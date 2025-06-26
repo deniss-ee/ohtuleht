@@ -24,12 +24,12 @@
 
     <link href="style.css" rel="stylesheet" />
   </head>
+
   <body>
     <div class="banner">
       <div class="header">
+        <p class="header__p">Taskukohased üürikad tudengitele</p>
         <img class="logo" src="logo.svg" alt="Kinnisvara24" />
-        <img src="text.png" alt="" class="img-text" />
-        <img src="img.png" alt="" class="img-maasikas" />
       </div>
       <div class="main">
         <div class="btn" id="btn-left">
@@ -50,7 +50,9 @@
         </div>
 
         <div class="slider swiper">
-          <div class="swiper-wrapper" id="property-container"></div>
+          <div class="swiper-wrapper" id="property-container">
+            <div class="swiper-slide"></div>
+          </div>
         </div>
 
         <div class="btn" id="btn-right">
@@ -71,15 +73,14 @@
         </div>
       </div>
     </div>
+
+    <script src="pxToVW.js"></script>
     <script>
       const swiper = new Swiper(".slider", {
         loop: true,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },
+        autoplay: false,
         speed: 500,
-        spaceBetween: 10,
+        spaceBetween: 20,
         slidesPerView: "auto",
         slidesPerGroup: 1, // ✅ Change this value to control how many slides move per click
         navigation: {
@@ -88,6 +89,7 @@
         },
       });
     </script>
+
     <script src="script.js"></script>
   </body>
 </html>
