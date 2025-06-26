@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kinnisvara24</title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Rubik:wght@500&display=swap" rel="stylesheet" />
+
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="banner">
+      <div class="header">
+        <img class="logo" src="logo.svg" alt="Kinnisvara24" />
+        <img src="text.png" alt="" class="img-text">
+        <img src="img.png" alt="" class="img-maasikas">
+      </div>
+      <div class="main">
+        <div class="btn" id="btn-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M25.2 14C25.2 13.7215 25.0893 13.4544 24.8924 13.2575C24.6955 13.0606 24.4284 12.95 24.15 12.95H6.52395L9.46395 10.22C9.56507 10.1262 9.64673 10.0135 9.70427 9.88815C9.7618 9.76282 9.7941 9.6274 9.7993 9.48959C9.8045 9.35179 9.7825 9.21431 9.73457 9.08501C9.68664 8.95571 9.61371 8.83711 9.51995 8.736C9.33059 8.53178 9.06785 8.41115 8.78955 8.40065C8.65174 8.39545 8.51427 8.41744 8.38497 8.46537C8.25566 8.5133 8.13707 8.58623 8.03595 8.68L3.13595 13.23C3.02993 13.3283 2.94535 13.4474 2.88751 13.5799C2.82967 13.7124 2.79981 13.8554 2.79981 14C2.79981 14.1446 2.82967 14.2876 2.88751 14.4201C2.94535 14.5526 3.02993 14.6717 3.13595 14.77L8.03595 19.32C8.24017 19.5094 8.51124 19.6098 8.78955 19.5993C9.06785 19.5888 9.33059 19.4682 9.51995 19.264C9.70932 19.0598 9.8098 18.7887 9.7993 18.5104C9.7888 18.2321 9.66817 17.9694 9.46395 17.78L6.52395 15.05H24.15C24.4284 15.05 24.6955 14.9394 24.8924 14.7425C25.0893 14.5455 25.2 14.2785 25.2 14Z"
+              fill="white"
+            ></path>
+          </svg>
+        </div>
+
+        <div class="slider swiper">
+          <div class="swiper-wrapper" id="property-container"> </div>
+        </div>
+
+        <div class="btn" id="btn-right">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M2.80005 14C2.80005 13.7215 2.91067 13.4544 3.10759 13.2575C3.3045 13.0606 3.57157 12.95 3.85005 12.95H21.476L18.536 10.22C18.4349 10.1262 18.3533 10.0135 18.2957 9.88815C18.2382 9.76282 18.2059 9.6274 18.2007 9.48959C18.1955 9.35179 18.2175 9.21431 18.2654 9.08501C18.3134 8.95571 18.3863 8.83711 18.4801 8.736C18.6694 8.53178 18.9321 8.41115 19.2105 8.40065C19.3483 8.39545 19.4857 8.41744 19.615 8.46537C19.7443 8.5133 19.8629 8.58623 19.9641 8.68L24.864 13.23C24.9701 13.3283 25.0547 13.4474 25.1125 13.5799C25.1703 13.7124 25.2002 13.8554 25.2002 14C25.2002 14.1446 25.1703 14.2876 25.1125 14.4201C25.0547 14.5526 24.9701 14.6717 24.864 14.77L19.9641 19.32C19.7598 19.5094 19.4888 19.6098 19.2105 19.5993C18.9321 19.5888 18.6694 19.4682 18.4801 19.264C18.2907 19.0598 18.1902 18.7887 18.2007 18.5104C18.2112 18.2321 18.3318 17.9694 18.536 17.78L21.476 15.05H3.85005C3.57157 15.05 3.3045 14.9394 3.10759 14.7425C2.91067 14.5455 2.80005 14.2785 2.80005 14Z"
+              fill="white"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <script>
+      const swiper = new Swiper(".slider", {
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        speed: 500,
+        spaceBetween: 10,
+        slidesPerView: "auto",
+        slidesPerGroup: 1, // ✅ Change this value to control how many slides move per click
+        navigation: {
+          nextEl: "#btn-right",
+          prevEl: "#btn-left",
+        },
+      });
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
