@@ -119,6 +119,12 @@ nobr {
   height: 400px;
   margin: 0 auto;
 }
+.banner, .banner * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .header {
   box-sizing: border-box;
   display: -webkit-box;
@@ -197,6 +203,7 @@ nobr {
   width: 287.5px;
   height: 296px;
   -ms-flex-negative: 0;
+  cursor: pointer;
 }
 .slide-cta {
   flex-shrink: 0;
