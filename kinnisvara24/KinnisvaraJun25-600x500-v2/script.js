@@ -69,7 +69,7 @@ function generateHTML(mainSlides, ctaImageUrl) {
     .map(
       ({ url, image, short_address, address_part, price, floor, rooms }) => `
       <div class="swiper-slide slide">
-        <a href="${url}" class="property-url" target="_blank" rel="noopener noreferrer">
+        <div onclick="window.open(olBanner.getClickTag('${url}'), '_blank')" class="property-url">
           <div class="img-wrap">
             <p class="property-price">${price}</p>
             <img class="property-img" src="${image}" loading="lazy" onerror="this.src='https://placehold.co/400'">
@@ -81,7 +81,7 @@ function generateHTML(mainSlides, ctaImageUrl) {
               <p class="property-info"><span class="floor">${floor}</span> korrus • <span class="rooms">${rooms}</span> tuba</p>
             </div>
           </div>
-        </a>
+        </div>
       </div>
     `
     )
@@ -91,9 +91,9 @@ function generateHTML(mainSlides, ctaImageUrl) {
     slidesHTML +
     `
     <div class="swiper-slide slide-cta" style="background-image: url('${ctaImageUrl}');">
-      <a href="ohtuleht.ee" class="slide-cta-a" target="_blank" rel="noopener noreferrer">
+      <div onclick="window.open(olBanner.getClickTag('https://kinnisvara24.ee/kuulutus/lisa-uus'), '_blank')" class="slide-cta-a">
         <p class="slide-cta-btn">Lisa oma<br>üüripakkumine</p>
-      </a>
+      </div>
     </div>
     `
   );
@@ -125,3 +125,21 @@ async function fetchProperties() {
 
 // Initialize property slider on page load
 fetchProperties();
+
+var olBanner = {
+	getQueryStringValue: function(key) {
+		return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+	},
+	
+	getClickTag: function(customDestinationUrl) {
+		this.clickMacro = this.getQueryStringValue('clickMacro');
+		this.clickTag = this.getQueryStringValue('clickTag');
+
+		if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+			return this.clickMacro + customDestinationUrl;
+		} else {
+			return this.clickTag;
+		}
+	}
+}
+var clickTag = ""
