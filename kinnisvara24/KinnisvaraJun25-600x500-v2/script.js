@@ -91,7 +91,7 @@ function generateHTML(mainSlides, ctaImageUrl) {
     slidesHTML +
     `
     <div class="swiper-slide slide-cta" style="background-image: url('${ctaImageUrl}');">
-      <div onclick="window.open(olBanner.getClickTag('https://kinnisvara24.ee/kuulutus/lisa-uus'), '_blank')" class="slide-cta-a">
+      <div onclick="window.open(olBanner.getClickTag('https://kinnisvara24.ee/kuulutus/lisa-uus?utm_campaign=lisa_kuulutus&utm_medium=display&utm_source=ohtuleht'), '_blank')" class="slide-cta-a">
         <p class="slide-cta-btn">Lisa oma<br>üüripakkumine</p>
       </div>
     </div>
