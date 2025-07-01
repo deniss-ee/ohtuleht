@@ -93,6 +93,12 @@
       var swiper = new Swiper(".mySwiper", {
         effect: "coverflow",
         grabCursor: true,
+        allowTouchMove: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+        loop: true,
         centeredSlides: true,
         slidesPerView: "auto",
         coverflowEffect: {
