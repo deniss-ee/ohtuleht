@@ -126,6 +126,7 @@ nobr {
   user-select: none;
 }
 .header {
+    cursor: pointer;
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
