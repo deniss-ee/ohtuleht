@@ -96,42 +96,66 @@ img-cropper/
 
 1. Open `index.html` in browser
 2. Drag image to upload area or click to select file
-3. Choose desired display mode
-4. If needed, drag image for precise cropping
-5. Click "Download Result" to save
+3. Choose display mode
+4. Adjust image position by dragging (if mode allows)
+5. Download result in JPG format
+
+## 🎨 UI Elements
+
+### Control Panel (Right)
+- **Display Mode Selector**: Radio buttons for mode selection
+- **Custom Width Input**: Number input for custom width mode
+- **Action Buttons**: Download, Upload New, Center Image
+
+### Canvas Area (Left)
+- **Upload Overlay**: Visible when no image loaded
+- **Image Canvas**: 1920x1080 canvas for image display
+- **Drag Interaction**: Available in specific modes
 
 ## 🔧 Technical Details
 
-- **Canvas size**: 1920x1080 pixels
-- **Supported formats**: all standard image formats (JPEG, PNG, WebP, etc.)
-- **Background blur**: 24px with 60% darkening
-- **Output format**: JPEG (90% quality) with original filename + "_ol" suffix
-- **Filename preservation**: Keeps original name with "_ol" postfix
-- **Compatibility**: Modern browsers with HTML5 Canvas support
+### Browser Support
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- Mobile browsers with touch support
+- File API and Canvas API required
 
-## 🎨 Styles and UI
+### Performance Features
+- Cached blurred background rendering
+- Optimized drag event handling
+- Efficient canvas operations
+- Smart boundary calculations
 
-- **Framework**: Tailwind CSS 4.0
-- **Design**: Minimalist, modern
-- **Responsiveness**: Mobile-first approach
-- **Animations**: Smooth transitions and hover effects
+### Mobile Optimizations
+- Touch event support
+- Responsive layout
+- Mobile-friendly file input
+- Touch-optimized controls
 
-## 📖 Changelog
+## 🎯 Mode Behavior
 
-### v2.0 - Modular Architecture
-- ✅ Complete code refactor
-- ✅ Separation into logical modules
-- ✅ Improved readability and maintainability
-- ✅ JSDoc documentation
-- ✅ Modern development practices
+| Mode | Scaling | Dragging | Use Case |
+|------|---------|----------|----------|
+| Fit Completely | Fit to canvas | ❌ | Show entire image |
+| Crop to Fit | Fill canvas | ✅ Always | Create backgrounds |
+| Original Size | No scaling | ✅ If larger | Pixel-perfect editing |
+| Custom Width | Custom scale | ✅ If larger | Specific dimensions |
 
-### v1.0 - Initial Version
-- ✅ 4 display modes
-- ✅ Interactive dragging
-- ✅ Drag & Drop upload
-- ✅ Responsive design
-- ✅ Blurred background
+## 🛠️ Customization
 
-## 🤝 Contributing
+The modular architecture allows easy customization:
 
-The application is built using pure JavaScript (Vanilla JS) without external dependencies, making it lightweight and fast. The modular architecture allows for easy addition of new features and code maintenance.
+1. **Add new modes**: Extend `FIT_MODES` and add rendering logic
+2. **Modify UI**: Update HTML structure and CSS
+3. **Change output format**: Modify `downloadImage()` method
+4. **Add filters**: Extend `ImageRenderer` class
+
+## 📋 Requirements
+
+- HTML5 Canvas support
+- File API support
+- Modern JavaScript (ES6+)
+- Touch events (for mobile)
+
+---
+
+Ready to use! Just open `index.html` in your browser. 🎨

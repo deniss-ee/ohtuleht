@@ -7,11 +7,11 @@
 const CANVAS_WIDTH = 1920;
 const CANVAS_HEIGHT = 1080;
 const FIT_MODES = {
-  FIT: 'fit',
-  COVER: 'cover', 
-  CENTER: 'center',
-  CUSTOM: 'custom',
-  AUTO: 'auto'
+  FIT: "fit",
+  COVER: "cover",
+  CENTER: "center",
+  CUSTOM: "custom",
+  AUTO: "auto",
 };
 
 // ===== DOM ELEMENTS =====
@@ -26,7 +26,7 @@ const elements = {
   reloadBtn: document.getElementById("reload-btn"),
   centerBtn: document.getElementById("center-btn"),
   customWidthInput: document.getElementById("custom-width"),
-  fitModeRadios: document.querySelectorAll(".fitmode-radio")
+  fitModeRadios: document.querySelectorAll(".fitmode-radio"),
 };
 
 // ===== APPLICATION STATE =====
@@ -39,7 +39,9 @@ const appState = {
   lastMouseY: 0,
   offsetX: 0,
   offsetY: 0,
-  originalFilename: ""
+  originalFilename: "",
+  renderRequestId: null,
+  blurredBackgroundCache: null,
 };
 
 // ===== UI MANAGEMENT MODULE =====
@@ -58,6 +60,10 @@ const UIManager = {
       elements.dropzone.classList.add("border-2", "border-dashed", "border-gray-300");
       elements.uploadOverlay.style.display = "";
       elements.controlPanel.classList.add("hidden");
+
+      // Clear cache when resetting
+      appState.blurredBackgroundCache = null;
+
       this.clearCanvas();
       DragManager.reset();
       elements.canvas.style.cursor = "default";
@@ -78,18 +84,52 @@ const UIManager = {
   updateCursor() {
     if (!appState.imageLoaded || !appState.currentImage) {
       elements.canvas.style.cursor = "default";
+      this.updateTouchHint(false);
       return;
     }
-    
+
     const canMoveX = MovementValidator.canMoveHorizontally(appState.currentImage, appState.currentFitMode);
     const canMoveY = MovementValidator.canMoveVertically(appState.currentImage, appState.currentFitMode);
-    
+
     if (canMoveX || canMoveY) {
       elements.canvas.style.cursor = appState.isDragging ? "grabbing" : "grab";
+      this.updateTouchHint(true);
     } else {
       elements.canvas.style.cursor = "default";
+      this.updateTouchHint(false);
     }
-  }
+  },
+
+  /**
+   * Shows/hides touch hint for mobile users
+   * @param {boolean} canDrag - whether dragging is possible
+   */
+  updateTouchHint(canDrag) {
+    // Check if device supports touch
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+    if (!isTouchDevice) return;
+
+    let hint = document.getElementById("touch-hint");
+
+    if (canDrag && !hint && !appState.isDragging) {
+      // Create touch hint
+      hint = document.createElement("div");
+      hint.id = "touch-hint";
+      hint.className = "fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm z-50 animate-pulse";
+      hint.innerHTML = "👆 Touch and drag to move image";
+      document.body.appendChild(hint);
+
+      // Auto-hide after 3 seconds
+      setTimeout(() => {
+        if (hint && hint.parentNode) {
+          hint.remove();
+        }
+      }, 3000);
+    } else if (!canDrag && hint) {
+      hint.remove();
+    }
+  },
 };
 
 // ===== MOVEMENT VALIDATION MODULE =====
@@ -102,7 +142,7 @@ const MovementValidator = {
    */
   canMoveHorizontally(img, fitMode) {
     if (!img) return false;
-    
+
     switch (fitMode) {
       case FIT_MODES.COVER:
       case FIT_MODES.AUTO:
@@ -129,7 +169,7 @@ const MovementValidator = {
    */
   canMoveVertically(img, fitMode) {
     if (!img) return false;
-    
+
     switch (fitMode) {
       case FIT_MODES.COVER:
       case FIT_MODES.AUTO:
@@ -146,7 +186,7 @@ const MovementValidator = {
       default:
         return false;
     }
-  }
+  },
 };
 
 // ===== DRAG MANAGEMENT MODULE =====
@@ -158,12 +198,12 @@ const DragManager = {
    */
   startDrag(mouseX, mouseY) {
     if (!appState.imageLoaded) return false;
-    
+
     const canMoveX = MovementValidator.canMoveHorizontally(appState.currentImage, appState.currentFitMode);
     const canMoveY = MovementValidator.canMoveVertically(appState.currentImage, appState.currentFitMode);
-    
+
     if (!canMoveX && !canMoveY) return false;
-    
+
     appState.isDragging = true;
     appState.lastMouseX = mouseX;
     appState.lastMouseY = mouseY;
@@ -172,26 +212,36 @@ const DragManager = {
   },
 
   /**
-   * Updates position during dragging
+   * Updates position during dragging with throttling
    * @param {number} mouseX - X mouse coordinate
    * @param {number} mouseY - Y mouse coordinate
    */
   updateDrag(mouseX, mouseY) {
     if (!appState.isDragging || !appState.imageLoaded) return;
-    
+
     const deltaX = mouseX - appState.lastMouseX;
     const deltaY = mouseY - appState.lastMouseY;
-    
+
+    // Skip small movements to reduce unnecessary renders
+    if (Math.abs(deltaX) < 1 && Math.abs(deltaY) < 1) return;
+
     const canMoveX = MovementValidator.canMoveHorizontally(appState.currentImage, appState.currentFitMode);
     const canMoveY = MovementValidator.canMoveVertically(appState.currentImage, appState.currentFitMode);
-    
-    if (canMoveX) appState.offsetX += deltaX;
-    if (canMoveY) appState.offsetY += deltaY;
-    
+
+    if (canMoveX) {
+      appState.offsetX += deltaX;
+      appState.offsetX = this._constrainOffsetX(appState.currentImage, appState.currentFitMode);
+    }
+    if (canMoveY) {
+      appState.offsetY += deltaY;
+      appState.offsetY = this._constrainOffsetY(appState.currentImage, appState.currentFitMode);
+    }
+
     appState.lastMouseX = mouseX;
     appState.lastMouseY = mouseY;
-    
-    ImageRenderer.draw(appState.currentImage, appState.currentFitMode);
+
+    // Use non-immediate rendering for smooth dragging
+    ImageRenderer.draw(appState.currentImage, appState.currentFitMode, false);
   },
 
   /**
@@ -201,6 +251,12 @@ const DragManager = {
     if (appState.isDragging) {
       appState.isDragging = false;
       UIManager.updateCursor();
+
+      // Hide touch hint when dragging ends
+      const hint = document.getElementById("touch-hint");
+      if (hint) {
+        hint.remove();
+      }
     }
   },
 
@@ -219,22 +275,154 @@ const DragManager = {
   center() {
     if (appState.imageLoaded && appState.currentImage) {
       this.reset();
-      ImageRenderer.draw(appState.currentImage, appState.currentFitMode);
+      ImageRenderer.draw(appState.currentImage, appState.currentFitMode, true);
     }
-  }
+  },
+
+  /**
+   * Constrains horizontal offset within valid bounds
+   * @param {Image} img - current image
+   * @param {string} fitMode - current fit mode
+   * @returns {number} constrained offset
+   * @private
+   */
+  _constrainOffsetX(img, fitMode) {
+    if (!img) return 0;
+
+    switch (fitMode) {
+      case FIT_MODES.COVER: {
+        const scale = Math.max(CANVAS_WIDTH / img.width, CANVAS_HEIGHT / img.height);
+        const drawW = img.width * scale;
+        const maxOffset = Math.max(0, (drawW - CANVAS_WIDTH) / 2);
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetX));
+      }
+      case FIT_MODES.CENTER: {
+        if (img.width <= CANVAS_WIDTH) return 0;
+        const maxOffset = (img.width - CANVAS_WIDTH) / 2;
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetX));
+      }
+      case FIT_MODES.CUSTOM: {
+        const customWidth = parseInt(elements.customWidthInput.value) || 1080;
+        const scale = customWidth / img.width;
+        const drawW = img.width * scale;
+        if (drawW <= CANVAS_WIDTH) return 0;
+        const maxOffset = (drawW - CANVAS_WIDTH) / 2;
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetX));
+      }
+      case FIT_MODES.AUTO: {
+        let targetSize, scale;
+        if (img.width === img.height) {
+          targetSize = 1080;
+          scale = targetSize / img.width;
+        } else if (img.width < img.height) {
+          targetSize = 1080;
+          scale = targetSize / img.width;
+        } else {
+          targetSize = 1080;
+          scale = targetSize / img.height;
+        }
+        const drawW = img.width * scale;
+        if (drawW <= CANVAS_WIDTH) return 0;
+        const maxOffset = (drawW - CANVAS_WIDTH) / 2;
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetX));
+      }
+      case FIT_MODES.FIT:
+      default:
+        return 0;
+    }
+  },
+
+  /**
+   * Constrains vertical offset within valid bounds
+   * @param {Image} img - current image
+   * @param {string} fitMode - current fit mode
+   * @returns {number} constrained offset
+   * @private
+   */
+  _constrainOffsetY(img, fitMode) {
+    if (!img) return 0;
+
+    switch (fitMode) {
+      case FIT_MODES.COVER: {
+        const scale = Math.max(CANVAS_WIDTH / img.width, CANVAS_HEIGHT / img.height);
+        const drawH = img.height * scale;
+        const maxOffset = Math.max(0, (drawH - CANVAS_HEIGHT) / 2);
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetY));
+      }
+      case FIT_MODES.CENTER: {
+        if (img.height <= CANVAS_HEIGHT) return 0;
+        const maxOffset = (img.height - CANVAS_HEIGHT) / 2;
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetY));
+      }
+      case FIT_MODES.CUSTOM: {
+        const customWidth = parseInt(elements.customWidthInput.value) || 1080;
+        const scale = customWidth / img.width;
+        const drawH = img.height * scale;
+        if (drawH <= CANVAS_HEIGHT) return 0;
+        const maxOffset = (drawH - CANVAS_HEIGHT) / 2;
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetY));
+      }
+      case FIT_MODES.AUTO: {
+        let targetSize, scale;
+        if (img.width === img.height) {
+          targetSize = 1080;
+          scale = targetSize / img.width;
+        } else if (img.width < img.height) {
+          targetSize = 1080;
+          scale = targetSize / img.width;
+        } else {
+          targetSize = 1080;
+          scale = targetSize / img.height;
+        }
+        const drawH = img.height * scale;
+        if (drawH <= CANVAS_HEIGHT) return 0;
+        const maxOffset = (drawH - CANVAS_HEIGHT) / 2;
+        return Math.max(-maxOffset, Math.min(maxOffset, appState.offsetY));
+      }
+      case FIT_MODES.FIT:
+      default:
+        return 0;
+    }
+  },
 };
 
 // ===== IMAGE RENDERING MODULE =====
 const ImageRenderer = {
   /**
-   * Draws image on canvas
+   * Draws image on canvas with optimized rendering
    * @param {Image} img - image to draw
    * @param {string} fitMode - display mode
+   * @param {boolean} immediate - skip debouncing for immediate render
    */
-  draw(img, fitMode = FIT_MODES.AUTO) {
+  draw(img, fitMode = FIT_MODES.AUTO, immediate = false) {
+    // Cancel previous render request
+    if (appState.renderRequestId) {
+      cancelAnimationFrame(appState.renderRequestId);
+    }
+
+    const renderFunction = () => {
+      this._performDraw(img, fitMode);
+      appState.renderRequestId = null;
+    };
+
+    if (immediate || !appState.isDragging) {
+      renderFunction();
+    } else {
+      // Use requestAnimationFrame for smooth dragging
+      appState.renderRequestId = requestAnimationFrame(renderFunction);
+    }
+  },
+
+  /**
+   * Performs the actual drawing operation
+   * @param {Image} img - image to draw
+   * @param {string} fitMode - display mode
+   * @private
+   */
+  _performDraw(img, fitMode) {
     elements.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    // Blurred background (110% to cover edges)
+    // Blurred background (cached for performance)
     this._drawBlurredBackground(img);
 
     // Check for exact size match
@@ -264,21 +452,37 @@ const ImageRenderer = {
   },
 
   /**
-   * Draws blurred background
+   * Draws blurred background with caching
    * @param {Image} img - image
    * @private
    */
   _drawBlurredBackground(img) {
+    // Use cached blurred background if available
+    if (appState.blurredBackgroundCache) {
+      elements.ctx.drawImage(appState.blurredBackgroundCache, 0, 0);
+      return;
+    }
+
+    // Create and cache blurred background
+    const offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = CANVAS_WIDTH;
+    offscreenCanvas.height = CANVAS_HEIGHT;
+    const offscreenCtx = offscreenCanvas.getContext("2d");
+
     const scaleBg = Math.max(CANVAS_WIDTH / img.width, CANVAS_HEIGHT / img.height) * 1.1;
     const bgW = img.width * scaleBg;
     const bgH = img.height * scaleBg;
     const bgX = (CANVAS_WIDTH - bgW) / 2;
     const bgY = (CANVAS_HEIGHT - bgH) / 2;
-    
-    elements.ctx.save();
-    elements.ctx.filter = "blur(24px) brightness(0.6)";
-    elements.ctx.drawImage(img, bgX, bgY, bgW, bgH);
-    elements.ctx.restore();
+
+    offscreenCtx.filter = "blur(48px) brightness(0.75)";
+    offscreenCtx.drawImage(img, bgX, bgY, bgW, bgH);
+
+    // Cache the result
+    appState.blurredBackgroundCache = offscreenCanvas;
+
+    // Draw to main canvas
+    elements.ctx.drawImage(offscreenCanvas, 0, 0);
   },
 
   /**
@@ -289,7 +493,10 @@ const ImageRenderer = {
   _drawCenterMode(img) {
     let drawW = img.width;
     let drawH = img.height;
-    let sx = 0, sy = 0, sWidth = img.width, sHeight = img.height;
+    let sx = 0,
+      sy = 0,
+      sWidth = img.width,
+      sHeight = img.height;
 
     if (drawW > CANVAS_WIDTH) {
       sx = Math.floor((img.width - CANVAS_WIDTH) / 2) - appState.offsetX;
@@ -297,17 +504,17 @@ const ImageRenderer = {
       sWidth = CANVAS_WIDTH;
       drawW = CANVAS_WIDTH;
     }
-    
+
     if (drawH > CANVAS_HEIGHT) {
       sy = Math.floor((img.height - CANVAS_HEIGHT) / 2) - appState.offsetY;
       sy = Math.max(0, Math.min(sy, img.height - CANVAS_HEIGHT));
       sHeight = CANVAS_HEIGHT;
       drawH = CANVAS_HEIGHT;
     }
-    
+
     const drawX = (CANVAS_WIDTH - drawW) / 2;
     const drawY = (CANVAS_HEIGHT - drawH) / 2;
-    
+
     elements.ctx.drawImage(img, sx, sy, sWidth, sHeight, drawX, drawY, drawW, drawH);
   },
 
@@ -322,13 +529,13 @@ const ImageRenderer = {
     const drawH = img.height * scale;
     let drawX = (CANVAS_WIDTH - drawW) / 2 + appState.offsetX;
     let drawY = (CANVAS_HEIGHT - drawH) / 2 + appState.offsetY;
-    
+
     // Offset constraints
     const maxOffsetX = (CANVAS_WIDTH - drawW) / 2;
     const maxOffsetY = (CANVAS_HEIGHT - drawH) / 2;
     drawX = Math.max(-maxOffsetX, Math.min(drawX, CANVAS_WIDTH - drawW + maxOffsetX));
     drawY = Math.max(-maxOffsetY, Math.min(drawY, CANVAS_HEIGHT - drawH + maxOffsetY));
-    
+
     elements.ctx.drawImage(img, drawX, drawY, drawW, drawH);
   },
 
@@ -343,11 +550,11 @@ const ImageRenderer = {
     const drawH = img.height * scale;
     let drawX = (CANVAS_WIDTH - drawW) / 2 + appState.offsetX;
     let drawY = (CANVAS_HEIGHT - drawH) / 2 + appState.offsetY;
-    
+
     // Constraints so image doesn't go outside bounds
     drawX = Math.max(CANVAS_WIDTH - drawW, Math.min(0, drawX));
     drawY = Math.max(CANVAS_HEIGHT - drawH, Math.min(0, drawY));
-    
+
     elements.ctx.drawImage(img, drawX, drawY, drawW, drawH);
   },
 
@@ -363,7 +570,7 @@ const ImageRenderer = {
     const drawH = img.height * scale;
     let drawX = (CANVAS_WIDTH - drawW) / 2 + appState.offsetX;
     let drawY = (CANVAS_HEIGHT - drawH) / 2 + appState.offsetY;
-    
+
     // Offset constraints
     if (drawW > CANVAS_WIDTH) {
       drawX = Math.max(CANVAS_WIDTH - drawW, Math.min(0, drawX));
@@ -371,7 +578,7 @@ const ImageRenderer = {
     if (drawH > CANVAS_HEIGHT) {
       drawY = Math.max(CANVAS_HEIGHT - drawH, Math.min(0, drawY));
     }
-    
+
     elements.ctx.drawImage(img, drawX, drawY, drawW, drawH);
   },
 
@@ -382,7 +589,7 @@ const ImageRenderer = {
    */
   _drawAutoMode(img) {
     let targetSize, scale, drawW, drawH, drawX, drawY;
-    
+
     if (img.width === img.height) {
       // Square images
       targetSize = 1080;
@@ -396,12 +603,12 @@ const ImageRenderer = {
       targetSize = 1080;
       scale = targetSize / img.height;
     }
-    
+
     drawW = img.width * scale;
     drawH = img.height * scale;
     drawX = (CANVAS_WIDTH - drawW) / 2 + appState.offsetX;
     drawY = (CANVAS_HEIGHT - drawH) / 2 + appState.offsetY;
-    
+
     // Offset constraints
     if (drawW > CANVAS_WIDTH) {
       drawX = Math.max(CANVAS_WIDTH - drawW, Math.min(0, drawX));
@@ -409,9 +616,9 @@ const ImageRenderer = {
     if (drawH > CANVAS_HEIGHT) {
       drawY = Math.max(CANVAS_HEIGHT - drawH, Math.min(0, drawY));
     }
-    
+
     elements.ctx.drawImage(img, drawX, drawY, drawW, drawH);
-  }
+  },
 };
 
 // ===== FILE LOADING MODULE =====
@@ -422,18 +629,18 @@ const FileManager = {
    */
   handleFiles(files) {
     if (!files || !files[0]) return;
-    
+
     const file = files[0];
     if (!file.type.startsWith("image/")) {
       alert("Please upload an image");
       return;
     }
-    
+
     // Store original filename without extension
     const filename = file.name;
-    const lastDotIndex = filename.lastIndexOf('.');
+    const lastDotIndex = filename.lastIndexOf(".");
     appState.originalFilename = lastDotIndex !== -1 ? filename.substring(0, lastDotIndex) : filename;
-    
+
     const img = new Image();
     img.onload = () => this._onImageLoad(img);
     img.onerror = () => alert("Image loading error");
@@ -449,13 +656,16 @@ const FileManager = {
     appState.imageLoaded = true;
     appState.currentImage = img;
     appState.currentFitMode = document.querySelector(".fitmode-radio:checked").value;
-    
+
+    // Clear cached background when new image loads
+    appState.blurredBackgroundCache = null;
+
     // Enable/disable width input field
     elements.customWidthInput.disabled = appState.currentFitMode !== FIT_MODES.CUSTOM;
-    
+
     DragManager.reset();
     UIManager.setDropzoneState(true);
-    ImageRenderer.draw(img, appState.currentFitMode);
+    ImageRenderer.draw(img, appState.currentFitMode, true); // Immediate render for initial load
     UIManager.updateCursor();
     elements.fileInput.value = "";
   },
@@ -465,10 +675,8 @@ const FileManager = {
    */
   downloadImage() {
     // Generate filename with original name + "_ol" suffix
-    const filename = appState.originalFilename 
-      ? `${appState.originalFilename}_ol.jpg` 
-      : "resized-1920x1080_ol.jpg";
-    
+    const filename = appState.originalFilename ? `${appState.originalFilename}_ol.jpg` : "resized-1920x1080_ol.jpg";
+
     const link = document.createElement("a");
     link.download = filename;
     // Convert to JPG format with 90% quality
@@ -482,7 +690,7 @@ const FileManager = {
   loadNewFile() {
     elements.fileInput.value = "";
     elements.fileInput.click();
-  }
+  },
 };
 
 // ===== EVENT HANDLERS =====
@@ -507,41 +715,90 @@ const EventHandlers = {
         if (appState.imageLoaded && appState.currentImage) {
           appState.currentFitMode = document.querySelector(".fitmode-radio:checked").value;
           elements.customWidthInput.disabled = appState.currentFitMode !== FIT_MODES.CUSTOM;
+
+          // Clear background cache when mode changes
+          appState.blurredBackgroundCache = null;
+
           DragManager.reset();
-          ImageRenderer.draw(appState.currentImage, appState.currentFitMode);
+          ImageRenderer.draw(appState.currentImage, appState.currentFitMode, true);
           UIManager.updateCursor();
         }
       });
     });
 
-    // Custom width change handler
+    // Custom width change handler with debouncing
+    let customWidthTimeout;
     elements.customWidthInput.addEventListener("input", () => {
       if (appState.imageLoaded && appState.currentImage && appState.currentFitMode === FIT_MODES.CUSTOM) {
-        DragManager.reset();
-        ImageRenderer.draw(appState.currentImage, appState.currentFitMode);
+        clearTimeout(customWidthTimeout);
+        customWidthTimeout = setTimeout(() => {
+          DragManager.reset();
+          ImageRenderer.draw(appState.currentImage, appState.currentFitMode, true);
+        }, 150); // 150ms debounce
       }
     });
   },
 
   /**
-   * Drag handlers
+   * Drag handlers (mouse and touch)
    * @private
    */
   _initDragHandlers() {
+    // Mouse events
     elements.canvas.addEventListener("mousedown", (e) => {
-      DragManager.startDrag(e.clientX, e.clientY);
+      if (appState.imageLoaded) {
+        e.preventDefault();
+        DragManager.startDrag(e.clientX, e.clientY);
+      }
     });
 
     elements.canvas.addEventListener("mousemove", (e) => {
-      DragManager.updateDrag(e.clientX, e.clientY);
+      if (appState.imageLoaded) {
+        DragManager.updateDrag(e.clientX, e.clientY);
+      }
     });
 
     elements.canvas.addEventListener("mouseup", () => {
-      DragManager.endDrag();
+      if (appState.imageLoaded) {
+        DragManager.endDrag();
+      }
     });
 
     elements.canvas.addEventListener("mouseleave", () => {
-      DragManager.endDrag();
+      if (appState.imageLoaded) {
+        DragManager.endDrag();
+      }
+    });
+
+    // Touch events for mobile devices - only when image is loaded
+    elements.canvas.addEventListener("touchstart", (e) => {
+      if (appState.imageLoaded) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        DragManager.startDrag(touch.clientX, touch.clientY);
+      }
+    });
+
+    elements.canvas.addEventListener("touchmove", (e) => {
+      if (appState.imageLoaded) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        DragManager.updateDrag(touch.clientX, touch.clientY);
+      }
+    });
+
+    elements.canvas.addEventListener("touchend", (e) => {
+      if (appState.imageLoaded) {
+        e.preventDefault();
+        DragManager.endDrag();
+      }
+    });
+
+    elements.canvas.addEventListener("touchcancel", (e) => {
+      if (appState.imageLoaded) {
+        e.preventDefault();
+        DragManager.endDrag();
+      }
     });
   },
 
@@ -568,9 +825,32 @@ const EventHandlers = {
    * @private
    */
   _initFileHandlers() {
-    // Click on dropzone
-    elements.dropzone.addEventListener("click", () => {
-      if (!appState.imageLoaded) elements.fileInput.click();
+    // Click on dropzone - improved mobile support
+    elements.dropzone.addEventListener("click", (e) => {
+      if (!appState.imageLoaded) {
+        e.preventDefault();
+        e.stopPropagation();
+        elements.fileInput.click();
+      }
+    });
+
+    // Mobile upload button
+    const mobileUploadBtn = document.getElementById("mobile-upload-btn");
+    if (mobileUploadBtn) {
+      mobileUploadBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        elements.fileInput.click();
+      });
+    }
+
+    // Touch events for mobile file selection
+    elements.dropzone.addEventListener("touchend", (e) => {
+      if (!appState.imageLoaded) {
+        e.preventDefault();
+        e.stopPropagation();
+        elements.fileInput.click();
+      }
     });
 
     // Drag & Drop
@@ -608,11 +888,11 @@ const EventHandlers = {
         elements.fileInput.value = "";
       }
     });
-  }
+  },
 };
 
 // ===== APPLICATION INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   UIManager.setDropzoneState(false);
   EventHandlers.init();
 });
