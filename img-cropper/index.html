@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Resizer 1920x1080</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
+    <h1 class="text-3xl font-bold mb-6">Генератор картинок 1920x1080</h1>
+    <div id="dropzone" class="relative group cursor-pointer rounded-lg bg-white shadow mb-4 max-w-[900px] w-full h-auto mx-auto block transition-all border-2 border-dashed border-gray-300">
+      <canvas class="w-full h-auto block rounded-lg" id="canvas" width="1920" height="1080"></canvas>
+      <div class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 text-gray-500 text-xl font-semibold transition-all pointer-events-none group-hover:bg-opacity-90" id="uploadOverlay">
+        <span>Кликните или перетащите изображение сюда</span>
+      </div>
+    </div>
+
+    <div class="hidden flex flex-col items-center gap-2 mb-4" id="mode-bar">
+      <label class="flex items-center gap-2">
+        <input type="radio" name="fitmode" value="fit" checked class="fitmode-radio" />
+        Вписать полностью
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="radio" name="fitmode" value="cover" class="fitmode-radio" />
+        Обрезать по размеру (cover)
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="radio" name="fitmode" value="center" class="fitmode-radio" />
+        Оригинальный размер по центру
+      </label>
+    </div>
+    <!-- ... (button-bar и далее) ... -->
+    <!-- Кнопки теперь вне dropzone, под canvas -->
+    <div class="hidden flex gap-2 justify-center mb-8" id="button-bar">
+      <button class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition" id="download-btn" type="button">Скачать результат</button>
+      <button class="bg-gray-500 text-white px-4 py-2 rounded shadow hover:bg-gray-600 transition" id="reload-btn" type="button">Загрузить новую</button>
+    </div>
+
+    <input class="hidden" id="file-input" type="file" accept="image/*" />
+    <script src="app.js"></script>
+  </body>
+</html>
