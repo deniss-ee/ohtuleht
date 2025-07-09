@@ -105,7 +105,8 @@ img-cropper/
 - **Canvas size**: 1920x1080 pixels
 - **Supported formats**: all standard image formats (JPEG, PNG, WebP, etc.)
 - **Background blur**: 24px with 60% darkening
-- **Output format**: PNG
+- **Output format**: JPEG (90% quality) with original filename + "_ol" suffix
+- **Filename preservation**: Keeps original name with "_ol" postfix
 - **Compatibility**: Modern browsers with HTML5 Canvas support
 
 ## 🎨 Styles and UI

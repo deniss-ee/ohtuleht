@@ -38,7 +38,8 @@ const appState = {
   lastMouseX: 0,
   lastMouseY: 0,
   offsetX: 0,
-  offsetY: 0
+  offsetY: 0,
+  originalFilename: ""
 };
 
 // ===== UI MANAGEMENT MODULE =====
@@ -428,6 +429,11 @@ const FileManager = {
       return;
     }
     
+    // Store original filename without extension
+    const filename = file.name;
+    const lastDotIndex = filename.lastIndexOf('.');
+    appState.originalFilename = lastDotIndex !== -1 ? filename.substring(0, lastDotIndex) : filename;
+    
     const img = new Image();
     img.onload = () => this._onImageLoad(img);
     img.onerror = () => alert("Image loading error");
@@ -458,9 +464,15 @@ const FileManager = {
    * Downloads current image
    */
   downloadImage() {
+    // Generate filename with original name + "_ol" suffix
+    const filename = appState.originalFilename 
+      ? `${appState.originalFilename}_ol.jpg` 
+      : "resized-1920x1080_ol.jpg";
+    
     const link = document.createElement("a");
-    link.download = "resized-1920x1080.png";
-    link.href = elements.canvas.toDataURL("image/png");
+    link.download = filename;
+    // Convert to JPG format with 90% quality
+    link.href = elements.canvas.toDataURL("image/jpeg", 1);
     link.click();
   },
 
