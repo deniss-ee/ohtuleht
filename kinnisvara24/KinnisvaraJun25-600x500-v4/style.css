@@ -265,34 +265,7 @@ nobr {
   -webkit-animation: pulsate-fwd 1s ease-in-out infinite;
   animation: pulsate-fwd 1s ease-in-out infinite both;
 }
-@-webkit-keyframes pulsate-fwd {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  50% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-@keyframes pulsate-fwd {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  50% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
+
 .img-wrap {
   flex-shrink: 0;
   width: 460px;
@@ -336,6 +309,8 @@ nobr {
   font-style: normal;
   leading-trim: both;
   text-edge: cap;
+    -webkit-animation: pulsate-fwd 1s ease-in-out infinite;
+  animation: pulsate-fwd 1s ease-in-out infinite both;
 }
 .property-price::after {
   content: " €";
@@ -361,4 +336,33 @@ nobr {
 .btn svg {
   width: 28px;
   height: 28px;
+}
+
+@-webkit-keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }

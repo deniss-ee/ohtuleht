@@ -32,14 +32,11 @@ function extractProperties(xml) {
   if (!items.length) return [];
 
   return Array.from(items, (item) => {
-    const getField = (field, fallback = "") =>
-      item.querySelector(PROPERTY_FIELDS[field])?.textContent?.trim() ||
-      fallback;
+    const getField = (field, fallback = "") => item.querySelector(PROPERTY_FIELDS[field])?.textContent?.trim() || fallback;
 
     const address = getField("address");
     const addressParts = address.split(",").map((s) => s.trim());
-    const address_part =
-      addressParts.length >= 2 ? addressParts.slice(-2).join(", ") : address;
+    const address_part = addressParts.length >= 2 ? addressParts.slice(-2).join(", ") : address;
 
     return {
       url: getField("url", "#"),
@@ -63,83 +60,82 @@ function shuffle(array) {
   return arr;
 }
 
-// Generate banner HTML for main slides + CTA slide
-function generateHTML(mainSlides, ctaImageUrl) {
-  const slidesHTML = mainSlides
-    .map(
-      ({ url, image, short_address, address_part, price, floor, rooms }) => `
+// Generate banner HTML for slides with CTA after every 3 flats
+function generateHTMLWithCTA(allSlides, ctaImageUrl) {
+  const CTA_URL = "https://kinnisvara24.ee/kuulutus/lisa-uus?utm_campaign=lisa_kuulutus&utm_medium=display&utm_source=ohtuleht";
+  let html = "";
+  for (let i = 0; i < allSlides.length; i++) {
+    const slide = allSlides[i];
+    html += `
       <div class="swiper-slide slide">
-        <div onclick="window.open(olBanner.getClickTag('${url}'), '_blank')" class="property-url">
+        <div onclick="window.open(olBanner.getClickTag('${slide.url}'), '_blank')" class="property-url">
           <div class="img-wrap">
-            <p class="property-price">${price}</p>
-            <img class="property-img" src="${image}" loading="lazy" onerror="this.src='https://placehold.co/400'">
+            <p class="property-price">${slide.price}</p>
+            <img class="property-img" src="${slide.image}" loading="lazy" onerror="this.src='https://placehold.co/400'">
           </div>
           <div class="info-wrap">
-            <p class="property-short-address">${short_address}</p>
+            <p class="property-short-address">${slide.short_address}</p>
             <div class="info-wrap-sm">
-              <p class="property-address-part">${address_part}</p>
-              <p class="property-info"><span class="floor">${floor}</span> korrus • <span class="rooms">${rooms}</span> tuba</p>
+              <p class="property-address-part">${slide.address_part}</p>
+              <p class="property-info"><span class="floor">${slide.floor}</span> korrus • <span class="rooms">${slide.rooms}</span> tuba</p>
             </div>
           </div>
         </div>
       </div>
-    `
-    )
-    .join("");
-
-  return (
-    slidesHTML +
-    `
-    <div class="swiper-slide slide-cta" style="background-image: url('${ctaImageUrl}');">
-      <div onclick="window.open(olBanner.getClickTag('https://kinnisvara24.ee/kuulutus/lisa-uus?utm_campaign=lisa_kuulutus&utm_medium=display&utm_source=ohtuleht'), '_blank')" class="slide-cta-a">
-        <p class="slide-cta-btn">Lisa oma<br>üüripakkumine</p>
-      </div>
-    </div>
-    `
-  );
+    `;
+    // Insert CTA after every 3 flats, but not after last flat
+    if ((i + 1) % 3 === 0 || i === allSlides.length - 1) {
+      html += `
+        <div class="swiper-slide slide-cta" style="background-image: url('${ctaImageUrl}');">
+          <div onclick="window.open(olBanner.getClickTag('${CTA_URL}'), '_blank')" class="slide-cta-a">
+            <p class="slide-cta-btn">Lisa oma<br>üüripakkumine</p>
+          </div>
+        </div>
+      `;
+    }
+  }
+  return html;
 }
 
-// Main function: fetch, parse, shuffle, and display slides
+// Main function: fetch, parse, shuffle, and display slides with 3 CTA slides
 async function fetchProperties() {
-  const proxyUrl =
-    "https://s.ohtuleht.ee/ads/kinnisvara24/xml";
+  const proxyUrl = "https://s.ohtuleht.ee/ads/kinnisvara24/xml";
   const xmlString = await fetchXML(proxyUrl);
   if (!xmlString) {
-    document.getElementById("property-container").innerHTML =
-      "<p>Failed to load properties.</p>";
+    document.getElementById("property-container").innerHTML = "<p>Failed to load properties.</p>";
     return;
   }
 
   const xml = parseXML(xmlString);
-  const properties = extractProperties(xml);
+  let properties = extractProperties(xml);
+  properties = properties.slice(0, 8); // Use only first 8 flats
+
+  if (properties.length === 0) {
+    document.getElementById("property-container").innerHTML = "<p>No properties found.</p>";
+    return;
+  }
+
   const shuffled = shuffle(properties);
-
-  const mainSlides = shuffled.slice(0, 3);
-  const ctaImageUrl = shuffled[3]?.image || "https://placehold.co/400";
-
-  document.getElementById("property-container").innerHTML = generateHTML(
-    mainSlides,
-    ctaImageUrl
-  );
+  const ctaImageUrl = shuffled[0]?.image || "https://placehold.co/400";
+  document.getElementById("property-container").innerHTML = generateHTMLWithCTA(shuffled, ctaImageUrl);
 }
 
 // Initialize property slider on page load
 fetchProperties();
 
 var olBanner = {
-	getQueryStringValue: function(key) {
-		return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
-	},
-	
-	getClickTag: function(customDestinationUrl) {
-		this.clickMacro = this.getQueryStringValue('clickMacro');
-		this.clickTag = this.getQueryStringValue('clickTag');
+  getQueryStringValue: function (key) {
+    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+  },
+  getClickTag: function (customDestinationUrl) {
+    this.clickMacro = this.getQueryStringValue("clickMacro");
+    this.clickTag = this.getQueryStringValue("clickTag");
 
-		if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
-			return this.clickMacro + customDestinationUrl;
-		} else {
-			return this.clickTag;
-		}
-	}
-}
-var clickTag = ""
+    if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+      return this.clickMacro + customDestinationUrl;
+    } else {
+      return this.clickTag;
+    }
+  },
+};
+var clickTag = "";
