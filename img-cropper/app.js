@@ -27,6 +27,7 @@ const elements = {
   centerBtn: document.getElementById("center-btn"),
   customWidthInput: document.getElementById("custom-width"),
   fitModeRadios: document.querySelectorAll(".fitmode-radio"),
+  whiteBackgroundCheckbox: document.getElementById("white-background-checkbox"),
 };
 
 // ===== APPLICATION STATE =====
@@ -42,6 +43,7 @@ const appState = {
   originalFilename: "",
   renderRequestId: null,
   blurredBackgroundCache: null,
+  whiteBackground: false,
 };
 
 // ===== UI MANAGEMENT MODULE =====
@@ -422,8 +424,15 @@ const ImageRenderer = {
   _performDraw(img, fitMode) {
     elements.ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    // Blurred background (cached for performance)
-    this._drawBlurredBackground(img);
+    // Draw background based on user preference
+    if (appState.whiteBackground) {
+      // Fill with white background
+      elements.ctx.fillStyle = '#ffffff';
+      elements.ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    } else {
+      // Blurred background (cached for performance)
+      this._drawBlurredBackground(img);
+    }
 
     // Check for exact size match
     if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
@@ -737,6 +746,20 @@ const EventHandlers = {
         }, 150); // 150ms debounce
       }
     });
+
+    // White background toggle handler
+    if (elements.whiteBackgroundCheckbox) {
+      elements.whiteBackgroundCheckbox.addEventListener("change", (e) => {
+        appState.whiteBackground = e.target.checked;
+        
+        // Clear cached blurred background when toggling to force redraw
+        appState.blurredBackgroundCache = null;
+        
+        if (appState.imageLoaded && appState.currentImage) {
+          ImageRenderer.draw(appState.currentImage, appState.currentFitMode, true);
+        }
+      });
+    }
   },
 
   /**
