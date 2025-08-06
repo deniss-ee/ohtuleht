@@ -145,6 +145,11 @@ const MovementValidator = {
   canMoveHorizontally(img, fitMode) {
     if (!img) return false;
 
+    // Allow movement for exact canvas size images in all modes
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      return true;
+    }
+
     switch (fitMode) {
       case FIT_MODES.COVER:
       case FIT_MODES.AUTO:
@@ -171,6 +176,11 @@ const MovementValidator = {
    */
   canMoveVertically(img, fitMode) {
     if (!img) return false;
+
+    // Allow movement for exact canvas size images in all modes
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      return true;
+    }
 
     switch (fitMode) {
       case FIT_MODES.COVER:
@@ -291,6 +301,12 @@ const DragManager = {
   _constrainOffsetX(img, fitMode) {
     if (!img) return 0;
 
+    // Handle exact canvas size - allow free movement within bounds
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      // Allow movement within canvas bounds
+      return Math.max(-CANVAS_WIDTH, Math.min(CANVAS_WIDTH, appState.offsetX));
+    }
+
     switch (fitMode) {
       case FIT_MODES.COVER: {
         const scale = Math.max(CANVAS_WIDTH / img.width, CANVAS_HEIGHT / img.height);
@@ -343,6 +359,12 @@ const DragManager = {
    */
   _constrainOffsetY(img, fitMode) {
     if (!img) return 0;
+
+    // Handle exact canvas size - allow free movement within bounds
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      // Allow movement within canvas bounds
+      return Math.max(-CANVAS_HEIGHT, Math.min(CANVAS_HEIGHT, appState.offsetY));
+    }
 
     switch (fitMode) {
       case FIT_MODES.COVER: {
@@ -434,13 +456,7 @@ const ImageRenderer = {
       this._drawBlurredBackground(img);
     }
 
-    // Check for exact size match
-    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
-      elements.ctx.drawImage(img, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-      return;
-    }
-
-    // Draw based on mode
+    // Draw based on mode (removed early return for exact size match to allow manipulation)
     switch (fitMode) {
       case FIT_MODES.CENTER:
         this._drawCenterMode(img);
@@ -507,6 +523,15 @@ const ImageRenderer = {
       sWidth = img.width,
       sHeight = img.height;
 
+    // Handle exact canvas size - allow manipulation
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      // Draw with offset support for exact size images
+      let drawX = appState.offsetX;
+      let drawY = appState.offsetY;
+      elements.ctx.drawImage(img, drawX, drawY, CANVAS_WIDTH, CANVAS_HEIGHT);
+      return;
+    }
+
     if (drawW > CANVAS_WIDTH) {
       sx = Math.floor((img.width - CANVAS_WIDTH) / 2) - appState.offsetX;
       sx = Math.max(0, Math.min(sx, img.width - CANVAS_WIDTH));
@@ -533,6 +558,14 @@ const ImageRenderer = {
    * @private
    */
   _drawFitMode(img) {
+    // Handle exact canvas size - allow manipulation with offset
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      let drawX = appState.offsetX;
+      let drawY = appState.offsetY;
+      elements.ctx.drawImage(img, drawX, drawY, CANVAS_WIDTH, CANVAS_HEIGHT);
+      return;
+    }
+
     const scale = Math.min(CANVAS_WIDTH / img.width, CANVAS_HEIGHT / img.height);
     const drawW = img.width * scale;
     const drawH = img.height * scale;
@@ -554,6 +587,14 @@ const ImageRenderer = {
    * @private
    */
   _drawCoverMode(img) {
+    // Handle exact canvas size - allow manipulation with offset
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      let drawX = appState.offsetX;
+      let drawY = appState.offsetY;
+      elements.ctx.drawImage(img, drawX, drawY, CANVAS_WIDTH, CANVAS_HEIGHT);
+      return;
+    }
+
     const scale = Math.max(CANVAS_WIDTH / img.width, CANVAS_HEIGHT / img.height);
     const drawW = img.width * scale;
     const drawH = img.height * scale;
@@ -580,6 +621,14 @@ const ImageRenderer = {
     let drawX = (CANVAS_WIDTH - drawW) / 2 + appState.offsetX;
     let drawY = (CANVAS_HEIGHT - drawH) / 2 + appState.offsetY;
 
+    // Handle exact canvas size case with custom scaling
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT && scale === 1) {
+      drawX = appState.offsetX;
+      drawY = appState.offsetY;
+      elements.ctx.drawImage(img, drawX, drawY, CANVAS_WIDTH, CANVAS_HEIGHT);
+      return;
+    }
+
     // Offset constraints
     if (drawW > CANVAS_WIDTH) {
       drawX = Math.max(CANVAS_WIDTH - drawW, Math.min(0, drawX));
@@ -598,6 +647,14 @@ const ImageRenderer = {
    */
   _drawAutoMode(img) {
     let targetSize, scale, drawW, drawH, drawX, drawY;
+
+    // Handle exact canvas size case
+    if (img.width === CANVAS_WIDTH && img.height === CANVAS_HEIGHT) {
+      drawX = appState.offsetX;
+      drawY = appState.offsetY;
+      elements.ctx.drawImage(img, drawX, drawY, CANVAS_WIDTH, CANVAS_HEIGHT);
+      return;
+    }
 
     if (img.width === img.height) {
       // Square images
