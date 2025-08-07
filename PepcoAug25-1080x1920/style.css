@@ -1,0 +1,77 @@
+html,
+body,
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.banner-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background: url("img/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.slide {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+.slide-2 {
+  cursor: pointer;
+}
+
+.img {
+  position: absolute;
+  height: auto;
+}
+
+.text-1 {
+  width: 100vw;
+  top: 25vh;
+}
+
+.img-1 {
+  width: 18.24vw;
+  left: 30.93vw;
+  top: 47.5vh;
+}
+
+.img-2 {
+  width: 25.65vw;
+  left: 9.91vw;
+  top: 36.25vh;
+}
+
+.img-3 {
+  width: 9.26vw;
+  left: 12.04vw;
+  top: 49.48vh;
+}
+
+.img-4 {
+  width: 14.35vw;
+  left: 77.04vw;
+  top: 39.84vh;
+}
+
+.img-5 {
+  width: 22.69vw;
+  left: 50.74vw;
+  top: 35.57vh;
+}
+
+.backpack {
+  width: 32.41vw;
+  left: 33.8vw;
+  top: 58.54vh;
+}
+
+.cta {
+  width: 76.57vw;
+  left: 11.76vw;
+  top: 41.56vh;
+}
