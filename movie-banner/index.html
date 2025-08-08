@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Banner Generator (Dynamic Size)</title>
+    <meta name="viewport" content="width=1800,user-scalable=no" />
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+      }
+      .container {
+        max-width: 1800px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px #0001;
+        padding: 32px;
+      }
+      label {
+        display: block;
+        margin-top: 18px;
+      }
+      input[type="number"],
+      select {
+        padding: 7px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-top: 4px;
+      }
+      .preview-wrap {
+        margin: 30px 0;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        background: #eee;
+        position: relative;
+        min-height: 200px;
+        min-width: 300px;
+        overflow: hidden;
+        transition: width 0.2s, height 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #preview-bg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+      }
+      #preview-video {
+        position: absolute;
+        z-index: 1;
+        background: #000;
+      }
+      .controls {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+      }
+      button {
+        background: #1e88e5;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 30px;
+        font-size: 17px;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+      }
+      .info-row {
+        margin-top: 10px;
+        color: #888;
+        font-size: 15px;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <h2>Генератор Video Banner ZIP</h2>
+      <label>Фоновая картинка: <input type="file" accept="image/*" id="bg-input" /></label>
+      <label>Видео: <input type="file" accept="video/mp4,video/webm" id="video-input" /></label>
+      <label>Высота видео (px): <input type="number" id="video-height" value="320" min="50" max="1000" /></label>
+      <label>
+        Позиция видео:
+        <select id="video-position">
+          <option value="left">Слева</option>
+          <option value="center" selected>По центру</option>
+          <option value="right">Справа</option>
+        </select>
+      </label>
+      <label>Горизонтальный отступ (px): <input type="number" id="video-offset" value="40" min="0" max="500" /></label>
+      <div class="info-row" id="size-info"></div>
+      <div class="preview-wrap" id="preview-wrap" style="width: 600px; height: 400px">
+        <img id="preview-bg" src="" alt="Background preview" hidden />
+        <video id="preview-video" src="" autoplay muted loop playsinline hidden></video>
+      </div>
+      <div class="controls">
+        <button id="download-btn" disabled>Скачать ZIP</button>
+      </div>
+    </div>
+
+    <script>
+      const bgInput = document.getElementById("bg-input");
+      const videoInput = document.getElementById("video-input");
+      const videoHeight = document.getElementById("video-height");
+      const videoPosition = document.getElementById("video-position");
+      const videoOffset = document.getElementById("video-offset");
+      const previewBg = document.getElementById("preview-bg");
+      const previewVideo = document.getElementById("preview-video");
+      const previewWrap = document.getElementById("preview-wrap");
+      const downloadBtn = document.getElementById("download-btn");
+      const sizeInfo = document.getElementById("size-info");
+      const container = document.getElementById("container");
+
+      let bgFile = null,
+        videoFile = null;
+      let bgNaturalWidth = 600,
+        bgNaturalHeight = 400;
+      let bgImageUrl = "",
+        videoUrl = "";
+
+      function setPreviewSize(w, h) {
+        previewWrap.style.width = w + "px";
+        previewWrap.style.height = h + "px";
+        container.style.maxWidth = w + 80 + "px";
+      }
+
+      function updatePreview() {
+        previewBg.hidden = !bgFile;
+        previewVideo.hidden = !videoFile;
+        if (bgFile) previewBg.src = bgImageUrl;
+        if (videoFile) previewVideo.src = videoUrl;
+
+        setPreviewSize(bgNaturalWidth, bgNaturalHeight);
+        sizeInfo.innerText = `Размер баннера: ${bgNaturalWidth} x ${bgNaturalHeight}px`;
+
+        const h = parseInt(videoHeight.value) || 320;
+        previewVideo.style.height = h + "px";
+        previewVideo.style.width = "auto";
+        previewVideo.style.top = "50%";
+        previewVideo.style.transform = "translateY(-50%)";
+        let pos = videoPosition.value;
+        let offset = parseInt(videoOffset.value) || 0;
+        previewVideo.style.right = "";
+        previewVideo.style.left = "";
+        previewVideo.style.marginLeft = "";
+        if (pos === "left") {
+          previewVideo.style.left = offset + "px";
+        } else if (pos === "center") {
+          previewVideo.style.left = "50%";
+          previewVideo.style.transform += " translateX(-50%)";
+        } else if (pos === "right") {
+          previewVideo.style.right = offset + "px";
+        }
+      }
+
+      // Событие для фоновой картинки
+      bgInput.addEventListener("input", function () {
+        if (bgInput.files[0]) {
+          bgFile = bgInput.files[0];
+          bgImageUrl = URL.createObjectURL(bgFile);
+          const img = new Image();
+          img.onload = function () {
+            bgNaturalWidth = img.naturalWidth;
+            bgNaturalHeight = img.naturalHeight;
+            setPreviewSize(bgNaturalWidth, bgNaturalHeight);
+            previewBg.src = bgImageUrl;
+            previewBg.hidden = false;
+            updatePreview();
+            enableDownloadIfReady();
+          };
+          img.src = bgImageUrl;
+        }
+      });
+
+      // Событие для видео
+      videoInput.addEventListener("input", function () {
+        if (videoInput.files[0]) {
+          videoFile = videoInput.files[0];
+          videoUrl = URL.createObjectURL(videoFile);
+          previewVideo.src = videoUrl;
+          previewVideo.hidden = false;
+          updatePreview();
+          enableDownloadIfReady();
+        }
+      });
+
+      [videoHeight, videoPosition, videoOffset].forEach((el) => el.addEventListener("input", updatePreview));
+      videoPosition.addEventListener("change", updatePreview);
+
+      function enableDownloadIfReady() {
+        downloadBtn.disabled = !(bgFile && videoFile);
+      }
+
+      downloadBtn.addEventListener("click", async function () {
+        if (!(bgFile && videoFile)) return;
+        const h = parseInt(videoHeight.value) || 320;
+        const pos = videoPosition.value;
+        const offset = parseInt(videoOffset.value) || 0;
+        const bgName = bgFile.name;
+        const videoName = "video.mp4"; // Всегда video.mp4
+
+        let videoPosCSS = "";
+        if (pos === "left") {
+          videoPosCSS = `left:${offset}px; top:50%; transform:translateY(-50%);`;
+        } else if (pos === "center") {
+          videoPosCSS = `left:50%; top:50%; transform:translate(-50%,-50%);`;
+        } else if (pos === "right") {
+          videoPosCSS = `right:${offset}px; top:50%; transform:translateY(-50%);`;
+        }
+
+        const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Banner</title>
+  <meta name="viewport" content="width=${bgNaturalWidth}, user-scalable=no">
+  <style>
+    body { margin:0; padding:0; }
+    .banner-bg {
+      background: url('${bgName}') center center/cover no-repeat;
+      width: ${bgNaturalWidth}px; height: ${bgNaturalHeight}px; position: relative; overflow: hidden;
+    }
+    .video-wrap {
+      position: absolute; z-index:2; ${videoPosCSS} height:${h}px; width:auto;
+    }
+    video { height:100%; width:auto; display:block; object-fit:contain; background:#000; }
+  </style>
+</head>
+<body>
+  <div class="banner-bg">
+    <div class="video-wrap">
+      <video src="video.mp4" autoplay loop muted playsinline></video>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
+        const zip = new JSZip();
+        zip.file("index.html", html);
+        zip.file(bgName, bgFile);
+
+        // Переименовываем видео в video.mp4 вне зависимости от исходного имени
+        const videoBlob = videoFile.slice(0, videoFile.size, videoFile.type);
+        zip.file("video.mp4", videoBlob);
+
+        // Имя архива = имя видео без расширения
+        let archiveName = videoFile.name;
+        if (archiveName.lastIndexOf(".") > 0) {
+          archiveName = archiveName.substring(0, archiveName.lastIndexOf("."));
+        }
+        archiveName += ".zip";
+
+        const blob = await zip.generateAsync({ type: "blob" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = archiveName;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 500);
+      });
+    </script>
+  </body>
+</html>
