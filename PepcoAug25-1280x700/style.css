@@ -1,0 +1,114 @@
+html,
+body,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.banner-wrapper {
+  width: 1280px;
+  height: 700px;
+  background: url("img/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  /* Disable text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Disable touch callouts on iOS */
+  -webkit-touch-callout: none;
+}
+
+.slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-2 {
+  cursor: pointer;
+}
+
+.img {
+  position: absolute;
+  height: auto;
+  /* Add touch-friendly properties */
+  touch-action: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  /* Set transform origin to center for scaling */
+  transform-origin: center center;
+}
+
+.text-1 {
+  width: 454px;
+  left: 443px;
+  top: 70px;
+}
+
+.img-1 {
+  width: 148px;
+  left: 169px;
+  top: 346px;
+}
+
+.img-2 {
+  width: 208px;
+  left: 609px;
+  top: 245px;
+}
+
+.img-3 {
+  width: 75px;
+  left: 83px;
+  top: 231px;
+}
+
+.img-4 {
+  width: 117px;
+  left: 842px;
+  top: 337px;
+}
+
+.img-5 {
+  width: 184px;
+  left: 371px;
+  top: 225px;
+}
+
+.backpack {
+  width: 263px;
+  left: 360px;
+  top: 468px;
+}
+
+.cta {
+  width: 620px;
+  left: 216px;
+  top: 248px;
+}
+
+/* Add hover effects for desktop */
+@media (hover: hover) {
+  .img-1:hover,
+  .img-2:hover,
+  .img-3:hover,
+  .img-4:hover,
+  .img-5:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+}
+
+/* Dragging states */
+.dragging {
+  z-index: 1000;
+  transform: scale(1.05) !important;
+  filter: brightness(1.1);
+}

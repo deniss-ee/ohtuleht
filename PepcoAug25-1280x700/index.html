@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="style.css" rel="stylesheet" />
+    <script>
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+    </script>
+  </head>
+
+  <body>
+    <div class="banner-wrapper">
+      <div class="slide slide-1">
+        <img class="img text-1" src="img/text-1.png" />
+        <img class="img img-1" src="img/img-1.png" />
+        <img class="img img-2" src="img/img-2.png" />
+        <img class="img img-3" src="img/img-3.png" />
+        <img class="img img-4" src="img/img-4.png" />
+        <img class="img img-5" src="img/img-5.png" />
+        <img class="img backpack" src="img/backpack.png" />
+      </div>
+      <div onclick="window.open(olBanner.getClickTag(), '_blank')" class="slide slide-2" style="display: none">
+        <img class="img cta" src="img/cta.png" />
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
