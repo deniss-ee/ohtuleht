@@ -1,26 +1,27 @@
 html,
 body,
 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 .banner-wrapper {
-  width: 1280px;
-  height: 700px;
-  background: url("img/bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-  overflow: hidden;
-  /* Disable text selection */
-  -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
-  /* Disable touch callouts on iOS */
   -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  position: relative;
+  width: 1280px;
+  height: 700px;
+  /* Disable text selection */
+  overflow: hidden;
+  user-select: none;
+  background: url("img/bg.png");
+  background-repeat: no-repeat;
+  /* Disable touch callouts on iOS */
+  background-size: cover;
 }
 
 .slide {
@@ -34,64 +35,116 @@ body,
 }
 
 .img {
-  position: absolute;
-  height: auto;
-  /* Add touch-friendly properties */
-  touch-action: none;
-  -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
+  /* Add touch-friendly properties */
+  -ms-touch-action: none;
+  -ms-transform-origin: center center;
   -o-user-drag: none;
+  -webkit-transform-origin: center center;
+  -webkit-user-drag: none;
+  touch-action: none;
   /* Set transform origin to center for scaling */
+  position: absolute;
+  height: auto;
   transform-origin: center center;
 }
 
 .text-1 {
-  width: 454px;
-  left: 443px;
   top: 70px;
+  left: 443px;
+  width: 454px;
 }
 
 .img-1 {
-  width: 148px;
-  left: 169px;
   top: 346px;
+  left: 169px;
+  width: 148px;
 }
 
 .img-2 {
-  width: 208px;
-  left: 609px;
   top: 245px;
+  left: 609px;
+  width: 208px;
 }
 
 .img-3 {
-  width: 75px;
-  left: 83px;
   top: 231px;
+  left: 83px;
+  width: 75px;
 }
 
 .img-4 {
-  width: 117px;
-  left: 842px;
   top: 337px;
+  left: 842px;
+  width: 117px;
 }
 
 .img-5 {
-  width: 184px;
-  left: 371px;
   top: 225px;
+  left: 371px;
+  width: 184px;
 }
 
 .backpack {
-  width: 263px;
-  left: 360px;
   top: 468px;
+  left: 360px;
+  width: 263px;
 }
 
 .cta {
-  width: 620px;
-  left: 216px;
   top: 248px;
+  left: 216px;
+  width: 620px;
+}
+
+.touch {
+  -o-transition: opacity 0.3s;
+  -webkit-animation: pulse 1s infinite;
+  -webkit-transition: opacity 0.3s;
+  z-index: 100;
+  top: 400px;
+  left: 600px;
+  transition: opacity 0.3s;
+  animation: pulse 1s infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.15);
+    transform: scale(1.15);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.img.touch.vanish {
+  -o-transition: opacity 0.25s;
+  -webkit-transition: opacity 0.25s;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
 }
 
 /* Add hover effects for desktop */
@@ -101,14 +154,20 @@ body,
   .img-3:hover,
   .img-4:hover,
   .img-5:hover {
-    transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -webkit-filter: brightness(1.1);
+    -webkit-transform: scale(1.05);
     filter: brightness(1.1);
+    transform: scale(1.05);
   }
 }
 
 /* Dragging states */
 .dragging {
+  -ms-transform: scale(1.05) !important;
+  -webkit-filter: brightness(1.1);
+  -webkit-transform: scale(1.05) !important;
   z-index: 1000;
-  transform: scale(1.05) !important;
   filter: brightness(1.1);
+  transform: scale(1.05) !important;
 }

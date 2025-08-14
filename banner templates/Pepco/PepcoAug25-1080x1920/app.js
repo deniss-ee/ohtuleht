@@ -7,6 +7,9 @@ class DragDropGame {
     this.collectedItems = new Set();
     this.totalItems = 5;
 
+    this.touchEl = document.querySelector('.img.touch');
+    this.touchVanished = false;
+
     this.isDragging = false;
     this.currentDragElement = null;
     this.offset = { x: 0, y: 0 };
@@ -30,6 +33,31 @@ class DragDropGame {
     element.style.transition = "transform 0.2s ease";
   }
 
+    vanishTouch() {
+      if (!this.touchVanished && this.touchEl) {
+        // Force reflow to ensure transition
+        void this.touchEl.offsetWidth;
+        this.touchEl.classList.add('vanish');
+        this.touchVanished = true;
+        const el = this.touchEl;
+        let displayNoneSet = false;
+        function handler(e) {
+          if (e.propertyName === 'opacity') {
+            el.style.display = 'none';
+            displayNoneSet = true;
+            el.removeEventListener('transitionend', handler);
+          }
+        }
+        el.addEventListener('transitionend', handler);
+        // Fallback: set display none after transition duration
+        setTimeout(function() {
+          if (!displayNoneSet) {
+            el.style.display = 'none';
+          }
+        }, 600); // slightly longer than CSS transition
+      }
+    }
+
   setupDropZone() {
     this.dropZone.style.transition = "filter 0.2s ease";
   }
@@ -43,6 +71,8 @@ class DragDropGame {
 
   startDrag(e, element) {
     e.preventDefault();
+
+    this.vanishTouch();
 
     if (this.collectedItems.has(element)) return;
 

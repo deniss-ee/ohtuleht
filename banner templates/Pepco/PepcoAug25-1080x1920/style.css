@@ -30,48 +30,102 @@ body,
 }
 
 .text-1 {
-  width: 100vw;
   top: 25vh;
+  width: 100vw;
 }
 
 .img-1 {
-  width: 18.24vw;
-  left: 30.93vw;
   top: 47.5vh;
+  left: 30.93vw;
+  width: 18.24vw;
 }
 
 .img-2 {
-  width: 25.65vw;
-  left: 9.91vw;
   top: 36.25vh;
+  left: 9.91vw;
+  width: 25.65vw;
 }
 
 .img-3 {
-  width: 9.26vw;
-  left: 12.04vw;
   top: 49.48vh;
+  left: 12.04vw;
+  width: 9.26vw;
 }
 
 .img-4 {
-  width: 14.35vw;
-  left: 77.04vw;
   top: 39.84vh;
+  left: 77.04vw;
+  width: 14.35vw;
 }
 
 .img-5 {
-  width: 22.69vw;
-  left: 50.74vw;
   top: 35.57vh;
+  left: 50.74vw;
+  width: 22.69vw;
 }
 
 .backpack {
-  width: 32.41vw;
-  left: 33.8vw;
   top: 58.54vh;
+  left: 33.8vw;
+  width: 32.41vw;
 }
 
 .cta {
-  width: 76.57vw;
-  left: 11.76vw;
   top: 41.56vh;
+  left: 11.76vw;
+  width: 76.57vw;
+}
+
+.touch {
+  -o-transition: opacity 0.3s;
+  -webkit-animation: pulse 1s infinite;
+  -webkit-transition: opacity 0.3s;
+  z-index: 100;
+  top: 60vh;
+  left: 65vw;
+  width: 30vw;
+  transition: opacity 0.3s;
+          animation: pulse 1s infinite;
+}
+
+.img.touch.vanish {
+  -o-transition: opacity 0.25s;
+  -webkit-transition: opacity 0.25s;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.15);
+            transform: scale(1.15);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
