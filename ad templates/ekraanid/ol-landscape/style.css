@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@500&display=swap");
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: #000;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  z-index: 0;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+#slide1,
+#slide7 {
+  background: #e3000f;
+}
+
+.article-wrap,
+.img-wrap {
+  width: 100%;
+  height: 50%;
+  color: #000;
+  position: relative;
+}
+
+.article-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 5.21vw 3.13vw 5.21vw 4.17vw; /* 100px 60px 100px 80px */
+}
+
+.article-text {
+  line-height: 135%;
+  color: #000;
+  font-family: "Fira Sans Condensed";
+  font-size: 7.5vw; /* 88px */
+  font-weight: 500;
+  font-style: normal;
+}
+
+.article-img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.article-img-overlay {
+  position: absolute;
+  height: auto;
+  width: 100vw; /* Keep this in vh to match screen height */
+}
+
+.logo-ol_intro {
+  height: 10.42vw; /* 200px */
+}
+
+.logo-ol_sm {
+  height: 6.17vw; /* 80px */
+}
+
+.last-slide-svg {
+  width: 70vw; /* 640px */
+}
