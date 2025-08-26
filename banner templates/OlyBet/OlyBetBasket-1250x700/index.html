@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Basketball Lite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-outer" id="gameOuter">
+      <div id="wrap" data-config='{"throwForce":34,"restitution":0.7,"gravity":3.5,"hoopMoves":false,"hoopSpeed":0.6,"rimY":195}'>
+        <div id="score">Skoor: 0</div>
+        <div id="timerDisplay">10.0</div>
+        <!-- Decorative hoop image (under physics objects) -->
+        <img id="hoopSprite" src="img/hoop.png" alt="" />
+        <canvas id="gameCanvas" width="720" height="560"></canvas>
+        <!-- Top overlay portion of hoop (net/front) above ball -->
+        <img id="hoopOverlaySprite" src="img/hoop-overlay.png" alt="" />
+        <div id="ballHit"></div>
+      </div>
+    </div>
+
+    <!-- Intro Screen (entire area acts as start button) -->
+    <div id="introScreen" class="screen-overlay"></div>
+    <!-- Outro Screen -->
+    <div id="outroScreen" class="screen-overlay hidden">
+      <h2 style="margin: 64px 0 16px 0; font-size: 42px">Aeg läbi!</h2>
+      <div id="finalScore" style="font-size: 22px; margin-bottom: 18px">Skoor: 0</div>
+      <p class="participationNote" style="font-size: 24px; max-width: 720px; line-height: 1.35; margin: 0 0 18px">Jäta siia enda nimi ja emaili aadress ning osaled loosis.</p>
+      <div class="entry-fields" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 720px">
+        <input id="playerName" type="text" placeholder="Name" autocomplete="name" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px" />
+        <input id="playerEmail" type="email" placeholder="Email" autocomplete="email" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px" />
+        <button id="submitEntry" type="button" style="padding: 16px 16px; border-radius: 10px; border: 0; background: #fff; color: #f73535; font-weight: 600; font-size: 15px; cursor: pointer">OSALEN LOOSIS</button>
+        <p class="participationNote" style="font-size: 16px; max-width: 720px; line-height: 1.35; margin: 0 0 18px">
+          Loosis osaledes nõustud <a href="kampaania-tingimused.html" target="_blank" rel="noopener noreferrer">kampaania tingimustega</a> ja meie <a href="https://www.ohtulehtkirjastus.ee/uldtingimused/" target="_blank" rel="noopener noreferrer">üldtingimustega</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Loading / Success / Error overlay (data submission feedback) -->
+    <div class="loading hidden" id="submissionOverlay">
+      <div class="popup_loading" id="loadingSpinner">
+        <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke-width="4" stroke-miterlimit="10" /></svg>
+      </div>
+      <div class="popup_data-sent hidden" id="successMessage"><p>Aitäh osalemise eest!</p></div>
+      <div class="popup_data-notsent hidden" id="errorMessage"><p>Tekkis viga, proovi uuesti.</p></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+    <script src="game-lite.js"></script>
+  </body>
+</html>
