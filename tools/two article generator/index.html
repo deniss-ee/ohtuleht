@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Story Split Canvas Tool (1080x1920)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Story Split Builder</h1>
+    <button id="downloadBtn" class="btn btn-primary" disabled>Download PNG</button>
+  </header>
+
+  <main class="app-shell">
+    <section class="workspace">
+      <div id="canvasWrapper" class="canvas-wrapper" aria-label="1080 by 1920 composition area">
+        <canvas id="storyCanvas" width="1080" height="1920"></canvas>
+
+        <!-- Drop overlays -->
+        <div id="dropTop" class="drop-zone drop-top" data-region="top">
+          <div class="dz-inner">
+            <p class="dz-label"><strong>Top Image</strong><br><span class="dz-hint">Click or Drop</span></p>
+            <input type="file" accept="image/*" class="dz-input" data-input-region="top" />
+          </div>
+        </div>
+        <div id="dropBottom" class="drop-zone drop-bottom" data-region="bottom">
+          <div class="dz-inner">
+            <p class="dz-label"><strong>Bottom Image</strong><br><span class="dz-hint">Click or Drop</span></p>
+            <input type="file" accept="image/*" class="dz-input" data-input-region="bottom" />
+          </div>
+        </div>
+
+        <div class="seam-line"></div>
+      </div>
+      <p class="hint-text">Drag inside each half (after image loads) to reposition.</p>
+    </section>
+
+    <aside class="control-panel" aria-label="Editing controls">
+      <div class="panel-block">
+        <h2>Text Block</h2>
+        <label class="form-label" for="storyText">Headline / Message</label>
+        <textarea id="storyText" rows="5" placeholder="Enter your text here..."></textarea>
+
+        <div class="two-col">
+          <label>
+            <span class="form-label">Font Size</span>
+            <input id="fontSize" type="number" min="16" max="120" value="48" />
+          </label>
+          <label>
+            <span class="form-label">Line Height (%)</span>
+            <input id="lineHeight" type="number" min="90" max="180" value="120" />
+          </label>
+        </div>
+
+        <div class="two-col" style="margin-top:.7rem">
+          <label>
+            <span class="form-label">Weight</span>
+            <select id="fontWeight">
+              <option value="400">Regular</option>
+              <option value="600">SemiBold</option>
+              <option value="700" selected>Bold</option>
+            </select>
+          </label>
+          <label>
+            <span class="form-label">Vert Offset (px)</span>
+            <input id="textOffsetY" type="number" value="0" />
+          </label>
+        </div>
+
+        <p style="margin-top:.75rem;font-size:.7rem;letter-spacing:.5px;opacity:.7">
+          Text area width is fixed at 824px (centered).
+        </p>
+
+        <details class="adv">
+          <summary>Highlight & Color</summary>
+            <div class="adv-grid">
+              <label>
+                <span class="form-label">Text Color</span>
+                <input id="textColor" type="color" value="#000000" />
+              </label>
+              <label>
+                <span class="form-label">Highlight Color</span>
+                <input id="highlightColor" type="color" value="#FFFFFF" />
+              </label>
+              <label>
+                <span class="form-label">Highlight Opacity</span>
+                <input id="highlightOpacity" type="number" min="0" max="100" value="50" />
+              </label>
+              <label>
+                <span class="form-label">Padding (px)</span>
+                <input id="highlightPadding" type="number" min="0" max="200" value="48" />
+              </label>
+            </div>
+        </details>
+      </div>
+
+      <div class="panel-block">
+        <h2>Images</h2>
+        <div class="img-tools">
+          <button id="resetTop" class="btn btn-sm" disabled>Reset Top Pos</button>
+          <button id="resetBottom" class="btn btn-sm" disabled>Reset Bottom Pos</button>
+        </div>
+        <p class="small-note">Click or drop to replace. Drag to reposition after loading.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="app-footer">
+    <p>Prototype build. Width fixed to 824px for centered text.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
