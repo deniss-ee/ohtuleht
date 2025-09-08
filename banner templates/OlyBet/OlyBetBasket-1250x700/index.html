@@ -5,8 +5,18 @@
     <title>Basketball Lite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TWLBVEFSRT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TWLBVEFSRT");
+    </script>
   </head>
   <body>
+    <img src="https://track.adform.net/adfserve/?bn=82813081;1x1inv=1;srctype=3;gdpr=${gdpr};gdpr_consent=${gdpr_consent_50};ord=[timestamp]" border="0" width="1" height="1" />
     <div class="game-outer" id="gameOuter">
       <div id="wrap" data-config='{"throwForce":34,"restitution":0.7,"gravity":3.5,"hoopMoves":false,"hoopSpeed":0.6,"rimY":195}'>
         <div id="score">Skoor: 0</div>
@@ -48,5 +58,17 @@
 
     <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
     <script src="game-lite.js"></script>
+    <script>
+      const links = document.querySelectorAll("#introScreen");
+      for (const link of links) {
+        link.addEventListener(
+          "click",
+          (event) => {
+            gtag("event", "Banner_click", { comp_name: "Olybet-1250-700" });
+          },
+          false
+        );
+      }
+    </script>
   </body>
 </html>

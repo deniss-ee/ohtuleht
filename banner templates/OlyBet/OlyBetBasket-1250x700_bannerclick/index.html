@@ -16,14 +16,14 @@
     </script>
   </head>
   <body>
-    <img src="https://track.adform.net/adfserve/?bn=82813080;1x1inv=1;srctype=3;gdpr=${gdpr};gdpr_consent=${gdpr_consent_50};ord=[timestamp]" border="0" width="1" height="1" />
+    <img src="https://track.adform.net/adfserve/?bn=82813081;1x1inv=1;srctype=3;gdpr=${gdpr};gdpr_consent=${gdpr_consent_50};ord=[timestamp]" border="0" width="1" height="1" />
     <div class="game-outer" id="gameOuter">
-      <div id="wrap" data-config='{"throwForce":36,"restitution":0.7,"gravity":3.5,"hoopMoves":false,"hoopSpeed":0.6,"rimY":195}'>
+      <div id="wrap" data-config='{"throwForce":34,"restitution":0.7,"gravity":3.5,"hoopMoves":false,"hoopSpeed":0.6,"rimY":195}'>
         <div id="score">Skoor: 0</div>
         <div id="timerDisplay">10.0</div>
         <!-- Decorative hoop image (under physics objects) -->
         <img id="hoopSprite" src="img/hoop.png" alt="" />
-        <canvas id="gameCanvas" width="360" height="560"></canvas>
+        <canvas id="gameCanvas" width="720" height="560"></canvas>
         <!-- Top overlay portion of hoop (net/front) above ball -->
         <img id="hoopOverlaySprite" src="img/hoop-overlay.png" alt="" />
         <div id="ballHit"></div>
@@ -31,17 +31,24 @@
     </div>
 
     <!-- Intro Screen (entire area acts as start button) -->
-    <div id="introScreen" class="screen-overlay"></div>
+    <div id="introScreen" class="screen-overlay">
+      <img
+        src="img/cta.svg"
+        alt="CTA Button"
+        class="cta-btn"
+        style="position: absolute; left: 96px; top: 482px; width: 440px; height: 90px;"
+      />
+    </div>
     <!-- Outro Screen -->
     <div id="outroScreen" class="screen-overlay hidden">
-      <h2 style="margin: 64px 0 16px 0; font-size: 28px">Aeg läbi!</h2>
+      <h2 style="margin: 64px 0 16px 0; font-size: 42px">Aeg läbi!</h2>
       <div id="finalScore" style="font-size: 22px; margin-bottom: 18px">Skoor: 0</div>
-      <p class="participationNote" style="font-size: 16px; max-width: 340px; line-height: 1.35; margin: 0 0 18px">Jäta siia enda nimi ja emaili aadress ning osaled loosis.</p>
-      <div class="entry-fields" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 260px">
+      <p class="participationNote" style="font-size: 24px; max-width: 720px; line-height: 1.35; margin: 0 0 18px">Jäta siia enda nimi ja emaili aadress ning osaled loosis.</p>
+      <div class="entry-fields" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 720px">
         <input id="playerName" type="text" placeholder="Name" autocomplete="name" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px" />
         <input id="playerEmail" type="email" placeholder="Email" autocomplete="email" style="padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px" />
         <button id="submitEntry" type="button" style="padding: 16px 16px; border-radius: 10px; border: 0; background: #fff; color: #f73535; font-weight: 600; font-size: 15px; cursor: pointer">OSALEN LOOSIS</button>
-        <p class="participationNote" style="font-size: 16px; max-width: 340px; line-height: 1.35; margin: 0 0 18px">
+        <p class="participationNote" style="font-size: 16px; max-width: 720px; line-height: 1.35; margin: 0 0 18px">
           Loosis osaledes nõustud <a href="kampaania-tingimused.html" target="_blank" rel="noopener noreferrer">kampaania tingimustega</a> ja meie <a href="https://www.ohtulehtkirjastus.ee/uldtingimused/" target="_blank" rel="noopener noreferrer">üldtingimustega</a>
         </p>
       </div>
