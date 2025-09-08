@@ -257,9 +257,9 @@ th {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  width: 1250px;
+  width: 1280px;
   height: 400px;
-  border-radius: 24px;
+  border-radius: 0px;
   overflow: hidden;
   overflow: hidden;
   background: #ffebc4;
