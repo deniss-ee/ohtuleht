@@ -81,11 +81,11 @@ class Quiz {
 
 document.addEventListener("DOMContentLoaded", () => {
   const questionData = {
-    template: "Uus õppeaasta toob koolipinki ligikaudu ___________________ õpilast.",
+    template: "Jumestaja Kaia Triisa: kui oled _____, siis seda näonahk ei peida.",
     answers: [
-      { text: "161 000", correct: true },
-      { text: "45 000", correct: false },
-      { text: "27 000", correct: false },
+      { text: "saritipsutaja", correct: true },
+      { text: "nutisõltlane", correct: false },
+      { text: "kohvihoolik", correct: false },
     ],
   };
 
