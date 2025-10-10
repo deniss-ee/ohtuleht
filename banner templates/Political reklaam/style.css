@@ -1,0 +1,60 @@
+.banner {
+  position: relative;
+  width: 1250px;
+  height: 400px;
+  background: url("images.jpeg");
+  background-color: red; /* Placeholder background */
+  background-size: contain;
+}
+
+.politics-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  padding: 8px 8px;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.politics-btn:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.politics-btn .icon {
+  width: calc(1em - 2px);
+  height: calc(1em - 2px);
+  margin-top: -1px;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+.politics-container {
+  display: none;
+  position: absolute;
+  bottom: 42px; /* Above the button */
+  left: 8px;
+  width: 300px;
+  height: 200px;
+  padding: 4px;
+  overflow-y: scroll;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  background-color: white;
+}
+
+.politics-container ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.politics-container li {
+  margin-bottom: 5px;
+  font-size: 14px;
+  line-height: 1.2;
+}

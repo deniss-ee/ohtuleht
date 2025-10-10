@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="checkout-style.css">
+  </head>
+  <body>
+<!-- redemption-component -->
+<script type="text/ng-template" id="/widget/checkout/component/partials/redemption-component.html">
+    <div account-header-component></div>
+
+    <div class="redemption-header">
+        <h1>
+            <t>Redeem your voucher</t>
+        </h1>
+    </div>
+
+    <div redemption-code-and-info></div>
+</script>
+
+<script type="text/ng-template" id="/widget/checkout/component/partials/redemption-code.html">
+    <div class="redemption-form">
+        <form>
+            <div>
+                <p class="redeem-code-description">
+                    <t>Enter the code of your voucher</t>
+                </p>
+                <div redeem-code-input></div>
+            </div>
+        </form>
+    </div>
+    <div class="redemption-footer">
+        <div class="access-button">
+            <a class="button big fixed gray" ng-click="cancel()"><t>Cancel</t></a>
+            <a class="button big fixed" ng-click="applyCode()"><t>Next</t></a>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/widget/checkout/component/partials/redemption-info.html">
+    <div class="redemption-form">
+        <div>
+            <p>
+                <t>You are about to receive <b>{{voucherResource()}}</b> by code "{{redeemCode()}}"</t>
+            </p>
+            <div class="redemption-info">
+                                <table class="redemption-info-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"><t>Alates</t></th>
+                                                <th scope="col"><t>Kestus</t></th>
+                                                <th scope="col"><t>Aegub</t></th>
+                                                <th scope="col"><t>Arveldamine</t></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td data-label="Alates">
+                                                        {{voucherStarting()}}
+                                                </td>
+                                                <td data-label="Kestus">{{voucherDuration()}}</td>
+                                                <td data-label="Aegub">{{voucherExpires()}}</td>
+                                                <td data-label="Arveldamine"><b><t>Free</t></b></td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+            </div>
+            <p ng-if="voucherRedemptionStartDate() !== null && voucherRedemptionEndDate() === null">
+                <t arg0="{{voucherRedemptionStartDate()}}">Redemption is allowed after <b>{0}</b></t>
+            </p>
+            <p ng-if="voucherRedemptionStartDate() !== null && voucherRedemptionEndDate() !== null">
+                <t arg0="{{voucherRedemptionStartDate()}}" arg1="{{voucherRedemptionEndDate()}}">Redemption is allowed from <b>{0}</b> to <b>{1}</b></t>
+            </p>
+            <p ng-if="voucherRedemptionStartDate() === null && voucherRedemptionEndDate() !== null">
+                <t arg0="{{voucherRedemptionEndDate()}}">Redemption is allowed before <b>{0}</b></t>
+            </p>
+        </div>
+    </div>
+
+    <div ng-if="isSingleStepEnabled()" auth-component></div>
+
+    <div class="redemption-footer">
+        <div class="access-button">
+            <a class="button big fixed gray" ng-click="cancel()"><t>Cancel</t></a>
+            <a ng-if="voucherRedemptionAllowed() === true && addressCollectEnabled() === true"
+               class="button big fixed" ng-click="toCollectAddress()"><t>Next</t></a>
+            <a ng-if="voucherRedemptionAllowed() === true && addressCollectEnabled() !== true"
+               class="button big fixed" ng-click="redeem()"><t>Redeem</t></a>
+            <a ng-if="voucherRedemptionAllowed() !== true" class="button big fixed disabled"><t>Redeem</t></a>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/widget/checkout/component/partials/redeem-code-input.html">
+    <div class="redeem-code-input-wrapper">
+        <input type="text"
+               id="redeem-code-input"
+               ng-model="form.redeemCode"
+               on-enter="applyCode()"
+               placeholder="{{'Enter voucher code' | t}}"
+               ng-class="{'invalid': redeemCodeIsInvalid()}"
+        />
+    </div>
+</script>
+
+  </body>
+</html>

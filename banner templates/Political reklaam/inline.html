@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <button
+      id="politics-btn"
+      style="position: absolute; bottom: 8px; left: 8px; padding: 8px 8px; border: none; border-radius: 2px; color: white; font-weight: 600; font-size: 12px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; text-transform: uppercase; cursor: pointer; background-color: rgba(0, 0, 0, 0.35); line-height: 1"
+      onmouseover="this.style.backgroundColor='rgba(0, 0, 0, 0.5)'"
+      onmouseout="this.style.backgroundColor='rgba(0, 0, 0, 0.35)'">
+      poliitreklaam
+      <svg style="width: calc(1em - 2px); height: calc(1em - 2px); margin-top: -1px; margin-left: 2px; vertical-align: middle" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path
+          d="M3.16953 19.4805C2.4312 19.4805 1.80495 19.2234 1.29078 18.7093C0.776615 18.1951 0.519531 17.5689 0.519531 16.8305V3.16953C0.519531 2.4312 0.776615 1.80495 1.29078 1.29078C1.80495 0.776614 2.4312 0.519531 3.16953 0.519531H10V3.16953H3.16953V16.8305H16.8305V10H19.4805V16.8305C19.4805 17.5689 19.2234 18.1951 18.7093 18.7093C18.1951 19.2234 17.5689 19.4805 16.8305 19.4805H3.16953ZM8.13803 13.7L6.30003 11.862L14.9923 3.16953H12V0.519531H19.4805V8.00003H16.8305V5.00778L8.13803 13.7Z"
+          fill="#ffffff"></path>
+      </svg>
+    </button>
+    <div id="politics-container" style="display: none; position: absolute; bottom: 42px; left: 8px; width: 300px; height: 200px; padding: 4px; overflow-y: scroll; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; background-color: white; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1)">
+      <ul style="padding-left: 0; list-style-type: none">
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px">Political point 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px">Political point 2: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px">Political point 3: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</li>
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px">Political point 4: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</li>
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px">Political point 5: Eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</li>
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px">Political point 6: Sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px">Political point 7: Another point to make the list longer for scrolling demonstration.</li>
+        <li style="margin-bottom: 5px; line-height: 1.2; font-size: 14px"><a href="http://" target="_blank" rel="noopener noreferrer">And yet another point.</a></li>
+      </ul>
+    </div>
+
+    <script>
+      document.getElementById("politics-btn").addEventListener("click", function () {
+        const container = document.getElementById("politics-container");
+        container.style.display = container.style.display === "block" ? "none" : "block";
+      });
+    </script>
+  </body>
+</html>
