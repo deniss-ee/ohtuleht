@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kuubik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <!-- Link Swiper's CSS -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@700&family=Roboto:wght@700&display=swap" rel="stylesheet" />
+    <link href="css/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <script>
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+    </script>
+    <!-- Demo styles -->
+  </head>
+
+  <body>
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://www.ohtuleht.ee/1141473/'), '_blank')">
+          <div class="st-wrapper" style="background-image: url('https://p.ohtuleht.ee/webp/54/i/2025/10/7/qu2oesht.as0.jpg')">
+            <div class="st-text">
+              <p class="badge">Sisuturundus</p>
+              <p class="header">Meeletu Rock 2025: Häädemeeste legendaarne muusikapidu on tagasi!</p>
+            </div>
+            <div class="gradient"></div>
+          </div>
+        </div>
+        <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://www.ohtuleht.ee/1141536/'), '_blank')">
+          <div class="st-wrapper" style="background-image: url('https://p.ohtuleht.ee/webp/54/i/2025/10/8/bymyhdtl.x1w.jpg')">
+            <div class="st-text">
+              <p class="badge">Sisuturundus</p>
+              <p class="header">Skratteni ja Metsatöllu võimas folk-metali pidu juba 1. novembril Helitehases!</p>
+            </div>
+            <div class="gradient"></div>
+          </div>
+        </div>
+        <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://www.ohtuleht.ee/1116086/'), '_blank')">
+          <div class="st-wrapper" style="background-image: url('https://p.ohtuleht.ee/webp/54/i/2024/10/8/rj5u1bqm.wgr.jpg')">
+            <div class="st-text">
+              <p class="badge">Sisuturundus</p>
+              <p class="header">„Lumevangis“ ja „Mulle huumor meeldib“: hirmnaljakad komöödiaetendused täis tõsielulisi situatsioone</p>
+            </div>
+            <div class="gradient"></div>
+          </div>
+        </div>
+        <!---->
+      </div>
+      <!-- If we need navigation buttons -->
+      <div class="swiper--prev"><img src="arrow-left.svg" alt /></div>
+      <div class="swiper--next"><img src="arrow-right.svg" alt /></div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script id="google-pcd-tag" data-audience-pixel="dc_iu=/22162534/DFPAudiencePixel;dc_seg=8835498351" src="https://pagead2.googlesyndication.com/pagead/js/pcd.js" async></script>
+    <script src="js/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        direction: "horizontal",
+        speed: 500,
+        autoplay: {
+          delay: 2500,
+        },
+        loop: true,
+        navigation: {
+          nextEl: ".swiper--next",
+          prevEl: ".swiper--prev",
+        },
+      });
+    </script>
+  </body>
+</html>

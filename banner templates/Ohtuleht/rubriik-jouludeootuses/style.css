@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;700&display=swap");
+
+:root {
+  --banner-background: #c8102e;
+  --banner-font-family: "Fira Sans Condensed", Arial, sans-serif;
+  --banner-font-size: 16px;
+  --banner-height: 46px;
+  --banner-padding-inline: 16px;
+  --banner-text-color: #ffffff;
+  --banner-background-image: url("header.png");
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--banner-font-family);
+  background-color: #f4f4f4;
+}
+
+.banner {
+  padding-inline: var(--banner-padding-inline);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  height: var(--banner-height);
+  overflow: hidden;
+  color: var(--banner-text-color);
+  text-decoration: none;
+  background-color: var(--banner-background);
+  background-image: var(--banner-background-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.banner__label {
+  font: 700 var(--banner-font-size) / 1 var(--banner-font-family);
+  text-transform: uppercase;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(var(--Color-Ohtuleht-Yellow-200, #ffff86)));
+  background: -o-linear-gradient(top, #fff 0%, var(--Color-Ohtuleht-Yellow-200, #ffff86) 100%);
+  background: linear-gradient(180deg, #fff 0%, var(--Color-Ohtuleht-Yellow-200, #ffff86) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (min-width: 428px) {
+  .banner {
+    letter-spacing: 0.01em;
+  }
+}
+
+@media (min-width: 1023px) {
+  .banner {
+    border-radius: 6px;
+  }
+}
