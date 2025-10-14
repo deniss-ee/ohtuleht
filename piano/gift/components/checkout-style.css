@@ -88,6 +88,59 @@ body {
   background-color: rgba(255, 255, 255, 0);
 }
 /* =============================
+   Checkout Components Overrides
+   (align with Redemption styling)
+   ============================= */
+/* Header (state1 & state2) should visually match .redemption-header h1 rules */
+/* Targeting both h1 and h2 inside .account-head-content for consistency */
+div[view="state1"] .account-head-content h2,
+div[view="state2"] .account-head-content h1 {
+  margin: 40px 0 0.5rem 0 !important; /* add top spacing to separate from close button; gift uses large top margin */
+  text-align: center !important;
+  color: var(--red-700) !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important; /* micro header scale */
+  line-height: 135% !important;
+  font-family: "Roboto", sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.25px !important;
+}
+/* Reduce spacing between header block and term selector (state1) */
+div[view="state1"] .row.account-head { margin-bottom: 0.25rem !important; /* tighter bottom margin */ }
+div[view="state1"] .account-head-content > p { margin-bottom: 0.5rem !important; }
+div[view="state1"] div[term-selector-component] { margin-top: -0.5rem !important; /* pull term selector closer */ }
+/* Override table top margin specifically in state1 to halve original (1.25rem -> 0.625rem) */
+div[view="state1"] table.account-terms { margin-top: 0.625rem !important; }
+/* Remove unintended padding if any wrapper applies it */
+div[view="state1"] .account-head-content,
+div[view="state2"] .account-head-content {
+  padding-top: 0 !important;
+  text-align: center !important; /* ensure inner text centering */
+}
+/* Paragraph immediately following header styled like .redeem-code-description */
+/* In state1: first <p> inside .account-head-content; In state2: .descrpt paragraph */
+div[view="state1"] .account-head-content > p,
+div[view="state2"] .account-head-content p.descrpt {
+  margin: 0 0 1rem 0 !important;
+  color: var(--gray-900) !important; /* near-black */
+  font-weight: 700 !important;
+  font-size: 1.5rem !important; /* large emphasis */
+  line-height: 135% !important;
+  font-family: "Fira Sans Condensed", "Fira Sans", sans-serif !important;
+  text-align: center !important;
+}
+/* Ensure any descriptive block (selectedTerm.description etc.) centers text to match redemption layout */
+div[view="state2"] .account-head-content div[ng-bind-html] {
+  text-align: center !important;
+  margin: 0 auto !important;
+}
+/* Normalize miscellaneous charge/details lines alignment */
+div[view="state2"] .account-head-content .charge-details,
+div[view="state2"] .account-head-content .subscription-has-free-trial,
+div[view="state2"] .account-head-content .term-details {
+  text-align: center !important;
+}
+/* =============================
    Redemption Components
    ============================= */
 .redemption-header,
@@ -462,6 +515,154 @@ p {
 }
 
 /* =============================
+   Term Components (Plans Listing)
+   ============================= */
+/* Table base */
+/* Attribute directive host padding to prevent full-bleed appearance */
+div[term-selector-component],
+[term-selector-component] {
+  padding: 0 2rem !important;
+  box-sizing: border-box;
+}
+table.account-terms {
+  width: 860px !important; /* fixed desktop width */
+  border-collapse: collapse;
+  margin: 1.25rem auto;
+  font-family: "Roboto", sans-serif;
+  max-width: 860px !important; /* explicit constraint */
+}
+/* Optional explicit wrapper if Piano injects wider container */
+.account-terms + tbody,
+.account-terms-wrapper,
+div[desktop] table.account-terms,
+div[mobile] table.account-terms {
+  max-width: 860px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* Ensure parent containers don't force full width */
+div[desktop],
+div[mobile] {
+  width: 100%;
+  display: block;
+}
+div[desktop] > table.account-terms,
+div[mobile] > table.account-terms {
+  width: 860px !important;
+}
+/* Responsive: below 900px allow fluid width but centered */
+@media (max-width: 900px) {
+  table.account-terms,
+  div[desktop] > table.account-terms,
+  div[mobile] > table.account-terms {
+    width: 100% !important;
+    max-width: 640px !important; /* narrower cap on small screens */
+    padding: 0 1rem; /* side breathing room */
+  }
+}
+table.account-terms tbody tr {
+  position: relative;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease;
+}
+/* Card-like row appearance */
+table.account-terms tbody tr td {
+  padding: 0.65rem 0.75rem; /* reduced padding for more compact height */
+  vertical-align: middle;
+  border: none;
+}
+/* Subtle background & border radius applied per row using :hover and focus within */
+table.account-terms tbody tr:hover,
+table.account-terms tbody tr:focus-within {
+  background: var(--red-50);
+  box-shadow: 0 0 0 1px var(--red-100) inset;
+  border-radius: 8px; /* hover shape rounding */
+}
+/* First column (title & description) */
+table.account-terms td.title h2 {
+  margin: 0 0 0.35rem 0;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  line-height: 135% !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.25px;
+  font-family: "Roboto", sans-serif !important;
+  color: var(--red-700) !important;
+}
+table.account-terms td.title {
+  font-size: 0.9375rem; /* 15px for description */
+  line-height: 1.4;
+  color: var(--gray-800); /* unify neutral color */
+  font-weight: 500;
+}
+/* Detail pricing area */
+table.account-terms td.detail,
+table.account-terms span.detail {
+  text-align: left;
+  font-size: 0.9375rem; /* same as description */
+  line-height: 1.4;
+  color: var(--gray-800); /* same neutral */
+  font-weight: 500;
+}
+table.account-terms .price {
+  font-weight: 700;
+  font-size: 1.125rem !important; /* unified price typography */
+  color: var(--red-700); /* primary accent */
+  font-family: "Fira Sans Condensed", "Fira Sans", sans-serif;
+}
+table.account-terms .period {
+  font-weight: 600;
+  font-size: 1.125rem !important; /* unify with price */
+  color: var(--red-700);
+  font-family: "Roboto", sans-serif;
+}
+table.account-terms td.choose {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
+}
+/* Choose button refinement when inside term table */
+table.account-terms td.choose a.button.plan {
+  min-width: 92px;
+  height: 40px !important; /* fixed height */
+  padding: 0 1.25rem !important; /* horizontal only */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1 !important;
+  border-radius: 0.5rem !important;
+  background: var(--red-700) !important;
+  margin-right: 1rem; /* slight separation from table edge */
+}
+table.account-terms td.choose a.button.plan:hover {
+  background: var(--red-800) !important;
+}
+/* Mobile: transform rows into stacked cards */
+@media (max-width: 640px) {
+  table.account-terms tbody tr {
+    display: block;
+    margin: 0 0 0.75rem 0;
+    padding: 0.5rem 0.75rem; /* reduced to align with compact desktop */
+    background: var(--red-50);
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px var(--red-100) inset;
+  }
+  table.account-terms tbody tr td {
+    display: block;
+    padding: 0.4rem 0 !important;
+  }
+  table.account-terms tbody tr td.choose {
+    text-align: center;
+    margin-top: 0.35rem;
+  }
+  table.account-terms td.title h2 {
+    margin-top: 0.25rem;
+  }
+  table.account-terms .price {
+    font-size: 1.125rem !important; /* keep consistent emphasis scale */
+  }
+}
+
+/* =============================
    Redemption Info Table Responsive
    ============================= */
 .redemption-info-table {
@@ -470,7 +671,7 @@ p {
   border-spacing: 0;
   margin: 1rem 0;
   font-family: "Roboto", sans-serif;
-  background: var(--red-50); /* subtle light red base */
+  background: var(--gray-50); /* switched to subtle gray */
   border: none; /* remove outer border */
   border-radius: 8px;
   overflow: hidden; /* clip inner corners */
@@ -484,14 +685,14 @@ p {
 }
 .redemption-info-table th {
   font-weight: 600;
-  color: var(--red-600); /* match data-label tone */
-  background: var(--red-50);
+  color: var(--gray-700); /* subtle dark gray for headers */
+  background: var(--gray-50);
   border: none;
   padding-top: 0.75rem;
 }
 .redemption-info-table td {
-  color: var(--red-800);
-  background: var(--red-50);
+  color: var(--gray-800); /* data cell text */
+  background: var(--gray-50);
   border: none;
 }
 @media (max-width: 620px) {
@@ -504,7 +705,7 @@ p {
     border: none;
     border-radius: 6px;
     padding: 0.5rem 0.75rem;
-    background: var(--red-50);
+    background: var(--gray-50); /* mobile card bg */
   }
   .redemption-info-table td {
     display: flex;
@@ -517,7 +718,7 @@ p {
     content: attr(data-label);
     flex: 0 0 110px;
     font-weight: 600;
-    color: var(--red-600);
+    color: var(--gray-600); /* label tone */
     padding-right: 0.75rem;
   }
   .redemption-info-table td:last-child {

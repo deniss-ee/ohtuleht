@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Sisuturundus 1250x400</title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="swiper-bundle.min.js"></script>
+    <link href="swiper-bundle.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="banner-wrap">
+<!-- <div class="button-prev"></div>
+<div class="button-next"></div> -->
+      <!-- Header -->
+      <a class="header" href="https://www.ohtuleht.ee/teemalehed/kultuurisundmused-st" target="_blank" rel="noopener noreferrer"> </a>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+<div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://www.ohtuleht.ee/1141840/'), '_blank')">
+  <div class="article">
+    <div class="img" style="background-image: url('https://p.ohtuleht.ee/webp/54/i/2025/10/12/uebxtzlp.mep.jpg')">
+      <p class="badge">Üritused</p>
+    </div>
+    <p class="title">GALERII | Mässumeelne Singer Vinger rokkis saali kuumaks. Leia end piltidelt!</p>
+  </div>
+</div>
+          <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://www.ohtuleht.ee/1141536/'), '_blank')">
+            <div class="article">
+              <div class="img" style="background-image: url('https://p.ohtuleht.ee/webp/54/i/2025/10/8/bymyhdtl.x1w.jpg')">
+                <p class="badge">Sisuturundus</p>
+              </div>
+              <p class="title">Skratteni ja Metsatöllu võimas folk-metali pidu juba 1. novembril Helitehases!</p>
+            </div>
+          </div>
+          <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://www.ohtuleht.ee/1116086/'), '_blank')">
+            <div class="article">
+              <div class="img" style="background-image: url('https://p.ohtuleht.ee/webp/54/i/2024/10/8/rj5u1bqm.wgr.jpg')">
+                <p class="badge">Sisuturundus</p>
+              </div>
+              <p class="title">„Lumevangis“ ja „Mulle huumor meeldib“: hirmnaljakad komöödiaetendused täis tõsielulisi situatsioone</p>
+            </div>
+          </div>
+          <!---->
+        </div>
+      </div>
+    </div>
+    <script>
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+    </script>
+    <script>
+      const swiper = new Swiper(".swiper", {
+        loop: true,
+        slidesPerGroup: 1,
+        speed: 250,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+        slidesPerView: 3,
+        centeredSlides: false,
+        noSwiping: true,
+        noSwipingClass: "swiper-slide",
+        spaceBetween: 16,
+        navigation: {
+          nextEl: ".button-next",
+          prevEl: ".button-prev",
+        },
+      });
+    </script>
+  </body>
+</html>
