@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;700&display=swap");
+
+:root {
+  --banner-background: #EDE9D9;
+  --banner-font-family: "Fira Sans Condensed", Arial, sans-serif;
+  --banner-font-size: 16px;
+  --banner-height: 46px;
+  --banner-padding-inline: 16px;
+  --banner-text-color: #000000;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--banner-font-family);
+  background-color: #f4f4f4;
+}
+
+.banner {
+  padding-inline: var(--banner-padding-inline);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  height: var(--banner-height);
+  overflow: hidden;
+  color: var(--banner-text-color);
+  text-decoration: none;
+  background-color: var(--banner-background);
+}
+
+.banner__label {
+  font: 700 var(--banner-font-size) / 1 var(--banner-font-family);
+  text-transform: none;
+  color: var(--banner-text-color);
+}
+
+@media (min-width: 1023px) {
+  .banner {
+    border-radius: 6px;
+  }
+}

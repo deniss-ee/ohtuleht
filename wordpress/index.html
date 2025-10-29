@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Two-column layout using Flex -->
+    <div class="answers-layout">
+      <!-- Left column: informational content -->
+      <div class="answers-col answers-side">
+        <section>
+          <h2>KUIDAS SAADA LOOSIS OSALEJAKS?</h2>
+          <p>Vali sobiv ajakiri, täida vastusevorm ja saada ära vähemalt üks õige vastus — see on kõik, mida vajad, et auhindade loosimises kaasa lüüa! Vastused saada hiljemalt vastava kuu ajakirjas välja toodud tähtajaks.</p>
+        </section>
+
+        <section>
+          <h2>KUIDAS VÕITJAD OMA AUHINNAD KÄTTE SAAVAD?</h2>
+          <p>Rahaauhind kantakse otse võitja pangakontole hiljemalt järgmise kuu seitsmendaks kuupäevaks, muud auhinnad saadetakse postiga ja tellimused vormistatakse automaatselt. Kõik maksud auhindade pealt tasub AS Õhtuleht Kirjastus.</p>
+        </section>
+
+        <section id="tingimused">
+          <h2>AASTALOOS 2025: VÕIDA KUNI 5000 EUROT!</h2>
+          <p>Kõigi AS Õhtuleht Kirjastuse ristsõnaajakirjade (v.a Ripsik) aastatellijad või kehtiva e-arve püsimakselepinguga kliendid osalevad automaatselt 2025. aasta suures loosimises, mille auhinnafond on kokku 5800 eurot!</p>
+          <br />
+          <p>Peaauhind: <span class="answers-prize">5000 €</span></p>
+          <p>Lohutusauhinnad: <span class="answers-prize">kokku 800 €</span></p>
+          <br />
+          <p>Lisaks toimub eraldi loos ka Ripsiku tellijatele, kus aastaloosi auhind on 550 €.</p>
+          <p>Aastaloosis osalemiseks pole vaja teha midagi lisaks – kehtiv aastatellimus või e-arve püsimakseleping tagab juba osalemise.</p>
+          <p>Juhul kui Teil aastatellimust või e-arve püsimakselepingut ei ole, koguge kokku kõik 12 ristsõna esikaane all nurgas ilmuvat vinjetti. Kleepige need jaanuari aastaauhinnakupongile või eraldi postkaardile ning saatke hiljemalt 31. detsembriks 2025 aadressile Ristik, AS Õhtuleht Kirjastus, Narva mnt 13, 10151 Tallinn. Ümbrikule kirjutage vastava ristsõna AASTAAUHIND. Kindlasti pange kirja oma kontaktandmed. Võitja saab kätte täpselt selle summa, maksud tasub AS Õhtuleht Kirjastus. Võitjatega võtame hiljemalt ühendust 31.01.2026.</p>
+        </section>
+        <!-- CTA button removed as requested -->
+      </div>
+      <!-- Right column: form -->
+      <div class="answers-col answers-form">[wpforms id="6271" title="false" description="false"]</div>
+    </div>
+
+    <style>
+      /* Layout */
+      .answers-layout {
+        display: flex;
+        flex-wrap: wrap; /* allow wrapping on small screens */
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        box-sizing: border-box;
+        align-items: flex-start;
+        gap: 16px; /* added horizontal gap between columns */
+      }
+      .answers-col {
+        flex: 1 1 0; /* allow equal distribution; gap handles spacing */
+        box-sizing: border-box;
+        min-width: 300px; /* prevent columns becoming too narrow and forcing awkward wraps */
+        padding: 0; /* no internal padding; side box already has padding */
+      }
+      .answers-form {
+        margin-top: -32px;
+      }
+      /* Typography & content styling */
+      .answers-side section {
+        margin: 0 0 1.75rem;
+      }
+      .answers-side h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.15rem;
+        line-height: 1.3;
+        color: #e3000f;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .answers-side p {
+        margin: 0;
+        line-height: 1.6;
+      }
+      .answers-side a {
+        color: #e3000f;
+        text-decoration: underline;
+      }
+      .answers-side a:hover {
+        text-decoration: none;
+      }
+      .answers-form form.wpforms-form {
+        width: 100%;
+        max-width: 100%;
+      }
+      .answers-side {
+        /* background & border removed per request */
+        padding: 1rem 1.25rem 0 0; /* keep some right spacing; adjust if needed */
+        font-size: 0.95rem;
+        box-sizing: border-box;
+      }
+      .answers-prize { color:#e3000f; font-weight:700; }
+      /* CTA Button */
+      .answers-cta {
+        display: inline-block;
+        background: #e3000f;
+        color: #fff;
+        text-decoration: none;
+        padding: 0.85rem 1.2rem;
+        border-radius: 8px; /* rounded corners */
+        font-size: 0.85rem;
+        line-height: 1;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+      }
+      /* Enforce white text & no underline in all states */
+      .answers-cta:link,
+      .answers-cta:visited,
+      .answers-cta:hover,
+      .answers-cta:active,
+      .answers-cta:focus {
+        color: #fff;
+        text-decoration: none;
+      }
+      .answers-cta:hover {
+        background: #c2000d;
+      }
+      .answers-cta:active {
+        transform: translateY(1px);
+      }
+      .answers-cta:focus {
+        outline: 2px solid #e3000f;
+        outline-offset: 2px;
+      }
+      @media (max-width: 900px) {
+        .answers-col {
+          flex: 1 1 100%;
+        }
+        .answers-side {
+          margin-top: 2rem;
+        }
+        .answers-form {
+          margin-top: 0;
+        } /* neutralize negative offset on small screens */
+      }
+    </style>
+  </body>
+</html>
