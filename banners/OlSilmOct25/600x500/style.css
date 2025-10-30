@@ -430,13 +430,14 @@ th {
   font-weight: bold;
   text-align: left;
 }
+
 .wrapper {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1250px;
-  height: 400px;
+  width: 100vw;
+  height: 83.33vw; /* 500px = 83.33vw (500/600*100) */
   background: #e3000f;
   overflow: hidden;
 }
@@ -459,11 +460,11 @@ th {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100% + 5vh);
-  height: calc(100% + 5vh);
+  width: calc(100% + 8.33vw); /* 50px = 8.33vw (50/600*100) */
+  height: calc(100% + 8.33vw);
   background: rgba(227, 0, 15, .85);
   border-radius: 50%;
-  filter: blur(40px);
+  filter: blur(6.67vw); /* 40px = 6.67vw (40/600*100) */
   z-index: 2;
   opacity: 0;
   transition: opacity 800ms ease-in-out;
@@ -471,7 +472,7 @@ th {
 
 .content {
   position: relative;
-  gap: 32px;
+  gap: 3.33vw; /* 20px = 3.33vw (20/600*100) */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -485,7 +486,7 @@ p.header {
   color: #fff;
   font-style: normal;
   font-weight: 400;
-  font-size: 60px;
+  font-size: 7vw; /* 42px = 7vw (42/600*100) */
   line-height: normal;
   font-family: "Fira Sans";
   text-align: center;
@@ -498,7 +499,7 @@ p.header {
 
 .cta {
   height: auto;
-  max-height: 64px;
+  max-height: 10.67vw; /* 64px = 10.67vw (64/600*100) */
   width: auto;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -520,13 +521,15 @@ p.header {
   }
   50% {
     transform: scale(1.08);
-    box-shadow: 0 0 0 10px rgba(255, 232, 13, 0);
+    box-shadow: 0 0 0 1.67vw rgba(255, 232, 13, 0); /* 10px = 1.67vw (10/600*100) */
   }
   100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 232, 13, 0);
   }
 }
+
+
 
 /* Fade animations */
 .fade-in {

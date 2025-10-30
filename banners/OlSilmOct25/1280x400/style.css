@@ -435,8 +435,8 @@ th {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1250px;
-  height: 400px;
+  width: 300px;
+  height: 600px;
   background: #e3000f;
   overflow: hidden;
 }
@@ -471,7 +471,7 @@ th {
 
 .content {
   position: relative;
-  gap: 32px;
+  gap: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -485,7 +485,7 @@ p.header {
   color: #fff;
   font-style: normal;
   font-weight: 400;
-  font-size: 60px;
+  font-size: 28px;
   line-height: normal;
   font-family: "Fira Sans";
   text-align: center;
@@ -498,7 +498,7 @@ p.header {
 
 .cta {
   height: auto;
-  max-height: 64px;
+  max-height: 48px;
   width: auto;
   cursor: pointer;
   transition: transform 0.2s ease;

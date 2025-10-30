@@ -430,15 +430,29 @@ th {
   font-weight: bold;
   text-align: left;
 }
+
+/* Banner container centering */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .wrapper {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1250px;
-  height: 400px;
+  width: 100%;
+  max-width: 700px;
+  height: 200px;
   background: #e3000f;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .background-video {
@@ -471,7 +485,7 @@ th {
 
 .content {
   position: relative;
-  gap: 32px;
+  gap: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -485,7 +499,7 @@ p.header {
   color: #fff;
   font-style: normal;
   font-weight: 400;
-  font-size: 60px;
+  font-size: 24px;
   line-height: normal;
   font-family: "Fira Sans";
   text-align: center;
@@ -498,7 +512,7 @@ p.header {
 
 .cta {
   height: auto;
-  max-height: 64px;
+  max-height: 48px;
   width: auto;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -537,4 +551,15 @@ p.header {
 .fade-out {
   opacity: 0 !important;
   transition: opacity 800ms ease-in-out;
+}
+
+/* Larger text and CTA for wider screens */
+@media (min-width: 540px) {
+  p.header {
+    font-size: 30px; /* 24px * 1.25 = 30px */
+  }
+  
+  .cta {
+    max-height: 60px; /* 48px * 1.25 = 60px */
+  }
 }
