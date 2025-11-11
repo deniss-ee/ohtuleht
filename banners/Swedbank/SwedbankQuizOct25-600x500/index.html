@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Swedbank</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://b.ohtuleht.ee/scripts/ads.js"></script>
+    <script>
+      var clickTag = "";
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="banner">
+      <div class="content" id="quiz-content">
+        <!-- Dynamic content will be loaded here -->
+      </div>
+      <img class="logo" src="../logo.svg" alt="Swedbank" />
+    </div>
+
+    <script>
+      // Quiz configuration data
+      const quizData = {
+        intro: [
+          {
+            type: "intro",
+            title: "Kas teadsid, et 6,9% laenuintress võib osutuda hoopis pea poole kallimaks kui 9% intress?",
+            titleTag: "h2",
+            buttonText: "Vaata kuidas",
+          },
+          {
+            type: "intro",
+            title: "Laenusumma ja laenujääk – väiksed sõnad, aga väga erinevad! Juhul kui intressi arvutatakse laenusummalt, siis pealtnäha soodne intress osutub tõesti kallimaks. See tähendab, et Sina maksad iga kuu laenu tagasi, aga intressi arvutatakse ikka kogu laenuks võetud summalt.",
+            titleTag: "h3",
+            buttonText: "Järgmine küsimus",
+          },
+        ],
+        questions: [
+          {
+            question: "Soovid osta 15 000 € auto. Kumb laen on soodsam?",
+            answers: [
+              { text: "Intress 9% laenujäägilt", correct: true },
+              { text: "Intress 6,9% laenusummalt", correct: false },
+            ],
+            correctText: "Kui maksad laenu tagasi, siis laenujääk väheneb – seega ka summa, millelt intressi arvutatakse.",
+            incorrectText: "Kuigi maksad laenu tagasi ja laenujääk väheneb, siis arvutatakse intressi ikka kogu laenusumma pealt.",
+            buttonText: "Järgmine küsimus",
+          },
+          {
+            question: "Kas järelmaks on soodsam kui väikelaen?",
+            answers: [
+              { text: "Jah", correct: false },
+              { text: "Ei", correct: true },
+              { text: "Nii ja naa", correct: true },
+            ],
+            correctText: "Laen on laen, pole vahet, kuidas seda nimetatakse. Et teada, kui kalliks laen osutub, vaata krediidi kulukuse määra. Kõige lihtsam on sealt otsida krediidi kogukulu. See näitab, kui palju pead laenuperioodi lõpuks kokku maksma.",
+            incorrectText: "Laen on laen, pole vahet, kuidas seda nimetatakse. Et teada, kui kalliks laen osutub, vaata krediidi kulukuse määra. Kõige lihtsam on sealt otsida krediidi kogukulu. See näitab, kui palju pead laenuperioodi lõpuks kokku maksma.",
+            buttonText: "Järgmine küsimus",
+          },
+          {
+            question: "Mida soodsam intress, seda soodsam laen.",
+            answers: [
+              { text: "Õige", correct: false },
+              { text: "Vale", correct: true },
+            ],
+            correctText: [
+              "Laenuga võivad kaasneda ka muud kulud, nagu igakuine haldustasu, arvelduskonto tasu jne. Need võivad laenuperioodi lõpuks moodustada suure summa.",
+              "Lisaks vaata, kas intressi arvutatakse laenusummalt või laenujäägilt. Kui intressi arvutatakse laenusummalt, võib see kokkuvõttes isegi ligi poole kallim olla.",
+            ],
+            incorrectText: [
+              "Laenuga võivad kaasneda ka muud kulud, nagu igakuine haldustasu, arvelduskonto tasu jne. Need võivad laenuperioodi lõpuks moodustada suure summa.",
+              "Lisaks vaata, kas intressi arvutatakse laenusummalt või laenujäägilt. Kui intressi arvutatakse laenusummalt, võib see kokkuvõttes isegi ligi poole kallim olla.",
+            ],
+            buttonText: "Loe lähemalt",
+            isLast: true,
+          },
+        ],
+      };
+
+      // Current state
+      let currentSlide = 0;
+      let currentQuestion = 0;
+      let isInIntro = true;
+
+      // DOM elements
+      const contentContainer = document.getElementById("quiz-content");
+
+      // Render functions
+      function renderIntro(introData) {
+        return `
+          <${introData.titleTag}>${introData.title}</${introData.titleTag}>
+          <div class="btn-wrapper">
+            <button class="answer" onclick="nextSlide()">${introData.buttonText}</button>
+          </div>
+          <p class="foo">Finantsteenuseid pakub Swedbank AS.<br>Pea nõu ja tutvu tingimustega.</p>
+        `;
+      }
+
+      function renderQuestion(questionData, questionIndex) {
+        const buttons = questionData.answers.map((answer, index) => `<button class="answer" onclick="selectAnswer(${questionIndex}, ${index})">${answer.text}</button>`).join("");
+
+        return `
+          <h2>${questionData.question}</h2>
+          <div class="btn-wrapper">
+            ${buttons}
+          </div>
+          <p class="foo">Finantsteenuseid pakub Swedbank AS.<br>Pea nõu ja tutvu tingimustega.</p>
+        `;
+      }
+
+      function renderAnswer(questionData, isCorrect) {
+        const resultText = isCorrect ? "Õige!" : "Vale!";
+        const contentText = isCorrect ? questionData.correctText : questionData.incorrectText;
+
+        let contentHTML = "";
+        if (Array.isArray(contentText)) {
+          // For last question with multiple paragraphs
+          contentHTML = contentText.map((text) => `<h4>${text}</h4>`).join("");
+        } else {
+          // For regular questions with single paragraph
+          contentHTML = `<h3>${contentText}</h3>`;
+        }
+
+        const buttonHTML = questionData.isLast ? `<button onclick="window.open(olBanner.getClickTag('https://track.adform.net/C/?bn=85500558'), '_blank')" class="answer">${questionData.buttonText}</button>` : `<button class="answer" onclick="nextQuestion()">${questionData.buttonText}</button>`;
+
+        return `
+          <h2>${resultText}</h2>
+          ${contentHTML}
+          <div class="btn-wrapper">
+            ${buttonHTML}
+          </div>
+          <p class="foo">Finantsteenuseid pakub Swedbank AS.<br>Pea nõu ja tutvu tingimustega.</p>
+        `;
+      }
+
+      // Navigation functions
+      function nextSlide() {
+        if (isInIntro) {
+          currentSlide++;
+          if (currentSlide >= quizData.intro.length) {
+            isInIntro = false;
+            currentQuestion = 0;
+            showQuestion(currentQuestion);
+          } else {
+            showIntro(currentSlide);
+          }
+        }
+      }
+
+      function selectAnswer(questionIndex, answerIndex) {
+        const question = quizData.questions[questionIndex];
+        const isCorrect = question.answers[answerIndex].correct;
+        showAnswer(questionIndex, isCorrect);
+      }
+
+      function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < quizData.questions.length) {
+          showQuestion(currentQuestion);
+        }
+      }
+
+      // Display functions
+      function showIntro(index) {
+        contentContainer.innerHTML = renderIntro(quizData.intro[index]);
+      }
+
+      function showQuestion(index) {
+        contentContainer.innerHTML = renderQuestion(quizData.questions[index], index);
+      }
+
+      function showAnswer(questionIndex, isCorrect) {
+        contentContainer.innerHTML = renderAnswer(quizData.questions[questionIndex], isCorrect);
+      }
+
+      // Initialize quiz
+      function initQuiz() {
+        showIntro(0);
+      }
+
+      // Start the quiz when page loads
+      document.addEventListener("DOMContentLoaded", initQuiz);
+    </script>
+  </body>
+</html>
