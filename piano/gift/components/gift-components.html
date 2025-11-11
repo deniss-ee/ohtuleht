@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="checkout-style.css">
+  </head>
+  <body>
+<!-- gift-email-params-form-component -->
+<script type="text/ng-template" id="/widget/checkout/component/partials/gift-form-component.html">
+
+    <div class="gift-header">
+        <h1>
+            <t>Give the gift of</t>
+            {{selectedTerm.resource.name | tc:'resource.name'}}
+        </h1>
+    </div>
+
+    <div class="gift-form">
+        <form name="giftForm">
+            <div gift-input-time class="gift-row"></div>
+            <div gift-input-email class="gift-row"></div>
+            <div gift-input-name class="gift-row"></div>
+            <div gift-input-message class="gift-row"></div>
+        </form>
+    </div>
+
+    <div class="gift-footer">
+        <div class="access-buttons">
+            <a class="button big fixed gray" ng-click="cancel()" title="{{ 'Cancel' | t }}"><t>Cancel</t></a>
+            <a class="button big fixed" ng-click="save()" data-e2e="next-button" title="{{ 'Next' | t }}"><t>Next</t></a>
+        </div>
+    </div>
+
+</script>
+
+<script type="text/ng-template" id="/widget/checkout/component/partials/gift-input-time.html">
+    <label>
+        <t>Send</t>
+    </label>
+    <div class="gift-input sides">
+        <span class="left-side">
+            <label class="radio-label">
+                <input name="send" id="send-now" type="radio" ng-model="form.sendType" value="now"/>
+                <span class="text-wrap"><t>Now</t></span>
+            </label>
+        </span>
+        <span class="right-side">
+            <label class="radio-label">
+                <input name="send" id="send-later" type="radio" ng-model="form.sendType" value="later"/>
+                <span class="text-wrap"><t>Later:</t></span>
+            </label>
+            <div tp-datepicker options="optionsDatepicker" from-date="form.sendTime" to-date="form.sendTime" disable="inputDisabled()">
+                <i class="icon-calendar"></i>
+                <input type="date" class="gift-send-date" ng-model="form.sendTime" ng-disabled="inputDisabled()" date-format="{{dateFormat}}" placeholder="{{datePlaceholder}}"/>
+            </div>
+        </span>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/widget/checkout/component/partials/gift-input-name.html">
+    <label for="recipientName">
+        <t>Recipient name</t>
+    </label>
+    <div class="gift-input">
+        <input id="recipientName" class="regular-border" data-e2e="recipient-name" ng-model="form.recipientName" type="text" required/>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/widget/checkout/component/partials/gift-input-email.html">
+    <label for="recipientEmail">
+        <t>Recipient email</t>
+    </label>
+    <div class="gift-input">
+        <input id="recipientEmail" class="regular-border" data-e2e="recipient-email" ng-model="form.recipientEmail" type="text" required/>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/widget/checkout/component/partials/gift-input-message.html">
+    <label for="message">
+        <t>Add a personal message</t>
+    </label>
+    <div class="gift-input">
+        <textarea id="message" ng-model="form.message" data-e2e="gift-message" rows="4"></textarea>
+    </div>
+</script>
+
+  </body>
+</html>

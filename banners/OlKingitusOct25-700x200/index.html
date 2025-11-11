@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@600&family=Roboto:wght@500&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <script>
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+    </script>
+  </head>
+
+  <body>
+    <div class="banner" onclick="window.open(olBanner.getClickTag(), '_blank')">
+      <div class="sidebar" aria-hidden="true">
+        <div class="sidebar__inner">
+          <iframe src="https://cdn.lottielab.com/l/7Tfn5EVabHprZB.html" title="Dekoratiivne animatsioon" width="200" height="200" frameborder="0"></iframe>
+        </div>
+      </div>
+      <div class="content">
+        <div class="text-wrapper">
+          <p class="title">Meiega näeb rohkem.</p>
+          <p class="subtitle">Kingi oma heale sõbrale Õhtuleht Kirjastuse digipakett!</p>
+        </div>
+        <div class="info-wrapper">
+          <div class="price-wrapper">
+            <p class="price">3€</p>
+            <p class="term">3 kuud</p>
+          </div>
+          <button class="button" type="button">KINKIMA</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

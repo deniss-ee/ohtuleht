@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>1250x400</title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <video class="background-video" autoplay muted loop>
+        <source src="../silmad.mp4" type="video/mp4" />
+      </video>
+      <div class="content-background"></div>
+      <div class="content">
+        <p class="header">Õhtuleht Kirjastuse<br />digipaketiga <strong>näed rohkem!</strong></p>
+        <img class="cta" src="../cta.svg" alt="TELLI 2 € / 2 kuud" />
+      </div>
+    </div>
+
+    <script>
+      /**
+       * ⭐ BANNER CONFIGURATION - CHANGE THESE VALUES ⭐
+       */
+      const BANNER_CONFIG = {
+        // ⏱️ TIMING SETTINGS
+        videoTime: 2000,        // How long video plays before content appears (milliseconds)
+        fadeIn: 250,           // How fast content fades in (milliseconds)
+        fadeOut: 250,          // How fast content fades out (milliseconds)
+        contentTime: 3000,     // How long content stays visible (milliseconds)
+        pulseDelay: 50,       // Delay before button starts pulsing (milliseconds)
+        
+        // 🎪 ANIMATION SETTINGS
+        pulseCount: 4,         // How many times button pulses
+        pulseDuration: 500,    // How long each pulse lasts (milliseconds)
+        pulsePause: 500,       // Pause between pulses (milliseconds)
+        
+        // 🎥 VIDEO SETTINGS
+        rotation: -45,           // Video rotation in degrees (0, 90, 180, 270, etc.)
+        scale: .75,            // Video size (1.0 = normal, 0.8 = smaller, 1.2 = bigger)
+        
+        // 🎯 ELEMENT SELECTORS (usually don't need to change these)
+        selectors: {
+          content: '.content',
+          background: '.content-background',
+          cta: '.cta',
+          video: '.background-video'
+        }
+      };
+
+      /**
+       * Banner Animation System
+       */
+      class BannerAnimationEngine {
+        constructor(config = {}) {
+          // Simple configuration merge
+          this.config = { ...this.getDefaultConfig(), ...config };
+          this.elements = this.getElements();
+          this.state = { isAnimating: false };
+          this.init();
+        }
+
+        getDefaultConfig() {
+          return {
+            // Default values (will be overridden by BANNER_CONFIG)
+            videoTime: 3500,
+            fadeIn: 600,
+            fadeOut: 400,
+            contentTime: 4000,
+            pulseDelay: 800,
+            pulseCount: 3,
+            pulseDuration: 600,
+            pulsePause: 700,
+            rotation: 0,
+            scale: 1.0,
+            selectors: {
+              content: ".content",
+              background: ".content-background",
+              cta: ".cta",
+              video: ".background-video"
+            }
+          };
+        }
+
+        getElements() {
+          const { selectors } = this.config;
+          return {
+            content: document.querySelector(selectors.content),
+            background: document.querySelector(selectors.background),
+            cta: document.querySelector(selectors.cta),
+            video: document.querySelector(selectors.video),
+          };
+        }
+
+        init() {
+          this.setupInitialState();
+          this.setupVideo();
+          this.startWhenReady();
+        }
+
+        setupInitialState() {
+          const { content, background } = this.elements;
+          [content, background].forEach((el) => el && (el.style.opacity = "0"));
+        }
+
+        setupVideo() {
+          const { video } = this.elements;
+          const { rotation, scale } = this.config;
+
+          if (video) {
+            video.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`;
+            video.addEventListener("loadeddata", () => this.scheduleStart(100));
+          } else {
+            this.scheduleStart(100);
+          }
+        }
+
+        scheduleStart(delay = 0) {
+          setTimeout(() => this.startCycle(), delay);
+        }
+
+        startCycle() {
+          if (this.state.isAnimating) return;
+          
+          this.state.isAnimating = true;
+          setTimeout(() => this.showContent(), this.config.videoTime);
+        }
+
+        showContent() {
+          this.fadeElements(true);
+          this.schedulePulse();
+          this.scheduleHide();
+        }
+
+        fadeElements(show = true) {
+          const { content, background } = this.elements;
+          const { fadeIn, fadeOut } = this.config;
+          const duration = show ? fadeIn : fadeOut;
+          const opacity = show ? "1" : "0";
+
+          [content, background].forEach((el) => {
+            if (el) {
+              el.style.transition = `opacity ${duration}ms ease-in-out`;
+              el.style.opacity = opacity;
+            }
+          });
+        }
+
+        schedulePulse() {
+          setTimeout(() => this.animatePulse(), this.config.pulseDelay);
+        }
+
+        scheduleHide() {
+          setTimeout(() => this.hideContent(), this.config.contentTime);
+        }
+
+        animatePulse() {
+          const { cta } = this.elements;
+          const { pulseCount, pulseDuration, pulsePause } = this.config;
+
+          if (!cta) return;
+
+          let count = 0;
+
+          const pulse = () => {
+            if (count >= pulseCount) return;
+
+            cta.classList.add('pulse');
+
+            setTimeout(() => {
+              cta.classList.remove('pulse');
+              count++;
+              if (count < pulseCount) setTimeout(pulse, pulsePause);
+            }, pulseDuration);
+          };
+
+          pulse();
+        }
+
+        hideContent() {
+          this.fadeElements(false);
+
+          setTimeout(() => {
+            this.state.isAnimating = false;
+            this.scheduleStart(200); // Small buffer before restart
+          }, this.config.fadeOut);
+        }
+
+        // Public methods for external control
+        stop() {
+          this.state.isAnimating = false;
+        }
+
+        restart() {
+          this.stop();
+          this.setupInitialState();
+          this.scheduleStart();
+        }
+      }
+
+      // Initialize banner with configuration
+      document.addEventListener("DOMContentLoaded", () => {
+        // Use the BANNER_CONFIG defined above
+        window.bannerAnimation = new BannerAnimationEngine(BANNER_CONFIG);
+        
+        // Simple controls for testing
+        window.bannerControls = {
+          stop: () => window.bannerAnimation.stop(),
+          restart: () => window.bannerAnimation.restart()
+        };
+      });
+    </script>
+  </body>
+</html>
