@@ -66,6 +66,12 @@ const UIManager = {
       // Clear cache when resetting
       appState.blurredBackgroundCache = null;
 
+      // Remove drag replace overlay if present on reset
+      if (elements.dragReplaceOverlay) {
+        elements.dragReplaceOverlay.remove();
+        elements.dragReplaceOverlay = null;
+      }
+
       this.clearCanvas();
       DragManager.reset();
       elements.canvas.style.cursor = "default";
@@ -936,26 +942,42 @@ const EventHandlers = {
     // Drag & Drop
     elements.dropzone.addEventListener("dragover", (e) => {
       e.preventDefault();
-      if (!appState.imageLoaded) {
-        elements.dropzone.classList.add("border-blue-400", "bg-blue-50");
-        elements.uploadOverlay.classList.add("text-blue-600");
+      // Always allow highlighting to indicate droppable area, even if an image is already loaded
+      elements.dropzone.classList.add("border-blue-400", "bg-blue-50");
+      elements.uploadOverlay.classList.add("text-blue-600");
+      // Only show replace overlay if an image is already loaded (skip on first run)
+      if (appState.imageLoaded) {
+        this._ensureDragReplaceOverlay();
+        if (elements.dragReplaceOverlay) {
+          elements.dragReplaceOverlay.classList.remove("opacity-0", "invisible");
+          elements.dragReplaceOverlay.classList.add("opacity-100", "visible");
+        }
       }
     });
 
     elements.dropzone.addEventListener("dragleave", (e) => {
       e.preventDefault();
-      if (!appState.imageLoaded) {
-        elements.dropzone.classList.remove("border-blue-400", "bg-blue-50");
-        elements.uploadOverlay.classList.remove("text-blue-600");
+      elements.dropzone.classList.remove("border-blue-400", "bg-blue-50");
+      elements.uploadOverlay.classList.remove("text-blue-600");
+
+      // Hide subtle overlay
+      if (elements.dragReplaceOverlay) {
+        elements.dragReplaceOverlay.classList.remove("opacity-100", "visible");
+        elements.dragReplaceOverlay.classList.add("opacity-0", "invisible");
       }
     });
 
     elements.dropzone.addEventListener("drop", (e) => {
       e.preventDefault();
-      if (!appState.imageLoaded) {
-        elements.dropzone.classList.remove("border-blue-400", "bg-blue-50");
-        elements.uploadOverlay.classList.remove("text-blue-600");
-        FileManager.handleFiles(e.dataTransfer.files);
+      // Always allow replacing the current image via drop
+      elements.dropzone.classList.remove("border-blue-400", "bg-blue-50");
+      elements.uploadOverlay.classList.remove("text-blue-600");
+      FileManager.handleFiles(e.dataTransfer.files);
+
+      // Hide subtle overlay after drop
+      if (elements.dragReplaceOverlay) {
+        elements.dragReplaceOverlay.classList.remove("opacity-100", "visible");
+        elements.dragReplaceOverlay.classList.add("opacity-0", "invisible");
       }
     });
 
@@ -968,6 +990,21 @@ const EventHandlers = {
         elements.fileInput.value = "";
       }
     });
+  },
+
+  /**
+   * Creates subtle drag-replace overlay if it doesn't exist
+   * @private
+   */
+  _ensureDragReplaceOverlay() {
+    if (elements.dragReplaceOverlay) return;
+    const overlay = document.createElement("div");
+    overlay.id = "drag-replace-overlay";
+    overlay.className = "absolute inset-0 flex flex-col gap-3 items-center justify-center pointer-events-none rounded-lg bg-black/40 backdrop-blur-sm text-white text-xl font-semibold tracking-wide transition-opacity duration-150 opacity-0 invisible";
+    overlay.textContent = "Release to replace image";
+    // Insert above canvas but below any future controls
+    elements.dropzone.appendChild(overlay);
+    elements.dragReplaceOverlay = overlay;
   },
 };
 
