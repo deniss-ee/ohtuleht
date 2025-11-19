@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>EmaTytarNov25</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.lottielab.com/s/lottie-player@1.x/player-web.min.js"></script>
+    <style>
+      body {
+        background: #c3f8eb;
+      }
+      .player-container {
+        position: relative;
+        width: 100%;
+        height: 200px; /* fixed banner height */
+        overflow: hidden; /* crop horizontally */
+      }
+      lottie-player.player-sm,
+      lottie-player.player-lg {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 200px; /* always 200px height */
+        max-width: none !important; /* prevent mobile auto-scaling */
+        box-sizing: content-box;
+        display: block;
+      }
+      lottie-player.player-sm {
+        width: 480px; /* fixed width, never shrink */
+        min-width: 480px;
+        flex: 0 0 480px;
+        display: block;
+      }
+      lottie-player.player-lg {
+        width: 700px; /* fixed width, never shrink */
+        min-width: 700px;
+        flex: 0 0 700px;
+        display: none; /* hidden until breakpoint */
+      }
+      @media (min-width: 481px) {
+        lottie-player.player-sm { display: none; }
+        lottie-player.player-lg { display: block; }
+      }
+    </style>
+  </head>
+  <body style="margin: 0; padding: 0; cursor: pointer">
+    <div class="player-container">
+      <lottie-player class="player-sm" src="700x200-sm.json" loop autoplay></lottie-player>
+      <lottie-player class="player-lg" src="700x200-lg.json" loop autoplay></lottie-player>
+    </div>
+  </body>
+</html>
