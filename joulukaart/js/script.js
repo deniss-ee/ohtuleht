@@ -20,7 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!snowContainer) {
       return;
     }
-    const flakes = 300;
+    
+    // Reduce snow particles on mobile for better performance
+    const isMobile = window.innerWidth <= 480;
+    const flakes = isMobile ? 100 : 300;
+    
     for (let i = 0; i < flakes; i += 1) {
       const flake = document.createElement("span");
       flake.className = "snowflake";
@@ -138,52 +142,56 @@ document.addEventListener("DOMContentLoaded", () => {
   // IRIS CURSOR TRACKING
   // ============================================
   
-  // Track mouse movement on the entire page
-  // Think of it like: the eye watching wherever you move your mouse!
-  document.addEventListener('mousemove', (event) => {
-    if (!irisElement) return; // If iris not found yet, skip
+  // Helper function to update iris position (works for both mouse and touch)
+  function updateIrisPosition(clientX, clientY) {
+    if (!irisElement) return;
     
-    // Get the iris container's position and size
     const irisContainer = irisElement.closest('.iris-container');
     if (!irisContainer) return;
     
-    // Get the bounding box of the iris container (where it is on screen)
     const rect = irisContainer.getBoundingClientRect();
-    
-    // Calculate the CENTER of the iris container
-    // Think of it like: finding the center of the eyeball
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     
-    // Calculate the angle from iris center to mouse cursor
-    // Think of it like: calculating which direction to look
-    const deltaX = event.clientX - centerX;  // How far left/right is the mouse?
-    const deltaY = event.clientY - centerY;  // How far up/down is the mouse?
-    const angle = Math.atan2(deltaY, deltaX); // Convert to angle in radians
+    const deltaX = clientX - centerX;
+    const deltaY = clientY - centerY;
+    const angle = Math.atan2(deltaY, deltaX);
     
-    // Calculate how far the iris should move (max 60 pixels from center - INCREASED!)
-    // Think of it like: the eyeball can now look much further to the sides!
     const distance = Math.min(60, Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 8);
     
-    // Calculate new position for iris
     const moveX = Math.cos(angle) * distance;
     const moveY = Math.sin(angle) * distance;
     
-    // Move the iris by applying a transform
-    // Think of it like: shifting the pupil left/right/up/down
-    // Use setAttribute to modify the SVG transform attribute directly
     irisContainer.setAttribute('transform', `matrix(1,0,0,1,${1004.001953125 + moveX},${725.4998779296875 + moveY})`);
     
-    // Also move the highlight (white circle) with the iris!
-    // Think of it like: the light reflection moves with the eyeball
     if (highlightElement) {
       const highlightContainer = highlightElement.closest('.highlight-container');
       if (highlightContainer) {
-        // Move highlight the same amount as the iris
         highlightContainer.setAttribute('transform', `matrix(1,0,0,1,${1093.326171875 + moveX},${771.1597900390625 + moveY})`);
       }
     }
+  }
+  
+  // Mouse tracking for desktop
+  document.addEventListener('mousemove', (event) => {
+    updateIrisPosition(event.clientX, event.clientY);
   });
+  
+  // Touch tracking for mobile
+  document.addEventListener('touchmove', (event) => {
+    if (event.touches.length > 0) {
+      const touch = event.touches[0];
+      updateIrisPosition(touch.clientX, touch.clientY);
+    }
+  }, { passive: true });
+  
+  // Track touch position on tap
+  document.addEventListener('touchstart', (event) => {
+    if (event.touches.length > 0) {
+      const touch = event.touches[0];
+      updateIrisPosition(touch.clientX, touch.clientY);
+    }
+  }, { passive: true });
   
   // ============================================
   // ANIMATION STATE CONTROLLER

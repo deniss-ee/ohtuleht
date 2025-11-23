@@ -5,11 +5,12 @@ An interactive Christmas card featuring a Lottie animation with cursor-tracking 
 ## Features
 
 - **Interactive Lottie Animation**: Eye animation with three states (idle, transition, hat)
-- **Cursor Tracking**: The iris and highlight follow the mouse cursor for a dynamic effect
+- **Cursor Tracking**: The iris and highlight follow the mouse cursor (or finger on mobile)
 - **Keyword Selection**: Choose 3 keywords to reveal a personalized Christmas message
 - **Smooth Transitions**: Elegant fade animations with 1-second duration
-- **Snow Effect**: Animated snowfall background with 300 particles
+- **Snow Effect**: Animated snowfall background (300 particles on desktop, 100 on mobile)
 - **Responsive Messages**: 20 unique message combinations based on keyword selection
+- **Mobile Optimized**: Fully responsive design with touch support
 
 ## Project Structure
 
@@ -93,10 +94,43 @@ Edit `data/messages.json` to change or add messages:
 
 - Chrome/Edge: ✅ Full support
 - Firefox: ✅ Full support
-- Safari: ✅ Full support
+- Safari: ✅ Full support (including iOS)
 - Opera: ✅ Full support
+- Mobile browsers: ✅ Optimized for touch
 
 **Note**: Requires a modern browser with ES6+ support.
+
+## Responsive Design
+
+The card automatically adapts to different screen sizes:
+
+### Desktop (>1280px)
+- Full 1280x800px card layout
+- 600x600px Lottie animation
+- 300 snowflakes
+- Mouse cursor tracking
+
+### Tablet (768px - 1280px)
+- Fluid layout fitting viewport
+- Proportional scaling
+- Touch support
+
+### Mobile (480px - 768px)
+- Optimized font sizes (32px headings)
+- 400x400px Lottie animation
+- Adjusted keyword positions
+- 100 snowflakes for performance
+- Touch tracking
+
+### Small Mobile (<480px)
+- Compact layout (24px headings)
+- 300x300px Lottie animation
+- Tighter keyword spacing
+- Maximum performance optimization
+
+### Landscape Mode
+- Special layout adjustments
+- Optimized spacing for horizontal orientation
 
 ## Performance
 
@@ -113,10 +147,22 @@ Edit `data/messages.json` to change or add messages:
 - **Data**: Separated content (messages) from code for easy editing
 
 ### Key Functions
-- `makeSnow()`: Creates 300 animated snowflakes
+- `makeSnow()`: Creates animated snowflakes (300 on desktop, 100 on mobile)
+- `updateIrisPosition(clientX, clientY)`: Unified tracking for mouse and touch
 - `switchAnimationState(stateName)`: Controls Lottie animation states
 - `showElement()/hideElement()`: Manages fade transitions
 - `handleKeywordClick()`: Keyword selection logic
+
+### Touch Support
+The card includes comprehensive touch event handling:
+```javascript
+// Mouse events for desktop
+document.addEventListener('mousemove', (event) => {...});
+
+// Touch events for mobile
+document.addEventListener('touchmove', (event) => {...}, { passive: true });
+document.addEventListener('touchstart', (event) => {...}, { passive: true });
+```
 
 ### Iris Tracking Algorithm
 ```javascript
