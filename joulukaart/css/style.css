@@ -1,0 +1,514 @@
+/* ============================================ */
+/* CSS VARIABLES */
+/* ============================================ */
+:root {
+  /* Colors */
+  --color-white: #fff;
+  --color-cream: #fdffc1;
+  --color-red-dark: #900c15;
+  --color-red-primary: #fc0616;
+  --color-red-gradient: #e3000f;
+  --color-black: black;
+  
+  /* Timing */
+  --fade-duration: 1000ms;
+  --intro-duration: 0.8s;
+  --keyword-intro-duration: 0.6s;
+  
+  /* Spacing */
+  --section-padding: 32px;
+  --card-width: 1280px;
+  --card-height: 800px;
+  --lottie-size: 600px;
+  --logo-height: 64px;
+  
+  /* Typography */
+  --font-primary: "Fira Sans";
+  --font-secondary: "Inter";
+  --font-size-xl: 48px;
+  --font-size-lg: 36px;
+  --font-size-md: 30px;
+  
+  /* Animation delays */
+  --delay-base: 0.2s;
+  --delay-step: 0.1s;
+}
+
+/* ============================================ */
+/* CSS RESET */
+/* ============================================ */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  user-select: none;
+}
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+  font: inherit;
+  font-size: 1em;
+  white-space: normal;
+}
+dfn,
+i,
+cite,
+var,
+address,
+em {
+  font-style: normal;
+}
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+  border: none;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+caption,
+th,
+td,
+center {
+  text-align: left;
+  vertical-align: top;
+}
+body {
+  color: var(--color-black);
+  line-height: 1;
+  background: var(--color-white);
+}
+q {
+  quotes: "" "";
+}
+ul,
+ol,
+dir,
+menu {
+  list-style: none;
+}
+sub,
+sup {
+  vertical-align: baseline;
+}
+a {
+  color: inherit;
+}
+hr {
+  display: none;
+}
+font {
+  color: inherit !important;
+  font: inherit !important;
+}
+marquee {
+  -moz-binding: none;
+  overflow: inherit !important;
+}
+blink {
+  text-decoration: none;
+}
+nobr {
+  white-space: normal;
+}
+
+[hidden] {
+  display: none;
+  visibility: hidden;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(227, 0, 15, 0) 0%, var(--color-red-gradient) 100%), var(--color-red-primary);
+}
+
+.card-container {
+  position: relative;
+  width: var(--card-width);
+  height: var(--card-height);
+}
+
+/* ============================================ */
+/* LOTTIE ANIMATION CONTAINER */
+/* ============================================ */
+
+/* This positions the animation in the CENTER of the card */
+.lottie-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--lottie-size);
+  height: var(--lottie-size);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* The actual animation div inside the container */
+#lottie-animation {
+  width: 100%;                  /* Fill the container */
+  height: 100%;                 /* Fill the container */
+}
+
+.section {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.--top {
+  top: var(--section-padding);
+}
+
+h1 {
+  leading-trim: both;
+  text-edge: cap;
+  color: var(--color-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--font-size-xl);
+  line-height: 125%;
+  font-family: var(--font-primary);
+  text-align: center;
+}
+
+h2 {
+  leading-trim: both;
+  text-edge: cap;
+  color: var(--color-cream);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-md);
+  line-height: 125%;
+  font-family: var(--font-secondary);
+  text-align: center;
+}
+
+.--bottom {
+  bottom: var(--section-padding);
+}
+
+.keywords {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  transition: opacity var(--fade-duration) ease;
+}
+.keyword {
+  leading-trim: both;
+  text-edge: cap;
+  display: inline;
+  position: absolute;
+  color: var(--color-red-dark);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--font-size-xl);
+  line-height: 100%;
+  font-family: var(--font-primary);
+  text-align: center;
+  cursor: pointer;
+  transition: opacity var(--fade-duration) ease;
+}
+.keyword.active {
+  color: var(--color-white);
+}
+
+#pere {
+  top: 0;
+  left: 0;
+}
+#puhkus {
+  top: 45%;
+  left: 12.5%;
+}
+#meeleolu {
+  top: 90%;
+  left: 30%;
+}
+#rahu {
+  top: 90%;
+  right: 30%;
+}
+#s6brad {
+  top: 45%;
+  right: 12.5%;
+}
+#kingitused {
+  top: 0;
+  right: 0;
+}
+
+h3 {
+  leading-trim: both;
+  text-edge: cap;
+  color: var(--color-white);
+  font-style: normal;
+  font-weight: 500;
+  font-size: var(--font-size-xl);
+  line-height: 125%;
+  font-family: var(--font-primary);
+  text-align: center;
+  transition: opacity var(--fade-duration) ease;
+}
+
+h4 {
+  leading-trim: both;
+  text-edge: cap;
+  margin: 0 160px;
+  color: var(--color-white);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--font-size-lg);
+  line-height: 125%;
+  font-family: var(--font-primary);
+  text-align: center;
+  transition: opacity var(--fade-duration) ease;
+}
+
+.logo {
+  width: auto;
+  height: var(--logo-height);
+  transition: opacity var(--fade-duration) ease;
+}
+
+.fade-target {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--fade-duration) ease;
+}
+
+.fade-target.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================ */
+/* INTRO ANIMATIONS */
+/* ============================================ */
+
+/* Fade in from below with scale - for headings */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Fade in with scale - for Lottie animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Fade in and pop - for keywords */
+@keyframes fadeInPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Apply animations to elements on first slide */
+.section.--top h1 {
+  animation: fadeInUp var(--intro-duration) ease-out forwards;
+  animation-delay: var(--delay-base);
+}
+
+/* When h1 needs to fade out, ensure it uses transition */
+.section.--top h1.fade-target {
+  animation: none;
+  opacity: 1;
+  transition: opacity var(--fade-duration) ease;
+}
+
+/* When hiding, fade it out */
+.section.--top h1.fade-target:not(.is-visible) {
+  opacity: 0;
+}
+
+.section.--top h2 {
+  animation: fadeInUp var(--intro-duration) ease-out forwards;
+  animation-delay: calc(var(--delay-base) + var(--delay-step) * 2);
+}
+
+/* When h2 needs to fade out, ensure it uses transition */
+.section.--top h2.fade-target {
+  animation: none;
+  opacity: 1;
+  transition: opacity var(--fade-duration) ease;
+}
+
+/* When hiding, fade it out */
+.section.--top h2.fade-target:not(.is-visible) {
+  opacity: 0;
+}
+
+.lottie-container {
+  animation: fadeInScale 1s ease-out forwards;
+  animation-delay: 0s;
+  opacity: 0;
+}
+
+.keyword {
+  animation: fadeInPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  opacity: 0;
+}
+
+/* Each keyword appears one after another - cascade effect */
+/* Note: animation-delay only applies on page load, not on fade-out */
+.keyword {
+  animation: fadeInPop var(--keyword-intro-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  opacity: 0;
+}
+
+/* When keywords have fade-target class, they use transition instead of animation */
+.keyword.fade-target {
+  animation: none;
+  opacity: 1;
+  transition: opacity var(--fade-duration) ease;
+}
+
+/* When hiding, fade them out */
+.keyword.fade-target:not(.is-visible) {
+  opacity: 0;
+}
+
+#pere {
+  animation-delay: calc(var(--delay-base) + var(--delay-step) * 4);
+}
+
+#puhkus {
+  animation-delay: calc(var(--delay-base) + var(--delay-step) * 5);
+}
+
+#meeleolu {
+  animation-delay: calc(var(--delay-base) + var(--delay-step) * 6);
+}
+
+#rahu {
+  animation-delay: calc(var(--delay-base) + var(--delay-step) * 7);
+}
+
+#s6brad {
+  animation-delay: calc(var(--delay-base) + var(--delay-step) * 8);
+}
+
+#kingitused {
+  animation-delay: calc(var(--delay-base) + var(--delay-step) * 9);
+}
+
+/* When keywords container is fading out, ensure all keywords fade together */
+.keywords.fade-target:not(.is-visible) .keyword {
+  opacity: 0;
+  transition: opacity var(--fade-duration) ease;
+}
+
+.fade-target.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  animation-name: snow-fall, snow-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes snow-drift {
+  0% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 15px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}

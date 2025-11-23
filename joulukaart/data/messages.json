@@ -1,0 +1,25 @@
+{
+  "defaultMessage": "Vali kolm märksõna",
+  "combinations": {
+    "meeleolu|pere|s6brad": "Soovime Sinu soovide täitumist — et saaksid jagada jõulurõõmu nendega, kellest kõige enam hoolid.",
+    "meeleolu|rahu|s6brad": "Soovime Sinu soovide täitumist — et leiaksid rahu ja rõõmu sõprade soojast seltskonnast.",
+    "kingitused|meeleolu|s6brad": "Soovime Sinu soovide täitumist — et kogeksid rohkem rõõmu kingitustest, naerust ja kallistustest.",
+    "meeleolu|puhkus|s6brad": "Soovime Sinu soovide täitumist — et toredad hetked sõpradega täidaksid Sind hea energiaga.",
+    "meeleolu|pere|rahu": "Soovime Sinu soovide täitumist — et tunneksid rohkem soojust südames, kus jagub ruumi kõigile lähedastele.",
+    "kingitused|meeleolu|pere": "Soovime Sinu soovide täitumist — et saaksid jagada hoolt ja armastust, sest just see on suurim kingitus.",
+    "meeleolu|pere|puhkus": "Soovime Sinu soovide täitumist — et hingaksid vabamalt ning puhkus, naer ja rõõm oleks Sinu pühade keskmes.",
+    "kingitused|meeleolu|rahu": "Soovime Sinu soovide täitumist — et tunneksid südamesoojust kingitustes, mida jagad ja saad.",
+    "meeleolu|puhkus|rahu": "Soovime Sinu soovide täitumist — et kogeksid vaikust, valgust ja pühade pehmet rahu.",
+    "kingitused|meeleolu|puhkus": "Soovime Sinu soovide täitumist — et saaksid nautida, sest igas hetkes on peidus kingitus, kui vaid märkad.",
+    "pere|rahu|s6brad": "Soovime Sinu soovide täitumist — et tunneksid tõelist rahu, mis tuleb koos inimestega, keda armastad.",
+    "kingitused|pere|s6brad": "Soovime Sinu soovide täitumist — et kogeksid suurt rõõmu, mida pakub koos naermine ja kinkide jagamine.",
+    "pere|puhkus|s6brad": "Soovime Sinu soovide täitumist — et leiaksid aega puhata ning jagada soojust kõigi oma lähedastega.",
+    "kingitused|rahu|s6brad": "Soovime Sinu soovide täitumist — et jaguks mõistmist ja armastust, mida jagada oma sõpradega.",
+    "puhkus|rahu|s6brad": "Soovime Sinu soovide täitumist — et tunneksid rahu, vaikust ja tõelist sõprust, mis kestab ka pärast pühi.",
+    "kingitused|puhkus|s6brad": "Soovime Sinu soovide täitumist — et jagaksid hetki, naeru ja soojust, mis täidavad südame.",
+    "kingitused|pere|rahu": "Soovime Sinu soovide täitumist — et tunneksid rahu, mida pakub perega veedetud pühadeaeg.",
+    "pere|puhkus|rahu": "Soovime Sinu soovide täitumist — et naudiksid erilist lähedust, mida pakub perega veedetud aeg.",
+    "kingitused|pere|puhkus": "Soovime Sinu soovide täitumist — et kogeksid kodusoojust, sest iga hetk perega on kõige väärtuslikum kink.",
+    "kingitused|puhkus|rahu": "Soovime Sinu soovide täitumist — et naudiksid rahu, rõõmu ja puhkehetki pühademeeleolus."
+  }
+}
