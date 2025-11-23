@@ -76,7 +76,7 @@
     <!-- Main script that builds all the cards -->
     <script type="module">
       // Import our store data
-      import { bannerData } from "./banner-data.js?v=20";
+      import { bannerData } from "./banner-data.js?v=30";
 
       // Find the container where we'll put all the cards
       const content = document.querySelector(".content");
@@ -156,7 +156,8 @@
         // Add the logo image
         const logoImg = document.createElement("img");
         logoImg.className = "logo";
-        logoImg.src = logo || "";
+        // Fix path: banner-data.js has ../logo/ but we're in root, so change to ./logo/
+        logoImg.src = (logo || "").replace("../logo/", "./logo/");
         logoImg.alt = alt || text || "Store logo";
         logoImg.loading = "lazy"; // Loads images only when needed (faster!)
         logoWrapper.appendChild(logoImg);
