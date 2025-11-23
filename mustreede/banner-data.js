@@ -1,0 +1,101 @@
+export const bannerData = {
+  title: "Must reede",
+  cards: [
+    {
+      text: "Kõik aknakatted -30%. Piiratud valik kangaid salongides TASUTA, maksa ainult õmblusteenuse eest.",
+      logo: "../logo/avaeksperdid.png",
+      alt: "Avaeksperdid",
+      url: "https://avaeksperdid.ee/kampaania/must-reede/?utm_source=www.ohtuleht.ee&utm_medium=mr",
+    },
+    {
+      text: "Kingitused, mis puudutavad hinge. Musta reedel nädalal kiirematele ostuga kaasa kingitus!",
+      logo: "../logo/aurearegina.png",
+      alt: "Aurea Regina",
+      url: "https://www.aurearegina.ee/?utm_source=www.ohtuleht.ee&utm_medium=mustreede",
+    },
+    {
+      text: "Premium kosmeetika ja toidulisandid. Mustal Reedel hinnad sulavad kuni -35%, lisaks kingipakkumised!",
+      logo: "../logo/mekelt.png",
+      alt: "Mekelt",
+      url: "https://www.mekelt.com/?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_id=kampaania",
+    },
+    {
+      text: "Eestimaised geel ja spreivitamiinid – parem imendumine, tugevam tervis.",
+      logo: "../logo/norvita.png",
+      alt: "Norvita",
+      url: "https://norvita.eu/pood/?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_id=kampaania",
+    },
+    {
+      text: "Salongist tellimisel kõik rulood -40%",
+      logo: "../logo/veepisar.png",
+      alt: "Veepisar",
+      url: "https://veepisar.ee/tooted/rulood/?utm_source=ohtuleht&utm_medium=mustreede",
+    },
+    {
+      text: "Eestis loodud kvaliteet! Jõulutunnet loob SIKSAK",
+      logo: "../logo/siksak.png",
+      alt: "Siksak",
+      url: "https://siksak.ee/kategooria/joulud?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_id=kampaania",
+    },
+    {
+      text: "Kõik vajalik töökoha sisustamiseks! Tavahinnaga tooted -15%, kasuta koodi MUST15",
+      logo: "../logo/aj.png",
+      alt: "Aj",
+      url: "https://www.ajtooted.ee/?utm_source=www.ohtuleht.ee&utm_medium=mustreede",
+    },
+    {
+      text: "Kõik robotid alates -50% odavamad!",
+      logo: "../logo/schbot.png",
+      alt: "Schbot",
+      url: "https://schbot.ee/e-pood/?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_id=kampaania",
+    },
+    {
+      text: "100 € Makita ostuga kauba peale USB akuadapter SEBADP05.",
+      logo: "../logo/ehituskaup24.png",
+      alt: "Ehituskaup24",
+      url: "https://www.ehituskaup24.ee/ee/makita-kampaania?utm_source=www.ohtuleht.ee&utm_medium=mustreede",
+    },
+    {
+      text: "Talvehommikud ilma lumelabidata – Yarbo robot lükkab lume ja hoolitseb su õue eest aasta ringselt.",
+      logo: "../logo/yarbo.png",
+      alt: "Yarbo",
+      url: "https://yarboeesti.my.canva.site/?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_id=kampaania",
+    },
+    {
+      text: "Meil on kaupu igale maitsele, igasse voodisse!",
+      logo: "../logo/desiree.png",
+      alt: "Desiree",
+      url: "https://desirees.ee/?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_…",
+    },
+    {
+      text: "Hinnad all kuni 50% ja majad kohe kätte.",
+      logo: "../logo/baltichouse.png",
+      alt: "Baltichouse",
+      url: "https://baltichouse.eu/majad/aiamajad/aiamajad-soodus/?utm_source=www.ohtuleht.ee&utm_medium=mr",
+    },
+    {
+      text: "Kasuta sooduskoodi MUST30 ja saad veel €30 soodustust.",
+      logo: "../logo/manguarvutid.png",
+      alt: "Manguarvutid",
+      url: "https://manguarvutid.ee/?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_id=kampaania",
+    },
+    {
+      text: "Parim aeg radikate vahetuseks! Kogu infrapunaküte -20%",
+      logo: "../logo/korest.png",
+      alt: "Korest",
+      url: "https://korest.ee/?utm_source=ohtuleht&utm_medium=banner&utm_campaign=must+reede&utm_id=kampaania",
+    },
+    {
+      text: "Tellides musta reede nädalal komplekt -1000€",
+      logo: "../logo/onoffgrid.png",
+      alt: "OnOffGrid",
+      url: "https://onoffgrid.ee/product/deye-12kw-ammi14-3kwh-modbusr2/?utm_source=ohtuleht&utm_medium=mustreede",
+    },
+    {
+      text: "Nutikad hinnad!",
+      logo: "../logo/klick.png",
+      alt: "Klick",
+      url: "https://www.klick.ee/mustreede?utm_source=ohtuleht&utm_medium=mustreede",
+    },
+  ],
+};

@@ -1,0 +1,305 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  user-select: none;
+}
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+  font: inherit;
+  font-size: 1em;
+  white-space: normal;
+}
+dfn,
+i,
+cite,
+var,
+address,
+em {
+  font-style: normal;
+}
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+  border: none;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+caption,
+th,
+td,
+center {
+  text-align: left;
+  vertical-align: top;
+}
+body {
+  color: black;
+  line-height: 1;
+  background: white;
+}
+q {
+  quotes: "" "";
+}
+ul,
+ol,
+dir,
+menu {
+  list-style: none;
+}
+sub,
+sup {
+  vertical-align: baseline;
+}
+a {
+  color: inherit;
+}
+hr {
+  display: none;
+}
+font {
+  color: inherit !important;
+  font: inherit !important;
+}
+marquee {
+  -moz-binding: none;
+  overflow: inherit !important;
+}
+blink {
+  text-decoration: none;
+}
+nobr {
+  white-space: normal;
+}
+
+[hidden] {
+  display: none;
+  visibility: hidden;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(227, 0, 15, 0) 0%, #e3000f 100%), #fc0616;
+}
+
+.card-container {
+  position: relative;
+  width: 1280px;
+  height: 800px;
+  background: red;
+}
+.section {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.--top {
+  top: 32px;
+}
+
+h1 {
+  leading-trim: both;
+  text-edge: cap;
+  color: #fff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 125%; /* 60px */
+  font-family: "Fira Sans";
+  text-align: center;
+}
+
+h2 {
+  leading-trim: both;
+  text-edge: cap;
+  color: #fdffc1;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 125%; /* 37.5px */
+  font-family: "Inter";
+  text-align: center;
+}
+
+.--bottom {
+  bottom: 32px;
+}
+
+.keywords {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+.keyword {
+  leading-trim: both;
+  text-edge: cap;
+  display: inline;
+  position: absolute;
+  color: #900c15;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 100%; /* 60px */
+  font-family: "Fira Sans";
+  text-align: center;
+  cursor: pointer;
+}
+.keyword.active {
+  color: #fff;
+}
+
+#pere {
+  top: 0;
+  left: 0;
+}
+#puhkus {
+  top: 45%;
+  left: 12.5%;
+}
+#meeleolu {
+  top: 90%;
+  left: 30%;
+}
+#rahu {
+  top: 90%;
+  right: 30%;
+}
+#s6brad {
+  top: 45%;
+  right: 12.5%;
+}
+#kingitused {
+  top: 0;
+  right: 0;
+}
+
+h3 {
+  leading-trim: both;
+  text-edge: cap;
+  color: #fff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 125%; /* 60px */
+  font-family: "Fira Sans";
+  text-align: center;
+}
+
+h4 {
+  leading-trim: both;
+  text-edge: cap;
+  margin: 0 160px;
+  color: #fff;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 125%; /* 45px */
+  font-family: "Fira Sans";
+  text-align: center;
+}
+
+.logo {
+  width: auto;
+  height: 64px;
+}
+
+.fade-target {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms ease;
+}
+
+.fade-target.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  animation-name: snow-fall, snow-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes snow-drift {
+  0% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 15px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}

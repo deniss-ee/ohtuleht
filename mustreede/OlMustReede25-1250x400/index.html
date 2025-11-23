@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Must Reede 1250x400</title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="banner-wrapper" data-size="desktop">
+      <div class="header">
+        <h1>Must reede</h1>
+        <a hidden class="all" href="#" target="#" rel="noopener noreferrer">vaata kõiki pakkumisi</a>
+      </div>
+      <div class="content">
+      </div>
+    </div>
+    <script>
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+    </script>
+    <script type="module">
+      import { bannerData } from "./../banner-data.js?v=10";
+
+      const wrapper = document.querySelector(".banner-wrapper");
+      const content = wrapper?.querySelector(".content");
+
+      const shuffleCards = (list) => {
+        const array = Array.isArray(list) ? list.slice() : [];
+        for (let i = array.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      };
+
+      if (!wrapper || !content) {
+        console.warn("Banner markup missing wrapper/content nodes");
+      } else {
+        const headerTitle = wrapper.querySelector(".header h1");
+        if (headerTitle && bannerData.title) {
+          headerTitle.textContent = bannerData.title;
+        }
+
+        const createCard = ({ text, logo, alt, url }) => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          const clickTarget = document.createElement("div");
+          clickTarget.className = "clickTagUrl";
+          const destination = url || "";
+          const escapedDestination = destination.replace(/'/g, "\\'");
+          clickTarget.setAttribute(
+            "onclick",
+            `window.open(olBanner.getClickTag('${escapedDestination}'), '_blank')`
+          );
+
+          const message = document.createElement("p");
+          message.className = "card-text";
+          message.textContent = text || "";
+
+          const logoImg = document.createElement("img");
+          logoImg.className = "card-img";
+          logoImg.src = logo || "";
+          logoImg.alt = alt || text || "Banner logo";
+          logoImg.loading = "lazy";
+
+          clickTarget.append(message, logoImg);
+          card.appendChild(clickTarget);
+          return card;
+        };
+
+        content.innerHTML = "";
+        const cards = shuffleCards(bannerData.cards);
+        cards.forEach((cardConfig) => {
+          content.appendChild(createCard(cardConfig));
+        });
+      }
+    </script>
+  </body>
+</html>

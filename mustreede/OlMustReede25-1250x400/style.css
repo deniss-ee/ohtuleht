@@ -1,0 +1,227 @@
+:root {
+  --banner-width: 1250px;
+  --banner-height: 400px;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  user-select: none;
+}
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+  font: inherit;
+  font-size: 1em;
+  white-space: normal;
+}
+dfn,
+i,
+cite,
+var,
+address,
+em {
+  font-style: normal;
+}
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+  border: none;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+caption,
+th,
+td,
+center {
+  text-align: left;
+  vertical-align: top;
+}
+body {
+  color: black;
+  line-height: 1;
+  background: white;
+}
+q {
+  quotes: "" "";
+}
+ul,
+ol,
+dir,
+menu {
+  list-style: none;
+}
+sub,
+sup {
+  vertical-align: baseline;
+}
+a {
+  color: inherit;
+}
+hr {
+  display: none;
+}
+font {
+  color: inherit !important;
+  font: inherit !important;
+}
+marquee {
+  -moz-binding: none;
+  overflow: inherit !important;
+}
+blink {
+  text-decoration: none;
+}
+nobr {
+  white-space: normal;
+}
+
+[hidden] {
+  display: none;
+  visibility: hidden;
+}
+
+.banner-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: var(--banner-width);
+  height: var(--banner-height);
+  margin: 0 auto;
+  background: linear-gradient(180deg, #500005 0%, #000 100%);
+}
+.header {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.header h1 {
+  leading-trim: both;
+  text-edge: cap;
+  color: #fc0616;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: normal;
+  line-height: 100%;
+  font-family: "Inter";
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.header .all {
+  color: #fff;
+  text-align: center;
+  leading-trim: both;
+  text-edge: cap;
+  font-family: "Inter";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.24px;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  background: rgba(144, 12, 21, 0.75);
+}
+.content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 1rem;
+}
+
+.card {
+  position: relative;
+  width: 180px;
+  height: 90px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.card .clickTagUrl {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.card-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.card-text {
+  inset: 0;
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  color: #000;
+  color: #fff;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  pointer-events: none;
+  background: #500005;
+  transition: opacity 0.2s ease;
+  font-family: "Fira Sans";
+}
+
+.card:hover .card-text {
+  opacity: 1;
+}

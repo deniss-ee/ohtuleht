@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="card-wrapper">
+      <div class="card-container">
+        <div class="section --top">
+          <!-- Slide 1 header-->
+          <h1 class="fade-target is-visible">Märka pühi enda ümber!</h1>
+          <h2 class="fade-target is-visible">Mis on Sinule oluline?</h2>
+          <!-- Slide 3 header-->
+          <h4 class="fade-target" hidden>Iga lugu loeb, kui on neid, kes loevad. Iga tegu muudab, kui on neid, kes usuvad. Meiega koos sisu loeb. Jõulurõõm, südamesoojus – saab alguse mõjuvast sõnast.</h4>
+        </div>
+        <div class="section --bottom">
+          <!-- Slide 1 footer-->
+          <div class="keywords fade-target is-visible">
+            <p class="keyword" id="pere">Pere</p>
+            <p class="keyword" id="puhkus">Puhkus</p>
+            <p class="keyword" id="meeleolu">Meeleolu</p>
+            <p class="keyword" id="rahu">Rahu</p>
+            <p class="keyword" id="s6brad">Sõbrad</p>
+            <p class="keyword" id="kingitused">Kingitused</p>
+          </div>
+          <!-- Slide 2 footer-->
+          <h3 class="fade-target" hidden>Soovime Sinu soovide täitumist — et kogeksid rohkem rõõmu kingitustest, naerust ja kallistustest.</h3>
+          <img class="logo fade-target" src="logo.svg" alt="Ohtuleht Kirjastus" hidden />
+        </div>
+      </div>
+    </div>
+    <div class="snow" aria-hidden="true"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        (function makeSnow() {
+          const snowContainer = document.querySelector(".snow");
+          if (!snowContainer) {
+            return;
+          }
+          const flakes = 300;
+          for (let i = 0; i < flakes; i += 1) {
+            const flake = document.createElement("span");
+            flake.className = "snowflake";
+            const size = Math.random() * 4 + 2;
+            flake.style.width = size + "px";
+            flake.style.height = size + "px";
+            flake.style.left = Math.random() * 100 + "%";
+            const duration = Math.random() * 12 + 12;
+            const delay = Math.random() * -duration + "s";
+            flake.style.animationDuration = duration + "s";
+            flake.style.animationDelay = delay;
+            flake.style.opacity = Math.random() * 0.6 + 0.4;
+            snowContainer.appendChild(flake);
+          }
+        })();
+        const headingPrimary = document.querySelector(".section.--top h1");
+        const headingSecondary = document.querySelector(".section.--top h2");
+        const headingFinal = document.querySelector(".section.--top h4");
+        const keywordsContainer = document.querySelector(".keywords");
+        const keywordElements = Array.from(document.querySelectorAll(".keyword"));
+        const slideMessage = document.querySelector(".section.--bottom h3");
+        const logo = document.querySelector(".section.--bottom .logo");
+
+        const keywordMessages = new Map([
+          ["meeleolu|pere|s6brad", "Soovime Sinu soovide täitumist — et saaksid jagada jõulurõõmu nendega, kellest kõige enam hoolid."],
+          ["meeleolu|rahu|s6brad", "Soovime Sinu soovide täitumist — et leiaksid rahu ja rõõmu sõprade soojast seltskonnast."],
+          ["kingitused|meeleolu|s6brad", "Soovime Sinu soovide täitumist — et kogeksid rohkem rõõmu kingitustest, naerust ja kallistustest."],
+          ["meeleolu|puhkus|s6brad", "Soovime Sinu soovide täitumist — et toredad hetked sõpradega täidaksid Sind hea energiaga."],
+          ["meeleolu|pere|rahu", "Soovime Sinu soovide täitumist — et tunneksid rohkem soojust südames, kus jagub ruumi kõigile lähedastele."],
+          ["kingitused|meeleolu|pere", "Soovime Sinu soovide täitumist — et saaksid jagada hoolt ja armastust, sest just see on suurim kingitus."],
+          ["meeleolu|pere|puhkus", "Soovime Sinu soovide täitumist — et hingaksid vabamalt ning puhkus, naer ja rõõm oleks Sinu pühade keskmes."],
+          ["kingitused|meeleolu|rahu", "Soovime Sinu soovide täitumist — et tunneksid südamesoojust kingitustes, mida jagad ja saad."],
+          ["meeleolu|puhkus|rahu", "Soovime Sinu soovide täitumist — et kogeksid vaikust, valgust ja pühade pehmet rahu."],
+          ["kingitused|meeleolu|puhkus", "Soovime Sinu soovide täitumist — et saaksid nautida, sest igas hetkes on peidus kingitus, kui vaid märkad."],
+          ["pere|rahu|s6brad", "Soovime Sinu soovide täitumist — et tunneksid tõelist rahu, mis tuleb koos inimestega, keda armastad."],
+          ["kingitused|pere|s6brad", "Soovime Sinu soovide täitumist — et kogeksid suurt rõõmu, mida pakub koos naermine ja kinkide jagamine."],
+          ["pere|puhkus|s6brad", "Soovime Sinu soovide täitumist — et leiaksid aega puhata ning jagada soojust kõigi oma lähedastega."],
+          ["kingitused|rahu|s6brad", "Soovime Sinu soovide täitumist — et jaguks mõistmist ja armastust, mida jagada oma sõpradega."],
+          ["puhkus|rahu|s6brad", "Soovime Sinu soovide täitumist — et tunneksid rahu, vaikust ja tõelist sõprust, mis kestab ka pärast pühi."],
+          ["kingitused|puhkus|s6brad", "Soovime Sinu soovide täitumist — et jagaksid hetki, naeru ja soojust, mis täidavad südame."],
+          ["kingitused|pere|rahu", "Soovime Sinu soovide täitumist — et tunneksid rahu, mida pakub perega veedetud pühadeaeg."],
+          ["pere|puhkus|rahu", "Soovime Sinu soovide täitumist — et naudiksid erilist lähedust, mida pakub perega veedetud aeg."],
+          ["kingitused|pere|puhkus", "Soovime Sinu soovide täitumist — et kogeksid kodusoojust, sest iga hetk perega on kõige väärtuslikum kink."],
+          ["kingitused|puhkus|rahu", "Soovime Sinu soovide täitumist — et naudiksid rahu, rõõmu ja puhkehetki pühademeeleolus."],
+        ]);
+
+        const selectedKeywords = new Set();
+        let slideStage = 1;
+        let slideTimer = null;
+        const defaultSlideText = slideMessage.textContent.trim();
+        const FADE_DURATION = 600;
+        const SLIDE_THREE_DELAY = 4000;
+
+        const showElement = (element) => {
+          if (!element) {
+            return;
+          }
+
+          element.hidden = false;
+          element.classList.remove("is-visible");
+
+          void element.offsetWidth; // force reflow so transition always fires
+
+          requestAnimationFrame(() => {
+            element.classList.add("is-visible");
+          });
+        };
+
+        const hideElement = (element) => {
+          if (!element || element.hidden) {
+            return;
+          }
+
+          element.classList.remove("is-visible");
+          setTimeout(() => {
+            element.hidden = true;
+          }, FADE_DURATION);
+        };
+
+        const transitionToSlideThree = () => {
+          slideStage = 3;
+          hideElement(slideMessage);
+          setTimeout(() => {
+            showElement(headingFinal);
+            showElement(logo);
+          }, FADE_DURATION);
+          slideTimer = null;
+        };
+
+        const showSlideTwo = () => {
+          const selectionKey = Array.from(selectedKeywords).sort().join("|");
+          const message = keywordMessages.get(selectionKey) || defaultSlideText;
+
+          hideElement(headingPrimary);
+          hideElement(headingSecondary);
+          hideElement(keywordsContainer);
+          hideElement(headingFinal);
+          hideElement(logo);
+
+          slideMessage.textContent = message;
+          slideStage = 2;
+
+          clearTimeout(slideTimer);
+
+          setTimeout(() => {
+            showElement(slideMessage);
+            slideTimer = setTimeout(transitionToSlideThree, SLIDE_THREE_DELAY);
+          }, FADE_DURATION);
+        };
+
+        const handleKeywordClick = (keyword) => {
+          if (slideStage !== 1) {
+            return;
+          }
+
+          const keywordId = keyword.id;
+
+          if (selectedKeywords.has(keywordId)) {
+            selectedKeywords.delete(keywordId);
+            keyword.classList.remove("active");
+            return;
+          }
+
+          if (selectedKeywords.size === 3) {
+            return;
+          }
+
+          selectedKeywords.add(keywordId);
+          keyword.classList.add("active");
+
+          if (selectedKeywords.size === 3) {
+            showSlideTwo();
+          }
+        };
+
+        keywordElements.forEach((keyword) => {
+          keyword.addEventListener("click", () => handleKeywordClick(keyword));
+        });
+      });
+    </script>
+  </body>
+</html>
