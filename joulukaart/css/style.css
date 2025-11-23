@@ -165,6 +165,7 @@ nobr {
   align-items: center;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   background: radial-gradient(50% 50% at 50% 50%, rgba(227, 0, 15, 0) 0%, var(--color-red-gradient) 100%), var(--color-red-primary);
   overflow: hidden;
 }
@@ -544,6 +545,7 @@ h4 {
   .card-container {
     width: 100vw;
     height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   }
   
   h1 {
@@ -691,6 +693,7 @@ h4 {
 @media (max-width: 768px) and (orientation: landscape) {
   .card-container {
     height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   }
   
   .keywords {
