@@ -1,0 +1,231 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+@font-face {
+  font-display: swap;
+  src: url("../fonts/SwedbankHeadlineBlack.woff2") format("woff2"), url("../fonts/SwedbankHeadlineBlack.woff") format("woff");
+  font-style: normal;
+  font-weight: 900;
+  font-family: "Swedbank Headline";
+}
+
+@font-face {
+  font-display: swap;
+  src: url("../fonts/SwedbankHeadlineBold.woff2") format("woff2"), url("../fonts/SwedbankHeadlineBold.woff") format("woff");
+  font-style: normal;
+  font-weight: bold;
+  font-family: "Swedbank Headline";
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+}
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+  font: inherit;
+  font-size: 1em;
+  white-space: normal;
+}
+dfn,
+i,
+cite,
+var,
+address,
+em {
+  font-style: normal;
+}
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+  border: none;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+caption,
+th,
+td,
+center {
+  text-align: left;
+  vertical-align: top;
+}
+body {
+  color: black;
+  line-height: 1;
+  background: white;
+}
+q {
+  quotes: "" "";
+}
+ul,
+ol,
+dir,
+menu {
+  list-style: none;
+}
+sub,
+sup {
+  vertical-align: baseline;
+}
+a {
+  color: inherit;
+}
+hr {
+  display: none;
+}
+font {
+  color: inherit !important;
+  font: inherit !important;
+}
+marquee {
+  -moz-binding: none;
+  overflow: inherit !important;
+}
+blink {
+  text-decoration: none;
+}
+nobr {
+  white-space: normal;
+}
+
+h1 {
+  font-family: "Swedbank Headline";
+}
+
+.banner {
+  position: relative;
+  width: 1250px;
+  height: 400px;
+  background: #ff5f00;
+}
+
+.logo {
+  position: absolute;
+  right: 64px;
+  bottom: 34px;
+  width: auto;
+  height: 56px;
+}
+
+.content {
+    position: relative;
+  width: inherit;
+  height: inherit;
+  padding: 60px 60px 44px;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+color: #FFF;
+font-family: "Swedbank Headline";
+font-size: 48px;
+font-style: normal;
+font-weight: 900;
+line-height: 110%; /* 52.8px */
+letter-spacing: -0.48px;
+margin-bottom: .125em;
+}
+
+h3 {
+color: #FFF;
+font-family: "Swedbank Headline";
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 105%; /* 33.6px */
+letter-spacing: -0.064px;
+}
+
+h4 {
+color: #FFF;
+font-family: "Swedbank Headline";
+font-size: 26px;
+font-style: normal;
+font-weight: 700;
+line-height: 105%;
+letter-spacing: -0.052px;
+margin-bottom: .25em;
+}
+
+.foo {
+    color: #FFF;
+font-family: 'Roboto';
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: 112.5%; /* 27px */
+letter-spacing: -0.84px;
+}
+
+.btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: start;
+    justify-content: start;
+    margin-top: auto;
+    margin-bottom: 16px;
+}
+
+.answer {
+    color: #FF5F00;
+font-family: "Swedbank Headline";
+font-size: 41px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: -0.102px;
+height: 58px;
+padding: 0 32px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+background: #fff;
+border: 0;
+cursor: pointer;
+}
