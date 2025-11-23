@@ -11,7 +11,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
     <link href="style.css" rel="stylesheet" />
     <link href="swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- Google Analytics tracking configuration -->
+    <!-- Measurement ID: G-TWLBVEFSRT -->
+    <!-- Event: Banner_click_must_reede | Category: Card Click | Label: Store name | Banner Type: Mobile 600x500 -->
+    <!-- Tracks clicks on all 16 store cards for analytics reporting -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-TWLBVEFSRT" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TWLBVEFSRT");
+    </script>
   </head>
+
   <body>
     <div class="banner-wrapper" data-size="desktop">
       <div class="header">
@@ -36,7 +51,7 @@
           </svg>
         </div>
       </div>
-      <a hidden class="all" href="#" target="#" rel="noopener noreferrer">vaata kõiki pakkumisi</a>
+      <a class="all" href="../index.html" target="#" rel="noopener noreferrer">vaata kõiki pakkumisi</a>
     </div>
     <script>
       var olBanner = {
@@ -59,7 +74,7 @@
     </script>
     <script src="swiper-bundle.min.js"></script>
     <script type="module">
-      import { bannerData } from "./../banner-data.js?v=10";
+      import { bannerData } from "./../banner-data.js?v=20";
 
       const wrapper = document.querySelector(".banner-wrapper");
       const swiperContainer = wrapper?.querySelector(".content.swiper");
@@ -94,6 +109,20 @@
       const arrowSvg =
         '<svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M22.5381 21.9999L18.5208 26.0172C18.0811 26.4483 17.8613 26.9872 17.8613 27.6337C17.8613 28.2806 18.0811 28.8304 18.5208 29.2833C18.9736 29.7535 19.5299 29.9844 20.1896 29.9758C20.8493 29.9673 21.4055 29.7364 21.8584 29.2833L27.4184 23.6976C27.8887 23.2133 28.1238 22.6481 28.1238 22.0022C28.1238 21.3562 27.8887 20.7896 27.4184 20.3022L21.8125 14.6964C21.3597 14.2435 20.8111 14.016 20.1667 14.0139C19.5223 14.0121 18.9736 14.2463 18.5208 14.7165C18.0811 15.1694 17.8622 15.718 17.864 16.3624C17.8661 17.0068 18.0936 17.5554 18.5465 18.0083L22.5381 21.9999ZM22 41.2141C19.3258 41.2141 16.8216 40.7106 14.4875 39.7035C12.1536 38.6964 10.1235 37.3295 8.39713 35.6028C6.67043 33.8764 5.30353 31.8463 4.29642 29.5124C3.28931 27.1783 2.78575 24.6741 2.78575 21.9999C2.78575 19.3257 3.28931 16.8215 4.29642 14.4874C5.30353 12.1535 6.67043 10.1234 8.39713 8.39702C10.1235 6.67032 12.1536 5.30342 14.4875 4.29631C16.8216 3.2892 19.3258 2.78564 22 2.78564C24.6742 2.78564 27.1784 3.2892 29.5125 4.29631C31.8464 5.30342 33.8765 6.67032 35.6029 8.39702C37.3296 10.1234 38.6965 12.1535 39.7036 14.4874C40.7107 16.8215 41.2142 19.3257 41.2142 21.9999C41.2142 24.6741 40.7107 27.1783 39.7036 29.5124C38.6965 31.8463 37.3296 33.8764 35.6029 35.6028C33.8765 37.3295 31.8464 38.6964 29.5125 39.7035C27.1784 40.7106 24.6742 41.2141 22 41.2141Z" fill="#E3000F"></path></svg>';
 
+      /**
+       * GA4 Tracking: Sends card click event with store name
+       * Test: Open console, click card, verify "📊 GA Event: Card Click - [Store]" appears
+       * Check GA Real-time: Reports → Real-time → Filter by "Banner_click_must_reede"
+       */
+      window.trackCardClick = function (storeName) {
+        gtag("event", "Banner_click_must_reede", {
+          event_category: "Card Click",
+          event_label: storeName,
+          banner_type: "Mobile 600x500",
+        });
+        console.log("📊 GA Event: Card Click -", storeName);
+      };
+
       const createSlide = ({ text, logo, alt, url }) => {
         const slide = document.createElement("div");
         slide.className = "swiper-slide";
@@ -102,10 +131,11 @@
         clickTarget.className = "clickTagUrl";
         const destination = url || "";
         const escapedDestination = destination.replace(/'/g, "\\'");
-        clickTarget.setAttribute(
-          "onclick",
-          `window.open(olBanner.getClickTag('${escapedDestination}'), '_blank')`
-        );
+
+        const escapedStoreName = (alt || "").replace(/'/g, "\\'");
+
+        // Track click then navigate using olBanner clickTag system
+        clickTarget.setAttribute("onclick", `window.trackCardClick('${escapedStoreName}'); window.open(olBanner.getClickTag('${escapedDestination}'), '_blank')`);
 
         const logoWrapper = document.createElement("div");
         logoWrapper.className = "logo-wrapper";
@@ -141,8 +171,8 @@
       if (typeof Swiper !== "undefined" && swiperContainer && cards.length) {
         new Swiper(swiperContainer, {
           autoplay: {
-          delay: 2500,
-        },
+            delay: 2500,
+          },
           slidesPerView: 1,
           speed: 500,
           allowTouchMove: cards.length > 1,

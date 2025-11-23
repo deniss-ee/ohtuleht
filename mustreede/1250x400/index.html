@@ -10,15 +10,28 @@
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
     <link href="style.css" rel="stylesheet" />
+
+    <!-- Google Analytics tracking configuration -->
+    <!-- Measurement ID: G-TWLBVEFSRT -->
+    <!-- Event: Banner_click_must_reede | Category: Card Click | Label: Store name | Banner Type: Desktop 1250x400 -->
+    <!-- Tracks clicks on all 16 store cards for analytics reporting -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-TWLBVEFSRT" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TWLBVEFSRT");
+    </script>
   </head>
   <body>
     <div class="banner-wrapper" data-size="desktop">
       <div class="header">
         <h1>Must reede</h1>
-        <a hidden class="all" href="#" target="#" rel="noopener noreferrer">vaata kõiki pakkumisi</a>
+        <a class="all" href="../index.html" target="#" rel="noopener noreferrer">vaata kõiki pakkumisi</a>
       </div>
-      <div class="content">
-      </div>
+      <div class="content"></div>
     </div>
     <script>
       var olBanner = {
@@ -40,11 +53,12 @@
       var clickTag = "";
     </script>
     <script type="module">
-      import { bannerData } from "./../banner-data.js?v=10";
+      import { bannerData } from "./../banner-data.js?v=20";
 
       const wrapper = document.querySelector(".banner-wrapper");
       const content = wrapper?.querySelector(".content");
 
+      // Fisher-Yates shuffle for random card order
       const shuffleCards = (list) => {
         const array = Array.isArray(list) ? list.slice() : [];
         for (let i = array.length - 1; i > 0; i -= 1) {
@@ -52,6 +66,20 @@
           [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
+      };
+
+      /**
+       * GA4 Tracking: Sends card click event with store name
+       * Test: Open console, click card, verify "📊 GA Event: Card Click - [Store]" appears
+       * Check GA Real-time: Reports → Real-time → Filter by "Banner_click_must_reede"
+       */
+      window.trackCardClick = function (storeName) {
+        gtag("event", "Banner_click_must_reede", {
+          event_category: "Card Click",
+          event_label: storeName,
+          banner_type: "Desktop 1250x400",
+        });
+        console.log("📊 GA Event: Card Click -", storeName);
       };
 
       if (!wrapper || !content) {
@@ -70,10 +98,11 @@
           clickTarget.className = "clickTagUrl";
           const destination = url || "";
           const escapedDestination = destination.replace(/'/g, "\\'");
-          clickTarget.setAttribute(
-            "onclick",
-            `window.open(olBanner.getClickTag('${escapedDestination}'), '_blank')`
-          );
+
+          const escapedStoreName = (alt || "").replace(/'/g, "\\'");
+
+          // Track click then navigate using olBanner clickTag system
+          clickTarget.setAttribute("onclick", `window.trackCardClick('${escapedStoreName}'); window.open(olBanner.getClickTag('${escapedDestination}'), '_blank')`);
 
           const message = document.createElement("p");
           message.className = "card-text";

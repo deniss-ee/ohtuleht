@@ -1,15 +1,27 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 :root {
   --banner-height: 83.3333vw;
   --banner-width: 100vw;
 }
 
 html {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 *,
 *:before,
 *:after {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-box-sizing: inherit;
+  -webkit-user-select: none;
   box-sizing: inherit;
   margin: 0;
   padding: 0;
@@ -125,7 +137,16 @@ nobr {
 }
 
 .banner-wrapper {
+  -ms-flex-align: center;
+  -ms-flex-direction: column;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
   gap: 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -133,6 +154,8 @@ nobr {
   width: var(--banner-width);
   height: var(--banner-height);
   margin: 0 auto;
+  background: -webkit-gradient(linear, left top, left bottom, from(#500005), to(#000));
+  background: -o-linear-gradient(top, #500005 0%, #000 100%);
   background: linear-gradient(180deg, #500005 0%, #000 100%);
 }
 .header {
@@ -160,7 +183,16 @@ nobr {
   margin-top: 2.6667vw;
 }
 .content-wrapper {
+  -ms-flex-align: center;
+  -ms-flex-direction: row;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
   gap: 2.6667vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -178,11 +210,19 @@ nobr {
   background: red;
 }
 .logo {
+  -o-object-fit: cover;
   object-fit: cover;
   width: inherit;
   height: 27.3333vw;
 }
 .info-wrapper {
+  -ms-flex-direction: column;
+  -ms-flex-pack: justify;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: justify;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -1,0 +1,574 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+/* ========================================
+   CSS RESET - Makes all browsers behave the same
+   Like cleaning your room before decorating!
+   ======================================== */
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-box-sizing: inherit;
+  -webkit-user-select: none;
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  user-select: none;
+}
+
+/* Reset for various HTML elements */
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+  font: inherit;
+  font-size: 1em;
+  white-space: normal;
+}
+
+dfn,
+i,
+cite,
+var,
+address,
+em {
+  font-style: normal;
+}
+
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+  border: none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+caption,
+th,
+td,
+center {
+  text-align: left;
+  vertical-align: top;
+}
+
+body {
+  color: black;
+  line-height: 1;
+  background: white;
+}
+
+q {
+  quotes: "" "";
+}
+
+ul,
+ol,
+dir,
+menu {
+  list-style: none;
+}
+
+sub,
+sup {
+  vertical-align: baseline;
+}
+
+a {
+  color: inherit;
+}
+
+hr {
+  display: none;
+}
+
+font {
+  color: inherit !important;
+  font: inherit !important;
+}
+
+marquee {
+  -moz-binding: none;
+  overflow: inherit !important;
+}
+
+blink {
+  text-decoration: none;
+}
+
+nobr {
+  white-space: normal;
+}
+
+[hidden] {
+  display: none;
+  visibility: hidden;
+}
+
+/* ========================================
+   PAGE LAYOUT - The main structure
+   Like building the walls of a house
+   ======================================== */
+
+body {
+  /* Remove default margin */
+  scroll-behavior: smooth;
+  margin: 0;
+  /* Smooth scrolling (like sliding down a slide instead of jumping!) */
+  padding: 0;
+}
+
+.page-wrapper {
+  /* Full width of the screen */
+  -ms-flex-align: center;
+  -ms-flex-direction: column;
+
+  /* Beautiful gradient background (red fading to black) */
+  -webkit-box-align: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+
+  /* Stack elements vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh; /* At least as tall as the screen */
+  padding: 40px 20px 60px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#500005), to(#000));
+  background: -o-linear-gradient(top, #500005 0%, #000 100%);
+
+  /* Add some breathing room at top and bottom */
+  background: linear-gradient(180deg, #500005 0%, #000 100%);
+}
+
+/* ========================================
+   HERO SECTION - Header + Subheader wrapper
+   Fixed height container for the top block
+   ======================================== */
+
+.hero-section {
+  -ms-flex-align: center;
+  -ms-flex-direction: column;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  height: 256px; /* Fixed height for desktop */
+  margin-bottom: 40px;
+}
+
+/* ========================================
+   HEADER - The big title at the top
+   Like the name on your birthday cake!
+   ======================================== */
+
+.header {
+  /* Center everything */
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px; /* Don't get too wide on big screens */
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.header h1 {
+  /* Big, bold, red title */
+  margin: 0;
+  color: #fc0616; /* Bright red like a fire truck! */
+  font-weight: 700; /* Super bold */
+  font-size: 128px; /* Really big! */
+  line-height: 1;
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase; /* ALL CAPS */
+}
+
+/* ========================================
+   SUBHEADER - The description text
+   Like the subtitle on a movie poster
+   ======================================== */
+
+.subheader {
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 800px; /* Narrower than content for readability */
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.subheader p {
+  /* White text on dark background */
+  opacity: 1; /* Slightly see-through for subtle effect */
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.5; /* More space between lines for easy reading */
+  font-family: "Fira Sans", sans-serif;
+}
+
+/* ========================================
+   CONTENT GRID - Where all the cards live
+   Like arranging photos in an album!
+   ======================================== */
+
+.content {
+  -ms-grid-columns: 1fr 20px 1fr 20px 1fr 20px 1fr;
+  gap: 20px;
+
+  /* CSS Grid - arranges cards automatically! */
+  grid-template-columns: repeat(4, 1fr);
+  display: -ms-grid;
+
+  /* 4 cards per row, each card gets equal space */
+  display: grid;
+  width: 100%;
+
+  /* Space between cards (like gaps between tiles) */
+  max-width: 1280px; /* Don't get too wide */
+
+  /* Some padding around the edges */
+  padding: 0 20px;
+}
+
+/* ========================================
+   CARD STYLING - Each individual store card
+   Like decorating each birthday invitation!
+   ======================================== */
+
+.card {
+  /* White background to stand out */
+  -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Fixed height so all cards are the same size! */
+  -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  /* No rounded corners - sharp edges */
+  -webkit-transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+
+  /* Hide anything that goes outside the card */
+  height: 300px;
+
+  /* Slight shadow for depth (makes it look lifted) */
+  border-radius: 0;
+  overflow: hidden;
+
+  /* Smooth animation when hovering */
+  cursor: pointer;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Pointer cursor on hover (shows it's clickable) */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, -webkit-transform 0.3s ease, -webkit-box-shadow 0.3s ease;
+}
+
+/* When you hover over a card, it lifts up! */
+.card:hover {
+  /* Move up a bit */
+  -ms-transform: translateY(-8px);
+  -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  -webkit-transform: translateY(-8px);
+
+  /* Bigger shadow when lifted */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-8px);
+}
+
+/* The clickable area (entire card is clickable) */
+.clickTagUrl {
+  -ms-flex-direction: column;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* ========================================
+   LOGO SECTION - Top part of the card
+   Where the store's picture goes
+   ======================================== */
+
+.logo-wrapper {
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 140px; /* Fixed height for logo area */
+  overflow: hidden;
+  background: #f5f5f5; /* Light gray background */
+}
+
+.logo {
+  /* Make logo fill the space nicely */
+  -o-object-fit: cover;
+  object-fit: cover; /* Covers area without stretching */
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   INFO SECTION - Bottom part of the card
+   Where the text and arrow go
+   ======================================== */
+
+.info-wrapper {
+  /* Stack text and arrow vertically */
+  -ms-flex: 1;
+  -ms-flex-direction: column;
+  -ms-flex-pack: justify;
+  -webkit-box-direction: normal;
+  -webkit-box-flex: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: justify;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  /* Space inside this section */
+  flex: 1;
+
+  /* Grow to fill remaining space */
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+
+  /* Minimum height to keep cards consistent */
+  padding: 16px;
+}
+
+.info-wrapper p {
+  /* Black text for the sale description */
+  margin: 0 0 12px 0; /* Space below text */
+  color: #000000;
+  font-weight: 600; /* Semi-bold */
+  font-size: 16px;
+  line-height: 1.3; /* Comfortable reading spacing */
+  font-family: "Inter", sans-serif;
+}
+
+/* The arrow icon */
+.arrow {
+  -ms-flex-item-align: start;
+  align-self: flex-start; /* Push to the left side */
+  width: 32px;
+  height: 32px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - Mobile friendly!
+   Makes it look good on phones and tablets
+   ======================================== */
+
+/* For tablets (screens smaller than 1024px) */
+@media (max-width: 1024px) {
+  .hero-section {
+    height: auto; /* Let it shrink naturally */
+    margin-bottom: 30px;
+  }
+
+  .content {
+    /* 3 cards per row instead of 4 */
+    -ms-grid-columns: 1fr 16px 1fr 16px 1fr;
+    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .header h1 {
+    font-size: 80px; /* Smaller title */
+  }
+
+  .subheader p {
+    font-size: 32px;
+  }
+}
+
+/* For smaller tablets (screens smaller than 768px) */
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    margin-bottom: 24px;
+  }
+
+  .content {
+    /* 2 cards per row */
+    -ms-grid-columns: 1fr 12px 1fr;
+    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 12px;
+  }
+
+  .header h1 {
+    font-size: 56px; /* Even smaller */
+  }
+
+  .page-wrapper {
+    padding: 30px 12px 40px; /* Less padding on sides */
+  }
+
+  .subheader p {
+    font-size: 20px;
+  }
+
+  .logo-wrapper {
+    height: 120px; /* Shorter logo area */
+  }
+}
+
+/* For phones (screens smaller than 480px) */
+@media (max-width: 480px) {
+  .hero-section {
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .content {
+    /* 1 card per row (stacked) */
+    -ms-grid-columns: 1fr;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+
+  .header h1 {
+    font-size: 54px; /* 1.5x larger (36px × 1.5) */
+  }
+
+  .subheader {
+    margin-bottom: 0;
+  }
+
+  .subheader p {
+    font-size: 24px; /* 1.5x larger (16px × 1.5) */
+  }
+
+  .card {
+    /* Bigger cards on mobile (easier to tap!) */
+    max-width: 100%;
+    /* Remove fixed height - let it grow with content */
+    height: auto;
+    /* No border radius needed - already set to 0 globally */
+  }
+
+  .logo-wrapper {
+    height: 160px; /* Taller on mobile for better visibility */
+  }
+
+  .info-wrapper {
+    min-height: auto;
+    /* Remove minimum height - let text determine size */
+    padding: 14px;
+  }
+
+  .info-wrapper p {
+    font-size: 18px; /* 1.5x larger (13px × 1.5) */
+  }
+
+  .arrow {
+    width: 48px; /* 1.5x larger (32px × 1.5) */
+    height: 48px;
+  }
+}
+
+/* ========================================
+   PRINT STYLES - If someone prints the page
+   (Bonus feature!)
+   ======================================== */
+
+@media print {
+  .page-wrapper {
+    background: white; /* No gradient when printing */
+  }
+
+  .card {
+    /* Prevent cards from breaking across pages */
+    -webkit-box-shadow: none;
+    page-break-inside: avoid;
+    box-shadow: none; /* No shadows in print */
+  }
+}

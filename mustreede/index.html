@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="et">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Must Reede - Kõik Pakkumised</title>
+    <meta name="description" content="Vaata kõiki Must Reede pakkumisi ühest kohast" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Fonts - Same as banners -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <!-- Our custom styles -->
+    <link href="style.css" rel="stylesheet" />
+
+    <!-- Google Analytics Tracking -->
+    <!-- Measurement ID: G-TWLBVEFSRT -->
+    <!-- Event: Banner_click_must_reede | Category: Card Click | Label: Store name | Banner Type: Landing Page -->
+    <!-- Tracks clicks on all 16 store cards for analytics reporting -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-TWLBVEFSRT" async></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TWLBVEFSRT");
+    </script>
+  </head>
+  <body>
+    <!-- Main wrapper for the entire page -->
+    <div class="page-wrapper">
+      <!-- Header and Subheader block -->
+      <div class="hero-section">
+        <!-- Header section with title -->
+        <header class="header">
+          <h1>Must reede</h1>
+        </header>
+
+        <!-- Subheader section with description -->
+        <div class="subheader">
+          <p>Parimad pakkumised leiad siit!</p>
+        </div>
+      </div>
+
+      <!-- Main content area with all the cards -->
+      <main class="content">
+        <!-- Cards will be inserted here by JavaScript -->
+      </main>
+    </div>
+
+    <!-- Click tracking script - same as banners -->
+    <script>
+      // This object helps us track when people click on cards
+      var olBanner = {
+        // Gets a value from the URL (like getting a toy from a box)
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+
+        // Creates the special tracking link (like putting a stamp on a letter)
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+    </script>
+
+    <!-- Main script that builds all the cards -->
+    <script type="module">
+      // Import our store data
+      import { bannerData } from "./banner-data.js?v=20";
+
+      // Find the container where we'll put all the cards
+      const content = document.querySelector(".content");
+
+      /**
+       * Shuffles the cards in random order
+       * Like shuffling a deck of cards before a game!
+       * This makes it fair - different stores appear first each time
+       *
+       * @param {Array} list - Array of card data to shuffle
+       * @returns {Array} - The shuffled array
+       */
+      const shuffleCards = (list) => {
+        // Make a copy of the array (don't change the original)
+        const array = Array.isArray(list) ? list.slice() : [];
+
+        // Fisher-Yates shuffle algorithm (fancy way to mix things up!)
+        // Start from the end and work backwards
+        for (let i = array.length - 1; i > 0; i -= 1) {
+          // Pick a random position from 0 to i
+          const j = Math.floor(Math.random() * (i + 1));
+
+          // Swap the items at positions i and j
+          // Like switching two cards in your hand!
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+
+        return array;
+      };
+
+      const arrowSvg =
+        '<svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none"><path d="M22.5381 21.9999L18.5208 26.0172C18.0811 26.4483 17.8613 26.9872 17.8613 27.6337C17.8613 28.2806 18.0811 28.8304 18.5208 29.2833C18.9736 29.7535 19.5299 29.9844 20.1896 29.9758C20.8493 29.9673 21.4055 29.7364 21.8584 29.2833L27.4184 23.6976C27.8887 23.2133 28.1238 22.6481 28.1238 22.0022C28.1238 21.3562 27.8887 20.7896 27.4184 20.3022L21.8125 14.6964C21.3597 14.2435 20.8111 14.016 20.1667 14.0139C19.5223 14.0121 18.9736 14.2463 18.5208 14.7165C18.0811 15.1694 17.8622 15.718 17.864 16.3624C17.8661 17.0068 18.0936 17.5554 18.5465 18.0083L22.5381 21.9999ZM22 41.2141C19.3258 41.2141 16.8216 40.7106 14.4875 39.7035C12.1536 38.6964 10.1235 37.3295 8.39713 35.6028C6.67043 33.8764 5.30353 31.8463 4.29642 29.5124C3.28931 27.1783 2.78575 24.6741 2.78575 21.9999C2.78575 19.3257 3.28931 16.8215 4.29642 14.4874C5.30353 12.1535 6.67043 10.1234 8.39713 8.39702C10.1235 6.67032 12.1536 5.30342 14.4875 4.29631C16.8216 3.2892 19.3258 2.78564 22 2.78564C24.6742 2.78564 27.1784 3.2892 29.5125 4.29631C31.8464 5.30342 33.8765 6.67032 35.6029 8.39702C37.3296 10.1234 38.6965 12.1535 39.7036 14.4874C40.7107 16.8215 41.2142 19.3257 41.2142 21.9999C41.2142 24.6741 40.7107 27.1783 39.7036 29.5124C38.6965 31.8463 37.3296 33.8764 35.6029 35.6028C33.8765 37.3295 31.8464 38.6964 29.5125 39.7035C27.1784 40.7106 24.6742 41.2141 22 41.2141Z" fill="#E3000F"></path></svg>';
+
+      /**
+       * GA4 Tracking: Sends card click event with store name
+       * Test: Open console, click card, verify "📊 Tracked click: [Store]" appears
+       * Check GA Real-time: Reports → Real-time → Filter by "Banner_click_must_reede"
+       */
+      window.trackCardClick = function (storeName) {
+        gtag("event", "Banner_click_must_reede", {
+          event_category: "Card Click",
+          event_label: storeName,
+          banner_type: "Landing Page",
+        });
+        console.log("📊 Tracked click:", storeName);
+      };
+
+      /**
+       * Creates a single card element
+       * Like making one birthday card at a time!
+       *
+       * @param {Object} cardData - The store's information
+       * @returns {HTMLElement} - The finished card
+       */
+      const createCard = ({ text, logo, alt, url }) => {
+        // Create the main card container (like the card's envelope)
+        const card = document.createElement("div");
+        card.className = "card";
+
+        // Create the clickable area (makes the whole card clickable)
+        const clickTarget = document.createElement("div");
+        clickTarget.className = "clickTagUrl";
+
+        // Prepare the URL and make it safe (escape special characters)
+        const destination = url || "";
+        const escapedDestination = destination.replace(/'/g, "\\'");
+
+        const escapedStoreName = (alt || "").replace(/'/g, "\\'");
+
+        // Track click then navigate using olBanner clickTag system
+        clickTarget.setAttribute("onclick", `window.trackCardClick('${escapedStoreName}'); window.open(olBanner.getClickTag('${escapedDestination}'), '_blank')`);
+
+        // Create the logo section (top part of the card)
+        const logoWrapper = document.createElement("div");
+        logoWrapper.className = "logo-wrapper";
+
+        // Add the logo image
+        const logoImg = document.createElement("img");
+        logoImg.className = "logo";
+        logoImg.src = logo || "";
+        logoImg.alt = alt || text || "Store logo";
+        logoImg.loading = "lazy"; // Loads images only when needed (faster!)
+        logoWrapper.appendChild(logoImg);
+
+        // Create the info section (bottom part of the card)
+        const infoWrapper = document.createElement("div");
+        infoWrapper.className = "info-wrapper";
+
+        // Add the sale description text
+        const message = document.createElement("p");
+        message.textContent = text || "";
+        infoWrapper.appendChild(message);
+
+        // Add the arrow icon
+        infoWrapper.insertAdjacentHTML("beforeend", arrowSvg);
+
+        // Put all pieces together (logo + info)
+        clickTarget.append(logoWrapper, infoWrapper);
+        card.appendChild(clickTarget);
+
+        return card;
+      };
+
+      // Check if we have the container and cards data
+      if (!content) {
+        console.warn("Content container not found!");
+      } else if (!bannerData || !bannerData.cards) {
+        console.warn("Banner data not found!");
+      } else {
+        // Clear any existing content
+        content.innerHTML = "";
+
+        // Shuffle the cards so they appear in random order!
+        // This is fair - different stores get to be first each time
+        const shuffledCards = shuffleCards(bannerData.cards);
+
+        // Create a card for each store and add it to the page
+        // Like adding each toy to your display shelf!
+        shuffledCards.forEach((cardData) => {
+          content.appendChild(createCard(cardData));
+        });
+      }
+    </script>
+  </body>
+</html>
