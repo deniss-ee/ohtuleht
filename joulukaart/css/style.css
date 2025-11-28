@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 /* ============================================ */
 /* CSS VARIABLES */
 /* ============================================ */
@@ -58,80 +65,24 @@
   h4 {
     margin: 0 12.5vw; /* 160px equivalent */
   }
-  
+
   .section.--top h1 {
-    padding-left: 5vw;
     padding-right: 5vw;
+    padding-left: 5vw;
   }
-  
+
   /* Mobile Lottie adjustments */
   .lottie-container {
+    top: calc(50% + 5vw); /* Move center down by 5vw */
     width: 51.5625vw; /* 10% larger than 46.875vw */
     height: 51.5625vw; /* Maintain aspect ratio */
-    top: calc(50% + 5vw); /* Move center down by 5vw */
-  }
-}
-
-/* Safari-specific responsive fixes */
-@supports (-webkit-appearance: none) {
-  @media (max-width: 1279px) {
-    :root {
-      --card-height: 100vh; /* Safari fallback */
-      --font-size-lg: 4.2vw; /* Larger fonts for Safari */
-      --font-size-md: 4.2vw;
-      --font-size-xl: 5.5vw;
-      --lottie-size: 55vw; /* Larger Lottie for Safari */
-      --section-padding: 4vw;
-    }
-    
-    .keywords {
-      height: 30vw; /* Larger keywords container */
-    }
-    
-    .lottie-container {
-      width: 60vw; /* Even larger for Safari */
-      height: 60vw;
-      top: calc(50% + 8vw);
-    }
-    
-    h4 {
-      margin: 0 8vw;
-    }
-  }
-  
-  @media (max-width: 438px) {
-    :root {
-      --font-size-lg: 6vw !important; /* Even larger for very small Safari screens */
-      --font-size-md: 6vw !important;
-      --font-size-xl: 8vw !important;
-      --lottie-size: 75vw !important;
-      --section-padding: 6vw !important;
-    }
-    
-    .card-container {
-      height: 90vh !important;
-    }
-    
-    .keywords {
-      height: 40vw !important;
-    }
-    
-    .lottie-container {
-      width: 80vw !important;
-      height: 80vw !important;
-      top: calc(50% + 10vw) !important;
-    }
-    
-    h4 {
-      margin: 0 4vw !important;
-    }
   }
 }
 
 /* ============================================ */
-/* MOBILE-SPECIFIC RESPONSIVE FIXES - Activates when viewport width ≤ 438px */
+/* MOBILE-SPECIFIC RESPONSIVE FIXES - Activates when viewport width ≤ 599px */
 /* ============================================ */
-@media (max-width: 438px) {
+@media (max-width: 599px) {
   :root {
     /* Double the vw values for enhanced readability on very small screens */
     --font-size-lg: 4.6875vw !important; /* 2x the responsive size */
@@ -158,37 +109,37 @@
 
   /* Small mobile Lottie adjustments */
   .lottie-container {
+    top: 50% !important; /* Move center down by 5vw */
     width: 103.125vw !important; /* 10% larger than 93.75vw */
     height: 103.125vw !important; /* Maintain aspect ratio */
-    top: 50% !important; /* Move center down by 5vw */
   }
 
   /* ============================================ */
-  /* SMALL MOBILE KEYWORD POSITIONS - For screens ≤ 438px */
+  /* SMALL MOBILE KEYWORD POSITIONS - For screens ≤ 599px */
   /* ============================================ */
   /* Adjust these values for optimal positioning on very small screens */
   #pere {
-top: 30% !important;
+    top: 30% !important;
     left: 5% !important;
   }
   #puhkus {
-top: 62% !important;
+    top: 62% !important;
     left: 11% !important;
   }
   #meeleolu {
-top: 95% !important;
+    top: 95% !important;
     left: 23% !important;
   }
   #rahu {
-top: 85% !important;
+    top: 85% !important;
     right: 26% !important;
   }
   #s6brad {
-top: 55% !important;
+    top: 55% !important;
     right: 10% !important;
   }
   #kingitused {
-top: 22% !important;
+    top: 22% !important;
     right: 5% !important;
   }
 }
@@ -197,12 +148,17 @@ top: 22% !important;
 /* CSS RESET */
 /* ============================================ */
 html {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 *,
 *:before,
 *:after {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-box-sizing: inherit;
+  -webkit-user-select: none;
   box-sizing: inherit;
   margin: 0;
   padding: 0;
@@ -318,8 +274,13 @@ nobr {
 }
 
 .card-wrapper {
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center; /* Safari */ /* Safari */
+  -webkit-box-pack: center; /* Safari */ /* Safari */
+  display: -webkit-box; /* Safari */ /* Safari */
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
@@ -327,17 +288,6 @@ nobr {
   height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   overflow: hidden;
   background: radial-gradient(50% 50% at 50% 50%, rgba(227, 0, 15, 0) 0%, var(--color-red-gradient) 100%), var(--color-red-primary);
-}
-
-/* Safari-specific fixes */
-@supports (-webkit-appearance: none) {
-  .card-wrapper {
-    height: 100vh; /* Safari doesn't handle dvh well */
-  }
-  
-  .card-container {
-    height: 100vh; /* Ensure proper height in Safari */
-  }
 }
 
 .card-container {
@@ -353,6 +303,8 @@ nobr {
 
 /* This positions the animation in the CENTER of the card */
 .lottie-container {
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
   z-index: 5;
   position: absolute;
   top: 50%;
@@ -370,6 +322,15 @@ nobr {
 }
 
 .section {
+  -ms-flex-align: center;
+  -ms-flex-direction: column;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: absolute;
   flex-direction: column;
@@ -413,12 +374,16 @@ h2 {
 }
 
 .keywords {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-transition: opacity var(--fade-duration) ease;
   position: relative;
   width: 100%;
   height: 300px;
   transition: opacity var(--fade-duration) ease;
 }
 .keyword {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-transition: opacity var(--fade-duration) ease;
   leading-trim: both;
   text-edge: cap;
   display: inline;
@@ -463,6 +428,8 @@ h2 {
 }
 
 h3 {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-transition: opacity var(--fade-duration) ease;
   leading-trim: both;
   text-edge: cap;
   color: var(--color-white);
@@ -476,6 +443,8 @@ h3 {
 }
 
 h4 {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-transition: opacity var(--fade-duration) ease;
   leading-trim: both;
   text-edge: cap;
   margin: 0 160px;
@@ -490,12 +459,16 @@ h4 {
 }
 
 .logo {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-transition: opacity var(--fade-duration) ease;
   width: auto;
   height: var(--logo-height);
   transition: opacity var(--fade-duration) ease;
 }
 
 .fade-target {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-transition: opacity var(--fade-duration) ease;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--fade-duration) ease;
@@ -511,39 +484,86 @@ h4 {
 /* ============================================ */
 
 /* Fade in from below with scale - for headings */
-@keyframes fadeInUp {
+@-webkit-keyframes fadeInUp {
   from {
+    -webkit-transform: translateY(30px) scale(0.95);
     opacity: 0;
     transform: translateY(30px) scale(0.95);
   }
   to {
+    -webkit-transform: translateY(0) scale(1);
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes fadeInUp {
+  from {
+    -webkit-transform: translateY(30px) scale(0.95);
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    -webkit-transform: translateY(0) scale(1);
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
 
 /* Fade in with scale - for Lottie animation */
-@keyframes fadeInScale {
+@-webkit-keyframes fadeInScale {
   from {
+    -webkit-transform: translate(-50%, -50%) scale(0.8);
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
   }
   to {
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes fadeInScale {
+  from {
+    -webkit-transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    -webkit-transform: translate(-50%, -50%) scale(1);
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
 }
 
 /* Fade in and pop - for keywords */
-@keyframes fadeInPop {
+@-webkit-keyframes fadeInPop {
   0% {
+    -webkit-transform: scale(0.5);
     opacity: 0;
     transform: scale(0.5);
   }
   70% {
+    -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
   100% {
+    -webkit-transform: scale(1);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes fadeInPop {
+  0% {
+    -webkit-transform: scale(0.5);
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
     opacity: 1;
     transform: scale(1);
   }
@@ -551,19 +571,27 @@ h4 {
 
 /* Apply animations to elements on first slide */
 .section.--top h1.animate-intro {
+  -webkit-animation: fadeInUp var(--intro-duration) ease-out forwards;
+  -webkit-animation-delay: var(--delay-base);
   animation: fadeInUp var(--intro-duration) ease-out forwards;
   animation-delay: var(--delay-base);
 }
 
 /* Instant appearance for initially visible elements */
 .section.--top h1.is-visible {
-  animation: none;
+  -ms-transform: none;
+  -webkit-animation: none;
+  -webkit-transform: none;
   opacity: 1;
+  animation: none;
   transform: none;
 }
 
 /* When h1 needs to fade out, ensure it uses transition */
 .section.--top h1.fade-target {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-animation: none;
+  -webkit-transition: opacity var(--fade-duration) ease;
   opacity: 1;
   transition: opacity var(--fade-duration) ease;
   animation: none;
@@ -575,19 +603,27 @@ h4 {
 }
 
 .section.--top h2.animate-intro {
+  -webkit-animation: fadeInUp var(--intro-duration) ease-out forwards;
+  -webkit-animation-delay: calc(var(--delay-base) + var(--delay-step) * 2);
   animation: fadeInUp var(--intro-duration) ease-out forwards;
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 2);
 }
 
 /* Instant appearance for initially visible elements */
 .section.--top h2.is-visible {
-  animation: none;
+  -ms-transform: none;
+  -webkit-animation: none;
+  -webkit-transform: none;
   opacity: 1;
+  animation: none;
   transform: none;
 }
 
 /* When h2 needs to fade out, ensure it uses transition */
 .section.--top h2.fade-target {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-animation: none;
+  -webkit-transition: opacity var(--fade-duration) ease;
   opacity: 1;
   transition: opacity var(--fade-duration) ease;
   animation: none;
@@ -599,32 +635,42 @@ h4 {
 }
 
 .lottie-container {
+  -webkit-animation: fadeInScale 1s ease-out forwards;
+  -webkit-animation-delay: 0s;
   opacity: 0;
   animation: fadeInScale 1s ease-out forwards;
   animation-delay: 0s;
 }
 
 .keyword.animate-intro {
+  -webkit-animation: fadeInPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
   opacity: 0;
   animation: fadeInPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
 /* Instant appearance for initially visible keywords */
 .keyword.is-visible {
-  animation: none;
+  -ms-transform: scale(1);
+  -webkit-animation: none;
+  -webkit-transform: scale(1);
   opacity: 1;
+  animation: none;
   transform: scale(1);
 }
 
 /* Each keyword appears one after another - cascade effect */
 /* Note: animation-delay only applies on page load, not on fade-out */
 .keyword.animate-intro {
+  -webkit-animation: fadeInPop var(--keyword-intro-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
   opacity: 0;
   animation: fadeInPop var(--keyword-intro-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
 /* When keywords have fade-target class, they use transition instead of animation */
 .keyword.fade-target {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-animation: none;
+  -webkit-transition: opacity var(--fade-duration) ease;
   opacity: 1;
   transition: opacity var(--fade-duration) ease;
   animation: none;
@@ -636,31 +682,39 @@ h4 {
 }
 
 #pere {
+  -webkit-animation-delay: calc(var(--delay-base) + var(--delay-step) * 4);
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 4);
 }
 
 #puhkus {
+  -webkit-animation-delay: calc(var(--delay-base) + var(--delay-step) * 5);
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 5);
 }
 
 #meeleolu {
+  -webkit-animation-delay: calc(var(--delay-base) + var(--delay-step) * 6);
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 6);
 }
 
 #rahu {
+  -webkit-animation-delay: calc(var(--delay-base) + var(--delay-step) * 7);
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 7);
 }
 
 #s6brad {
+  -webkit-animation-delay: calc(var(--delay-base) + var(--delay-step) * 8);
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 8);
 }
 
 #kingitused {
+  -webkit-animation-delay: calc(var(--delay-base) + var(--delay-step) * 9);
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 9);
 }
 
 /* When keywords container is fading out, ensure all keywords fade together */
 .keywords.fade-target:not(.is-visible) .keyword {
+  -o-transition: opacity var(--fade-duration) ease;
+  -webkit-transition: opacity var(--fade-duration) ease;
   opacity: 0;
   transition: opacity var(--fade-duration) ease;
 }
@@ -681,25 +735,30 @@ h4 {
 /* MUSIC TOGGLE BUTTON */
 /* ============================================ */
 .music-toggle {
+  -o-transition: all 0.3s ease;
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.3s ease;
+  z-index: 2000;
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 2000;
-  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 12px;
   border: 2px solid var(--color-red-primary);
   border-radius: 25px;
-  padding: 8px 12px;
+  color: var(--color-red-primary);
   font-size: 14px;
   font-family: var(--font-secondary);
-  color: var(--color-red-primary);
   cursor: pointer;
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 .music-toggle:hover {
-  background: var(--color-red-primary);
+  -ms-transform: scale(1.05);
+  -webkit-transform: scale(1.05);
   color: white;
+  background: var(--color-red-primary);
   transform: scale(1.05);
 }
 
@@ -719,91 +778,143 @@ h4 {
 /* START SCREEN OVERLAY */
 /* ============================================ */
 .start-overlay {
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-animation: none;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 3000;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(135deg, var(--color-red-primary), var(--color-red-gradient));
-  z-index: 3000;
-  display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
   cursor: pointer;
+  background: -o-linear-gradient(315deg, var(--color-red-primary), var(--color-red-gradient));
+  background: linear-gradient(135deg, var(--color-red-primary), var(--color-red-gradient));
   animation: none; /* Instant appearance */
-}
-
-/* Safari-specific start overlay fixes */
-@supports (-webkit-appearance: none) {
-  .start-overlay {
-    height: 100vh; /* Ensure full height in Safari */
-    min-height: 100vh; /* Additional fallback */
-  }
 }
 
 .start-content {
-  text-align: center;
-  color: white;
-  animation: none; /* Instant appearance */
+  -ms-transform: translateY(0);
+  -webkit-animation: none;
+  -webkit-transform: translateY(0);
   opacity: 1;
+  color: white;
+  text-align: center;
+  animation: none; /* Instant appearance */
   transform: translateY(0);
 }
 
 .start-content h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-shadow: none;
-  background: white;
-  color: var(--color-red-primary);
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 2px;
-  border: 2px solid var(--color-red-primary);
-  cursor: pointer;
-  transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
   display: inline-block;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+  border: 2px solid var(--color-red-primary);
+  border-radius: 50px;
+  color: var(--color-red-primary);
+  font-weight: 600;
+  font-size: 2rem;
+  text-transform: uppercase;
+  text-shadow: none;
+  letter-spacing: 2px;
+  cursor: pointer;
+  background: white;
+  transition: all 0.3s ease;
 }
 
 .start-content h1:hover {
-  background: var(--color-red-primary);
+  -ms-transform: scale(1.05);
+  -webkit-box-shadow: 0 4px 15px rgba(252, 6, 22, 0.3);
+  -webkit-transform: scale(1.05);
   color: white;
-  transform: scale(1.05);
+  background: var(--color-red-primary);
   box-shadow: 0 4px 15px rgba(252, 6, 22, 0.3);
+  transform: scale(1.05);
 }
 
 .start-content p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
   opacity: 0.9;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
 }
 
 .start-hint {
-  font-size: 1rem;
+  -webkit-animation: pulse 2s infinite;
   opacity: 0.7;
+  font-size: 1rem;
   animation: pulse 2s infinite;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-@keyframes slideUp {
+@keyframes fadeIn {
   from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slideUp {
+  from {
+    -webkit-transform: translateY(30px);
     opacity: 0;
     transform: translateY(30px);
   }
   to {
+    -webkit-transform: translateY(0);
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+@keyframes slideUp {
+  from {
+    -webkit-transform: translateY(30px);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 @keyframes pulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .start-overlay.hidden {
@@ -811,6 +922,9 @@ h4 {
 }
 
 .snowflake {
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-name: snow-fall, snow-drift;
+  -webkit-animation-timing-function: linear;
   position: absolute;
   top: -10px;
   border-radius: 50%;
@@ -820,12 +934,37 @@ h4 {
   animation-iteration-count: infinite;
 }
 
-@keyframes snow-fall {
+@-webkit-keyframes snow-fall {
   0% {
+    -webkit-transform: translateY(0);
     transform: translateY(0);
   }
   100% {
+    -webkit-transform: translateY(100vh);
     transform: translateY(100vh);
+  }
+}
+
+@keyframes snow-fall {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(100vh);
+    transform: translateY(100vh);
+  }
+}
+
+@-webkit-keyframes snow-drift {
+  0% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 15px;
+  }
+  100% {
+    margin-left: 0;
   }
 }
 
