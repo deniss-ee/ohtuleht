@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Interactive Christmas Card - Ohtuleht</title>
+    <title>Jõulukaart</title>
     <meta name="description" content="Interactive Christmas card with animated eye tracking" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -18,17 +18,21 @@
         <div class="lottie-container">
           <div id="lottie-animation"></div>
         </div>
-        
+
         <div class="section --top">
           <!-- Slide 1 header-->
-          <h1 class="fade-target is-visible">Märka pühi enda ümber kaadris!</h1>
-          <h2 class="fade-target is-visible">Mis on Sulle oluline?</h2>
+          <h1 class="fade-target">Märka pühi enda ümber kaadris!</h1>
+          <h2 class="fade-target">Mis on Sulle oluline?</h2>
           <!-- Slide 3 header-->
-          <h4 class="fade-target" hidden>Iga lugu loeb, kui on neid, kes loevad. Iga tegu muudab, kui on neid, kes usuvad. Meiega koos sisu loeb. Jõulurõõm, südamesoojus – saab alguse mõjuvast sõnast.</h4>
+          <h4 class="fade-target" hidden>
+            Iga lugu loeb, kui on neid, kes loevad. Iga tegu muudab, kui on neid, kes usuvad. Meiega koos sisu loeb.
+            <br style="margin-bottom: 1.5vw" />
+            Jõulurõõm, südamesoojus – saab alguse mõjuvast sõnast.
+          </h4>
         </div>
         <div class="section --bottom">
           <!-- Slide 1 footer-->
-          <div class="keywords fade-target is-visible">
+          <div class="keywords fade-target">
             <p class="keyword" id="pere">Pere</p>
             <p class="keyword" id="puhkus">Puhkus</p>
             <p class="keyword" id="meeleolu">Meeleolu</p>
@@ -43,30 +47,26 @@
       </div>
     </div>
     <div class="snow" aria-hidden="true"></div>
-    
+
     <!-- Start Screen Overlay -->
-    <div id="start-overlay" class="start-overlay">
+    <div class="start-overlay" id="start-overlay">
       <div class="start-content">
-        <h1>🎄 Merry Christmas! 🎄</h1>
-        <p>Click anywhere to start the experience</p>
-        <div class="start-hint">✨ Interactive Christmas Card ✨</div>
+        <h1>vaata kaarti!</h1>
       </div>
     </div>
-    
+
     <!-- Music Toggle Button -->
-    <button id="music-toggle" class="music-toggle" aria-label="Toggle background music">
-      🔊 Music
-    </button>
-    
+    <button class="music-toggle" id="music-toggle" aria-label="Toggle background music">Heli</button>
+
     <!-- Background Music -->
     <audio id="background-music" loop>
-      <source src="music/This Christmas Eve (main loop).mp3" type="audio/mpeg">
+      <source src="music/This Christmas Eve (main loop).mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
-    
+
     <!-- Lottie Web Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    
+
     <!-- Main Application Script -->
     <script src="js/script.js"></script>
   </body>

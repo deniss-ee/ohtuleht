@@ -59,6 +59,11 @@
     margin: 0 12.5vw; /* 160px equivalent */
   }
   
+  .section.--top h1 {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+  
   /* Mobile Lottie adjustments */
   .lottie-container {
     width: 51.5625vw; /* 10% larger than 46.875vw */
@@ -99,7 +104,7 @@
   .lottie-container {
     width: 103.125vw !important; /* 10% larger than 93.75vw */
     height: 103.125vw !important; /* Maintain aspect ratio */
-    top: calc(50% + 5vw) !important; /* Move center down by 5vw */
+    top: 50% !important; /* Move center down by 5vw */
   }
 
   /* ============================================ */
@@ -107,27 +112,27 @@
   /* ============================================ */
   /* Adjust these values for optimal positioning on very small screens */
   #pere {
-    top: 30% !important;
+top: 30% !important;
     left: 5% !important;
   }
   #puhkus {
-    top: 62% !important;
-    left: 14% !important;
+top: 62% !important;
+    left: 11% !important;
   }
   #meeleolu {
-    top: 95% !important;
-    left: 32% !important;
+top: 95% !important;
+    left: 23% !important;
   }
   #rahu {
-    top: 65% !important;
-    right: 28% !important;
+top: 85% !important;
+    right: 26% !important;
   }
   #s6brad {
-    top: 40% !important;
+top: 55% !important;
     right: 10% !important;
   }
   #kingitused {
-    top: 10% !important;
+top: 22% !important;
     right: 5% !important;
   }
 }
@@ -478,9 +483,16 @@ h4 {
 }
 
 /* Apply animations to elements on first slide */
-.section.--top h1 {
+.section.--top h1.animate-intro {
   animation: fadeInUp var(--intro-duration) ease-out forwards;
   animation-delay: var(--delay-base);
+}
+
+/* Instant appearance for initially visible elements */
+.section.--top h1.is-visible {
+  animation: none;
+  opacity: 1;
+  transform: none;
 }
 
 /* When h1 needs to fade out, ensure it uses transition */
@@ -495,9 +507,16 @@ h4 {
   opacity: 0;
 }
 
-.section.--top h2 {
+.section.--top h2.animate-intro {
   animation: fadeInUp var(--intro-duration) ease-out forwards;
   animation-delay: calc(var(--delay-base) + var(--delay-step) * 2);
+}
+
+/* Instant appearance for initially visible elements */
+.section.--top h2.is-visible {
+  animation: none;
+  opacity: 1;
+  transform: none;
 }
 
 /* When h2 needs to fade out, ensure it uses transition */
@@ -518,14 +537,21 @@ h4 {
   animation-delay: 0s;
 }
 
-.keyword {
+.keyword.animate-intro {
   opacity: 0;
   animation: fadeInPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
+/* Instant appearance for initially visible keywords */
+.keyword.is-visible {
+  animation: none;
+  opacity: 1;
+  transform: scale(1);
+}
+
 /* Each keyword appears one after another - cascade effect */
 /* Note: animation-delay only applies on page load, not on fade-out */
-.keyword {
+.keyword.animate-intro {
   opacity: 0;
   animation: fadeInPop var(--keyword-intro-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
@@ -637,19 +663,39 @@ h4 {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  animation: fadeIn 1s ease-out;
+  animation: none; /* Instant appearance */
 }
 
 .start-content {
   text-align: center;
   color: white;
-  animation: slideUp 0.8s ease-out 0.5s both;
+  animation: none; /* Instant appearance */
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .start-content h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: none;
+  background: white;
+  color: var(--color-red-primary);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  border: 2px solid var(--color-red-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.start-content h1:hover {
+  background: var(--color-red-primary);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(252, 6, 22, 0.3);
 }
 
 .start-content p {

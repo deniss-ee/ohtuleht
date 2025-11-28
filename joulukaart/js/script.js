@@ -394,6 +394,17 @@ if (startOverlay) {
       console.log('Music play failed:', error);
     });
     
+    // Start intro animations after overlay is hidden
+    setTimeout(() => {
+      // Trigger intro animations for first slide elements
+      showElement(headingPrimary);
+      showElement(headingSecondary);
+      showElement(keywordsContainer);
+      
+      // Add animation classes to keywords for staggered animation
+      keywordElements.forEach(keyword => keyword.classList.add('animate-intro'));
+    }, 300); // Small delay to ensure overlay is hidden
+    
     // Remove listeners
     startOverlay.removeEventListener('click', startExperience);
   };
