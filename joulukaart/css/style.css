@@ -447,7 +447,7 @@ h4 {
   -webkit-transition: opacity var(--fade-duration) ease;
   leading-trim: both;
   text-edge: cap;
-  margin: 0 160px;
+  margin: 0 15vw;
   color: var(--color-white);
   font-style: normal;
   font-weight: 400;

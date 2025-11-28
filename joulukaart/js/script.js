@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Get fade duration from CSS variable for consistency
   const FADE_DURATION = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--fade-duration")) || 1000;
-  const SLIDE_THREE_DELAY = 4000;
+  const SLIDE_THREE_DELAY = 6000;
 
   // ============================================
   // HELPER FUNCTIONS
