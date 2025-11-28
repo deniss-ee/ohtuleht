@@ -72,6 +72,62 @@
   }
 }
 
+/* Safari-specific responsive fixes */
+@supports (-webkit-appearance: none) {
+  @media (max-width: 1279px) {
+    :root {
+      --card-height: 100vh; /* Safari fallback */
+      --font-size-lg: 4.2vw; /* Larger fonts for Safari */
+      --font-size-md: 4.2vw;
+      --font-size-xl: 5.5vw;
+      --lottie-size: 55vw; /* Larger Lottie for Safari */
+      --section-padding: 4vw;
+    }
+    
+    .keywords {
+      height: 30vw; /* Larger keywords container */
+    }
+    
+    .lottie-container {
+      width: 60vw; /* Even larger for Safari */
+      height: 60vw;
+      top: calc(50% + 8vw);
+    }
+    
+    h4 {
+      margin: 0 8vw;
+    }
+  }
+  
+  @media (max-width: 438px) {
+    :root {
+      --font-size-lg: 6vw !important; /* Even larger for very small Safari screens */
+      --font-size-md: 6vw !important;
+      --font-size-xl: 8vw !important;
+      --lottie-size: 75vw !important;
+      --section-padding: 6vw !important;
+    }
+    
+    .card-container {
+      height: 90vh !important;
+    }
+    
+    .keywords {
+      height: 40vw !important;
+    }
+    
+    .lottie-container {
+      width: 80vw !important;
+      height: 80vw !important;
+      top: calc(50% + 10vw) !important;
+    }
+    
+    h4 {
+      margin: 0 4vw !important;
+    }
+  }
+}
+
 /* ============================================ */
 /* MOBILE-SPECIFIC RESPONSIVE FIXES - Activates when viewport width ≤ 438px */
 /* ============================================ */
@@ -271,6 +327,17 @@ nobr {
   height: 100dvh; /* Use dynamic viewport height for mobile browsers */
   overflow: hidden;
   background: radial-gradient(50% 50% at 50% 50%, rgba(227, 0, 15, 0) 0%, var(--color-red-gradient) 100%), var(--color-red-primary);
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-appearance: none) {
+  .card-wrapper {
+    height: 100vh; /* Safari doesn't handle dvh well */
+  }
+  
+  .card-container {
+    height: 100vh; /* Ensure proper height in Safari */
+  }
 }
 
 .card-container {
@@ -664,6 +731,14 @@ h4 {
   align-items: center;
   cursor: pointer;
   animation: none; /* Instant appearance */
+}
+
+/* Safari-specific start overlay fixes */
+@supports (-webkit-appearance: none) {
+  .start-overlay {
+    height: 100vh; /* Ensure full height in Safari */
+    min-height: 100vh; /* Additional fallback */
+  }
 }
 
 .start-content {
