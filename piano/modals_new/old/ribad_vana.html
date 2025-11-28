@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Liitu Õhtuleht Kirjastuse digipaketiga</title>
+  
+  <!-- Styles -->
+  <style>
+    body, html {
+    margin: 0;
+    padding: 0;
+    color: #272727;
+    font: 300 16px/1.5 Roboto,sans-serif;
+    text-align: left;
+    -webkit-text-size-adjust: none;
+    width: 100%;
+}
+.subscribe-button {
+    display: flex;
+    align-items: center;
+  	justify-content: space-between;
+    gap: 16px;
+	width: 100%;
+    padding: 4px 16px;
+    background-color: #ffce1f;
+    color: #3e3e43;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #272727;
+}
+.subscribe-button .btn {
+    display: inline-flex;
+    width: 139px;
+}
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    border-radius: 6px;
+    font-family: Fira Sans,serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0 10px;
+    color: #fff;
+    box-shadow: 0 1px 10px rgba(0,0,0,.15);
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: .3s;
+    transition-timing-function: ease-out;
+    transition-delay: 0ms;
+}
+.btn--dark {
+    background-color: #272727;
+}
+.btn--height-30 {
+    height: 26px;
+}
+
+  </style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&amp;family=Fira+Sans:ital,wght@0,600&amp;display=swap" rel="stylesheet"/>
+ <div id="header-subscribe-button" class="subscribe-button" ng-class="{ 'mobile-user-agent': isMobileUserAgent() }">Digipaketi eripakkumine<button ng-click="startCheckout('TM5FOW7M0SVW')" class="btn btn--dark btn--width-large"> Telli</button></div>
+</body>
+</html>

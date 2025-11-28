@@ -8,17 +8,99 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="../style.css">
+  
+  <!-- Page-specific styles for larger header fonts on desktop -->
+  <style>
+    /* Only apply to this landing page - make header section fonts 25% smaller on desktop */
+    @media only screen and (min-width: 980px) {
+      /* Constrain the entire page width */
+      body {
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      /* Target the first section (Header Section) specifically */
+      body > .section:first-child .pn-modal__title {
+        font-size: calc(var(--font__size__4xl) * 1.25); /* 36px * 0.75 = 27px */
+        line-height: 1.2;
+      }
+      
+      body > .section:first-child .pn-modal__text {
+        font-size: calc(var(--font__size__lg) * 1.25); /* 18px * 0.75 = 13.5px */
+        line-height: 1.4;
+      }
+      
+      body > .section:first-child .pn-modal__footer {
+        font-size: calc(var(--font__size__sm) * 1.25); /* 14px * 0.75 = 10.5px */
+        line-height: 1.4;
+      }
+
+      /* ============================================
+         PRICING CARDS SECTION - Desktop Layout
+         Only for this landing page
+         ============================================ */
+      
+      .section--red-light {
+        /* Switch from vertical stack (mobile) to horizontal row (desktop) */
+        -ms-flex-direction: row !important;
+        -webkit-box-direction: normal !important;
+        -webkit-box-orient: horizontal !important;
+        flex-direction: row !important;
+        
+        /* Wrap cards if they don't fit */
+        flex-wrap: wrap;
+        
+        /* Center the cards on the page */
+        justify-content: center;
+        align-items: flex-start;
+        
+        /* Add some spacing between cards */
+        gap: var(--spacing__4);
+      }
+
+      /* Cards inside the red-light section should NOT be full width */
+      .section--red-light > .card {
+        width: calc(33.333% - var(--spacing__4)) !important; /* 3 cards per row, accounting for gap */
+        flex: 0 0 calc(33.333% - var(--spacing__4)); /* Fixed width, 3 cards fill the row */
+      }
+
+      /* ============================================
+         CARD ORDERING - Rearrange visual position
+         ============================================ */
+      
+      /* First card in HTML (red featured) becomes SECOND on desktop */
+      .section--red-light > .card:nth-child(1) {
+        order: 2;
+      }
+      
+      /* Second card (ad-free) becomes first on desktop */
+      .section--red-light > .card:nth-child(2) {
+        order: 1;
+      }
+      
+      /* Third card (annual) becomes third on desktop */
+      .section--red-light > .card:nth-child(3) {
+        order: 3;
+      }
+
+      /* Business button should take full row and appear AFTER all cards */
+      .section--red-light > .btn {
+        flex-basis: 100%; /* Forces button to its own row below cards */
+        order: 10; /* Put it last - after all cards (which are order 1, 2, 3) */
+      }
+    }
+  </style>
 </head>
 <body>
 
 <!-- Header Section -->
 <div class="section section--white">
-  <div class="modal modal--white modal--left">
-    <h1 class="modal__title">Liitu Õhtuleht Kirjastuse digipaketiga!</h1>
+  <div class="pn-modal pn-modal--white pn-modal--left">
+    <h1 class="pn-modal__title">Liitu Õhtuleht Kirjastuse digipaketiga!</h1>
     
-    <p class="modal__text">Õhtuleht Kirjastuse digipakett toob Sinuni olulised uudised, põnevad persoonilood ja kaasahaarava meelelahutuse.</p>
+    <p class="pn-modal__text">Õhtuleht Kirjastuse digipakett toob Sinuni olulised uudised, põnevad persoonilood ja kaasahaarava meelelahutuse.</p>
     
-    <p class="modal__footer">Digipakett tagab Sulle ligipääsu Õhtulehe, Naistelehe, Tiiu ja Toidutare tasulisele sisule ning Ristiku digiristsõnadele.</p>
+    <p class="pn-modal__footer">Digipakett tagab Sulle ligipääsu Õhtulehe, Naistelehe, Tiiu ja Toidutare tasulisele sisule ning Ristiku digiristsõnadele.</p>
   </div>
 </div>
 
@@ -29,7 +111,7 @@
   <div class="card card--red card--center">
     <div class="badge">TELLIJATE LEMMIK</div>
     
-    <p class="modal__text">digipaketi püsitellimus</p>
+    <p class="pn-modal__text">digipaketi püsitellimus</p>
     
     <div class="price-box price-box--featured">
       <div class="price--lg">
@@ -63,12 +145,12 @@
     
     <button class="btn btn--yellow">Liitu kohe</button>
     
-    <p class="modal__footer">Esimesed 3 kuud maksavad 3 €, 4.-6. kuu 5,25 € kuus, 7. kuust 10,49 € kuus. Püsimaksega tellimus pikeneb automaatselt tühistamiseni. Pakkumine kehtib uutele eraisikutest lugejatele, kellel ei ole hetkel kehtivat digitellimust.</p>
+    <p class="pn-modal__footer">Esimesed 3 kuud maksavad 3 €, 4.-6. kuu 5,25 € kuus, 7. kuust 10,49 € kuus. Püsimaksega tellimus pikeneb automaatselt tühistamiseni. Pakkumine kehtib uutele eraisikutest lugejatele, kellel ei ole hetkel kehtivat digitellimust.</p>
   </div>
   
   <!-- Card 2: Ad-free Package -->
   <div class="card card--white card--center">
-    <p class="modal__text">reklaamivaba pakett</p>
+    <p class="pn-modal__text">reklaamivaba pakett</p>
     
     <div class="price-box">
       <div class="price--lg">
@@ -102,12 +184,12 @@
     
     <button class="btn btn--red">Liitu kohe</button>
     
-    <p class="modal__footer">Esimene kuu maksab 1,99 €, alates 2. kuust 12,99 € kuus. Püsimaksega tellimus pikeneb automaatselt tühistamiseni.</p>
+    <p class="pn-modal__footer">Esimene kuu maksab 1,99 €, alates 2. kuust 12,99 € kuus. Püsimaksega tellimus pikeneb automaatselt tühistamiseni.</p>
   </div>
   
   <!-- Card 3: Annual Package -->
   <div class="card card--white card--center">
-    <p class="modal__text">Digipaketi aastane tellimus</p>
+    <p class="pn-modal__text">Digipaketi aastane tellimus</p>
     
     <div class="price-box">
       <div class="price--lg">
@@ -141,7 +223,7 @@
     
     <button class="btn btn--red">Liitu kohe</button>
     
-    <p class="modal__footer">Tasudes aasta kaupa, on 1 kuu hind 5,25 €. Soodushinnaga (tavahind 125,88 €) püsitellimus pikeneb automaatselt tühistamiseni. Pakkumine kehtib uutele eraisikutest lugejatele, kellel ei ole hetkel kehtivat digitellimust.</p>
+    <p class="pn-modal__footer">Tasudes aasta kaupa, on 1 kuu hind 5,25 €. Soodushinnaga (tavahind 125,88 €) püsitellimus pikeneb automaatselt tühistamiseni. Pakkumine kehtib uutele eraisikutest lugejatele, kellel ei ole hetkel kehtivat digitellimust.</p>
   </div>
   
   <!-- Business Package Button -->
@@ -150,8 +232,8 @@
 
 <!-- FAQ Section -->
 <div class="section section--white">
-  <div class="modal modal--white modal--left">
-    <h1 class="modal__title">Korduma kippuvad küsimused</h1>
+  <div class="pn-modal pn-modal--white pn-modal--left">
+    <h1 class="pn-modal__title">Korduma kippuvad küsimused</h1>
     
     <div class="faq">
       <p class="faq__question">Mis on püsitellimus?</p>
@@ -178,7 +260,7 @@
 
 <!-- Footer CTA Section -->
 <div class="section section--red-light">
-  <p class="modal__text">Õhtuleht Kirjastuse paberväljaandeid saad tellida <span class="link link--bold">meie e-poest</span></p>
+  <p class="pn-modal__text">Õhtuleht Kirjastuse paberväljaandeid saad tellida <span class="link link--bold">meie e-poest</span></p>
 </div>
 
 </body>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <h1>Landing Page HTML Generator</h1>
+    <div class="section">
+      <label for="config">Edit campaign data (JavaScript object):</label><br />
+      <textarea id="config" rows="20">
+return {
+  mediaType: "video", // "video" or "image"
+  mediaSrc: "https://b.ohtuleht.ee/html5/Ohtuleht/2025/Sep/nl55.mp4",
+  poster: "https://pood.ohtuleht.ee/storage/images/campaigns/4822/Nl55coco-1200x400@2x.jpg",
+  headline: "Telli <strong>Naisteleht 55+</strong> ja võida naiste poolt armastatud värvianalüüsi kinkekaart kahele <strong>salongist Meeletu Ilu!</strong>",
+  price: "Ajakiri aastaks vaid <span style=\"background-color: #a51982; color: #fff; font-weight: bold\"> 17,67 &euro; </span>",
+  prize: "Mis on <strong>värvianalüüs?</strong>",
+  body: [
+    "Naisteleht 55+ on ajakiri toimekale, praktilisele ja head lugemist austavale inimesele. Igas numbris toome lugejani mahuka kaaneloo mõne Eestis tuntud inimesega, lisaks mitmeid põnevaid lugusid erinevatest inimestest meie ümber.",
+    "Värvianalüüs on tööriist, mille abil saame kindlaks teha, millised värvid teile kõige rohkem sobivad. Lähtudes teie üldisest välimusest ja eriti silmade, juuste ja naha toonist, leiame teile värvipaleti, mis on spetsiaalselt loodud sobituma teie enda värvitoonidega.",
+    "Ka Coco Chanel on ütelnud: <strong>„Parim värv maailmas on see, mis sobib just Sulle.“</strong>"
+  ],
+  brandColor: "#a51982"
+};
+</textarea
+      >
+      <button id="generateBtn">Generate HTML</button>
+    </div>
+    <div class="section">
+      <label for="output">Generated HTML:</label>
+      <textarea id="output" readonly></textarea>
+    </div>
+    <script>
+      function generateHTML() {
+        let config;
+        try {
+          config = new Function(document.getElementById("config").value)();
+        } catch (e) {
+          document.getElementById("output").value = "Invalid config!";
+          return;
+        }
+        if (typeof config !== "object") {
+          document.getElementById("output").value = "Config must return an object.";
+          return;
+        }
+        let media = "";
+        if (config.mediaType === "video") {
+          media = `<video style="max-width: 100%; height: auto; display: block; margin: 0 auto; width: 100%" poster="${config.poster}" autoplay loop muted>\n  <source src="${config.mediaSrc}" type="video/mp4" />\n</video>`;
+        } else {
+          media = `<img class="img-responsive" src="${config.mediaSrc}" alt="" style="max-width: 100%; display: block; margin: 0 auto;" />`;
+        }
+        let bodyHtml = config.body.map((p) => `<p style=\"text-align: center; padding: 0 5vw\">${p}</p>`).join("\n");
+        let html = `<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <title></title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  </head>\n  <body>\n    <div style=\"max-width: 100vw; width: 100%; display: flex; justify-content: center; align-items: center\">\n      ${media}\n    </div>\n    <p style=\"text-align: center; font-size: 24px; font-weight: 500; color: ${config.brandColor}; line-height: 1.4em; padding: 0 5vw\">${config.headline}</p>\n    <p style=\"text-align: center; font-size: 24px; font-weight: 500; color: ${config.brandColor}; line-height: 1.4em; padding: 0 5vw\">${config.price}</p>\n    <p style=\"text-align: center; font-size: 24px; font-weight: 500; color: ${config.brandColor}; line-height: 1.4em; padding: 0 5vw\">${config.prize}</p>\n    ${bodyHtml}\n  </body>\n</html>`;
+        document.getElementById("output").value = html;
+      }
+      window.onload = function () {
+        document.getElementById("generateBtn").onclick = generateHTML;
+      };
+    </script>
+  </body>
+</html>

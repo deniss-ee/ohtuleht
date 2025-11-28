@@ -2,9 +2,9 @@
 // CHRISTMAS CARD - MAIN SCRIPT
 // ============================================
 // This script handles:
-// - Snow animation
-// - Lottie eye animation
-// - Iris cursor tracking
+// - Snow animation (responsive: reduced particles on mobile)
+// - Lottie eye animation with responsive scaling
+// - Iris cursor tracking (scales with viewport)
 // - Slide transitions
 // - Keyword selection logic
 // ============================================
@@ -23,20 +23,20 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Reduce snow particles on mobile for better performance
     const isMobile = window.innerWidth <= 480;
-    const flakes = isMobile ? 100 : 300;
+    const flakes = isMobile ? 75 : 200;
     
     for (let i = 0; i < flakes; i += 1) {
       const flake = document.createElement("span");
       flake.className = "snowflake";
-      const size = Math.random() * 4 + 2;
+      const size = Math.random() * 6 + 1;
       flake.style.width = size + "px";
       flake.style.height = size + "px";
       flake.style.left = Math.random() * 100 + "%";
-      const duration = Math.random() * 12 + 12;
+      const duration = Math.random() * 24 + 24;
       const delay = Math.random() * -duration + "s";
       flake.style.animationDuration = duration + "s";
       flake.style.animationDelay = delay;
-      flake.style.opacity = Math.random() * 0.6 + 0.4;
+      flake.style.opacity = Math.random() * 0.2 + 0.6;
       snowContainer.appendChild(flake);
     }
   })();
@@ -143,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ============================================
   
   // Helper function to update iris position (works for both mouse and touch)
+  // Note: Movement distance is fixed in pixels; scales proportionally with responsive design
   function updateIrisPosition(clientX, clientY) {
     if (!irisElement) return;
     
@@ -375,7 +376,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
   
-  // ============================================
+// ============================================
+// MUSIC TOGGLE FUNCTIONALITY
+// ============================================
+
+const musicToggle = document.getElementById('music-toggle');
+const backgroundMusic = document.getElementById('background-music');
+const startOverlay = document.getElementById('start-overlay');
+
+if (startOverlay) {
+  // Start experience on overlay click
+  const startExperience = () => {
+    startOverlay.classList.add('hidden');
+    
+    // Play music after user interaction
+    backgroundMusic.play().catch(error => {
+      console.log('Music play failed:', error);
+    });
+    
+    // Remove listeners
+    startOverlay.removeEventListener('click', startExperience);
+  };
+  
+  startOverlay.addEventListener('click', startExperience);
+}
+
+if (musicToggle && backgroundMusic) {
+  // Update button text based on mute state
+  function updateMusicButton() {
+    if (backgroundMusic.muted) {
+      musicToggle.classList.add('muted');
+    } else {
+      musicToggle.classList.remove('muted');
+    }
+  }
+  
+  // Toggle music on button click
+  musicToggle.addEventListener('click', () => {
+    backgroundMusic.muted = !backgroundMusic.muted;
+    updateMusicButton();
+  });
+  
+  // Initialize button state
+  updateMusicButton();
+}  // ============================================
   // EVENT LISTENERS
   // ============================================
   
@@ -384,3 +428,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   
 });
+

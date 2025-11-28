@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Soovid rohkem näha ja teada?</title>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../style.css">
+  
+  <!-- Page-specific responsive layout -->
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&family=Open+Sans&family=Oswald:wght@700&family=Roboto&display=swap');
+/* scaffolding */
+
+button[hidden]{
+  display: none;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin: 0;
+  font: inherit;
+}
+
+b {
+  display: block;
+  font: inherit;
+}
+
+i {
+  font-style: normal;
+}
+
+a,
+button {
+  transition: all 0.1s ease-in;
+}
+
+a[href^="tel"] {
+  color: inherit;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: none;
+  text-shadow: none;
+  border: 0;
+}
+
+* {
+  -webkit-text-size-adjust: none;
+  box-sizing: border-box;
+}
+
+
+/* General Style */
+
+:root {
+  --template-bg: [%% template-bg %%];
+  --template-font : "Praxis Next", "Arial", sans-serif;
+}
+
+#ng-app,
+#checkout-container,
+body {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.pn-template {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 940px;
+  flex-direction: row;
+  gap: 30px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: var(--template-bg);
+}
+
+@media (max-width: 667px){
+  .pn-template{
+    flex-direction: column;
+  }
+}
+
+.pn-template__header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+
+.pn-template__state {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.pn-template__state--first {
+  max-width: 1000px;
+}
+
+.pn-template__state--second {
+  justify-content: flex-start;
+  max-width: 350px;
+}
+
+.pn-template__content-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.pn-template__text-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 10px;
+}
+
+.pn-template__title {
+  font-family: "Fira Sans" , Helvetica , sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.pn-template__logo {
+  margin-bottom: 20px;
+}
+
+.pn-template__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pn-template__input-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 25px;
+}
+
+.pn-template__email-wrapper {
+  position: relative;
+  width: 325px;
+}
+
+@media (max-width: 650px) {
+  .pn-template__email-wrapper {
+    width: 100%;
+  }
+}
+
+input.pn-template__email {
+  width: 100%;
+  margin-bottom: 25px;
+  height: 45px;
+  padding: 0px 0px 0px 20px;
+  border-radius: 6px;
+  border: 1px solid #E9E9E9;
+  background: #FFF;
+}
+
+@media(max-width: 667px){
+  input.pn-template__email {
+    margin-bottom: 0;
+  }
+}
+
+.pn-template__email::placeholder {
+  font-family: "Roboto" , Helvetica sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  color: rgba(39, 39, 39, 0.50);
+}
+
+.pn-template__email:focus {
+  outline: 0;
+}
+
+.pn-template__email-wrapper--bad input.pn-template__email {
+  border: 1px solid #921a1d;
+}
+
+.pn-template__error {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  width: 100%;
+  font-size: 12px;
+  line-height: 13px;
+  text-align: center;
+  color: #ee0004;
+  transform: translate(-50%, 0);
+}
+
+.pn-template__error-icon {
+  position: absolute;
+  top: 30%;
+  right: 14px;
+  display: none;
+  transform: translate(0, -50%);
+}
+
+.pn-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  width: 100%;
+  padding: 10px 30px; 
+  border-radius: 0px 1px 1px 0px;
+  background: #E2050D;
+  color: #FFFFFF;
+  text-align: center;
+  font-family: "Fira Sans" , Helvetica , sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 12px */
+  letter-spacing: 0.24px;
+  text-transform: uppercase;
+  border-radius: 6px;
+}
+
+.pn-button:hover,
+.pn-button:focus {
+  background-color: #a91d23;
+  transition: background-color ease 0.5s;
+}
+
+.pn-button:active {
+  opacity: 0.7;
+  transition: opacity ease 0.5s;
+}
+
+.pn-template__description {
+  font-family: "Roboto" , Helvetica , sans-serif ;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  color: #000;
+}
+
+.pn-template__small-text,  
+.pn-template__terms-link {
+  font-family: "Roboto" , Helvetica , sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  color: #909090;
+}
+
+.pn-template__small-text-copy {
+  text-align: center;
+}
+
+@media (max-width: 667px){
+  .pn-template__small-text-copy  {
+    text-align: left;
+  }
+}
+
+.pn-template__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  cursor: pointer; 
+}
+
+.pn-template__close:hover,
+.pn-template__close:focus {
+  opacity: 0.8;
+}
+
+@media(max-width: 667px){
+  .pn-template {
+    padding: 20px;
+  }
+
+
+  .pn-template__input-wrapper {
+    gap: 25px;
+  }
+
+  .pn-template__input-container {
+    flex-direction: column;
+    gap: 25px;
+    border-radius: 5px;
+  }
+  .pn-template__checkbox-group {
+    position: relative;
+  }
+
+  .pn-template__checkbox {
+    position: absolute;
+    top: 6px;
+    left: 0;
+  }
+
+  .pn-template__checkbox-label {
+    padding-left: 20px;
+  }
+
+  .pn-button {
+    width: 100%;
+  }
+
+  .pn-template__close {
+    padding: 25px;
+  }
+}
+
+.pn-template__checkbox {
+  accent-color: #E2001A;
+}
+
+.pn-template__checkbox-label {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: var(--template-font);
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+  </style>
+</head>
+<body>
+
+<div template="" class="showTemplate">
+        <div class="show-template-error-screen ng-hide" ng-show="terminalError">
+            <div class="error-screen">
+                <div class="row">
+                    <div class="error-notification-icon"></div>
+                    <div class="content">
+                        <div class="error-title">
+                            <b>An error has occurred</b>
+                        </div>
+
+                        <div>
+                            <span class="ng-hide text ng-binding" ng-show="terminalError">
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!terminalError" class="">
+
+            <config close-button-type="boilerplate" width="1000"></config>
+
+<article class="pn-template" ng-init="$isSubmit = false">
+  <button class="pn-template__close" ng-click="close()" external-event="close-button" type="button"> 
+     
+  </button>
+  <div class="pn-template__state pn-template__state--first" ng-show="!$isSubmit">
+    <img class="pn-template__logo" src="https://i.piano.io/managedservices/ohtuleht/logo.svg" width="140" height="27" alt="Ohtuleht Logo">
+    <div class="pn-template__text-wrapper">
+      <strong class="pn-template__title">
+        Liitu Õhtulehe uudiskirjaga ja ole kursis maailmas toimuvaga!
+      </strong>
+      <p class="pn-template__description">
+        Õhtulehe uudiskiri toob Sinuni olulised uudised, põnevad persoonilood ja kaasahaarava meelelahutuse – iga päev!
+      </p>
+      <p class="pn-template__small-text">
+      </p>
+    </div>
+  </div>
+  <form class="pn-template__input-wrapper ng-pristine ng-valid" id="template-form" ng-show="!$isSubmit">
+    <div class="pn-template__input-container pn-template__container">
+      <div class="pn-template__email-wrapper">
+        <input class="pn-template__email ng-pristine ng-valid ng-valid-email" newsletter-signup-input="" id="user-email" type="email" ng-model="userEmail" placeholder="Meiliaadress">
+        <label class="pn-template__error" for="user-email"></label>
+        <svg class="pn-template__error-icon" id="error-icon" width="16" height="16" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16ZM6.839 3.545H9.16l-.212 6.56H7.05l-.212-6.56Zm2.363 8.389c-.009.664-.567 1.2-1.2 1.2-.665 0-1.21-.536-1.2-1.2-.01-.656.535-1.187 1.2-1.187.633 0 1.191.531 1.2 1.187Z" fill="#EE0004"></path>
+        </svg>
+      </div>
+      <button class="pn-template__submit pn-button" id="fake-button" type="button">
+        Liitu kohe
+      </button>
+      <button class="pn-template__submit pn-button" id="submit-button" type="button" ng-click="$isSubmit = true" newsletter-signup-submit="" external-event="newsletter-template-submit-button" external-event-user-email="" external-event-agree-newsletter="" external-event-agree-commercial="" hidden="">
+        Liitu kohe
+      </button>
+    </div>
+    <p class="pn-template__small-text pn-template__small-text-copy">
+      Liitumisega annad Õhtuleht Kirjastus AS-ile nõusoleku töödelda oma e-posti aadressi uudiskirjade saatmiseks. Võid oma nõusoleku alati tagasi võtta uudiskirjas oleva lingi kaudu. Tutvu ka
+      <a class="pn-template__terms-link" external-event="terms-and-condition-cta" href="https://www.ohtulehtkirjastus.ee/andmekaitsetingimused/" target="_blank">Õhtuleht Kirjastuse andmekaitsetingimustega
+      </a>
+    </p>
+  </form>
+
+
+  <div class="pn-template__state pn-template__state--second ng-hide" ng-show="$isSubmit">
+    <div class="pn-template__text-wrapper">
+      <strong class="pn-template__title">
+        Aitäh, et liitusid!
+      </strong>
+      <p class="pn-template__text">
+        Meeldivaid lugemiselamusi!
+      </p>
+    </div>
+  </div>
+</article>
+
+<div custom-script="" class="ng-isolate-scope"></div>
+
+
+        </div>
+    </div>
+
+</body>
+</html>

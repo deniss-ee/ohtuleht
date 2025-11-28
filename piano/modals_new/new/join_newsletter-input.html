@@ -8,20 +8,189 @@
   
   <!-- Styles -->
   <link rel="stylesheet" href="../style.css">
+  
+  <style>
+    /* Additional styles for email validation states */
+    .form-group {
+      position: relative;
+    }
+    
+    /* Error state for input wrapper */
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    
+    /* Ensure input height matches design system - override any parent styles */
+    .input-wrapper .input {
+      height: 56px !important;
+    }
+    
+    .input-wrapper--bad .input {
+      border-color: var(--ol__red__700) !important;
+    }
+    
+    /* Hide buttons by default */
+    #fake-button,
+    #submit-button {
+      display: none;
+    }
+    
+    /* Show only the fake button initially */
+    #fake-button:not([hidden]) {
+      display: inline-flex;
+    }
+    
+    /* Show only the submit button when visible */
+    #submit-button:not([hidden]) {
+      display: inline-flex;
+    }
+    
+    /* Error message inside input field */
+    .input-error {
+      position: absolute;
+      top: 50%;
+      right: 48px;
+      transform: translateY(-50%);
+      font-size: var(--font__size__xs);
+      line-height: 1.35;
+      color: var(--ol__red__700);
+      font-family: var(--font__family__inter);
+      font-weight: var(--font__weight__medium);
+      pointer-events: none;
+    }
+    
+    /* Error icon inside input */
+    .input-error-icon {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      display: none;
+      transform: translateY(-50%);
+    }
+    
+    .input-wrapper--bad .input-error-icon {
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
-<div class="modal modal--white modal--left">
-  <h1 class="modal__title">Liitu Õhtulehe uudiskirjaga ja ole kursis maailmas toimuvaga!</h1>
+<config [%% config-button %%] width="1000"></config>
+
+<!-- State 1: Newsletter signup form -->
+<div class="pn-modal pn-modal--white pn-modal--left" ng-init="$isSubmit = false" ng-show="!$isSubmit">
+  <h1 class="pn-modal__title">[%% card-header-1 %%]</h1>
   
-  <p class="modal__text">Õhtulehe uudiskiri toob Sinuni olulised uudised, põnevad persoonilood ja kaasahaarava meelelahutuse – iga päev!</p>
+  <p class="pn-modal__text">[%% card-description %%]</p>
   
-  <div class="form-group">
-    <input type="email" class="input" placeholder="E-Mail" required>
-    <button class="btn btn--red btn--full">Liitu kohe</button>
-  </div>
+  <form class="form-group" id="newsletter-form">
+    <div class="input-wrapper" id="email-wrapper">
+      <input type="email" 
+             class="input" 
+             id="user-email"
+             newsletter-signup-input
+             ng-model="userEmail"
+             placeholder="[%% placeholder-email %%]">
+      <label class="input-error" for="user-email" id="email-error"></label>
+      <svg class="input-error-icon" id="error-icon" width="16" height="16" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16ZM6.839 3.545H9.16l-.212 6.56H7.05l-.212-6.56Zm2.363 8.389c-.009.664-.567 1.2-1.2 1.2-.665 0-1.21-.536-1.2-1.2-.01-.656.535-1.187 1.2-1.187.633 0 1.191.531 1.2 1.187Z" fill="#EE0004"/>
+      </svg>
+    </div>
+    
+    <button class="btn btn--red btn--full" 
+            id="fake-button"
+            type="button">
+      [%% cta-button-text %%]
+    </button>
+    
+    <button class="btn btn--red btn--full"
+            id="submit-button"
+            type="button"
+            ng-click="$isSubmit = true"
+            newsletter-signup-submit
+            external-event="newsletter-template-submit-button"
+            external-event-user-email="{{userEmail}}"
+            external-event-agree-newsletter="{{agreeNewsletter}}"
+            external-event-agree-commercial="{{agreeCommercial}}"
+            hidden>
+      [%% cta-button-text %%]
+    </button>
+  </form>
   
-  <p class="modal__footer">Liitumisega annad Õhtuleht Kirjastus AS-ile nõusoleku töödelda oma e-posti aadressi uudiskirjade saatmiseks.</p>
+  <p class="pn-modal__footer">Liitumisega annad Õhtuleht Kirjastus AS-ile nõusoleku töödelda oma e-posti aadressi uudiskirjade saatmiseks. Võid oma nõusoleku alati tagasi võtta uudiskirjas oleva lingi kaudu. Tutvu ka
+    <a class="pn-modal__footer--link"
+       external-event="terms-and-condition-cta"
+       href="[%% terms-and-condition-href %%]"
+       target="_blank">Õhtuleht Kirjastuse andmekaitsetingimustega</a>
+  </p>
+</div>
+
+<!-- State 2: Thank you message after submission -->
+<div class="pn-modal pn-modal--white pn-modal--center" ng-show="$isSubmit">
+  <h1 class="pn-modal__title">[%% thanks-title %%]</h1>
+  
+  <p class="pn-modal__text">[%% thanks-text %%]</p>
+</div>
+
+<div custom-script>
+  // Email validation regex pattern
+  var checkEmail = function (inputData) {
+    var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(inputData);
+  };
+
+  // Get DOM elements for email validation
+  var emailWrapper = document.querySelector('#email-wrapper');
+  var userEmailInput = document.querySelector('#user-email');
+  var emailError = document.querySelector('#email-error');
+  var errorIcon = document.querySelector('#error-icon');
+  var userSubmit = document.querySelector('#submit-button');
+  var userFakeSubmit = document.querySelector('#fake-button');
+
+  // Toggle between fake button (shows validation) and real submit button
+  function handleUiState() {
+    // Clear any error states when user types
+    emailWrapper.classList.remove('input-wrapper--bad');
+    emailError.innerText = '';
+    errorIcon.style.display = 'none';
+    
+    // Show real submit button only when email is valid
+    if (checkEmail(userEmailInput.value)) {
+      userFakeSubmit.hidden = true;
+      userSubmit.hidden = false;
+    } else {
+      userSubmit.hidden = true;
+      userFakeSubmit.hidden = false;
+    }
+  }
+
+  // Listen for input changes to update button visibility
+  userEmailInput.addEventListener('input', handleUiState);
+
+  // Fake button shows validation errors when clicked
+  userFakeSubmit.addEventListener('click', function () {
+    const userEmail = userEmailInput.value;
+
+    if (!checkEmail(userEmail)) {
+      // Add error styling to the input wrapper
+      emailWrapper.classList.add('input-wrapper--bad');
+      errorIcon.style.display = 'block';
+      userEmailInput.focus();
+
+      // Show appropriate error message
+      if (userEmail === '') {
+        emailError.innerText = 'Please enter an email address.';
+      } else {
+        emailError.innerText = 'Please enter a valid email address.';
+      }
+    } else {
+      // Clear error states if email becomes valid
+      emailWrapper.classList.remove('input-wrapper--bad');
+      errorIcon.style.display = 'none';
+      emailError.innerText = '';
+    }
+  });
 </div>
 
 </body>

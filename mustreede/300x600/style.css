@@ -1,0 +1,375 @@
+:root {
+  --banner-height: 600px;
+  --banner-width: 300px;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-box-sizing: inherit;
+  -webkit-user-select: none;
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  user-select: none;
+}
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+  font: inherit;
+  font-size: 1em;
+  white-space: normal;
+}
+dfn,
+i,
+cite,
+var,
+address,
+em {
+  font-style: normal;
+}
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+  border: none;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+caption,
+th,
+td,
+center {
+  text-align: left;
+  vertical-align: top;
+}
+body {
+  color: black;
+  line-height: 1;
+  background: white;
+}
+q {
+  quotes: "" "";
+}
+ul,
+ol,
+dir,
+menu {
+  list-style: none;
+}
+sub,
+sup {
+  vertical-align: baseline;
+}
+a {
+  color: inherit;
+}
+hr {
+  display: none;
+}
+font {
+  color: inherit !important;
+  font: inherit !important;
+}
+marquee {
+  -moz-binding: none;
+  overflow: inherit !important;
+}
+blink {
+  text-decoration: none;
+}
+nobr {
+  white-space: normal;
+}
+
+[hidden] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.banner-wrapper {
+  -ms-flex-direction: column;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  width: var(--banner-width);
+  height: var(--banner-height);
+  margin: 0 auto;
+  background: -o-linear-gradient(top, #500005 0%, #000 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#500005), to(#000));
+  background: linear-gradient(180deg, #500005 0%, #000 100%);
+  padding: 1rem 0;
+}
+.header {
+  gap: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 1rem;
+}
+.header h1 {
+  leading-trim: both;
+  text-edge: cap;
+  color: #fc0616;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: normal;
+  line-height: 100%;
+  font-family: "Inter";
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.header .subheader {
+  color: #fff;
+  font-family: "Inter";
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: -4px;
+}
+
+.all {
+  leading-trim: both;
+  text-edge: cap;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: normal;
+  font-family: "Inter";
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: -0.24px;
+  background: rgba(144, 12, 21, 0.75);
+  width: 90%;
+  margin-left: 5%;
+}
+
+.content-wrapper {
+  position: relative;
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 52px;
+}
+
+.button {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  z-index: 10;
+  -webkit-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.button.left {
+  left: 4px;
+}
+
+.button.right {
+  right: 4px;
+}
+
+.button.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.button svg {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  -ms-flex: 1;
+  -ms-flex-align: center;
+  -ms-flex-line-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-flex: 1;
+  -webkit-box-pack: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+}
+
+.swiper-slide {
+  width: 100% !important;
+  height: 100%;
+  margin: 0 !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 24px !important;
+  padding: 12px 0 !important;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.swiper-slide > .card {
+  margin-bottom: 0 !important;
+}
+
+.swiper-slide > .card:not(:last-child) {
+  margin-bottom: 24px !important;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.card .clickTagUrl {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.card-img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.card-text {
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -o-transition: opacity 0.2s ease;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-transition: opacity 0.2s ease;
+  inset: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  color: #000;
+  color: #fff;
+  font-weight: 400;
+  font-size: 11 px;
+  font-family: "Fira Sans";
+  text-align: center;
+  pointer-events: none;
+  background: #500005;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover .card-text {
+  opacity: 1;
+}
+
+body {
+  color: black;
+  line-height: 1;
+  background: white;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}

@@ -3,35 +3,133 @@
 /* ============================================ */
 :root {
   /* Colors */
-  --color-white: #fff;
+  --card-height: 768px;
+  --card-width: 1366px;
+  --color-black: black;
   --color-cream: #fdffc1;
   --color-red-dark: #500005;
-  --color-red-primary: #fc0616;
   --color-red-gradient: #e3000f;
-  --color-black: black;
-  
+
   /* Timing */
+  --color-red-primary: #fc0616;
+  --color-white: #fff;
+  --delay-base: 0.2s;
+
+  /* Spacing - Fixed pixel values for desktop (>=1280px), responsive vw below */
+  --delay-step: 0.1s;
   --fade-duration: 1000ms;
-  --intro-duration: 0.8s;
-  --keyword-intro-duration: 0.6s;
-  
-  /* Spacing */
-  --section-padding: 32px;
-  --card-width: 1280px;
-  --card-height: 800px;
-  --lottie-size: 600px;
-  --logo-height: 64px;
-  
-  /* Typography */
   --font-primary: "Fira Sans";
   --font-secondary: "Inter";
-  --font-size-xl: 48px;
-  --font-size-lg: 36px;
+  --font-size-lg: 30px;
+
+  /* Typography - Fixed pixel values for desktop, responsive vw below */
   --font-size-md: 30px;
-  
+  --font-size-xl: 42px;
+  --intro-duration: 0.8s;
+  --keyword-intro-duration: 0.6s;
+  --logo-height: 64px;
+
   /* Animation delays */
-  --delay-base: 0.2s;
-  --delay-step: 0.1s;
+  --lottie-size: 600px;
+  --section-padding: 32px;
+}
+
+/* ============================================ */
+/* RESPONSIVE DESIGN - Activates only when viewport width < 1280px */
+/* ============================================ */
+@media (max-width: 1279px) {
+  :root {
+    /* Convert fixed pixels to vw units based on 1280px = 100vw assumption */
+    --card-height: 100dvh; /* Full viewport height for mobile */
+    --card-width: 100vw;
+    --font-size-lg: 2.34375vw; /* 30px equivalent */
+    --font-size-md: 2.34375vw; /* 30px equivalent */
+    --font-size-xl: 3.28125vw; /* 42px equivalent */
+    --logo-height: 5vw; /* 64px equivalent */
+    --lottie-size: 46.875vw; /* 600px equivalent */
+    --section-padding: 2.5vw; /* 32px equivalent */
+  }
+
+  /* Responsive overrides for specific elements */
+  .keywords {
+    height: 23.4375vw; /* 300px equivalent */
+  }
+
+  h4 {
+    margin: 0 12.5vw; /* 160px equivalent */
+  }
+  
+  /* Mobile Lottie adjustments */
+  .lottie-container {
+    width: 51.5625vw; /* 10% larger than 46.875vw */
+    height: 51.5625vw; /* Maintain aspect ratio */
+    top: calc(50% + 5vw); /* Move center down by 5vw */
+  }
+}
+
+/* ============================================ */
+/* MOBILE-SPECIFIC RESPONSIVE FIXES - Activates when viewport width ≤ 438px */
+/* ============================================ */
+@media (max-width: 438px) {
+  :root {
+    /* Double the vw values for enhanced readability on very small screens */
+    --font-size-lg: 4.6875vw !important; /* 2x the responsive size */
+    --font-size-md: 4.6875vw !important; /* 2x the responsive size */
+    --font-size-xl: 6.5625vw !important; /* 2x the responsive size */
+    --logo-height: 10vw !important; /* 2x the responsive size */
+    --lottie-size: 93.75vw !important; /* 2x the responsive size */
+    --section-padding: 5vw !important; /* 2x the responsive size */
+  }
+  .card-container {
+    height: 85dvh !important;
+  }
+
+  /* Mobile-specific overrides for specific elements */
+  .keywords {
+    position: relative;
+
+    height: 36.875vw !important; /* 2x the responsive size (600px equivalent at 1280px) */
+  }
+
+  h4 {
+    margin: 0 2vw !important; /* 2x the responsive size (320px equivalent at 1280px) */
+  }
+
+  /* Small mobile Lottie adjustments */
+  .lottie-container {
+    width: 103.125vw !important; /* 10% larger than 93.75vw */
+    height: 103.125vw !important; /* Maintain aspect ratio */
+    top: calc(50% + 5vw) !important; /* Move center down by 5vw */
+  }
+
+  /* ============================================ */
+  /* SMALL MOBILE KEYWORD POSITIONS - For screens ≤ 438px */
+  /* ============================================ */
+  /* Adjust these values for optimal positioning on very small screens */
+  #pere {
+    top: 30% !important;
+    left: 5% !important;
+  }
+  #puhkus {
+    top: 62% !important;
+    left: 14% !important;
+  }
+  #meeleolu {
+    top: 95% !important;
+    left: 32% !important;
+  }
+  #rahu {
+    top: 65% !important;
+    right: 28% !important;
+  }
+  #s6brad {
+    top: 40% !important;
+    right: 10% !important;
+  }
+  #kingitused {
+    top: 10% !important;
+    right: 5% !important;
+  }
 }
 
 /* ============================================ */
@@ -166,8 +264,8 @@ nobr {
   width: 100vw;
   height: 100vh;
   height: 100dvh; /* Use dynamic viewport height for mobile browsers */
-  background: radial-gradient(50% 50% at 50% 50%, rgba(227, 0, 15, 0) 0%, var(--color-red-gradient) 100%), var(--color-red-primary);
   overflow: hidden;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(227, 0, 15, 0) 0%, var(--color-red-gradient) 100%), var(--color-red-primary);
 }
 
 .card-container {
@@ -183,20 +281,20 @@ nobr {
 
 /* This positions the animation in the CENTER of the card */
 .lottie-container {
+  z-index: 5;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   width: var(--lottie-size);
   height: var(--lottie-size);
-  z-index: 5;
   pointer-events: none;
+  transform: translate(-50%, -50%);
 }
 
 /* The actual animation div inside the container */
 #lottie-animation {
-  width: 100%;                  /* Fill the container */
-  height: 100%;                 /* Fill the container */
+  width: 100%; /* Fill the container */
+  height: 100%; /* Fill the container */
 }
 
 .section {
@@ -216,6 +314,7 @@ nobr {
 h1 {
   leading-trim: both;
   text-edge: cap;
+  margin-bottom: 8px;
   color: var(--color-white);
   font-style: normal;
   font-weight: 500;
@@ -223,7 +322,6 @@ h1 {
   line-height: 125%;
   font-family: var(--font-primary);
   text-align: center;
-  margin-bottom: 8px;
 }
 
 h2 {
@@ -269,27 +367,27 @@ h2 {
 
 #pere {
   top: 0;
-  left: 0;
+  left: 5%;
 }
 #puhkus {
   top: 40%;
-  left: 12.5%;
+  left: 14%;
 }
 #meeleolu {
   top: 80%;
-  left: 30%;
+  left: 32%;
 }
 #rahu {
   top: 80%;
-  right: 30%;
+  right: 32%;
 }
 #s6brad {
   top: 40%;
-  right: 12.5%;
+  right: 14%;
 }
 #kingitused {
   top: 0;
-  right: 0;
+  right: 5%;
 }
 
 h3 {
@@ -387,9 +485,9 @@ h4 {
 
 /* When h1 needs to fade out, ensure it uses transition */
 .section.--top h1.fade-target {
-  animation: none;
   opacity: 1;
   transition: opacity var(--fade-duration) ease;
+  animation: none;
 }
 
 /* When hiding, fade it out */
@@ -404,9 +502,9 @@ h4 {
 
 /* When h2 needs to fade out, ensure it uses transition */
 .section.--top h2.fade-target {
-  animation: none;
   opacity: 1;
   transition: opacity var(--fade-duration) ease;
+  animation: none;
 }
 
 /* When hiding, fade it out */
@@ -415,28 +513,28 @@ h4 {
 }
 
 .lottie-container {
+  opacity: 0;
   animation: fadeInScale 1s ease-out forwards;
   animation-delay: 0s;
-  opacity: 0;
 }
 
 .keyword {
-  animation: fadeInPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
   opacity: 0;
+  animation: fadeInPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
 /* Each keyword appears one after another - cascade effect */
 /* Note: animation-delay only applies on page load, not on fade-out */
 .keyword {
-  animation: fadeInPop var(--keyword-intro-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
   opacity: 0;
+  animation: fadeInPop var(--keyword-intro-duration) cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
 /* When keywords have fade-target class, they use transition instead of animation */
 .keyword.fade-target {
-  animation: none;
   opacity: 1;
   transition: opacity var(--fade-duration) ease;
+  animation: none;
 }
 
 /* When hiding, fade them out */
@@ -480,10 +578,115 @@ h4 {
 }
 
 .snow {
-  position: fixed;
   inset: 0;
-  pointer-events: none;
   z-index: 1000;
+  position: fixed;
+  pointer-events: none;
+}
+
+/* ============================================ */
+/* MUSIC TOGGLE BUTTON */
+/* ============================================ */
+.music-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--color-red-primary);
+  border-radius: 25px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: var(--font-secondary);
+  color: var(--color-red-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.music-toggle:hover {
+  background: var(--color-red-primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+.music-toggle.muted {
+  opacity: 0.7;
+}
+
+.music-toggle.muted::before {
+  content: "🔇 ";
+}
+
+.music-toggle:not(.muted)::before {
+  content: "🔊 ";
+}
+
+/* ============================================ */
+/* START SCREEN OVERLAY */
+/* ============================================ */
+.start-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--color-red-primary), var(--color-red-gradient));
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  animation: fadeIn 1s ease-out;
+}
+
+.start-content {
+  text-align: center;
+  color: white;
+  animation: slideUp 0.8s ease-out 0.5s both;
+}
+
+.start-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.start-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.start-hint {
+  font-size: 1rem;
+  opacity: 0.7;
+  animation: pulse 2s infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.start-overlay.hidden {
+  display: none;
 }
 
 .snowflake {
@@ -514,198 +717,5 @@ h4 {
   }
   100% {
     margin-left: 0;
-  }
-}
-
-/* ============================================ */
-/* MOBILE RESPONSIVE STYLES */
-/* ============================================ */
-
-/* Tablet */
-@media (max-width: 1280px) {
-  .card-container {
-    width: 100vw;
-    height: 100vh;
-    max-width: 1280px;
-    max-height: 800px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  :root {
-    --section-padding: 80px;
-    --lottie-size: 600px;
-    --font-size-xl: 32px;
-    --font-size-lg: 24px;
-    --font-size-md: 20px;
-    --logo-height: 48px;
-  }
-  
-  .card-container {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh; /* Use dynamic viewport height for mobile browsers */
-  }
-  
-  h1 {
-    font-size: var(--font-size-xl);
-    padding: 0 20px;
-  }
-  
-  h2 {
-    font-size: var(--font-size-md);
-    padding: 0 20px;
-  }
-  
-  h3 {
-    font-size: var(--font-size-lg);
-    padding: 0 20px;
-    line-height: 140%;
-  }
-  
-  h4 {
-    font-size: var(--font-size-md);
-    margin: 0 40px;
-    line-height: 140%;
-  }
-  
-  .lottie-container {
-    width: var(--lottie-size);
-    height: var(--lottie-size);
-  }
-  
-  .keywords {
-    height: 250px;
-  }
-  
-  .keyword {
-    font-size: 28px;
-  }
-  
-  /* Adjust keyword positions for mobile - tighter vertical spacing */
-  #pere {
-    top: 0;
-    left: 5%;
-  }
-  
-  #puhkus {
-    top: 32%;
-    left: 8%;
-  }
-  
-  #meeleolu {
-    top: 64%;
-    left: 20%;
-  }
-  
-  #rahu {
-    top: 64%;
-    right: 20%;
-  }
-  
-  #s6brad {
-    top: 32%;
-    right: 8%;
-  }
-  
-  #kingitused {
-    top: 0;
-    right: 5%;
-  }
-}
-
-/* Small Mobile */
-@media (max-width: 480px) {
-  :root {
-    --section-padding: 60px;
-    --lottie-size: 450px;
-    --font-size-xl: 24px;
-    --font-size-lg: 20px;
-    --font-size-md: 16px;
-    --logo-height: 40px;
-  }
-  
-  h1 {
-    padding: 0 16px;
-  }
-  
-  h2 {
-    padding: 0 16px;
-  }
-  
-  h3 {
-    padding: 0 16px;
-    line-height: 150%;
-  }
-  
-  h4 {
-    margin: 0 20px;
-    line-height: 150%;
-  }
-  
-  .keywords {
-    height: 120px;
-  }
-  
-  .keyword {
-    font-size: 22px;
-  }
-  
-  /* Tighter keyword positions for small screens */
-  #pere {
-    top: 0;
-    left: 15%;
-  }
-  
-  #puhkus {
-    top: 28%;
-    left: 8%;
-  }
-  
-  #meeleolu {
-    top: 56%;
-    left: 20%;
-  }
-  
-  #rahu {
-    top: 56%;
-    right: 20%;
-  }
-  
-  #s6brad {
-    top: 28%;
-    right: 8%;
-  }
-  
-  #kingitused {
-    top: 0;
-    right: 15%;
-  }
-  
-  /* Reduce snow particles on mobile for performance */
-  .snowflake:nth-child(n+100) {
-    display: none;
-  }
-}
-
-/* Landscape mobile phones */
-@media (max-width: 768px) and (orientation: landscape) {
-  .card-container {
-    height: 100vh;
-    height: 100dvh; /* Use dynamic viewport height for mobile browsers */
-  }
-  
-  .keywords {
-    height: 180px;
-  }
-  
-  .keyword {
-    font-size: 20px;
-  }
-  
-  .lottie-container {
-    width: 420px;
-    height: 420px;
   }
 }

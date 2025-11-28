@@ -97,5 +97,11 @@ export const bannerData = {
       alt: "Klick",
       url: "https://www.klick.ee/mustreede?utm_source=ohtuleht&utm_medium=mustreede",
     },
+        {
+      text: "Must Reede! Nüüd kõikidelt tavahinnaga toodetelt –20% , kui ostad üle 70 €.",
+      logo: "../logo/stockmann.png",
+      alt: "Klick",
+      url: "https://www.stockmann.ee/et-ee/kategooria/must-reede?utm_source=ohtuleht&utm_medium=mustreede&utm_campaign=black-week_1125&utm_content=ohtulehtmustreede",
+    }
   ],
 };

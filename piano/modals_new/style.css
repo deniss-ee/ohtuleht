@@ -125,8 +125,56 @@
 *::after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+}
+/* Reset margins and paddings only for Piano modal elements to prevent parent CSS interference */
+.pn-modal *,
+.pn-modal *::before,
+.pn-modal *::after,
+.card *,
+.card *::before,
+.card *::after,
+.section *,
+.section *::before,
+.section *::after {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+/* Re-apply intentional spacing from component classes */
+.pn-modal {
+  margin: 0 !important;
+  padding: var(--spacing__6) var(--spacing__4) var(--spacing__4) !important;
+}
+.card {
+  margin: 0 !important;
+  padding: var(--spacing__3) var(--spacing__3) !important;
+}
+.section {
+  margin: 0 !important;
+  padding: var(--spacing__4) !important;
+}
+.section--white {
+  padding: 0 !important;
+}
+.list__bullet {
+  margin-top: 4px !important;
+}
+.price__original {
+  margin-top: -8px !important;
+}
+.btn {
+  padding: 0 var(--spacing__8) !important;
+}
+.input {
+  padding: 0 var(--spacing__3) !important;
+}
+.badge {
+  padding: var(--spacing__3) !important;
+}
+.price-box {
+  padding: var(--spacing__2) var(--spacing__4) !important;
+}
+.banner {
+  padding: var(--spacing__4) !important;
 }
 body {
   -moz-osx-font-smoothing: grayscale;
@@ -134,7 +182,7 @@ body {
   margin: 0;
   font-family: var(--font__family__inter);
 }
-.modal {
+.pn-modal {
   -ms-flex-direction: column;
   -webkit-box-direction: normal;
   -webkit-box-orient: vertical;
@@ -147,82 +195,82 @@ body {
   border-radius: var(--radius__2xl);
   background: var(--white);
 }
-.modal--white {
+.pn-modal--white {
   background: var(--white);
 }
-.modal--yellow {
+.pn-modal--yellow {
   background: var(--ol__yellow__500);
 }
-.modal--red {
+.pn-modal--red {
   background: var(--ol__red__700);
 }
-.modal--left {
+.pn-modal--left {
   -ms-flex-align: start;
   -webkit-box-align: start;
   align-items: flex-start;
 }
-.modal--center {
+.pn-modal--center {
   -ms-flex-align: center;
   -webkit-box-align: center;
   align-items: center;
   text-align: center;
 }
-.modal__title {
+.pn-modal__title {
   color: var(--ol__red__700);
   font-weight: var(--font__weight__bold);
   font-size: var(--font__size__2xl);
   line-height: 1.2;
   font-family: var(--font__family__fira);
 }
-.modal--yellow .modal__title {
+.pn-modal--yellow .pn-modal__title {
   color: var(--ol__red__700);
 }
-.modal--red .modal__title {
+.pn-modal--red .pn-modal__title {
   color: var(--ol__yellow__500);
 }
-.modal__subtitle {
+.pn-modal__subtitle {
   color: var(--black);
   font-weight: var(--font__weight__bold);
   font-size: var(--font__size__base);
   line-height: 1.35;
   font-family: var(--font__family__inter);
 }
-.modal__text {
+.pn-modal__text {
   color: var(--ol__monochrome__950);
   font-weight: var(--font__weight__medium);
   font-size: var(--font__size__base);
   line-height: 1.35;
   font-family: var(--font__family__inter);
 }
-.modal--yellow .modal__text {
+.pn-modal--yellow .pn-modal__text {
   color: var(--ol__yellow__950);
 }
-.modal--red .modal__text {
+.pn-modal--red .pn-modal__text {
   color: var(--white);
 }
-.modal__footer {
+.pn-modal__footer {
   color: var(--ol__monochrome__500);
   font-weight: var(--font__weight__medium);
   font-size: var(--font__size__xs);
   line-height: 1.35;
   font-family: var(--font__family__inter);
 }
-.modal__footer--dark {
+.pn-modal__footer--dark {
   color: var(--ol__monochrome__900);
 }
-.modal--yellow .modal__footer {
+.pn-modal--yellow .pn-modal__footer {
   color: var(--ol__yellow__900);
 }
-.modal--red .modal__footer {
+.pn-modal--red .pn-modal__footer {
   color: var(--white);
 }
-.modal__footer--link {
+.pn-modal__footer--link {
   color: var(--ol__red__700);
   font-weight: var(--font__weight__bold);
   text-decoration: underline;
   cursor: pointer;
 }
-.modal__footer--link:hover {
+.pn-modal__footer--link:hover {
   color: var(--ol__red__800);
 }
 .price {
@@ -241,7 +289,7 @@ body {
   color: var(--ol__red__700);
   font-weight: var(--font__weight__bold);
   font-size: var(--font__size__4xl);
-  line-height: 1.35;
+  line-height: 1;
   font-family: var(--font__family__fira);
   text-align: center;
 }
@@ -253,8 +301,8 @@ body {
   font-family: var(--font__family__fira);
   text-align: center;
 }
-.modal--red .price--lg,
-.modal--red .price--xl,
+.pn-modal--red .price--lg,
+.pn-modal--red .price--xl,
 .card--red .price--lg,
 .card--red .price--xl {
   color: var(--ol__yellow__500);
@@ -269,7 +317,7 @@ body {
   line-height: 1.35;
   font-family: var(--font__family__fira);
 }
-.modal--red .price__period,
+.pn-modal--red .price__period,
 .card--red .price__period {
   color: var(--white);
 }
@@ -339,11 +387,11 @@ body {
 .btn--full {
   width: 100%;
 }
-.modal--red .btn--red {
+.pn-modal--red .btn--red {
   color: var(--ol__yellow__950);
   background: var(--ol__yellow__500);
 }
-.modal--red .btn--red:hover {
+.pn-modal--red .btn--red:hover {
   background: var(--ol__yellow__600);
 }
 .form-group {
@@ -405,7 +453,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: var(--spacing__2) var(--spacing__2);
+  padding: var(--spacing__3) var(--spacing__3);
   border-radius: var(--radius__lg);
   background: var(--white);
 }
@@ -422,10 +470,10 @@ body {
   color: var(--white);
   background: var(--ol__red__700);
 }
-.card--red .modal__text {
+.card--red .pn-modal__text {
   color: var(--white);
 }
-.card--red .modal__footer {
+.card--red .pn-modal__footer {
   color: var(--white);
 }
 .list {
@@ -454,11 +502,14 @@ body {
   height: 12px;
   margin-top: 4px;
   border-radius: 0;
-  background: var(--ol__red__700);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.13 8.74005L9.37005 4.5L8.62995 3.76995L5.13 7.27005L3.36 5.50005L2.62995 6.22995L5.13 8.74005ZM6 12C5.1767 12 4.40005 11.8425 3.67005 11.5275C2.94005 11.2125 2.30335 10.7833 1.75995 10.24C1.21665 9.69665 0.7875 9.05995 0.4725 8.32995C0.1575 7.59995 0 6.8233 0 6C0 5.17 0.1575 4.39 0.4725 3.66C0.7875 2.93 1.21665 2.295 1.75995 1.755C2.30335 1.215 2.94005 0.7875 3.67005 0.4725C4.40005 0.1575 5.1767 0 6 0C6.83 0 7.61 0.1575 8.34 0.4725C9.07 0.7875 9.705 1.215 10.245 1.755C10.785 2.295 11.2125 2.93 11.5275 3.66C11.8425 4.39 12 5.17 12 6C12 6.8233 11.8425 7.59995 11.5275 8.32995C11.2125 9.05995 10.785 9.69665 10.245 10.24C9.705 10.7833 9.07 11.2125 8.34 11.5275C7.61 11.8425 6.83 12 6 12ZM6 11C7.3933 11 8.57495 10.5133 9.54495 9.54C10.5149 8.5667 11 7.3867 11 6C11 4.6067 10.5149 3.42505 9.54495 2.45505C8.57495 1.48505 7.3933 1.00005 6 1.00005C4.6133 1.00005 3.4333 1.48505 2.46 2.45505C1.4867 3.42505 1.00005 4.6067 1.00005 6C1.00005 7.3867 1.4867 8.5667 2.46 9.54C3.4333 10.5133 4.6133 11 6 11Z" fill="%23E3000F"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
 }
-.modal--red .list__bullet,
+.pn-modal--red .list__bullet,
 .card--red .list__bullet {
-  background: var(--ol__yellow__500);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.13 8.74005L9.37005 4.5L8.62995 3.76995L5.13 7.27005L3.36 5.50005L2.62995 6.22995L5.13 8.74005ZM6 12C5.1767 12 4.40005 11.8425 3.67005 11.5275C2.94005 11.2125 2.30335 10.7833 1.75995 10.24C1.21665 9.69665 0.7875 9.05995 0.4725 8.32995C0.1575 7.59995 0 6.8233 0 6C0 5.17 0.1575 4.39 0.4725 3.66C0.7875 2.93 1.21665 2.295 1.75995 1.755C2.30335 1.215 2.94005 0.7875 3.67005 0.4725C4.40005 0.1575 5.1767 0 6 0C6.83 0 7.61 0.1575 8.34 0.4725C9.07 0.7875 9.705 1.215 10.245 1.755C10.785 2.295 11.2125 2.93 11.5275 3.66C11.8425 4.39 12 5.17 12 6C12 6.8233 11.8425 7.59995 11.5275 8.32995C11.2125 9.05995 10.785 9.69665 10.245 10.24C9.705 10.7833 9.07 11.2125 8.34 11.5275C7.61 11.8425 6.83 12 6 12ZM6 11C7.3933 11 8.57495 10.5133 9.54495 9.54C10.5149 8.5667 11 7.3867 11 6C11 4.6067 10.5149 3.42505 9.54495 2.45505C8.57495 1.48505 7.3933 1.00005 6 1.00005C4.6133 1.00005 3.4333 1.48505 2.46 2.45505C1.4867 3.42505 1.00005 4.6067 1.00005 6C1.00005 7.3867 1.4867 8.5667 2.46 9.54C3.4333 10.5133 4.6133 11 6 11Z" fill="%23FCD700"/></svg>');
 }
 .list__text {
   -ms-flex: 1;
@@ -470,10 +521,10 @@ body {
   line-height: 1.35;
   font-family: var(--font__family__inter);
 }
-.modal--yellow .list__text {
+.pn-modal--yellow .list__text {
   color: var(--ol__yellow__950);
 }
-.modal--red .list__text,
+.pn-modal--red .list__text,
 .card--red .list__text {
   color: var(--white);
 }
@@ -513,7 +564,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: var(--spacing__2) var(--spacing__4);
-  border: var(--borderwidth__2) solid var(--ol__monochrome__100);
+  border: var(--borderwidth__1) dashed var(--ol__monochrome__100);
   border-radius: var(--radius__md);
 }
 .price-box--featured {
@@ -624,7 +675,7 @@ body {
   -webkit-box-orient: vertical;
   flex-direction: column;
 }
-.modal__container-left {
+.pn-modal__container-left {
   -ms-flex-direction: column;
   -webkit-box-direction: normal;
   -webkit-box-orient: vertical;
@@ -635,7 +686,7 @@ body {
   flex-direction: column;
   width: 100%;
 }
-.modal__container {
+.pn-modal__container {
   -ms-flex-direction: column;
   -webkit-box-direction: normal;
   -webkit-box-orient: vertical;
@@ -646,3 +697,37 @@ body {
   flex-direction: column;
   width: 100%;
 }
+/* ============================================
+   RIBA (Top Banner Bar) Component
+   A compact horizontal bar for subscription CTAs
+   ============================================ */
+.riba {
+  -ms-flex-pack: justify;
+  -webkit-box-pack: justify;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing__3);
+  width: 100%;
+  padding: var(--spacing__1) var(--spacing__3) !important;
+  background: var(--ol__yellow__500);
+  overflow: hidden;
+}
+.riba__text {
+  color: var(--black);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__base);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+  flex: 1;
+}
+.riba .btn {
+  height: 28px;
+  padding: 0 var(--spacing__2) !important;
+  font-size: var(--font__size__base);
+  text-transform: uppercase;
+}
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="et">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Õhtuleht Kirjastuse digipaketi eripakkumine</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../style.css" />
+
+    <!-- Page-specific responsive layout -->
+    <style>
+      @media only screen and (min-width: 648px) {
+        /* Container becomes a flex row to align left and right side-by-side */
+        .pn-modal--left {
+          display: flex;
+          flex-direction: row;
+          align-items: center; /* Vertically center both sides */
+          gap: var(--spacing__6);
+        }
+
+        /* Left side takes up available space */
+        .pn-modal__container-left {
+          flex: 1;
+        }
+
+        /* Right side (card container) has fixed width */
+        .pn-modal__container {
+          flex: 0 0 auto;
+          width: 350px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+<div class="pn-modal pn-modal--yellow pn-modal--left">
+  <div class="pn-modal__container-left">
+    <h1 class="pn-modal__title">[%%benefits-promo%%]</h1>
+    <h2 class="pn-modal__subtitle">Telli digipakett ja saad:</h2>
+    <ul class="list">
+      <li class="list__item">
+        <div class="list__bullet"></div>
+        <div class="list__text">[%%benefits-item--1%%]</div>
+      </li>
+      <li class="list__item">
+        <div class="list__bullet"></div>
+        <div class="list__text">[%%benefits-item--2%%]</div>
+      </li>
+      <li class="list__item">
+        <div class="list__bullet"></div>
+        <div class="list__text">[%%benefits-item--3%%]</div>
+      </li>
+    </ul>
+  </div>
+  <div class="pn-modal__container">
+    <div class="card card--white card--center">
+      <div class="price--lg">
+        <span class="price__value">[%%benefits-price%%]</span>
+        <span class="price__period">[%%benefits-price--term%%]</span>
+      </div>
+      <button class="btn btn--red">[%%btn-text%%]</button>
+    </div>
+    <div ng-show="!isUserValid()">
+      <div class="banner">
+        <p class="banner__text">Tellimus olemas?
+          <span class="banner__link" external-event="cta-login" ng-click="login()">Logi sisse →</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  </body>
+</html>
