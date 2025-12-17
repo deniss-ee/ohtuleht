@@ -16,6 +16,11 @@ body {
   min-height: 100vh;
 }
 
+:root {
+  /* Change this value to move the video up or down */
+  --banner-video-y: 30%; /* 50% = centered, higher = further down */
+}
+
 .page {
   margin: auto;
   width: 100%;
@@ -79,6 +84,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% var(--banner-video-y);
 }
 
 .banner-overlay {
