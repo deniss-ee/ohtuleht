@@ -1,0 +1,36 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  text-decoration: none;
+}
+.banner-wrapper {
+  overflow: hidden;
+  background: #fc0616;
+}
+
+.banner-content {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.text {
+  flex-shrink: 0;
+}
+
+.img-wrapper {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background-size: cover !important;
+}
