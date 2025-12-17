@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>1200×400 Video Banner Example</title>
+    <meta name="description" content="Responsive 3:1 banner with background video and overlay image." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page" role="main">
+      <h1 class="visually-hidden" id="banner-heading">Featured promotional banner</h1>
+
+      <section class="banner" aria-labelledby="banner-heading">
+        <div class="banner-box">
+          <div class="banner-box__content">
+            <video class="banner-video" autoplay muted loop playsinline aria-hidden="true">
+              <!-- Replace with your own video sources -->
+              <source src="video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            <!-- Replace with your own overlay image -->
+            <img class="banner-overlay" src="overlay.png" alt="Promotional message or brand logo" loading="lazy" />
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
