@@ -22,7 +22,40 @@
     </div>
 
     <script>
-      // Quiz configuration data
+      /******************************************************************************
+       * SWEDBANK QUIZ BANNER - INTERACTIVE QUIZ SYSTEM
+       *
+       * OVERVIEW:
+       * This is an interactive banner with 11 slides total:
+       * - 2 intro slides
+       * - 3 question slides
+       * - 6 answer slides (correct/incorrect for each question)
+       *
+       * TRACKING REQUIREMENTS FOR IT DEPARTMENT:
+       * Google Ad tracking needs to be added to ALL buttons in the quiz.
+       * Each button click should be tracked with appropriate event labels.
+       *
+       * BUTTON TYPES THAT NEED TRACKING:
+       * 1. Intro navigation buttons (2 buttons)
+       * 2. Question answer buttons (7 buttons across 3 questions)
+       * 3. "Next Question" buttons (5 buttons on answer screens)
+       * 4. Final CTA button (1 button - external link with clickTag)
+       ******************************************************************************/
+
+      /******************************************************************************
+       * QUIZ CONFIGURATION DATA
+       *
+       * This object contains all quiz content and can be easily modified.
+       * Structure:
+       * - intro: Array of 2 intro slides
+       * - questions: Array of 3 question objects, each containing:
+       *   - question: Question text
+       *   - answers: Array of answer options with correct/incorrect flags
+       *   - correctText: Message shown when answer is correct
+       *   - incorrectText: Message shown when answer is incorrect
+       *   - buttonText: Text for the next action button
+       *   - isLast: Flag indicating if this is the final question
+       ******************************************************************************/
       const quizData = {
         intro: [
           {
@@ -80,25 +113,73 @@
         ],
       };
 
-      // Current state
+      /******************************************************************************
+       * STATE MANAGEMENT VARIABLES
+       *
+       * These variables track the current position in the quiz flow:
+       * - currentSlide: Current intro slide index (0 or 1)
+       * - currentQuestion: Current question index (0, 1, or 2)
+       * - isInIntro: Boolean flag - true when showing intro slides, false when in questions
+       ******************************************************************************/
       let currentSlide = 0;
       let currentQuestion = 0;
       let isInIntro = true;
 
-      // DOM elements
+      /******************************************************************************
+       * DOM ELEMENT REFERENCE
+       *
+       * This is the main container where all dynamic content is rendered.
+       * All slides (intro, questions, answers) are injected into this element.
+       ******************************************************************************/
       const contentContainer = document.getElementById("quiz-content");
 
-      // Render functions
+      /******************************************************************************
+       * RENDER FUNCTION: INTRO SLIDES
+       *
+       * Generates HTML for intro slides (Slide 1 and Slide 2).
+       *
+       * ⚠️ TRACKING POINT FOR IT DEPARTMENT:
+       * The button generated here needs Google Analytics tracking.
+       * Suggested tracking events:
+       * - Event Category: "Quiz Interaction"
+       * - Event Action: "Intro Navigation"
+       * - Event Label: "Intro Slide 1" or "Intro Slide 2"
+       *
+       * Current onclick: nextSlide()
+       * Add tracking before or after this function call.
+       ******************************************************************************/
       function renderIntro(introData) {
         return `
           <${introData.titleTag}>${introData.title}</${introData.titleTag}>
           <div class="btn-wrapper">
             <button class="answer" onclick="nextSlide()">${introData.buttonText}</button>
           </div>
-          <p class="foo">Finantsteenuseid pakub Swedbank AS. Pea nõu ja tutvu tingimustega.</p>
+          <p class="foo">Finantsteenuseid pakub Swedbank AS.<br>Pea nõu ja tutvu tingimustega.</p>
         `;
       }
 
+      /******************************************************************************
+       * RENDER FUNCTION: QUESTION SLIDES
+       *
+       * Generates HTML for question slides (Questions 1, 2, and 3).
+       * Dynamically creates answer buttons based on the question data.
+       *
+       * ⚠️ TRACKING POINT FOR IT DEPARTMENT:
+       * Each answer button needs Google Analytics tracking.
+       * Suggested tracking events:
+       * - Event Category: "Quiz Interaction"
+       * - Event Action: "Answer Selected"
+       * - Event Label: "Q1: Answer 1" / "Q1: Answer 2" / "Q2: Answer 1" etc.
+       * - Custom Dimension (optional): Track if answer was correct/incorrect
+       *
+       * Current onclick: selectAnswer(questionIndex, answerIndex)
+       * Add tracking to capture which question and which answer was selected.
+       *
+       * IMPORTANT: Each question can have 2-3 answer buttons
+       * - Question 1: 2 answers
+       * - Question 2: 3 answers
+       * - Question 3: 2 answers
+       ******************************************************************************/
       function renderQuestion(questionData, questionIndex) {
         const buttons = questionData.answers.map((answer, index) => `<button class="answer" onclick="selectAnswer(${questionIndex}, ${index})">${answer.text}</button>`).join("");
 
@@ -107,10 +188,39 @@
           <div class="btn-wrapper">
             ${buttons}
           </div>
-          <p class="foo">Finantsteenuseid pakub Swedbank AS. Pea nõu ja tutvu tingimustega.</p>
+          <p class="foo">Finantsteenuseid pakub Swedbank AS.<br>Pea nõu ja tutvu tingimustega.</p>
         `;
       }
 
+      /******************************************************************************
+       * RENDER FUNCTION: ANSWER RESULT SLIDES
+       *
+       * Generates HTML for correct/incorrect answer feedback slides.
+       * Shows different content based on whether the answer was correct.
+       *
+       * ⚠️ TRACKING POINT FOR IT DEPARTMENT:
+       * Two types of buttons need tracking here:
+       *
+       * 1. "Next Question" buttons (appear after Q1 and Q2 answers)
+       *    - Current onclick: nextQuestion()
+       *    - Suggested tracking:
+       *      - Event Category: "Quiz Interaction"
+       *      - Event Action: "Continue to Next Question"
+       *      - Event Label: "After Q1" / "After Q2"
+       *
+       * 2. Final CTA button (appears after Q3 answer)
+       *    - This is the MOST IMPORTANT tracking point - leads to external URL
+       *    - Current onclick: window.open(olBanner.getClickTag(...), '_blank')
+       *    - Suggested tracking:
+       *      - Event Category: "Quiz Completion"
+       *      - Event Action: "CTA Click"
+       *      - Event Label: "Learn More - Final"
+       *    - This button opens the final landing page with clickTag tracking
+       *
+       * PARAMETERS:
+       * - questionData: Contains button text and content
+       * - isCorrect: Boolean indicating if user's answer was correct
+       ******************************************************************************/
       function renderAnswer(questionData, isCorrect) {
         const resultText = isCorrect ? "Õige!" : "Vale!";
         const contentText = isCorrect ? questionData.correctText : questionData.incorrectText;
@@ -124,7 +234,10 @@
           contentHTML = `<h3>${contentText}</h3>`;
         }
 
-        const buttonHTML = questionData.isLast ? `<button onclick="window.open(olBanner.getClickTag('https://track.adform.net/C/?bn=85500557'), '_blank')" class="answer">${questionData.buttonText}</button>` : `<button class="answer" onclick="nextQuestion()">${questionData.buttonText}</button>`;
+        // IMPORTANT: This generates two different button types:
+        // 1. Regular "Next Question" button for Q1 and Q2
+        // 2. Final CTA button with external link for Q3
+        const buttonHTML = questionData.isLast ? `<button onclick="window.open(olBanner.getClickTag('https://track.adform.net/C/?bn=85500558'), '_blank')" class="answer">${questionData.buttonText}</button>` : `<button class="answer" onclick="nextQuestion()">${questionData.buttonText}</button>`;
 
         return `
           <h2>${resultText}</h2>
@@ -132,30 +245,92 @@
           <div class="btn-wrapper">
             ${buttonHTML}
           </div>
-          <p class="foo">Finantsteenuseid pakub Swedbank AS. Pea nõu ja tutvu tingimustega.</p>
+          <p class="foo">Finantsteenuseid pakub Swedbank AS.<br>Pea nõu ja tutvu tingimustega.</p>
         `;
       }
 
-      // Navigation functions
+      /******************************************************************************
+       * NAVIGATION FUNCTION: Next Slide (Intro Navigation)
+       *
+       * Handles progression through intro slides (Slide 1 → Slide 2 → Questions).
+       *
+       * FLOW:
+       * 1. User clicks button on Intro Slide 1 → moves to Intro Slide 2
+       * 2. User clicks button on Intro Slide 2 → moves to Question 1
+       *
+       * ⚠️ TRACKING SUGGESTION FOR IT DEPARTMENT:
+       * Add tracking at the beginning of this function to capture intro navigation:
+       * Example:
+       *   gtag('event', 'intro_navigation', {
+       *     'event_category': 'Quiz Interaction',
+       *     'event_label': 'Intro Slide ' + (currentSlide + 1)
+       *   });
+       ******************************************************************************/
       function nextSlide() {
         if (isInIntro) {
           currentSlide++;
           if (currentSlide >= quizData.intro.length) {
+            // End of intro slides, transition to first question
             isInIntro = false;
             currentQuestion = 0;
             showQuestion(currentQuestion);
           } else {
+            // Move to next intro slide
             showIntro(currentSlide);
           }
         }
       }
 
+      /******************************************************************************
+       * NAVIGATION FUNCTION: Answer Selection
+       *
+       * Handles user's answer selection on question slides.
+       * Determines if the answer was correct and shows appropriate feedback.
+       *
+       * PARAMETERS:
+       * - questionIndex: Which question (0, 1, or 2)
+       * - answerIndex: Which answer was clicked (0, 1, or 2 depending on question)
+       *
+       * ⚠️ TRACKING SUGGESTION FOR IT DEPARTMENT:
+       * This is a CRITICAL tracking point - captures user's quiz answers.
+       * Add tracking to record:
+       * - Which question was answered
+       * - Which answer was selected
+       * - Whether answer was correct or incorrect
+       *
+       * Example:
+       *   gtag('event', 'answer_selected', {
+       *     'event_category': 'Quiz Interaction',
+       *     'event_label': 'Q' + (questionIndex + 1) + ' - Answer ' + (answerIndex + 1),
+       *     'correct': isCorrect ? 'Yes' : 'No'
+       *   });
+       ******************************************************************************/
       function selectAnswer(questionIndex, answerIndex) {
         const question = quizData.questions[questionIndex];
         const isCorrect = question.answers[answerIndex].correct;
+
+        // Show the appropriate answer feedback (correct or incorrect)
         showAnswer(questionIndex, isCorrect);
       }
 
+      /******************************************************************************
+       * NAVIGATION FUNCTION: Next Question
+       *
+       * Progresses from answer feedback to the next question.
+       * Called when user clicks "Järgmine küsimus" on answer slides.
+       *
+       * FLOW:
+       * - After Q1 answer → moves to Q2
+       * - After Q2 answer → moves to Q3
+       *
+       * ⚠️ TRACKING SUGGESTION FOR IT DEPARTMENT:
+       * Track quiz progression:
+       * Example:
+       *   gtag('event', 'next_question', {
+       *     'event_category': 'Quiz Interaction',
+       *     'event_label': 'From Q' + currentQuestion + ' to Q' + (currentQuestion + 1)
+       *   });
+       ******************************************************************************/
       function nextQuestion() {
         currentQuestion++;
         if (currentQuestion < quizData.questions.length) {
@@ -163,25 +338,55 @@
         }
       }
 
-      // Display functions
+      /******************************************************************************
+       * DISPLAY FUNCTIONS
+       *
+       * These functions update the DOM by injecting rendered HTML into the container.
+       * They call the appropriate render function and update the page content.
+       *
+       * NO TRACKING NEEDED IN THESE FUNCTIONS
+       * Tracking should be done in the navigation functions above, not here.
+       ******************************************************************************/
+
+      // Displays intro slide content
       function showIntro(index) {
         contentContainer.innerHTML = renderIntro(quizData.intro[index]);
       }
 
+      // Displays question slide content
       function showQuestion(index) {
         contentContainer.innerHTML = renderQuestion(quizData.questions[index], index);
       }
 
+      // Displays answer feedback slide content
       function showAnswer(questionIndex, isCorrect) {
         contentContainer.innerHTML = renderAnswer(quizData.questions[questionIndex], isCorrect);
       }
 
-      // Initialize quiz
+      /******************************************************************************
+       * INITIALIZATION FUNCTION
+       *
+       * Starts the quiz by displaying the first intro slide.
+       * Called automatically when the page loads (see DOMContentLoaded below).
+       *
+       * ⚠️ TRACKING SUGGESTION FOR IT DEPARTMENT:
+       * Optional: Track banner load/initialization
+       * Example:
+       *   gtag('event', 'banner_loaded', {
+       *     'event_category': 'Quiz Interaction',
+       *     'event_label': 'Quiz Started'
+       *   });
+       ******************************************************************************/
       function initQuiz() {
         showIntro(0);
       }
 
-      // Start the quiz when page loads
+      /******************************************************************************
+       * AUTO-START ON PAGE LOAD
+       *
+       * Waits for the DOM to be fully loaded, then initializes the quiz.
+       * This ensures all HTML elements are ready before JavaScript runs.
+       ******************************************************************************/
       document.addEventListener("DOMContentLoaded", initQuiz);
     </script>
   </body>
