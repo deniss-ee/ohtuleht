@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@400;700&display=swap");
+
+:root {
+  --banner-background: #FCD700;
+  --banner-font-family: "Fira Sans Condensed", Arial, sans-serif;
+  --banner-font-size: 16px;
+  --banner-height: 46px;
+  --banner-padding-inline: 16px;
+  --banner-text-color: #e3000f;
+  --banner-background-image: url("header.jpg");
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--banner-font-family);
+  background-color: #f4f4f4;
+}
+
+.banner {
+  padding-inline: var(--banner-padding-inline);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  height: var(--banner-height);
+  overflow: hidden;
+  color: var(--banner-text-color);
+  text-decoration: none;
+  background-color: var(--banner-background);
+  background-image: var(--banner-background-image);
+  background-position: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.banner__label {
+  font: 700 var(--banner-font-size) / 1 var(--banner-font-family);
+  text-transform: uppercase;
+  color: inherit;
+  position: relative;
+  z-index: 2;
+}
+
+.banner__text-wrapper {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.banner__rays {
+  position: absolute;
+  left: -1070px;
+  top: 50%;
+  width: 2306px;
+  height: 2306px;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  z-index: 1;
+  -webkit-animation: rotate 10s linear infinite;
+  animation: rotate 10s linear infinite;
+}
+
+.banner__cta {
+  z-index: 2;
+}
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: translateY(-50%) rotate(0deg);
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    -webkit-transform: translateY(-50%) rotate(360deg);
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: translateY(-50%) rotate(0deg);
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    -webkit-transform: translateY(-50%) rotate(360deg);
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@media (min-width: 1023px) {
+  .banner {
+    border-radius: 6px;
+  }
+}

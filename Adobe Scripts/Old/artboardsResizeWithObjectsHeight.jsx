@@ -1,25 +1,27 @@
 //@target illustrator
 
 /**
- * Artboard Resize by Height - Refactored
+ * Resize Artboard by Height (Scale by Height, Adjust Width)
  * 
- * Scales content uniformly based on HEIGHT, then sets artboard width to exact value.
- * Objects are centered on the artboard after transformation.
- *
- * Workflow:
- *   1. Parse dimensions from filename (format: "name_WIDTHxHEIGHT.ai")
- *   2. Scale all objects uniformly by height ratio
- *   3. Set artboard to exact dimensions from filename
- *   4. Center all objects on artboard
- *
- * Example:
- *   File: "poster_210x297.ai"
- *   Current: 400mm × 600mm
- *   Result: Objects scaled by 49.5%, artboard = 210mm × 297mm, centered
- *
- * @version 3.0
+ * Automatically resizes artboard and scales all content based on HEIGHT dimension
+ * extracted from filename. Width adjusts proportionally to maintain aspect ratio.
+ * 
+ * Usage:
+ *   1. Name your file with format: "name_WIDTHxHEIGHT.ai" (dimensions in mm)
+ *      Example: "poster_210x297.ai" (A4 dimensions)
+ *   2. Run this script
+ *   3. Artboard will resize to match HEIGHT (297mm), content scales proportionally
+ *      Width adjusts to maintain original aspect ratio
+ * 
+ * Features:
+ *   - Extracts HEIGHT from filename (e.g., 297 from "210x297")
+ *   - Scales artboard and ALL objects by height ratio
+ *   - Maintains aspect ratio (no clipping or distortion)
+ *   - Handles locked/hidden items
+ *   - Preserves object positions proportionally
+ * 
+ * @version 1.0
  * @date 2025-12-14
- * @author Refactored for improved structure and performance
  */
 
 // ============================================================================
@@ -27,21 +29,13 @@
 // ============================================================================
 
 var CONFIG = {
-    // Dimension constraints
     MIN_DIMENSION: 1,
     MAX_DIMENSION: 10000,
-    
-    // Parsing
     DIMENSION_REGEX: /\b(\d+(?:\.\d+)?)[xX×](\d+(?:\.\d+)?)\b/,
-    
-    // Conversion constants
     MM_TO_PT_RATIO: 72 / 25.4,
-    SCALING_PRECISION: 0.0001,
-    
-    // Behavior flags
-    INCLUDE_LOCKED_HIDDEN: true,
-    CENTER_OBJECTS: true,
-    SILENT_MODE: true
+    SCALING_PRECISION: 0.0001, // Minimum scale difference to apply
+    INCLUDE_LOCKED_HIDDEN: true, // Process locked/hidden items
+    SHOW_SUCCESS_MESSAGE: false // Silent operation
 };
 
 // ============================================================================
@@ -55,32 +49,32 @@ var hiddenItems = [];
  * Stores and unlocks/shows locked or hidden items for processing
  */
 function saveItemsState(doc) {
-  lockedItems = [];
-  hiddenItems = [];
-
-  for (var i = 0; i < doc.pageItems.length; i++) {
-    var item = doc.pageItems[i];
-    if (item.locked) {
-      lockedItems.push(i);
-      item.locked = false;
+    lockedItems = [];
+    hiddenItems = [];
+    
+    for (var i = 0; i < doc.pageItems.length; i++) {
+        var item = doc.pageItems[i];
+        if (item.locked) {
+            lockedItems.push(i);
+            item.locked = false;
+        }
+        if (item.hidden) {
+            hiddenItems.push(i);
+            item.hidden = false;
+        }
     }
-    if (item.hidden) {
-      hiddenItems.push(i);
-      item.hidden = false;
-    }
-  }
 }
 
 /**
  * Restores original locked/hidden state
  */
 function restoreItemsState(doc) {
-  for (var i = 0; i < lockedItems.length; i++) {
-    doc.pageItems[lockedItems[i]].locked = true;
-  }
-  for (var i = 0; i < hiddenItems.length; i++) {
-    doc.pageItems[hiddenItems[i]].hidden = true;
-  }
+    for (var i = 0; i < lockedItems.length; i++) {
+        doc.pageItems[lockedItems[i]].locked = true;
+    }
+    for (var i = 0; i < hiddenItems.length; i++) {
+        doc.pageItems[hiddenItems[i]].hidden = true;
+    }
 }
 
 // ============================================================================
@@ -88,18 +82,15 @@ function restoreItemsState(doc) {
 // ============================================================================
 
 /**
- * Converts millimeters to points (Illustrator's coordinate system)
- * @param {number} mm - Value in millimeters
- * @returns {number} Value in points
+ * Converts millimeters to points
  */
 function mmToPt(mm) {
     return mm * CONFIG.MM_TO_PT_RATIO;
 }
 
 /**
- * Extracts dimensions from filename using regex pattern
- * @param {string} fileName - Document filename
- * @returns {Object|null} {width, height} in mm, or null if no match
+ * Extracts width and height from filename
+ * @returns {Object|null} {width: number, height: number} in mm, or null
  */
 function parseDimensionsFromFilename(fileName) {
     var match = fileName.match(CONFIG.DIMENSION_REGEX);
@@ -112,10 +103,7 @@ function parseDimensionsFromFilename(fileName) {
 }
 
 /**
- * Validates that dimensions are within acceptable range
- * @param {number} width - Width in millimeters
- * @param {number} height - Height in millimeters
- * @returns {boolean} True if dimensions are valid
+ * Validates dimensions are within acceptable range
  */
 function validateDimensions(width, height) {
     return (
@@ -126,9 +114,7 @@ function validateDimensions(width, height) {
 }
 
 /**
- * Extracts artboard dimensions and position
- * @param {Artboard} artboard - Target artboard
- * @returns {Object} Artboard geometry data
+ * Gets current artboard dimensions
  */
 function getArtboardDimensions(artboard) {
     var rect = artboard.artboardRect;
@@ -142,105 +128,43 @@ function getArtboardDimensions(artboard) {
     };
 }
 
-/**
- * Calculates bounding box encompassing all objects
- * @param {Array} items - Array of page items
- * @returns {Object} Bounding box with minX, maxX, minY, maxY
- */
-function calculateBoundingBox(items) {
-    if (items.length === 0) return null;
-    
-    var bounds = {
-        minX: items[0].position[0],
-        maxX: items[0].position[0] + items[0].width,
-        minY: items[0].position[1] - items[0].height,
-        maxY: items[0].position[1]
-    };
-    
-    for (var i = 1; i < items.length; i++) {
-        var left = items[i].position[0];
-        var right = left + items[i].width;
-        var top = items[i].position[1];
-        var bottom = top - items[i].height;
-        
-        if (left < bounds.minX) bounds.minX = left;
-        if (right > bounds.maxX) bounds.maxX = right;
-        if (bottom < bounds.minY) bounds.minY = bottom;
-        if (top > bounds.maxY) bounds.maxY = top;
-    }
-    
-    return bounds;
-}
-
-/**
- * Centers objects on artboard by calculating and applying offset
- * @param {Array} items - Array of page items to center
- * @param {Artboard} artboard - Target artboard
- */
-function centerObjectsOnArtboard(items, artboard) {
-    if (items.length === 0) return;
-    
-    var artboardRect = artboard.artboardRect;
-    var artboardCenterX = (artboardRect[0] + artboardRect[2]) / 2;
-    var artboardCenterY = (artboardRect[1] + artboardRect[3]) / 2;
-    
-    var bounds = calculateBoundingBox(items);
-    var objectsCenterX = (bounds.minX + bounds.maxX) / 2;
-    var objectsCenterY = (bounds.minY + bounds.maxY) / 2;
-    
-    var offsetX = artboardCenterX - objectsCenterX;
-    var offsetY = artboardCenterY - objectsCenterY;
-    
-    for (var i = 0; i < items.length; i++) {
-        items[i].position = [
-            items[i].position[0] + offsetX,
-            items[i].position[1] + offsetY
-        ];
-    }
-}
-
 // ============================================================================
 // MAIN RESIZE FUNCTION
 // ============================================================================
 
 /**
- * Scales objects uniformly by height, then sets exact artboard dimensions
+ * Resizes artboard by HEIGHT and scales all content proportionally
+ * Width adjusts to maintain aspect ratio
  * 
- * Process:
- *   1. Calculate scale ratio from height
- *   2. Scale all objects uniformly
- *   3. Set artboard to exact dimensions from filename
- *   4. Center objects on artboard
- *
  * @param {Document} doc - Active document
- * @param {number} targetWidthMM - Exact artboard width (mm)
- * @param {number} targetHeightMM - Target height for scaling (mm)
+ * @param {number} targetHeightMM - Target height in millimeters
  */
-function resizeArtboardByHeight(doc, targetWidthMM, targetHeightMM) {
-    // Set coordinate system for accurate transformations
+function resizeArtboardByHeight(doc, targetHeightMM) {
+    // Switch to artboard coordinate system for accurate transformations
     app.coordinateSystem = CoordinateSystem.ARTBOARDCOORDINATESYSTEM;
     
     var abIdx = doc.artboards.getActiveArtboardIndex();
     var artboard = doc.artboards[abIdx];
     var dims = getArtboardDimensions(artboard);
     
-    // Convert target dimensions to points
-    var targetWidthPt = mmToPt(targetWidthMM);
+    // Calculate target dimensions
     var targetHeightPt = mmToPt(targetHeightMM);
-    
-    // Calculate uniform scale ratio based on HEIGHT
     var scaleRatio = targetHeightPt / dims.height;
     
-    // Skip if no significant scaling needed
+    // Check if scaling is significant enough
     if (Math.abs(scaleRatio - 1.0) < CONFIG.SCALING_PRECISION) {
-        return;
+        return; // No scaling needed
     }
+    
+    // Calculate new width (maintains aspect ratio)
+    var newWidthPt = dims.width * scaleRatio;
+    var newHeightPt = targetHeightPt;
     
     // Store original selection
     var originalSelection = doc.selection;
     doc.selection = null;
     
-    // Handle locked/hidden items
+    // Save locked/hidden states if needed
     if (CONFIG.INCLUDE_LOCKED_HIDDEN) {
         saveItemsState(doc);
     }
@@ -248,24 +172,43 @@ function resizeArtboardByHeight(doc, targetWidthMM, targetHeightMM) {
     // Select all objects on active artboard
     doc.artboards.setActiveArtboardIndex(abIdx);
     doc.selectObjectsOnActiveArtboard();
+    
     var items = doc.selection;
+    var itemCount = items.length;
     
-    // Scale objects uniformly by height ratio
-    if (items.length > 0) {
-        scaleObjects(items, scaleRatio);
-    }
-    
-    // Set artboard to exact dimensions
+    // Resize artboard first (top-left anchor)
     artboard.artboardRect = [
         dims.left,
         dims.top,
-        dims.left + targetWidthPt,
-        dims.top - targetHeightPt
+        dims.left + newWidthPt,
+        dims.top - newHeightPt
     ];
     
-    // Center objects on artboard
-    if (CONFIG.CENTER_OBJECTS && items.length > 0) {
-        centerObjectsOnArtboard(items, artboard);
+    // Scale all objects proportionally
+    var scalePercent = scaleRatio * 100;
+    
+    for (var i = 0; i < itemCount; i++) {
+        var item = items[i];
+        
+        // Resize the item (uniform scaling)
+        // Parameters: scaleX, scaleY, changePositions, changeFillPatterns, 
+        //             changeFillGradients, changeStrokePattern, changeLineWidths, scaleAbout
+        item.resize(
+            scalePercent,  // Scale X
+            scalePercent,  // Scale Y
+            true,          // Change positions
+            true,          // Change fill patterns
+            true,          // Change fill gradients
+            true,          // Change stroke patterns
+            scalePercent,  // Scale line widths
+            Transformation.TOPLEFT  // Scale from top-left
+        );
+        
+        // Adjust position proportionally
+        item.position = [
+            item.position[0] * scaleRatio,
+            item.position[1] * scaleRatio
+        ];
     }
     
     // Restore locked/hidden states
@@ -275,36 +218,21 @@ function resizeArtboardByHeight(doc, targetWidthMM, targetHeightMM) {
     
     // Restore original selection
     doc.selection = originalSelection;
-}
-
-/**
- * Scales multiple objects uniformly from top-left anchor
- * @param {Array} items - Array of page items
- * @param {number} ratio - Scale ratio (e.g., 1.5 = 150%)
- */
-function scaleObjects(items, ratio) {
-    var scalePercent = ratio * 100;
     
-    for (var i = 0; i < items.length; i++) {
-        var item = items[i];
+    // Show results
+    if (CONFIG.SHOW_SUCCESS_MESSAGE) {
+        var oldHeightMM = (dims.height / CONFIG.MM_TO_PT_RATIO).toFixed(2);
+        var oldWidthMM = (dims.width / CONFIG.MM_TO_PT_RATIO).toFixed(2);
+        var newHeightMM = targetHeightMM.toFixed(2);
+        var newWidthMM = (newWidthPt / CONFIG.MM_TO_PT_RATIO).toFixed(2);
         
-        // Apply uniform scaling
-        item.resize(
-            scalePercent,           // Scale X
-            scalePercent,           // Scale Y
-            true,                   // Change positions
-            true,                   // Change fill patterns
-            true,                   // Change fill gradients
-            true,                   // Change stroke patterns
-            scalePercent,           // Scale line widths
-            Transformation.TOPLEFT  // Anchor point
+        alert(
+            'Artboard resized by HEIGHT (Scale: ' + (scaleRatio * 100).toFixed(2) + '%)\n\n' +
+            'Original: ' + oldWidthMM + 'mm × ' + oldHeightMM + 'mm\n' +
+            'New:      ' + newWidthMM + 'mm × ' + newHeightMM + 'mm\n\n' +
+            'Objects scaled: ' + itemCount + '\n' +
+            'Aspect ratio: MAINTAINED'
         );
-        
-        // Adjust position proportionally
-        item.position = [
-            item.position[0] * ratio,
-            item.position[1] * ratio
-        ];
     }
 }
 
@@ -312,46 +240,33 @@ function scaleObjects(items, ratio) {
 // MAIN EXECUTION
 // ============================================================================
 
-/**
- * Main execution function with validation pipeline
- */
 function main() {
-    // Validation: Document exists
+    // Validate document is open
     if (app.documents.length === 0) {
-        if (!CONFIG.SILENT_MODE) alert('No document is open.');
-        return;
+        return; // Silent exit
     }
     
     var doc = app.activeDocument;
     var fileName = doc.name;
     
-    // Validation: Parse dimensions from filename
+    // Parse dimensions from filename
     var dimensions = parseDimensionsFromFilename(fileName);
     if (!dimensions) {
-        if (!CONFIG.SILENT_MODE) {
-            alert('Could not parse dimensions from filename.\nExpected format: name_WIDTHxHEIGHT.ai');
-        }
-        return;
+        return; // Silent exit
     }
     
-    // Validation: Dimensions within acceptable range
+    // Validate dimensions
     if (!validateDimensions(dimensions.width, dimensions.height)) {
-        if (!CONFIG.SILENT_MODE) {
-            alert('Invalid dimensions: ' + dimensions.width + 'mm × ' + dimensions.height + 'mm\n' +
-                  'Must be between ' + CONFIG.MIN_DIMENSION + 'mm and ' + CONFIG.MAX_DIMENSION + 'mm');
-        }
-        return;
+        return; // Silent exit
     }
     
-    // Execute resize operation
+    // Execute resize (no confirmation needed)
     try {
-        resizeArtboardByHeight(doc, dimensions.width, dimensions.height);
+        resizeArtboardByHeight(doc, dimensions.height);
     } catch (error) {
-        if (!CONFIG.SILENT_MODE) {
-            alert('Error during resize: ' + error.message);
-        }
+        // Silent error handling - script continues
     }
 }
 
-// Execute main function
+// Execute
 main();

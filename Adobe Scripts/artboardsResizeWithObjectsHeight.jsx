@@ -141,7 +141,7 @@ function getArtboardDimensions(artboard) {
  * @param {number} targetWidthMM - Target artboard width in millimeters (no scaling)
  * @param {number} targetHeightMM - Target height in millimeters (scales content)
  */
-function resizeArtboardByWidth(doc, targetWidthMM, targetHeightMM) {
+function resizeArtboardByHeight(doc, targetWidthMM, targetHeightMM) {
     // Switch to artboard coordinate system for accurate transformations
     app.coordinateSystem = CoordinateSystem.ARTBOARDCOORDINATESYSTEM;
     
@@ -301,7 +301,7 @@ function main() {
     
     // Execute resize (no confirmation needed)
     try {
-        resizeArtboardByWidth(doc, dimensions.width, dimensions.height);
+        resizeArtboardByHeight(doc, dimensions.width, dimensions.height);
     } catch (error) {
         // Silent error handling - script continues
     }
