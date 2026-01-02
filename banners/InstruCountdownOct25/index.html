@@ -51,12 +51,9 @@
     <script>
       (function () {
         function getTargetChristmas(now) {
-          // If we've passed December 25 of current year, target next year's Christmas
+          // Target Christmas Day at midnight - after that, show final slide
           var year = now.getFullYear();
           var christmasThisYear = new Date(year, 11, 25, 0, 0, 0); // Month 11 = December
-          if (now >= christmasThisYear) {
-            return new Date(year + 1, 11, 25, 0, 0, 0);
-          }
           return christmasThisYear;
         }
 
@@ -79,7 +76,9 @@
           var diff = target - now;
           if (diff <= 0) {
             finished = true;
-            titleEl.textContent = "Häid Jõule!";
+            var year = now.getFullYear();
+            var dec27 = new Date(year, 11, 27, 0, 0, 0);
+            titleEl.textContent = now >= dec27 ? "Häid Pühi!" : "Häid Jõule!";
             if (containerEl) {
               containerEl.parentNode.removeChild(containerEl);
             }

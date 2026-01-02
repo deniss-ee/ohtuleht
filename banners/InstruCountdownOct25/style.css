@@ -81,7 +81,7 @@ html {
   color: #fff;
   font-style: normal;
   font-weight: 700;
-  font-size: 30px;
+  font-size: 52px;
   line-height: normal;
   letter-spacing: -0.3px;
 }
@@ -173,7 +173,7 @@ html {
     flex-direction: row;
   }
   .countdown-title {
-    font-size: 34px;
+    font-size: 48px;
   }
   .offer-container {
     gap: 16px;
@@ -188,7 +188,7 @@ html {
 
 @media only screen and (min-width: 1247px) {
   .countdown-title {
-    font-size: 48px;
+    font-size: 64px;
   }
   .time-container p {
     padding: 12px 16px;
