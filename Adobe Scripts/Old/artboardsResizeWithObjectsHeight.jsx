@@ -134,12 +134,13 @@ function getArtboardDimensions(artboard) {
 
 /**
  * Resizes artboard by HEIGHT and scales all content proportionally
- * Width adjusts to maintain aspect ratio
+ * Width sets to exact value from filename
  * 
  * @param {Document} doc - Active document
- * @param {number} targetHeightMM - Target height in millimeters
+ * @param {number} targetWidthMM - Target width in millimeters (exact)
+ * @param {number} targetHeightMM - Target height in millimeters (scales content)
  */
-function resizeArtboardByHeight(doc, targetHeightMM) {
+function resizeArtboardByHeight(doc, targetWidthMM, targetHeightMM) {
     // Switch to artboard coordinate system for accurate transformations
     app.coordinateSystem = CoordinateSystem.ARTBOARDCOORDINATESYSTEM;
     
@@ -148,6 +149,7 @@ function resizeArtboardByHeight(doc, targetHeightMM) {
     var dims = getArtboardDimensions(artboard);
     
     // Calculate target dimensions
+    var targetWidthPt = mmToPt(targetWidthMM);
     var targetHeightPt = mmToPt(targetHeightMM);
     var scaleRatio = targetHeightPt / dims.height;
     
@@ -156,8 +158,8 @@ function resizeArtboardByHeight(doc, targetHeightMM) {
         return; // No scaling needed
     }
     
-    // Calculate new width (maintains aspect ratio)
-    var newWidthPt = dims.width * scaleRatio;
+    // Calculate scaled width (after uniform scaling by height)
+    var scaledWidthPt = dims.width * scaleRatio;
     var newHeightPt = targetHeightPt;
     
     // Store original selection
@@ -176,11 +178,11 @@ function resizeArtboardByHeight(doc, targetHeightMM) {
     var items = doc.selection;
     var itemCount = items.length;
     
-    // Resize artboard first (top-left anchor)
+    // First, resize artboard with uniform scaling by height
     artboard.artboardRect = [
         dims.left,
         dims.top,
-        dims.left + newWidthPt,
+        dims.left + scaledWidthPt,
         dims.top - newHeightPt
     ];
     
@@ -209,6 +211,47 @@ function resizeArtboardByHeight(doc, targetHeightMM) {
             item.position[0] * scaleRatio,
             item.position[1] * scaleRatio
         ];
+    }
+    
+    // Adjust artboard width to exact dimension from filename
+    var currentRect = artboard.artboardRect;
+    artboard.artboardRect = [
+        currentRect[0],
+        currentRect[1],
+        currentRect[0] + targetWidthPt,  // Exact width from filename
+        currentRect[3]                   // Keep scaled height
+    ];
+    
+    // Center all objects on the final artboard
+    if (itemCount > 0) {
+        var finalRect = artboard.artboardRect;
+        var artboardCenterX = (finalRect[0] + finalRect[2]) / 2;
+        
+        // Calculate bounding box of all objects (horizontal only)
+        var minX = items[0].position[0];
+        var maxX = items[0].position[0] + items[0].width;
+        
+        for (var i = 0; i < itemCount; i++) {
+            var left = items[i].position[0];
+            var right = left + items[i].width;
+            
+            if (left < minX) minX = left;
+            if (right > maxX) maxX = right;
+        }
+        
+        // Calculate horizontal center of all objects
+        var objectsCenterX = (minX + maxX) / 2;
+        
+        // Calculate horizontal centering offset
+        var offsetX = artboardCenterX - objectsCenterX;
+        
+        // Apply horizontal centering to all objects
+        for (var i = 0; i < itemCount; i++) {
+            items[i].position = [
+                items[i].position[0] + offsetX,
+                items[i].position[1]
+            ];
+        }
     }
     
     // Restore locked/hidden states
@@ -262,7 +305,7 @@ function main() {
     
     // Execute resize (no confirmation needed)
     try {
-        resizeArtboardByHeight(doc, dimensions.height);
+        resizeArtboardByHeight(doc, dimensions.width, dimensions.height);
     } catch (error) {
         // Silent error handling - script continues
     }

@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;750;800&display=swap" rel="stylesheet" />
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="swiper-bundle.min.css" />
     <link href="style.css" rel="stylesheet" />
   </head>
   <body>
@@ -33,7 +33,7 @@
     </div>
 
     <!-- Swiper JS Library -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="swiper-bundle.min.js"></script>
 
     <!-- Property Data & Slider Initialization -->
     <script>
@@ -141,8 +141,6 @@
         loop: true, // Enable continuous loop mode
         slidesPerView: 1, // Show 1 property card at a time
         centeredSlides: false, // Align slides to the left
-        noSwiping: true, // Disable swipe/drag to prevent accidental interaction
-        noSwipingClass: "swiper-slide", // Apply no-swiping to all slides
         navigation: {
           nextEl: ".button-next", // Right arrow button
           prevEl: ".button-prev", // Left arrow button

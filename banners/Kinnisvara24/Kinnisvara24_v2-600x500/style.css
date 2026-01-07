@@ -130,8 +130,8 @@ button {
   align-items: flex-start;
   flex-wrap: nowrap;
   position: relative;
-  width: 600px;
-  height: 500px;
+  width: 100vw;
+  height: 83.33vw;
   margin: 0 auto;
   background: #ffffff;
   overflow: hidden;
@@ -144,30 +144,30 @@ button {
   flex-wrap: nowrap;
   flex-shrink: 0;
   position: relative;
-  min-width: 375px;
-  height: 56px;
-  padding: 0 22px 0 22px;
+  min-width: 62.5vw;
+  height: 9.33vw;
+  padding: 0 3.67vw 0 3.67vw;
   background: linear-gradient(90deg, #0284c7, #bae6fd);
   overflow: hidden;
-  max-width: 1250px;
+  max-width: 208.33vw;
 }
 .title {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
-  height: 24px;
+  height: 4vw;
   color: #ffffff;
-  font-size: 24px;
+  font-size: 4vw;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 4vw;
   text-align: left;
   white-space: nowrap;
 }
 .logo {
   flex-shrink: 0;
   position: relative;
-  width: 140px;
-  height: 48px;
+  width: 23.33vw;
+  height: 8vw;
   overflow: hidden;
 }
 .property-cards-container {
@@ -179,11 +179,11 @@ button {
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
-  gap: 12px;
+  gap: 2vw;
   position: relative;
   min-width: 0;
   min-height: 0;
-  padding: 12px 12px 12px 12px;
+  padding: 2vw 2vw 2vw 2vw;
 }
 .arrow-button {
   display: flex;
@@ -192,11 +192,11 @@ button {
   flex-wrap: nowrap;
   flex-shrink: 0;
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 8vw;
+  height: 8vw;
   background: #0284c7;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 0.67vw;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -212,15 +212,19 @@ button {
 .caret {
   flex-shrink: 0;
   position: relative;
-  width: 11.361px;
-  height: 19.361px;
-  background-size: cover;
+  width: 1.89vw;
+  height: 3.23vw;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .caret.left {
   background: url('caret-left.svg') no-repeat center;
+  background-size: contain;
 }
 .caret.right {
   background: url('caret-right.svg') no-repeat center;
+  background-size: contain;
 }
 .frame {
   display: flex;
@@ -230,7 +234,7 @@ button {
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
-  gap: 16px;
+  gap: 2.67vw;
   position: relative;
 }
 
@@ -274,7 +278,7 @@ button {
   flex-basis: 0;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: 0.17vw solid rgba(0, 0, 0, 0.125);
   text-decoration: none;
   color: inherit;
 }
@@ -288,9 +292,9 @@ button {
   align-self: stretch;
   flex-wrap: nowrap;
   flex-shrink: 0;
-  gap: 6px;
+  gap: 1vw;
   position: relative;
-  height: 260px;
+  height: 43.33vw;
 
   background-size: cover;
   overflow: hidden;
@@ -301,19 +305,19 @@ button {
   flex-wrap: nowrap;
   flex-shrink: 0;
   position: relative;
-  height: 48px;
-  padding: 0 12px 0 12px;
+  height: 8vw;
+  padding: 0 2vw 0 2vw;
   background: rgba(0, 0, 0, 0.6);
 }
 .location {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
-  height: 21px;
+  height: 3.5vw;
   color: #ffffff;
-  font-size: 21px;
+  font-size: 3.5vw;
   font-weight: 700;
-  line-height: 21px;
+  line-height: 3.5vw;
   text-align: left;
   white-space: nowrap;
 }
@@ -328,7 +332,7 @@ button {
   flex-shrink: 0;
   flex-basis: 0;
   position: relative;
-  padding: 12px 12px 12px 12px;
+  padding: 2vw 2vw 2vw 2vw;
   background: #ffffff;
   overflow: hidden;
 }
@@ -339,7 +343,7 @@ button {
   align-self: stretch;
   flex-wrap: nowrap;
   flex-shrink: 0;
-  gap: 9px;
+  gap: 1.5vw;
   position: relative;
 }
 .property-name {
@@ -347,11 +351,11 @@ button {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
-  height: 27px;
+  height: 4.5vw;
   color: #0c254d;
-  font-size: 27px;
+  font-size: 4.5vw;
   font-weight: 750;
-  line-height: 27px;
+  line-height: 4.5vw;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -364,22 +368,22 @@ button {
   align-self: stretch;
   flex-shrink: 0;
   position: relative;
-  height: 50px;
+  height: 8.33vw;
   color: #0c254d;
-  font-size: 21px;
+  font-size: 3.5vw;
   font-weight: 400;
-  line-height: 25.2px;
+  line-height: 4.2vw;
   text-align: left;
 }
 .property-price {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
-  height: 27px;
+  height: 4.5vw;
   color: #fa3944;
-  font-size: 27px;
+  font-size: 4.5vw;
   font-weight: 800;
-  line-height: 27px;
+  line-height: 4.5vw;
   text-align: left;
   white-space: nowrap;
 }

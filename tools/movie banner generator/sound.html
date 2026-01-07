@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Banner</title>
+  <meta name="viewport" content="width=1250, user-scalable=no">
+  <script>
+    var olBanner = {
+	getQueryStringValue: function(key) {
+		return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+	},
+	
+	getClickTag: function(customDestinationUrl) {
+		this.clickMacro = this.getQueryStringValue('clickMacro');
+		this.clickTag = this.getQueryStringValue('clickTag');
+
+		if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+			return this.clickMacro + customDestinationUrl;
+		} else {
+			return this.clickTag;
+		}
+	}
+}
+var clickTag = ""
+  </script>
+  <style>
+    body { margin:0; padding:0; cursor: pointer; }
+    .banner-bg {
+      background: url('thumbnail_SpongeBob Movie_1250x400.jpg') center center/cover no-repeat;
+      width: 1250px; height: 400px; position: relative; overflow: hidden;
+    }
+    .video-wrap {
+      position: absolute; z-index:2; left:20px; top:50%; transform:translateY(-50%); height:360px; width:auto;
+    }
+    video { height:100%; width:auto; display:block; object-fit:contain; background:#000; }
+    
+    /* Video Controls */
+    #video-controls {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      z-index: 100;
+    }
+    #video-controls > button {
+      position: relative;
+      background-color: transparent;
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 30px;
+      height: 30px;
+      border: none;
+      opacity: 0.7;
+      border-radius: 15px;
+      cursor: pointer;
+      margin-left: 5px;
+      display: inline-block;
+    }
+    #video-controls > button:hover {
+      opacity: 1;
+    }
+    #video-controls > button:focus {
+      outline: none;
+      box-shadow: none;
+    }
+    #video-controls > button svg {
+      pointer-events: none;
+    }
+    #video-control-audio {
+      background-image: none !important;
+    }
+  </style>
+</head>
+<body onclick="window.open(olBanner.getClickTag('https://heafilm.ee/event/5651/title/nukker_laul/'), '_blank')">
+  <div class="banner-bg">
+    <div class="video-wrap">
+      <video src="video.mp4" autoplay loop muted playsinline></video>
+      <div id="video-controls">
+        <button id="video-control-audio" onclick="event.stopPropagation(); toggleVideoAudio();">
+          <svg id="volume-off" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#FFFFFF">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M4.34 2.93L2.93 4.34 7.29 8.7 7 9H3v6h4l5 5v-6.59l4.18 4.18c-.65.49-1.38.88-2.18 1.11v2.06c1.34-.3 2.57-.92 3.61-1.75l2.05 2.05 1.41-1.41L4.34 2.93zM10 15.17L7.83 13H5v-2h2.83l.88-.88L10 11.41v3.76zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8l-1.88 1.88L12 7.76zm4.5 8c0-1.77-1.02-3.29-2.5-4.03v1.79l2.48 2.48c.01-.08.02-.16.02-.24z"/>
+          </svg>
+          <svg id="volume-on" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#FFFFFF" style="display:none;">
+            <path d="M0 0h24v24H0V0z" fill="none"/>
+            <path d="M3 9v6h4l5 5V4L7 9H3zm7-.17v6.34L7.83 13H5v-2h2.83L10 8.83zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleVideoAudio() {
+      var video = document.querySelector('video');
+      var volumeOff = document.getElementById('volume-off');
+      var volumeOn = document.getElementById('volume-on');
+      
+      if (video.muted) {
+        video.muted = false;
+        volumeOff.style.display = 'none';
+        volumeOn.style.display = 'block';
+      } else {
+        video.muted = true;
+        volumeOff.style.display = 'block';
+        volumeOn.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
