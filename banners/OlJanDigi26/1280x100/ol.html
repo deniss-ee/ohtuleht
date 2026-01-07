@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>1280x100</title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../style.css" rel="stylesheet" />
+    <style>
+      iframe {
+        aspect-ratio: 1 / 1;
+        position: absolute;
+        top: -190%;
+        left: 50%;
+        width: 80%;
+        transform: translateX(-50%);
+      }
+
+      .text-container {
+        position: relative;
+        flex-shrink: 0;
+        width: auto;
+        height: 100px;
+      }
+
+      .text {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .text-1 {
+        position: relative;
+        animation: textFade 9s infinite 0s;
+      }
+
+      .text-2 {
+        animation: textFade 9s infinite 3s;
+      }
+
+      .text-3 {
+        animation: textFade 9s infinite 6s;
+      }
+
+      @keyframes textFade {
+        0% {
+          opacity: 0;
+        }
+
+        5.56% {
+          opacity: 1;
+        }
+
+        27.78% {
+          opacity: 1;
+        }
+
+        33.33% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="banner-wrapper" style="width: 1280px; height: 100px">
+      <div class="banner-content">
+        <div class="img-wrapper" style="background: url('1280x100-img-ol.jpg')">
+          <iframe src="https://cdn.lottielab.com/l/2m1BDNj3Tu64oy.html" frameborder="0"></iframe>
+        </div>
+        <div class="text-container">
+          <img class="text text-1" src="1280x100-ol-1.svg" />
+          <img class="text text-2" src="1280x100-ol-2.svg" />
+          <img class="text text-3" src="1280x100-3.svg" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
