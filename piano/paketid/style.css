@@ -129,10 +129,20 @@
   box-sizing: border-box;
 }
 
-/* Style all anchor links */
+/* Style all anchor links - bold and red */
 a {
   color: var(--ol__red__700);
-  font-weight: var(--font__weight__bold);
+  font-weight: 700;
+}
+
+a:visited {
+  color: var(--ol__red__700);
+  /* Same as default to prevent color change */
+}
+
+a:hover {
+  color: var(--ol__red__800);
+  /* Slightly darker on hover */
 }
 
 /* Reset margins and paddings only for Piano modal elements to prevent parent CSS interference */
@@ -191,6 +201,26 @@ a {
 
 .price-box {
   padding: var(--spacing__2) var(--spacing__4) !important;
+  position: relative;
+}
+
+.discount-badge {
+  position: absolute !important;
+  top: -16px;
+  right: -16px;
+  width: 40px;
+  height: 40px;
+  background: var(--ol__red__700);
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--white);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__xs);
+  font-family: var(--font__family__inter);
+  line-height: 1;
+  z-index: 10;
 }
 
 .banner {
@@ -434,7 +464,7 @@ body {
 }
 
 .btn--black {
-  color: var(--white);
+  color: var(--white) !important;
   background: var(--ol__monochrome__950);
 }
 
@@ -802,20 +832,6 @@ body {
   width: 100%;
 }
 
-/* ============================================
-       IFRAME EYE ANIMATION - Added from v26
-       ============================================ */
-
-/* Eye animation wrapper - Hidden on mobile by default */
-.intro-eye-wrapper {
-  display: none;
-  /* hidden on mobile */
-}
-
-.eye {
-  overflow: hidden;
-}
-
 /* Only apply to this landing page - make header section fonts 25% smaller on desktop */
 @media only screen and (min-width: 980px) {
   /* Constrain the entire page width */
@@ -824,79 +840,23 @@ body {
     margin: 0 auto;
   }
 
-  body > .section:first-child {
-    margin: 1rem 0 !important;
-  }
-
   /* Target the first section (Header Section) specifically */
   body > .section:first-child .pn-modal__title {
-    font-size: calc(var(--font__size__4xl) * 1);
-    /* 36px * 0.75 = 27px - reduced by 25% */
+    font-size: calc(var(--font__size__4xl) * 1.25);
+    /* 36px * 0.75 = 27px */
     line-height: 1.2;
   }
 
   body > .section:first-child .pn-modal__text {
-    font-size: calc(var(--font__size__lg) * 1);
-    /* 18px * 0.75 = 13.5px - reduced by 25% */
+    font-size: calc(var(--font__size__lg) * 1.25);
+    /* 18px * 0.75 = 13.5px */
     line-height: 1.4;
   }
 
   body > .section:first-child .pn-modal__footer {
-    font-size: calc(var(--font__size__sm) * 1);
-    /* 14px * 0.75 = 10.5px - reduced by 25% */
+    font-size: calc(var(--font__size__sm) * 1.25);
+    /* 14px * 0.75 = 10.5px */
     line-height: 1.4;
-  }
-
-  /* ============================================
-         IFRAME EYE ANIMATION - Desktop Layout
-         Show animated eye on left side of header
-         ============================================ */
-
-  /* Make header section horizontal to accommodate eye */
-  body > .section:first-child .pn-modal {
-    gap: var(--spacing__6);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 !important;
-    /* Remove all padding from first pn-modal */
-    background: #ffebc4;
-    /* cream background like v26 */
-  }
-
-  /* Show and position eye animation on desktop */
-  .intro-eye-wrapper {
-    display: flex;
-    position: relative;
-    flex: 0 0 350px;
-    justify-content: center;
-    align-items: center;
-    width: 350px;
-    height: 100%;
-    min-height: 300px;
-    /* Reduced by 25% from 400px for smaller header */
-    border-top-left-radius: 16px;
-    border-bottom-left-radius: 16px;
-    overflow: hidden;
-    background: var(--ol__red__700);
-  }
-
-  .eye {
-    position: absolute;
-    top: 40px;
-    /* Adjusted from 40px for better centering in reduced height */
-    left: 50%;
-    width: 300px;
-    height: 361px;
-    outline: 0;
-    transform: translateX(-50%);
-  }
-
-  /* Text wrapper takes remaining space */
-  body > .section:first-child .pn-modal__container-left {
-    flex: 1;
-    padding: var(--spacing__4) var(--spacing__6) var(--spacing__4) var(--spacing__4);
-    /* Reduced vertical padding to match smaller header */
   }
 
   /* ============================================
@@ -925,9 +885,9 @@ body {
   /* Cards inside the red-light section should NOT be full width */
   .section--red-light > .card {
     flex: 0 0 calc(33.333% - var(--spacing__4));
-    /* Fixed width, 3 cards fill the row */
-    width: calc(33.333% - var(--spacing__4)) !important;
     /* 3 cards per row, accounting for gap */
+    width: calc(33.333% - var(--spacing__4)) !important;
+    /* Fixed width, 3 cards fill the row */
   }
 
   /* ============================================
@@ -955,5 +915,210 @@ body {
     /* Forces button to its own row below cards */
     order: 10;
     /* Put it last - after all cards (which are order 1, 2, 3) */
+  }
+}
+
+/* ============================================
+   WRAPPER - Container for header
+   ============================================ */
+.wrapper {
+  width: 100%;
+  max-width: 1280px;
+  height: auto;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+/* ============================================
+   INTRO - Main header container
+   Cream background, flexbox layout
+   ============================================ */
+.intro {
+  gap: 1rem;
+  /* reduced gap between eye and text */
+  display: flex;
+  flex-direction: row;
+  /* side-by-side also on mobile */
+  align-items: center;
+  width: 100%;
+  max-width: 980px;
+  margin: 1rem auto;
+  padding: 0 1.5rem;
+  /* equal horizontal padding on mobile */
+  border-radius: 16px;
+  background: #ffebc4;
+}
+
+/* ============================================
+   DEPRECATED IMAGES - Hidden on mobile
+   ============================================ */
+.intro-img,
+.intro-img_2 {
+  display: none;
+  /* deprecated image hidden (replaced by iframe eye) */
+  width: 75%;
+  height: auto;
+}
+
+/* ============================================
+   EYE ANIMATION WRAPPER - Hidden on mobile, shown on desktop
+   ============================================ */
+.intro-eye-wrapper {
+  display: none;
+  /* hidden on mobile */
+}
+
+.eye {
+  overflow: hidden;
+}
+
+/* ============================================
+   TEXT WRAPPER - Contains h1, h2, h3 content
+   ============================================ */
+.intro-text-wrapper {
+  gap: 0.5rem;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  /* take remaining space */
+  padding: 1rem 0;
+  /* reset */
+}
+
+/* ============================================
+   URL STYLING - For links within text wrapper
+   ============================================ */
+.intro-text-wrapper_url {
+  color: var(--red-500) !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 135% !important;
+  font-family: "Fira Sans Condensed", sans-serif !important;
+  text-decoration: underline !important;
+}
+
+/* ============================================
+   HEADING ALIGNMENT - Global for all headings
+   ============================================ */
+h1,
+h2,
+h3 {
+  text-align: left;
+}
+
+/* ============================================
+   PARAGRAPH RESET - Used within intro
+   ============================================ */
+p {
+  margin: 0 0;
+}
+
+/* ============================================
+   INTRO HEADING TYPOGRAPHY - Specific styles for h1, h2, h3 in intro
+   ============================================ */
+.intro h1 {
+  color: #e3000f;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 135%;
+  font-family: "Fira Sans Condensed", sans-serif;
+}
+
+.intro h2 {
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 135%;
+  font-family: var(--font__family__inter);
+}
+
+.intro h3 {
+  color: var(--gray-800);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 135%;
+  font-family: "Roboto", sans-serif;
+}
+
+/* ============================================
+   DESKTOP STYLES - Applied at 980px and above
+   ============================================ */
+@media only screen and (min-width: 980px) {
+  /* Remove wrapper padding on desktop */
+  .wrapper {
+    padding: 0;
+  }
+
+  /* Intro desktop layout - horizontal with fixed height */
+  .intro {
+    -ms-flex-direction: row;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    gap: 2rem;
+    /* smaller desktop gap */
+    flex-direction: row;
+    align-items: stretch;
+    /* maintain right breathing room */
+    height: 300px;
+    /* fixed height for desktop */
+    padding-right: 2rem;
+    /* right padding for text breathing room */
+    padding-left: 0;
+    /* remove mobile left padding so eye is flush */
+  }
+
+  /* Text wrapper desktop spacing */
+  .intro-text-wrapper {
+    gap: 1rem;
+  }
+
+  /* Heading alignment (redundant but kept for completeness) */
+  h1,
+  h2,
+  h3 {
+    text-align: left;
+  }
+
+  /* Intro heading size increases on desktop */
+  .intro h1 {
+    font-size: 32px;
+  }
+
+  .intro h2 {
+    font-size: 22px;
+  }
+
+  .intro h3 {
+    font-size: 14px;
+  }
+
+  /* Eye animation wrapper - shown and positioned on desktop */
+  .intro-eye-wrapper {
+    display: flex;
+    /* show and size on desktop */
+    position: relative;
+    flex: 0 0 350px;
+    /* fixed width 350px */
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 100%;
+    /* full height of intro */
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    overflow: hidden;
+    background: #e3000f;
+  }
+
+  /* Eye iframe positioning within wrapper */
+  .eye {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 300px;
+    height: 361px;
+    outline: 0;
+    transform: translateX(-50%);
   }
 }

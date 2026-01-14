@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsive for Mobile v1.14.61</title>
+    <style>
+      html,
+      body,
+      div,
+      img,
+      iframe,
+      a,
+      button {
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+      }
+
+      a:focus,
+      button:focus {
+        outline: none;
+      }
+
+      #container {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        height: 100%;
+        width: 100%;
+      }
+
+      #canvas {
+        height: 100%;
+        width: 100%;
+        -ms-transform-origin: top left;
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        position: absolute;
+      }
+
+      #tracking-code,
+      #html {
+        display: none;
+        max-height: 250px;
+        height: 250px;
+        max-width: 300px;
+        width: 300px;
+      }
+
+      #click-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        top: 0;
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="click-overlay" onclick="event.stopPropagation(); banner.click();"></div>
+      <div id="canvas">
+        <div id="image" onclick="banner.click()"></div>
+        <div id="iframe"></div>
+        <div id="html">[%html%]</div>
+      </div>
+      <div id="tracking-code">[%trackingCode%]</div>
+    </div>
+
+    <script>
+      var banner = {
+        build: function () {
+          this.setVariables();
+          this.fillCanvas();
+          this.configureFrame();
+          this.initDL();
+        },
+
+        setVariables: function () {
+          this.variables = {};
+          this.setVariable("adUnit", "%%ADUNIT%%");
+          this.setVariable("width", "%%WIDTH%%");
+          this.setVariable("height", "%%HEIGHT%%");
+          this.setVariable("cachebuster", "%%CACHEBUSTER%%");
+          this.setVariable("clickMacroUrl", "%%CLICK_URL_ESC%%");
+          this.setVariable("destinationUrl", "%%DEST_URL_ESC%%");
+          this.setVariable("imageUrl", "[%imageUrl%]");
+          this.setVariable("iframeUrl", "[%iframeUrl%]");
+          this.setVariable("iframeClickTagType", "[%iframeClickTagType%]");
+          this.setVariable("iframeOriginalWidth", "[%iframeOriginalWidth%]");
+          this.setVariable("iframeOriginalHeight", "[%iframeOriginalHeight%]");
+          this.setVariable("iframeResponsiveType", "[%iframeResponsiveType%]");
+          this.setVariable("reTargetingPixelUrl", "[%reTargetingPixelUrl%]");
+          this.setVariable("promoName", "[%promoName%]");
+          this.setVariable("promoId", "[%promoId%]");
+          this.setVariable("creativeName", "[%creativeName%]");
+          this.setVariable("creativeSlot", "[%creativeSlot%]");
+          this.setVariable("creativeAdapt", "[%creativeAdapt%]");
+          this.setVariable("auth", "%%PATTERN:NewMobilePage%%");
+        },
+
+        setVariable: function (name, value) {
+          this.variables[name] = value.length > 0 ? value : "";
+        },
+
+        click: function () {
+          if (this.variables.reTargetingPixelUrl.length > 0) {
+            this.appendReTargetingPixel();
+          }
+          window.open(this.variables.clickMacroUrl + this.variables.destinationUrl, "_blank");
+
+          if (this.variables.promoName != "") {
+            parent.dataLayer.push({ ecommerce: null });
+            parent.dataLayer.push({
+              event: "select_promotion",
+              ecommerce: {
+                creative_name: "" + this.variables.creativeName,
+                creative_slot: "" + this.variables.creativeSlot,
+                promotion_id: "" + this.variables.promoId,
+                promotion_name: "" + this.variables.promoName,
+                items: [
+                  {
+                    item_id: "1",
+                    item_name: "Turundus",
+                  },
+                ],
+              },
+            });
+          }
+        },
+
+        initDL: function () {
+          if (this.variables.promoName != "") {
+            parent.dataLayer.push({ ecommerce: null });
+            parent.dataLayer.push({
+              event: "view_promotion",
+              ecommerce: {
+                creative_name: "" + this.variables.creativeName,
+                creative_slot: "" + this.variables.creativeSlot,
+                promotion_id: "" + this.variables.promoId,
+                promotion_name: "" + this.variables.promoName,
+                items: [
+                  {
+                    item_id: "1",
+                    item_name: "Turundus",
+                  },
+                ],
+              },
+            });
+          }
+        },
+
+        appendReTargetingPixel: function () {
+          var pixelImg = document.createElement("img");
+          pixelImg.src = this.variables.reTargetingPixelUrl;
+          document.getElementById("container").appendChild(pixelImg);
+        },
+
+        fillCanvas: function () {
+          if (this.variables.imageUrl.length > 0) {
+            this.setImageContent();
+          } else if (this.variables.iframeUrl.length > 0) {
+            this.setIframeContent();
+          } else {
+            document.getElementById("html").style.display = "block";
+          }
+
+          if (this.variables.iframeClickTagType === "simple") {
+            document.getElementById("click-overlay").style.display = "block";
+          }
+        },
+
+        setImageContent: function () {
+          this.setStylesToElement(document.getElementById("image"), {
+            width: "100%",
+            height: "100%",
+            backgroundImage: 'url("' + this.variables.imageUrl + '")',
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            backgroundSize: "contain",
+          });
+        },
+
+        setIframeContent: function () {
+          var iframe = document.createElement("iframe");
+          iframe.src = this.variables.iframeUrl + "?clickTag=" + this.variables.clickMacroUrl + this.variables.destinationUrl + "&clickMacro=" + this.variables.clickMacroUrl;
+          iframe.scrolling = "no";
+          iframe.rel = "nofollow";
+          iframe.width = "100%";
+          iframe.height = this.variables.height + "px";
+          if (this.variables.iframeOriginalHeight != 0) {
+            iframe.height = this.variables.iframeOriginalHeight + "px";
+          }
+          iframe.frameborder = "0px";
+          iframe.style.border = "none";
+          iframe.style.overflow = "hidden";
+          document.getElementById("iframe").appendChild(iframe);
+          this.setStylesToElement(iframe, {
+            width: "100vw",
+            height: "83.3333vw",
+          });
+          window.parent.document.addEventListener(
+            "resize",
+            function () {
+              this.configureFrame();
+            }.bind(this)
+          );
+        },
+
+        configureFrame: function () {
+          var css = "";
+          const pw = window.frameElement?.parentNode?.parentNode?.parentNode?.getBoundingClientRect().width ?? window.innerWidth;
+          const phh = pw * 0.85;
+          var isDs = pw >= 800;
+
+          if (this.variables.auth != "true") {
+            this.setStylesToElement(window.frameElement, {
+              width: "100vw",
+              height: "83.3333vw",
+            });
+          } else {
+            this.setStylesToElement(window.frameElement, {
+              width: pw + "px",
+              height: phh + "px",
+            });
+            if (isDs) {
+              this.setStylesToElement(window.frameElement, {
+                width: "500px",
+                height: "450px",
+              });
+            }
+          }
+
+          if (this.variables.creativeAdapt === "true" && this.variables.auth != "true") {
+            this.setStylesToElement(window.frameElement.parentNode.parentNode, {
+              width: "300px",
+              height: "282px",
+            });
+            this.setStylesToElement(window.frameElement.parentNode, {
+              width: "300px",
+              height: "250px",
+            });
+          }
+          if (this.variables.adUnit.indexOf("kliendilehed") !== -1) {
+            css = ".ad-class-rep { overflow: auto;width: 100vw;left: -15px;position: relative; }";
+          }
+          this.appendStyleToParent(css);
+        },
+
+        setStylesToElement: function (el, styles) {
+          var keys = Object.keys(styles);
+          keys.forEach(function (key) {
+            if (Array.isArray(styles[key])) {
+              var css = el.style.cssText;
+              styles[key].forEach(function (value) {
+                css = css + " " + key + ": " + value + ";";
+              });
+              el.style.cssText = css;
+            } else {
+              el.style[key] = styles[key];
+            }
+          });
+        },
+
+        appendStyleToParent: function (css) {
+          var style = document.createElement("style");
+          style.type = "text/css";
+
+          if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+          } else {
+            style.appendChild(document.createTextNode(css));
+          }
+
+          window.parent.document.getElementsByTagName("head")[0].appendChild(style);
+        },
+      };
+
+      banner.build();
+    </script>
+  </body>
+</html>
