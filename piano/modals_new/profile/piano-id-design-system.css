@@ -1,0 +1,937 @@
+/**
+ * ============================================================================
+ * ÕHTULEHT PIANO ID - DESIGN SYSTEM OVERLAY
+ * ============================================================================
+ * 
+ * Purpose: Apply design system tokens and styles to Piano ID login/register
+ * pages while preserving functionality from piano-id-layout-old.css
+ * 
+ * Load Order:
+ * 1. ../style.css (main design system)
+ * 2. piano-id-layout-old.css (legacy styles - DO NOT MODIFY)
+ * 3. piano-id-design-system.css (this file - design system overrides)
+ * 
+ * Design System Reference: ../DESIGN_SYSTEM.md
+ * Migration Plan: ./PROFILE_MIGRATION_PLAN.md
+ * 
+ * ============================================================================
+ */
+
+/* ============================================================================
+   DESIGN TOKENS IMPORT
+   ============================================================================ */
+
+/**
+ * Option 1: Import design system tokens from parent
+ * If ../style.css is already loaded, tokens are available via CSS variables
+ */
+
+/**
+ * Option 2: Define tokens locally (if not importing parent stylesheet)
+ * Uncomment if ../style.css is NOT loaded in HTML
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+:root {
+  --black: #000000;
+  --borderwidth__0: 0px;
+  --borderwidth__1: 1px;
+  --borderwidth__2: 2px;
+  --borderwidth__4: 4px;
+  --borderwidth__8: 8px;
+  --font__family__fira: "Fira Sans Condensed", sans-serif;
+  --font__family__inter: "Inter", sans-serif;
+  --font__family__mono: "Fira Mono", monospace;
+  --font__family__serif: "Georgia", serif;
+  --font__size__2xl: 24px;
+  --font__size__3xl: 30px;
+  --font__size__4xl: 36px;
+  --font__size__5xl: 48px;
+  --font__size__6xl: 60px;
+  --font__size__7xl: 72px;
+  --font__size__8xl: 96px;
+  --font__size__9xl: 128px;
+  --font__size__base: 16px;
+  --font__size__lg: 18px;
+  --font__size__sm: 14px;
+  --font__size__xl: 20px;
+  --font__size__xs: 12px;
+  --font__style__italic: italic;
+  --font__style__notitalic: normal;
+  --font__weight__black: 900;
+  --font__weight__bold: 700;
+  --font__weight__extrabold: 800;
+  --font__weight__extralight: 200;
+  --font__weight__light: 300;
+  --font__weight__medium: 500;
+  --font__weight__normal: 400;
+  --font__weight__semibold: 600;
+  --font__weight__thin: 100;
+  --ol__cream__100: #ffebc4;
+  --ol__cream__200: #ffd688;
+  --ol__cream__300: #ffbc4a;
+  --ol__cream__400: #ffa220;
+  --ol__cream__50: #fff8eb;
+  --ol__cream__500: #f97d07;
+  --ol__cream__600: #dd5902;
+  --ol__cream__700: #b73a06;
+  --ol__cream__800: #942c0c;
+  --ol__cream__900: #7a250d;
+  --ol__cream__950: #461102;
+  --ol__monochrome__100: #e5e8e8;
+  --ol__monochrome__200: #cdd3d4;
+  --ol__monochrome__300: #aab3b6;
+  --ol__monochrome__400: #808d90;
+  --ol__monochrome__50: #f5f6f6;
+  --ol__monochrome__500: #657275;
+  --ol__monochrome__600: #566064;
+  --ol__monochrome__700: #4a5254;
+  --ol__monochrome__800: #414749;
+  --ol__monochrome__900: #3a3e3f;
+  --ol__monochrome__950: #17191a;
+  --ol__red__100: #ffdddf;
+  --ol__red__200: #ffc1c5;
+  --ol__red__300: #ff959c;
+  --ol__red__400: #ff5964;
+  --ol__red__50: #fff0f1;
+  --ol__red__500: #ff2634;
+  --ol__red__600: #fc0616;
+  --ol__red__700: #e3000f;
+  --ol__red__800: #af0510;
+  --ol__red__900: #900c15;
+  --ol__red__950: #500005;
+  --ol__yellow__100: #fdffc1;
+  --ol__yellow__200: #ffff86;
+  --ol__yellow__300: #fff641;
+  --ol__yellow__400: #ffe80d;
+  --ol__yellow__50: #ffffe7;
+  --ol__yellow__500: #fcd700;
+  --ol__yellow__600: #d1a000;
+  --ol__yellow__700: #a67302;
+  --ol__yellow__800: #89590a;
+  --ol__yellow__900: #74490f;
+  --ol__yellow__950: #442604;
+  --radius__2xl: 16px;
+  --radius__3xl: 24px;
+  --radius__4xl: 32px;
+  --radius__full: 9999px;
+  --radius__lg: 8px;
+  --radius__md: 6px;
+  --radius__none: 0px;
+  --radius__sm: 4px;
+  --radius__xl: 12px;
+  --radius__xs: 2px;
+  --spacing__0: 0px;
+  --spacing__1: 4px;
+  --spacing__10: 40px;
+  --spacing__11: 44px;
+  --spacing__12: 48px;
+  --spacing__14: 56px;
+  --spacing__16: 64px;
+  --spacing__2: 8px;
+  --spacing__20: 80px;
+  --spacing__24: 96px;
+  --spacing__28: 112px;
+  --spacing__3: 12px;
+  --spacing__32: 128px;
+  --spacing__36: 144px;
+  --spacing__4: 16px;
+  --spacing__40: 160px;
+  --spacing__44: 176px;
+  --spacing__48: 192px;
+  --spacing__5: 20px;
+  --spacing__52: 208px;
+  --spacing__56: 224px;
+  --spacing__6: 24px;
+  --spacing__60: 240px;
+  --spacing__64: 256px;
+  --spacing__7: 28px;
+  --spacing__72: 288px;
+  --spacing__8: 32px;
+  --spacing__80: 320px;
+  --spacing__9: 36px;
+  --spacing__96: 384px;
+  --white: #ffffff;
+}
+
+/* ============================================================================
+   Resets
+   ============================================================================ */
+
+/**
+
+
+
+/* ============================================================================
+   GLOBAL ELEMENTS
+   ============================================================================ */
+
+/**
+ * body
+ * Location: Both HTML files, root element
+ * Current: Roboto font, 14px, center-aligned
+ * Update: Inter font, 16px base size (design system standard)
+ */
+ 
+ main {
+    padding: 0;
+ }
+body {
+    padding: var(--spacing__6) var(--spacing__4) var(--spacing__4) var(--spacing__4);
+  /* TODO: Override font-family with Inter */
+  /* font-family: var(--font__family__inter); */
+  
+  /* TODO: Update font-size from 14px to 16px */
+  /* font-size: var(--font__size__base); */
+}
+
+/**
+ * p (paragraphs)
+ * Location: Throughout both HTML files
+ * Current: Default margins
+ * Update: Align with design system spacing
+ */
+p {
+  /* TODO: Consider updating margins to use spacing tokens */
+}
+
+/**
+ * textarea
+ * Location: Form elements
+ * Current: Roboto font, 48px min-height
+ * Update: Inter font, updated min-height
+ */
+textarea {
+  /* TODO: Update font-family */
+  /* TODO: Consider updating min-height to 56px */
+}
+
+
+/* ============================================================================
+   TYPOGRAPHY CLASSES
+   ============================================================================ */
+
+/**
+ * .lead
+ * Location: Modal headers, main titles
+ * Current: 16px, font-weight 500
+ * Update: Use Fira Sans Condensed, 24px, Bold (similar to .pn-modal__title)
+ */
+.lead {
+    text-align: center;
+  color: var(--black);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__base);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+}
+
+/**
+ * .sub-lead
+ * Location: Subtitle text below main heading
+ * Current: 14px, rgba(15, 15, 21, 0.5)
+ * Update: Use Inter medium, design system gray color
+ */
+.sub-lead {
+  /* TODO: Apply design system text styles */
+  /* color: var(--ol__monochrome__500); */
+  /* font-family: var(--font__family__inter); */
+  /* font-size: var(--font__size__base); */
+}
+
+/**
+ * .agreement
+ * Location: Terms and conditions text
+ * Current: Same as .sub-lead
+ * Update: Align with design system footer text
+ */
+.agreement {
+  /* TODO: Similar to .sub-lead */
+  /* color: var(--ol__monochrome__500); */
+}
+
+/**
+ * .or-text
+ * Location: Divider text between social and form login
+ * Current: 16px, font-weight 500, color #0f0f15
+ * Update: Use design system text color
+ */
+.or-text {
+  /* TODO: Update color to design system token */
+  /* color: var(--ol__monochrome__950); */
+}
+
+
+/* ============================================================================
+   LAYOUT CONTAINERS
+   ============================================================================ */
+
+/**
+ * .piano-id-modal
+ * Location: Body class in both HTML files
+ * Current: border-radius: 10px
+ * Update: border-radius: 16px (var(--radius__2xl))
+ */
+.piano-id-modal {
+  /* TODO: Update border radius */
+  /* border-radius: var(--radius__2xl); */
+}
+
+/**
+ * .pane
+ * Location: Main content wrapper
+ * Current: display: block, position: relative
+ * Update: Consider adding design system spacing
+ */
+.pane {
+  /* TODO: Review spacing alignment */
+}
+
+/**
+ * main
+ * Location: Main content area
+ * Current: padding-top: 40px
+ * Update: Use design system spacing token
+ */
+main {
+  /* TODO: padding-top: var(--spacing__10); */
+}
+
+
+/* ============================================================================
+   LOGO & BRANDING
+   ============================================================================ */
+
+/**
+ * .logo
+ * Location: Logo container in both HTML files
+ * Current: 80x80px, white bg, 1px border
+ * Update: Consider using design system border color
+ */
+.logo {
+  /* TODO: Update border color */
+  /* border-color: var(--ol__monochrome__200); */
+}
+
+
+/* ============================================================================
+   FORM ELEMENTS - INPUTS
+   ============================================================================ */
+
+/**
+ * .input, input[type="text"], input[type="password"], input[type="tel"], 
+ * input[type="email"], input[type="number"], input[type="date"], select
+ * 
+ * Location: All form inputs throughout both HTML files
+ * Current: height 48px, border-radius 6px, border 1px rgba(15,15,21,0.1)
+ * Update: height 56px, border-radius 8px, use design system colors
+ */
+.input,
+select,
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="password"],
+input[type="tel"],
+input[type="email"] {
+  -o-transition: border-color 125ms ease-in-out;
+  -webkit-transition: border-color 125ms ease-in-out;
+  width: 100%;
+  height: 56px;
+  padding: 0 var(--spacing__3);
+  border: var(--borderwidth__1) solid var(--ol__monochrome__200);
+  border-radius: var(--radius__lg);
+  outline: none;
+  color: var(--ol__monochrome__950);
+  font-weight: var(--font__weight__medium);
+  font-size: var(--font__size__base);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+  background: var(--white);
+  transition: border-color 125ms ease-in-out;
+}
+
+/**
+ * .input:focus, .input.focused, input:focus
+ * Location: Focus state for all inputs
+ * Current: border-color rgba(15,15,21,0.3)
+ * Update: border-color var(--ol__red__700)
+ */
+.input.focused,
+.input:focus,
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus {
+  border-color: var(--ol__red__700);
+}
+
+/**
+ * input[disabled]
+ * Location: Disabled form inputs
+ * Current: background #fafafa, border rgba(15,15,21,0.08)
+ * Update: Use design system monochrome colors
+ */
+input[disabled] {
+  /* TODO: Update disabled state colors */
+  /* background: var(--ol__monochrome__50); */
+  /* border-color: var(--ol__monochrome__100); */
+}
+
+/**
+ * .placeholder
+ * Location: Custom placeholder styling
+ * Current: color rgba(15,15,21,0.3)
+ * Update: color var(--ol__monochrome__200)
+ */
+.placeholder {
+  /* TODO: Update placeholder color */
+  /* color: var(--ol__monochrome__200); */
+}
+
+/**
+ * input.has-errors
+ * Location: Error state for inputs
+ * Current: border rgba(242,61,61,0.3)
+ * Update: border var(--ol__red__700)
+ */
+input.has-errors {
+  /* TODO: Update error border color */
+  /* border-color: var(--ol__red__700); */
+}
+
+
+/* ============================================================================
+   FORM ELEMENTS - BUTTONS
+   ============================================================================ */
+
+/**
+ * .btn
+ * Location: Primary action buttons throughout forms
+ * Current: background #e3000f, height from padding, border-radius 6px
+ * Update: Use design tokens, height 56px, border-radius 4px
+ */
+.btn {
+padding: 0 var(--spacing__8) !important;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -o-transition: background-color 125ms ease-in-out;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-transition: background-color 125ms ease-in-out;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  padding: 0 var(--spacing__8);
+  border: none;
+  border-radius: var(--radius__sm);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__base);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+  cursor: pointer;
+  transition: background-color 125ms ease-in-out;
+}
+
+/**
+ * .btn:hover, .btn:active
+ * Location: Button hover/active states
+ * Current: background #b6000c
+ * Update: background var(--ol__red__800)
+ */
+.btn:active,
+.btn:hover {
+  /* TODO: Update hover color */
+  /* background: var(--ol__red__800); */
+}
+
+/**
+ * .btn-link
+ * Location: Link-styled buttons
+ * Current: color #3b67b2 (blue)
+ * Update: color var(--ol__red__700) (design system red)
+ */
+.btn-link {
+  /* TODO: Update to design system link color */
+  /* color: var(--ol__red__700); */
+}
+
+.btn-link:hover,
+.btn-link:active,
+.btn-link:focus {
+  /* TODO: Update hover background */
+  /* background: var(--ol__monochrome__50); */
+}
+
+/**
+ * .btn.outline
+ * Location: Outlined button variant
+ * Current: color #3b67b2, border rgba(59,103,178,0.2)
+ * Update: Use design system red
+ */
+.btn.outline {
+  /* TODO: Update outline button colors */
+  /* color: var(--ol__red__700); */
+  /* border-color: var(--ol__red__700); */
+}
+
+.btn.outline:active,
+.btn.outline:hover {
+  /* TODO: Update hover state */
+  /* border-color: var(--ol__red__800); */
+}
+
+
+/* ============================================================================
+   FORM ELEMENTS - CHECKBOXES
+   ============================================================================ */
+
+/**
+ * .checkbox
+ * Location: Custom checkbox styling
+ * Current: 14x14px, custom SVG checkmark
+ * Update: Update colors to design system, keep size
+ */
+.checkbox {
+  /* Keep existing size (14x14px) */
+  /* TODO: Update border color */
+}
+
+.checkbox::before {
+  /* Current border: rgba(15,15,21,0.2) */
+  /* TODO: border-color: var(--ol__monochrome__200); */
+}
+
+.checkbox:hover::before,
+.checkbox:active::before,
+.checkbox:focus::before {
+  /* TODO: border-color: var(--ol__red__700); */
+}
+
+.checkbox.disabled::before {
+  /* TODO: background-color: var(--ol__monochrome__50); */
+}
+
+
+/* ============================================================================
+   SOCIAL LOGIN BUTTONS
+   ============================================================================ */
+
+/**
+ * .social-buttons-wrapper
+ * Location: Container for social login buttons
+ * Current: flex, wrap, center
+ * Update: Consider design system spacing
+ */
+.social-buttons-wrapper {
+  /* TODO: Review spacing using design tokens */
+}
+
+/**
+ * .btn.facebook
+ * Location: Facebook login button
+ * Current: Branded Facebook blue #3f5b96
+ * Update: KEEP BRANDED COLORS - don't change
+ */
+.btn.facebook {
+  /* KEEP: background-color: #3f5b96; */
+}
+
+/**
+ * .btn.google
+ * Location: Google login button
+ * Current: Branded Google blue #4688f1
+ * Update: KEEP BRANDED COLORS
+ */
+.btn.google {
+  /* KEEP: background-color: #4688f1; */
+}
+
+/**
+ * .btn.twitter
+ * Location: Twitter login button
+ * Current: Branded Twitter blue #1da1f2
+ * Update: KEEP BRANDED COLORS
+ */
+.btn.twitter {
+  /* KEEP: background-color: #1da1f2; */
+}
+
+/**
+ * .btn.linkedin
+ * Location: LinkedIn login button
+ * Current: Branded LinkedIn blue #1178b3
+ * Update: KEEP BRANDED COLORS
+ */
+.btn.linkedin {
+  /* KEEP: background-color: #1178b3; */
+}
+
+/**
+ * .btn.apple
+ * Location: Apple login button
+ * Current: white bg, black text
+ * Update: KEEP BRANDED COLORS
+ */
+.btn.apple {
+  /* KEEP: background-color: #ffffff; color: #0f0f15; */
+}
+
+/**
+ * .btn.openid
+ * Location: OpenID Connect button
+ * Current: white bg, black text
+ * Update: Consider subtle design system alignment
+ */
+.btn.openid {
+  /* KEEP: background-color: #ffffff; */
+}
+
+
+/* ============================================================================
+   ERROR STATES
+   ============================================================================ */
+
+/**
+ * .error-message, .validation-error, .error-list .error
+ * Location: Validation error messages
+ * Current: color #f14e1b
+ * Update: color var(--ol__red__700)
+ */
+.error-message,
+.validation-error,
+.error-list .error {
+  /* TODO: Update error color */
+  /* color: var(--ol__red__700); */
+  
+  /* TODO: Update font */
+  /* font-family: var(--font__family__inter); */
+  /* font-size: var(--font__size__xs); */
+}
+
+
+/* ============================================================================
+   LINKS
+   ============================================================================ */
+
+/**
+ * a, .link
+ * Location: All hyperlinks and link-styled elements
+ * Current: color #3b67b2 (blue)
+ * Update: color var(--ol__red__700) (design system red)
+ */
+a,
+.link {
+  /* TODO: Update link color from blue to design system red */
+  /* color: var(--ol__red__700); */
+}
+
+a:active,
+a:hover,
+.link:active,
+.link:hover {
+  /* TODO: Update hover color */
+  /* color: var(--ol__red__800); */
+}
+
+
+/* ============================================================================
+   CUSTOM FIELD COMPONENTS
+   ============================================================================ */
+
+/**
+ * .custom-field
+ * Location: Custom form field wrapper with icons
+ * Current: Complex positioning and labeling
+ * Update: Align colors with design system, preserve structure
+ */
+.custom-field {
+  /* Keep existing structure */
+  /* TODO: Update colors within this component */
+}
+
+/**
+ * .custom-field-label
+ * Location: Floating label for custom fields
+ * Current: color rgba(15,15,21,0.3)
+ * Update: color var(--ol__monochrome__200)
+ */
+.custom-field-label {
+  /* TODO: Update label color */
+  /* color: var(--ol__monochrome__200); */
+}
+
+.custom-field-label::before {
+  /* Icon color */
+  /* TODO: Consider updating icon color/opacity */
+}
+
+
+/* ============================================================================
+   PRELOADER / SKELETON STATES
+   ============================================================================ */
+
+/**
+ * CRITICAL: DO NOT MODIFY THESE CLASSES
+ * All .p-* classes are for skeleton loading states
+ * Modifying these may break the preloader animations
+ */
+
+/**
+ * .p-background
+ * Location: Preloader background overlay
+ * Purpose: Background for loading skeleton
+ * DO NOT MODIFY
+ */
+.p-background {
+  /* DO NOT MODIFY */
+}
+
+/**
+ * .p-header, .p-footer, .p-logo, .p-main
+ * Location: Preloader sections
+ * Purpose: Skeleton structure
+ * DO NOT MODIFY
+ */
+.p-header,
+.p-footer,
+.p-logo,
+.p-main {
+  /* DO NOT MODIFY */
+}
+
+/**
+ * .p-auth, .p-sessions, .p-profile, .p-newsletters
+ * Location: Different preloader views
+ * Purpose: Skeleton for different page states
+ * DO NOT MODIFY
+ */
+.p-auth,
+.p-sessions,
+.p-profile,
+.p-newsletters {
+  /* DO NOT MODIFY */
+}
+
+/**
+ * .p-social, .p-social__item, .p-social__btn
+ * Location: Social login preloader
+ * Purpose: Skeleton for social buttons
+ * DO NOT MODIFY
+ */
+.p-social,
+.p-social__item,
+.p-social__btn {
+  /* DO NOT MODIFY */
+}
+
+/**
+ * .p-input, .p-checkbox, .p-tooltip
+ * Location: Form element skeletons
+ * Purpose: Skeleton for inputs
+ * DO NOT MODIFY
+ */
+.p-input,
+.p-checkbox,
+.p-tooltip {
+  /* DO NOT MODIFY */
+}
+
+/**
+ * .p-bg, .p-bg--secondary, .p-bg--4, .p-bg--10
+ * Location: Background utility classes
+ * Purpose: Skeleton background variations
+ * DO NOT MODIFY
+ */
+.p-bg,
+.p-bg--secondary,
+.p-bg--4,
+.p-bg--10 {
+  /* DO NOT MODIFY */
+}
+
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+/**
+ * .divider
+ * Location: Visual divider between sections
+ * Current: border-bottom rgba(15,15,21,0.06)
+ * Update: Use design system border color
+ */
+.divider {
+  /* TODO: Update border color */
+  /* border-bottom-color: var(--ol__monochrome__100); */
+}
+
+/**
+ * .consent-list, .consent
+ * Location: Consent checkboxes list
+ * Current: Text-align left, flex display
+ * Update: Consider spacing updates
+ */
+.consent-list {
+  /* Keep existing structure */
+}
+
+.consent {
+  /* TODO: Consider margin updates to use spacing tokens */
+}
+
+/**
+ * .remember-me
+ * Location: Remember me checkbox
+ * Current: flex, align-items center
+ * Update: Consider spacing updates
+ */
+.remember-me {
+  /* TODO: Consider spacing using design tokens */
+}
+
+
+/* ============================================================================
+   RESPONSIVE BEHAVIORS
+   ============================================================================ */
+
+/**
+ * @media (max-width: 360px)
+ * Purpose: Mobile-specific adjustments for social buttons
+ * Update: Preserve existing behavior, ensure design system compatibility
+ */
+@media only screen and (max-width: 360px) {
+  /* Keep existing responsive behavior */
+  /* Ensure design system changes don't break mobile layout */
+}
+
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+/**
+ * @media (prefers-color-scheme: dark)
+ * Purpose: Dark mode color adjustments
+ * Update: Align with design system dark mode if applicable
+ * CRITICAL: Test thoroughly, this is complex
+ */
+@media (prefers-color-scheme: dark) {
+  /**
+   * .p-background
+   * Current: background #2d2d2d
+   * Update: Consider design system dark background if exists
+   */
+  .p-background {
+    /* TODO: Review dark mode background */
+  }
+  
+  /**
+   * body.form .p-social
+   * Current: background #cdcdcd
+   * Update: Review for consistency
+   */
+  body.form .p-social {
+    /* TODO: Review dark mode colors */
+  }
+  
+  /* Additional dark mode overrides */
+  /* TODO: Ensure design system colors work in dark mode */
+}
+
+
+/* ============================================================================
+   ANGULAR-SPECIFIC STYLES
+   ============================================================================ */
+
+/**
+ * CRITICAL: DO NOT MODIFY ANGULAR COMPONENT STYLES
+ * All [_nghost-*] and [_ngcontent-*] selectors are Angular-generated
+ */
+
+/**
+ * .toggle[_nghost-ng-c2812426466]
+ * Location: Toggle switch component
+ * Purpose: Angular component styling
+ * DO NOT MODIFY - Angular scoped styles
+ */
+.toggle[_nghost-ng-c2812426466] {
+  /* DO NOT MODIFY - Angular component */
+}
+
+
+/* ============================================================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================================================ */
+
+/**
+ * .sr-only
+ * Location: Screen reader only content
+ * Purpose: Accessibility
+ * KEEP AS IS - Critical for accessibility
+ */
+.sr-only {
+  /* DO NOT MODIFY */
+}
+
+/**
+ * Focus visible improvements
+ * Add enhanced focus indicators for keyboard navigation
+ */
+/* TODO: Consider adding :focus-visible styles for better keyboard navigation */
+/*
+a:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+.link:focus-visible {
+  outline: 2px solid var(--ol__red__700);
+  outline-offset: 2px;
+}
+*/
+
+
+/* ============================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================================================ */
+
+/**
+ * Consider adding will-change for animated elements
+ * But be cautious - overuse can hurt performance
+ */
+
+
+/* ============================================================================
+   END OF FILE
+   ============================================================================ */
+
+/**
+ * Implementation Notes:
+ * 
+ * 1. Uncomment TODO items as you implement each section
+ * 2. Test each section thoroughly before moving to the next
+ * 3. Use browser dev tools to verify design token values
+ * 4. Check both light and dark modes
+ * 5. Test on multiple screen sizes
+ * 6. Verify form functionality after each change
+ * 7. DO NOT modify .p-* (preloader) classes
+ * 8. DO NOT modify [_nghost] (Angular) classes
+ * 9. KEEP social button brand colors intact
+ * 10. Document any deviations from the plan
+ * 
+ * Testing Checklist:
+ * - [ ] Login form works
+ * - [ ] Registration form works
+ * - [ ] Social logins trigger
+ * - [ ] Validation errors display
+ * - [ ] Preloader displays correctly
+ * - [ ] Dark mode works
+ * - [ ] Mobile responsive
+ * - [ ] Accessibility (keyboard nav, screen readers)
+ * - [ ] Cross-browser compatible
+ * - [ ] No console errors
+ */

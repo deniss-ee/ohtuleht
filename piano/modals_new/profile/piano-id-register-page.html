@@ -1,0 +1,1107 @@
+<html data-critters-container lang="et">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <link type="image/x-icon" href="favicon.ico" rel="icon" />
+    <style>
+      @-webkit-keyframes preloader-opacityPulse {
+        0%,
+        to {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      @keyframes preloader-opacityPulse {
+        0%,
+        to {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .body-relative {
+        position: relative;
+      }
+
+      body.form .p-social {
+        background: #323232;
+        opacity: 0.04;
+      }
+
+      body.form .p-social__item,
+      body.form .p-text--switch,
+      body.profile .p-header,
+      body.profile .p-logo,
+      body.profile .p-social {
+        display: none;
+      }
+
+      body.inside-checkout {
+        min-height: 527px;
+      }
+
+      .p-header {
+        border-bottom: 1px solid rgba(50, 50, 50, 0.08);
+        display: flex;
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+      }
+
+      .p-footer {
+        border-top: 1px solid rgba(50, 50, 50, 0.08);
+        clear: both;
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+      }
+
+      .p-footer .p-footer-content {
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .p-footer .footer-content .p-text--switch {
+        padding: 0 64px;
+      }
+
+      .inside-checkout .p-header {
+        display: none;
+      }
+
+      .p-lang {
+        display: inline-block;
+        height: 60px;
+        line-height: 60px;
+      }
+
+      .p-lang__label,
+      .p-lang__switcher {
+        display: inline-block;
+        height: 10px;
+        width: 16px;
+        margin-left: 22px;
+      }
+
+      .p-lang__switcher {
+        width: 22px;
+        margin-left: 11px;
+      }
+
+      .p-close {
+        float: right;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        p-text-align: center;
+        border-left: 1px solid rgba(50, 50, 50, 0.08);
+      }
+
+      .p-icon {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+      }
+
+      .p-logo {
+        min-height: 210px;
+        padding-top: 47px;
+        max-width: 320px;
+        margin: 0 auto 25px;
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+      }
+
+      .p-img {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+      }
+
+      .p-text {
+        margin-top: 10px;
+      }
+
+      .p-text--action {
+        margin: 45px auto 30px;
+        padding: 0 64px;
+      }
+
+      .p-text--desc {
+        margin-top: 14px;
+      }
+
+      .p-text--desc.p-small {
+        padding: 0 24px;
+      }
+
+      .p-text--desc.p-xsmall {
+        padding: 0 56px;
+      }
+
+      .p-text--divider {
+        padding: 0 96px;
+        margin-bottom: 29px;
+      }
+
+      .p-text--switch {
+        margin-top: 29px;
+        padding: 0 55px;
+      }
+
+      .p-text__content {
+        height: 6px;
+      }
+
+      .p-main {
+        padding: 0 24px 25px;
+        max-width: 320px;
+        margin: 0 auto;
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+      }
+
+      .p-bg {
+        background: #0f0f15;
+      }
+
+      .p-bg--secondary {
+        background: #c4c4c4;
+      }
+
+      .p-bg--4 {
+        opacity: 0.04;
+      }
+
+      .p-bg--10 {
+        opacity: 0.1;
+      }
+
+      .p-social {
+        white-space: nowrap;
+        height: 48px;
+        margin-bottom: 29px;
+      }
+
+      .p-social__item {
+        float: left;
+        box-sizing: border-box;
+        width: 25%;
+      }
+
+      .p-social__btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 24px;
+        margin: 0 auto;
+      }
+
+      .p-input {
+        height: 48px;
+        margin-top: 16px;
+      }
+
+      .p-input-cf {
+        margin-top: 24px;
+      }
+
+      .piano-id-short.piano-id-inline .p-header,
+      .piano-id-short.piano-id-inline .p-footer,
+      .piano-id-short.piano-id-inline .p-logo,
+      .piano-id-short .p-social__preloader,
+      .piano-id-short .p-text,
+      .piano-id-short .p-input.p-bg.p-bg--4 {
+        display: none;
+      }
+
+      .piano-id-short.piano-id-inline .p-main {
+        padding: 0;
+        margin: 0;
+        max-width: 100%;
+      }
+
+      .piano-id-short.piano-id-inline .p-input--cf {
+        margin-top: 0;
+      }
+
+      .piano-id-short.piano-id-rounded .p-input--cf {
+        border-radius: 999px;
+      }
+
+      #preloader-container {
+        position: relative;
+      }
+
+      [data-switch-case] {
+        display: none;
+      }
+
+      [data-switch-case].active {
+        display: block;
+      }
+
+      .inside-checkout .p-sessions {
+        border-radius: 6px;
+        border: 1px solid rgba(15, 15, 21, 0.06);
+        background: #fff;
+      }
+
+      .p-sessions .p-header {
+        background: rgba(51, 51, 51, 0.02);
+        padding: 13px 25px;
+        display: grid;
+        gap: 15px;
+        grid-template-columns: 20px repeat(3, 1fr) 20px;
+        border: none;
+        margin-bottom: 6px;
+      }
+
+      .p-sessions .p-input {
+        margin: 0;
+        height: 14px;
+        border-radius: 2px;
+        background: linear-gradient(97deg, rgba(15, 15, 21, 0) 25.36%, rgba(15, 15, 21, 0.03) 49.68%, rgba(15, 15, 21, 0) 74.52%), rgba(15, 15, 21, 0.05);
+      }
+
+      .p-sessions .p-checkbox {
+        width: 14px;
+        height: 14px;
+        border-radius: 2px;
+        background: linear-gradient(97deg, rgba(15, 15, 21, 0) 25.36%, rgba(15, 15, 21, 0.03) 49.68%, rgba(15, 15, 21, 0) 74.52%), rgba(15, 15, 21, 0.05);
+      }
+
+      #preloader-container .p-sessions .p-tooltip {
+        width: 14px;
+        height: 14px;
+        border-radius: 100px;
+        background: linear-gradient(97deg, rgba(15, 15, 21, 0) 25.36%, rgba(15, 15, 21, 0.03) 49.68%, rgba(15, 15, 21, 0) 74.52%), rgba(15, 15, 21, 0.05);
+      }
+
+      .p-sessions .p-list-item {
+        padding: 13px 25px;
+        display: grid;
+        gap: 15px;
+        grid-template-columns: 20px repeat(3, 1fr) 20px;
+        border: none;
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+      }
+
+      .p-sessions .p-list-item:last-child {
+        margin-bottom: 6px;
+      }
+
+      .p-w-30 {
+        max-width: 30%;
+      }
+
+      .p-w-50 {
+        max-width: 50%;
+      }
+
+      .p-w-80 {
+        max-width: 80%;
+      }
+
+      .p-profile .p-section-title {
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+        margin-bottom: 20px;
+      }
+
+      .p-profile .p-section-title:first-child {
+        margin-top: 30px;
+      }
+
+      .p-profile .p-section-title .p-title {
+        background: #ebebeb;
+        height: 16px;
+        width: 80px;
+      }
+
+      .p-profile .p-row,
+      .p-newsletters .p-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+      }
+
+      .p-newsletters .p-row:first-child {
+        margin-top: 30px;
+      }
+
+      .p-profile .p-row div,
+      .p-newsletters .p-row div {
+        border-radius: 2px;
+      }
+
+      .p-profile .p-label,
+      .p-newsletters .p-label {
+        background: #ebebeb;
+        height: 16px;
+        width: 172px;
+        margin-right: 20px;
+      }
+
+      .p-profile .p-input,
+      .p-newsletters .p-input {
+        background: #ebebeb;
+        height: 30px;
+        flex: 1;
+        margin: 0;
+      }
+
+      .p-profile .p-section-actions {
+        display: flex;
+        animation: preloader-opacityPulse 3s ease-in-out 0s infinite;
+        margin-bottom: 40px;
+        margin-top: 20px;
+      }
+
+      .p-section-actions .p-action {
+        background: #ebebeb;
+        height: 30px;
+        width: 80px;
+      }
+
+      .p-section-actions .p-action:first-child {
+        margin-right: 10px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .p-background {
+          position: fixed;
+          inset: 0;
+          background-color: #2d2d2d;
+        }
+
+        body.form .p-social {
+          background: #cdcdcd;
+        }
+
+        .p-close {
+          border-left: 1px solid rgba(205, 205, 205, 0.08);
+        }
+
+        .p-header {
+          border-bottom: 1px solid rgba(205, 205, 205, 0.08);
+        }
+
+        .p-footer {
+          border-top: 1px solid rgba(205, 205, 205, 0.08);
+        }
+
+        .p-bg {
+          background: #f0f0ea;
+        }
+
+        .p-bg--secondary {
+          background: #3b3b3b;
+        }
+      }
+    </style>
+    <style>
+      body {
+        width: 100% !important;
+        margin: 0;
+        font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          Segoe UI,
+          Roboto,
+          Oxygen-Sans,
+          Ubuntu,
+          Cantarell,
+          Helvetica Neue,
+          sans-serif;
+        font-size: 16px;
+        font-weight: 200;
+        box-sizing: border-box;
+        background: #ffffff;
+      }
+    </style>
+    <link href="https://cdn.piano.io/id/1.62.23/styles.css" rel="stylesheet" media="all" onload="this.media = 'all'" />
+    <noscript>
+      <link href="https://cdn.piano.io/id/1.62.23/styles.css" rel="stylesheet" />
+    </noscript>
+    <title>Authorization</title>
+    <script src="https://www.gstatic.com/recaptcha/releases/PoyoqOPhxBO7pBk68S4YbpHZ/recaptcha__en.js" type="text/javascript" async charset="utf-8" crossorigin="anonymous" integrity="sha384-CsMESSmpdyXn2oSFisDd6UA6lT/9DlfGd77o9JZlC2/zeLHxhb5UOwKTAkz7dFBg"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcKo3sUAAAAAMOKgLCX7I54lgY3AxCNq2pX8mZZ&amp;onload=ng2recaptchaloaded" async defer></script>
+    <style>
+      button[_ngcontent-ng-c3291433135] {
+        height: 48px;
+        border: 1px solid rgba(15, 15, 21, 0.06);
+        cursor: pointer;
+        outline: none;
+      }
+
+      button[_ngcontent-ng-c3291433135]::-moz-focus-inner {
+        border: 0;
+      }
+
+      button[_ngcontent-ng-c3291433135]:hover,
+      button[_ngcontent-ng-c3291433135]:focus {
+        border-color: rgba(15, 15, 21, 0.2);
+      }
+
+      .wrapper[_ngcontent-ng-c3291433135] {
+        min-width: 212px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .round-social-button[_ngcontent-ng-c3291433135] {
+        width: 48px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        background-size: inherit;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: inherit;
+        margin: 0 4px;
+      }
+
+      .round-social-button.msqa[_ngcontent-ng-c3291433135] {
+        height: 48px;
+      }
+
+      .with-title-social-button[_ngcontent-ng-c3291433135] {
+        min-width: 212px;
+        border-radius: 24px;
+        box-sizing: border-box;
+        color: rgb(41, 41, 41);
+        background-color: inherit;
+        margin-bottom: 14px;
+        font-size: 14px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+      }
+
+      .with-title-social-button.msqa[_ngcontent-ng-c3291433135] {
+        width: 212px;
+      }
+
+      .with-title-social-button[_ngcontent-ng-c3291433135]:last-child {
+        margin-bottom: 0;
+      }
+
+      .with-title-social-button[_ngcontent-ng-c3291433135] .social-button-icon[_ngcontent-ng-c3291433135] {
+        background-size: inherit;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 48px;
+        height: 48px;
+        display: block;
+        margin-right: 6px;
+      }
+    </style>
+    <style>
+      .branded-social-button[_ngcontent-ng-c3291433135] {
+        border: 1px solid;
+        padding: 12px 8px;
+        line-height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        background-color: transparent;
+        width: 240px;
+        box-sizing: border-box;
+        margin-bottom: 14px;
+        color: #2867b2;
+        font-size: 14px;
+        font-weight: 500;
+        border-color: rgba(59, 103, 178, 0.2);
+        border-radius: 0;
+        font-family:
+          Roboto,
+          Helvetica,
+          -apple-system,
+          sans-serif;
+      }
+
+      .branded-social-button.msqa[_ngcontent-ng-c3291433135] {
+        border: none;
+        padding: 0;
+        height: 48px;
+      }
+
+      .branded-social-button.msqa[_ngcontent-ng-c3291433135]:hover {
+        border: none;
+      }
+
+      .branded-social-button[_ngcontent-ng-c3291433135]:last-child {
+        margin-bottom: 0;
+      }
+
+      .branded-social-button[_ngcontent-ng-c3291433135]:hover {
+        border: 1px solid rgba(59, 103, 178, 0.4);
+      }
+
+      .branded-social-button[_ngcontent-ng-c3291433135] .social-button-title[_ngcontent-ng-c3291433135] {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        line-height: 1.25;
+      }
+
+      .branded-social-button[_ngcontent-ng-c3291433135] .social-button-icon[_ngcontent-ng-c3291433135] {
+        background-size: inherit;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+        margin-right: 8px;
+        min-width: 24px;
+        max-width: 24px;
+        height: 24px;
+      }
+
+      .branded-social-button.facebook[_ngcontent-ng-c3291433135] {
+        color: #2867b2;
+        border-color: #2867b2;
+        font-size: 14px;
+        border-radius: 4px;
+      }
+
+      .branded-social-button.google[_ngcontent-ng-c3291433135] {
+        padding: 12px 10px;
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 14px;
+        border-radius: 2px;
+        background: #fff;
+        box-shadow:
+          0 1px 2px 0 rgba(0, 0, 0, 0.25),
+          0 0 0 0 rgba(0, 0, 0, 0.08);
+        border-color: transparent;
+      }
+
+      .branded-social-button.google[_ngcontent-ng-c3291433135] .social-button-icon[_ngcontent-ng-c3291433135] {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+      }
+
+      .branded-social-button.apple[_ngcontent-ng-c3291433135] {
+        padding: 12px 15px 12px 8px;
+        border-color: #000;
+        color: #000;
+        font-size: 14px;
+        border-radius: 0;
+      }
+
+      .branded-social-button.apple[_ngcontent-ng-c3291433135] .social-button-icon[_ngcontent-ng-c3291433135] {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+    </style>
+    <style>
+      .preloader {
+        display: none !important;
+      }
+
+      app-main {
+        display: block !important;
+      }
+    </style>
+    <style>
+      .toggle[_nghost-ng-c2812426466] {
+        border-radius: 10px;
+        width: 40px;
+        height: 20px;
+        display: block;
+        align-items: center;
+        padding: 2px;
+        background: #878787;
+        transition: 0.2s;
+        outline: none;
+      }
+
+      .toggle[_nghost-ng-c2812426466]::before {
+        content: "";
+        transition: 0.3s;
+        width: 16px;
+        height: 16px;
+        background-color: #ffffff;
+        display: block;
+        border-radius: 8px;
+      }
+
+      .toggle[_nghost-ng-c2812426466]:hover::before {
+        transform: translateX(2px);
+      }
+
+      .toggle.checked[_nghost-ng-c2812426466] {
+        background-color: #81c875;
+      }
+
+      .toggle.disabled[_nghost-ng-c2812426466] {
+        opacity: 50%;
+      }
+
+      .toggle.checked[_nghost-ng-c2812426466]::before {
+        transform: translateX(20px);
+      }
+    </style>
+        <link rel="stylesheet" href="piano-id-layout-old.css">
+  </head>
+
+  <body class="body-relative piano-id-modal no-scroll" dir="ltr">
+    <div class="preloader">
+      <div class="p-background"></div>
+      <div id="preloader-container">
+        <div class="p-auth active" data-switch-case="auth">
+          <div class="p-header">
+            <div class="p-lang">
+              <div class="p-lang__label p-bg p-bg--10"></div>
+              <div class="p-lang__switcher p-bg p-bg--10"></div>
+            </div>
+          </div>
+          <div class="p-logo">
+            <div class="p-img p-bg p-bg--10"></div>
+            <div class="p-text p-text--action">
+              <div class="p-text__content p-bg p-bg--secondary"></div>
+            </div>
+            <div class="p-text p-text--desc">
+              <div class="p-text__content p-bg p-bg--4"></div>
+            </div>
+            <div class="p-text p-text--desc p-small">
+              <div class="p-text__content p-bg p-bg--4"></div>
+            </div>
+            <div class="p-text p-text--desc p-xsmall">
+              <div class="p-text__content p-bg p-bg--4"></div>
+            </div>
+          </div>
+          <div class="p-main">
+            <div class="p-social p-social__preloader">
+              <div class="p-social__item">
+                <div class="p-social__btn p-bg p-bg--10"></div>
+              </div>
+              <div class="p-social__item">
+                <div class="p-social__btn p-bg p-bg--10"></div>
+              </div>
+              <div class="p-social__item">
+                <div class="p-social__btn p-bg p-bg--10"></div>
+              </div>
+              <div class="p-social__item">
+                <div class="p-social__btn p-bg p-bg--10"></div>
+              </div>
+            </div>
+            <div class="p-text p-text--action p-text--divider">
+              <div class="p-text__content p-bg p-bg--secondary"></div>
+            </div>
+            <div class="p-input p-bg p-bg--4"></div>
+            <div class="p-input p-bg p-bg--4"></div>
+            <div class="p-input p-input--cf p-bg p-bg--10"></div>
+            <div class="p-text p-text--switch">
+              <div class="p-text__content p-bg p-bg--4"></div>
+            </div>
+          </div>
+          <div class="p-footer">
+            <div class="p-footer-content">
+              <div class="p-text p-text--switch">
+                <div class="p-text__content p-bg p-bg--4"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-sessions" data-switch-case="sessions">
+          <div class="p-header">
+            <div class="p-checkbox"></div>
+            <div class="p-input p-w-30"></div>
+            <div class="p-input p-w-30"></div>
+            <div class="p-input p-w-30"></div>
+          </div>
+          <div class="p-list-item">
+            <div class="p-checkbox"></div>
+            <div class="p-input p-w-50"></div>
+            <div class="p-input p-w-50"></div>
+            <div class="p-input p-w-50"></div>
+            <div class="p-tooltip"></div>
+          </div>
+          <div class="p-list-item">
+            <div class="p-checkbox"></div>
+            <div class="p-input p-w-80"></div>
+            <div class="p-input p-w-80"></div>
+            <div class="p-input p-w-80"></div>
+          </div>
+        </div>
+        <div class="p-profile" data-switch-case="profile">
+          <div class="p-section-title">
+            <div class="p-title"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-section-actions">
+            <div class="p-action"></div>
+            <div class="p-action"></div>
+          </div>
+          <div class="p-section-title">
+            <div class="p-title"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-section-actions">
+            <div class="p-action"></div>
+            <div class="p-action"></div>
+          </div>
+        </div>
+        <div class="p-newsletters" data-switch-case="newsletters">
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-label"></div>
+            <div class="p-input"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-main ng-version="16.2.12" style="display: none">
+      <div class="sr-only" role="status" aria-atomic="true" aria-live="polite"></div>
+      <router-outlet></router-outlet
+      ><app-widget
+        ><pn-messages>
+          <div data-e2e="messagesContainer">
+            <div></div>
+            <!---->
+          </div>
+        </pn-messages>
+        <app-resolve-outlet>
+          <!---->
+          <!----> </app-resolve-outlet
+        ><screen-layout>
+          <meta name="design-version" content="2" />
+          <main class="with-logo" setclassdependsonapplogo>
+            <current-screen role="region" aria-label="Register screen">
+              <form novalidate="">
+                <screen-register>
+                  <p class="lead">
+                    <t>Loo Õhtulehe konto</t>
+                  </p>
+
+                  <p class="sub-lead">
+                    <span>Õhtulehe konto on vajalik Õhtuleht Kirjastuse digipaketi ligipääsuks</span>
+                  </p>
+
+                  <p class="sub-lead">
+                    <!---->
+                  </p>
+
+                  <!---->
+                  <!---->
+
+                  <p class="input-group with-icon">
+                    <input class="empty required" name="email" type="text" aria-label="e-post" fieldregisteremail value pn-autofocus autocorrect="off" autocapitalize="none" />
+                    <span class="placeholder"
+                      ><i class="icon icon-email"></i>
+                      <t>E-mail</t>
+                    </span>
+                    <span class="error-message" role="alert" showifemailinvalid style="display: none">
+                      <t>E-posti aadress on kohustuslik</t>
+                    </span>
+                    <span class="error-message" role="alert" showifemailinvalidby="SERVER_ERROR" setemailservererrormessage style="display: none"></span>
+                    <span class="mailcheck" mailcheck></span>
+                  </p>
+                  <!---->
+
+                  <p class="input-group with-icon">
+                    <input class="empty required" type="password" aria-label="salasõna" fieldregisterpassword value autocorrect="off" autocapitalize="none" />
+                    <span class="placeholder"
+                      ><i class="icon icon-password"></i>
+                      <t>Salasõna</t>
+                    </span>
+                    <span class="float">
+                      <i class="icon icon-show" role="button" aria-label="Show password" showregisterpassword style="display: block" tabindex="0"></i>
+                      <i class="icon icon-hide" role="button" aria-label="Hide password" hideregisterpassword style="display: none" tabindex="0"></i>
+                    </span>
+                    <span class="error-message" role="alert" showifpasswordinvalidby="PASSWORD_REQUIRED" style="display: none">
+                      <t>Salasõna on kohustuslik</t>
+                    </span>
+                    <span class="error-message" role="alert" showifpasswordinvalidby="PASSWORD_MIXED_CASE" style="display: none">
+                      <t>Salasõna peab sisaldama väikseid ja suuri tähti</t>
+                    </span>
+                    <span class="error-message" role="alert" showifpasswordinvalidby="PASSWORD_ALPHANUMERIC" style="display: none">
+                      <t>Salasõna peab sisaldama nii tähti kui ka numbreid</t>
+                    </span>
+                    <span class="error-message" role="alert" showifpasswordinvalidby="PASSWORD_SPECIAL_CHARACTERS" style="display: none">
+                      <t>Salasõna peab sisaldama mis tahes sümboleid</t>
+                    </span>
+                    <span class="error-message" role="alert" showifpasswordinvalidby="PASSWORD_CANT_CONTAIN_EMAIL" style="display: none">
+                      <t>Parool ei tohi sisaldada kasutaja e-posti aadressi</t>
+                    </span>
+                    <span class="error-message" role="alert" showifpasswordinvalidby="PASSWORD_MIN_LENGTH" style="display: none">
+                      <t>Salasõna pikkus peab olema vähemalt 8 tähemärki.</t>
+                    </span>
+                    <span class="error-message" role="alert" showifpasswordinvalidby="SERVER_ERROR" setpasswordservererrormessage style="display: none"></span>
+                  </p>
+                  <!---->
+
+                  <p class="input-group with-icon">
+                    <input class="empty required" type="password" aria-label="kinnita salasõna" fieldconfirmpassword value autocorrect="off" autocapitalize="none" />
+                    <span class="placeholder"
+                      ><i class="icon icon-password"></i>
+                      <t>Korda salasõna</t>
+                    </span>
+                    <span class="float">
+                      <i class="icon icon-show" role="button" aria-label="Show password" showpassword style="display: block" tabindex="0"></i>
+                      <i class="icon icon-hide" role="button" aria-label="Hide password" hidepassword style="display: none" tabindex="0"></i>
+                    </span>
+                    <span class="error-message" role="alert" showifregisterconfirmpasswordinvalidby="PASSWORD_NOT_CONFIRMED">
+                      <t>Parool ja parooli kinnitus ei kattu</t>
+                    </span>
+                    <span class="error-message" role="alert" showifregisterconfirmpasswordinvalidby="SERVER_ERROR" setconfirmpasswordservererrormessage style="display: none"></span>
+                  </p>
+                  <!---->
+                  <!----><!---->
+                  <!----><!---->
+
+                  <custom-fields class="custom-fields">
+                    <!---->
+                  </custom-fields>
+
+                  <p class="consents-block" style="display: none">
+                    <consent-boxes class="consent-list">
+                      <label class="consent">
+                        <checkbox class="checkbox-container">
+                          <checkbox-control class="checkbox" role="checkbox" aria-checked="false" aria-labelledby="consent-c66b56fd642f1e4d" _nghost-ng-c2812426466 tabindex="0">
+                            <input type="checkbox" _ngcontent-ng-c2812426466 style="display: none; visibility: hidden" /> </checkbox-control
+                          ><!---->
+                          <!---->
+                        </checkbox>
+                        <span id="consent-c66b56fd642f1e4d">Annan Õhtuleht Kirjastus AS-ile õiguse töödelda minu e-posti aadressi ja telefoni turunduslikul eesmärgil pakkumiste ja uudiskirjade saatmiseks.</span> </label
+                      ><!---->
+                      <!----><!---->
+                    </consent-boxes>
+                  </p>
+                  <div class="cf remember-and-restore" style="display: none">
+                    <span class="pull-left">
+                      <label class="remember-me">
+                        <remember-me>
+                          <checkbox class="checkbox-container">
+                            <checkbox-control class="checkbox" role="checkbox" aria-checked="false" aria-label="Jäta mind meelde" _nghost-ng-c2812426466 tabindex="0">
+                              <input type="checkbox" _ngcontent-ng-c2812426466 style="display: none; visibility: hidden" /> </checkbox-control
+                            ><!---->
+                            <!---->
+                          </checkbox>
+                        </remember-me>
+                        <t>Jäta mind meelde</t>
+                      </label>
+                    </span>
+                  </div>
+                  <!----><!---->
+
+                  <re-captcha>
+                    <!----> </re-captcha
+                  ><!---->
+
+                  <p>
+                    <button class="btn prime" type="submit" role="button" actionregister tabindex="0">
+                      <t>Loo Õhtulehe konto</t></button
+                    ><!---->
+                  </p>
+
+                  <!---->
+
+                  <div class="social-wrapper">
+                    <span class="social-buttons-wrapper">
+                      <social-sign-in _nghost-ng-c3291433135="">
+                        <button class="round-social-button social-button-icon facebook" type="button" aria-label="Sign in with FACEBOOK" _ngcontent-ng-c3291433135 tabindex="0"></button
+                        ><!---->
+                        <!---->
+                        <button class="round-social-button social-button-icon apple" type="button" aria-label="Sign in with APPLE" _ngcontent-ng-c3291433135 tabindex="0"></button
+                        ><!---->
+                        <!---->
+                        <button class="round-social-button social-button-icon google" type="button" aria-label="Sign in with GOOGLE" _ngcontent-ng-c3291433135 tabindex="0"></button
+                        ><!---->
+                        <!----><!---->
+                        <!----><!---->
+                        <!---->
+                        <!---->
+                      </social-sign-in>
+                    </span>
+                  </div>
+                  <!---->
+                  <!----><!---->
+
+                  <errors-list>
+                    <!---->
+                  </errors-list>
+
+                  <div class="divider"></div>
+
+                  <p class="final bolder">
+                    <span>
+                      <t>Sul on juba konto?</t> </span
+                    ><!---->
+                  </p>
+                  <!---->
+                  <!----><!---->
+
+                  <p class="final">
+                    <button class="btn prime" type="button" role="button" showscreen="login" tabindex="0">
+                      <t>Sisene</t>
+                    </button>
+                  </p>
+                  <!---->
+                  <!----><!----> </screen-register
+                ><!---->
+              </form>
+              <spinner><!----></spinner>
+            </current-screen>
+          </main> </screen-layout
+        ><!----> </app-widget
+      ><!---->
+    </app-main>
+    <script>
+      var origin = getParameterByName("origin");
+      var sender = getParameterByName("sender");
+      var width = getParameterByName("width");
+      var insideCheckout = !!getParameterByName("checkout");
+      var preloaderHeight = getParameterByName("preloader_height");
+      var display = getParameterByName("display_mode");
+      var roundedPreloader = getParameterByName("rounded_preloader");
+
+      function sendMessage(event, params) {
+        var message = {
+          sender: sender,
+          event: event,
+          params: params,
+        };
+
+        try {
+          var target = window === window.parent ? window.opener : window.parent;
+          target.postMessage(JSON.stringify(message), origin);
+        } catch (e) {
+          // console.log('failed to send postmessage', e, event, data);
+        }
+      }
+
+      function addClass(element, className) {
+        var prefix = element.className.length > 0 ? " " : "";
+        element.className = element.className + prefix + className;
+      }
+
+      function getParameterByName(name) {
+        var search = window.location.search;
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+        var results = regex.exec(search);
+        if (!results) return null;
+        if (!results[2]) return "";
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      function getModuleName() {
+        var url = window.location.href;
+        var pathMatch = url.match(/\/id\/([^/?#]+)/);
+        if (!pathMatch || pathMatch.length < 1) {
+          return "auth";
+        }
+        return pathMatch[1];
+      }
+
+      function switchPreloader() {
+        const container = document.getElementById("preloader-container");
+        const module = getModuleName();
+
+        if (!container) return;
+
+        const activeElement = container.querySelector(`[data-switch-case="${module}"]`);
+        if (activeElement) {
+          addClass(activeElement, "active");
+        } else {
+          const authElement = container.querySelector("[data-switch-case='auth']");
+          if (authElement) {
+            addClass(authElement, "active");
+          }
+        }
+      }
+
+      var appRoute = window.location.hash.substr(1).slice(1).split("?")[0];
+      addClass(document.body, appRoute);
+      switchPreloader();
+
+      if (preloaderHeight) {
+        addClass(document.body, "piano-id-short");
+        var preloaderItem = document.querySelector(".p-input--cf");
+        preloaderItem.style.height = preloaderHeight + "px";
+
+        if (roundedPreloader) {
+          addClass(document.body, "piano-id-rounded");
+        }
+      }
+
+      if (display) {
+        addClass(document.body, "piano-id-" + display);
+      }
+
+      if (appRoute !== "profile") {
+        if (insideCheckout && !preloaderHeight) {
+          addClass(document.body, "inside-checkout");
+        }
+
+        sendMessage("resize", {
+          height: window.document.body.clientHeight,
+          width: width ? +width : undefined,
+        });
+      }
+    </script>
+    <script>
+      window.staticDomain = "";
+    </script>
+
+    <div>
+      <div class="grecaptcha-badge grecaptcha-badge--visible" data-style="bottomright" style="width: 256px; height: 60px; display: block; transition: right 0.3s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden">
+        <div class="grecaptcha-logo">
+          <iframe
+            name="a-2w73b1677ndv"
+            src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcKo3sUAAAAAMOKgLCX7I54lgY3AxCNq2pX8mZZ&amp;co=aHR0cHM6Ly9zYW5kYm94LnBpYW5vLmlvOjQ0Mw..&amp;hl=en&amp;v=PoyoqOPhxBO7pBk68S4YbpHZ&amp;size=invisible&amp;anchor-ms=20000&amp;execute-ms=30000&amp;cb=vw4o1faq8r6l"
+            title="reCAPTCHA"
+            role="presentation"
+            width="256"
+            height="60"
+            frameborder="0"
+            scrolling="no"
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation"></iframe>
+        </div>
+        <div class="grecaptcha-error"></div>
+        <textarea class="g-recaptcha-response" id="g-recaptcha-response-100000" name="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none"></textarea>
+      </div>
+      <iframe style="display: none"></iframe>
+    </div>
+  </body>
+</html>
