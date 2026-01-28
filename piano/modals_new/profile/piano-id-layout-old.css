@@ -221,15 +221,13 @@ p:first-child {
   font-size: 14px;
   line-height: 24px;
   margin-top: 0;
-  margin-bottom: 32px;
 }
 
 .agreement {
   margin-bottom: 26px;
 }
-
-p.final {
-  margin: 24px 0 0 !important;
+screen-login p {
+  margin: 0 !important;
 }
 
 .re-captcha {
@@ -461,8 +459,7 @@ input.fake-input {
 .btn.prime {
   position: relative;
   text-align: left;
-  margin-bottom: 22px;
-  margin-top: 26px;
+  margin-top: .5rem;
 }
 
 .btn.outline {
@@ -854,7 +851,7 @@ remember-me {
 }
 
 .remember-and-restore {
-  margin-top: 2em;
+  margin: 0 !important;
 }
 
 .consents-block {
@@ -1724,7 +1721,7 @@ button.pn-icon {
 }
 
 .round-social-button {
-  margin: 16px 8px 0 8px !important;
+  margin: 0;
 }
 
 .round-social-button:hover,
@@ -2315,13 +2312,6 @@ body[dir="rtl"] .pn-scale-custom-field-label {
 
 .btn-custom:hover {
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
-}
-
-.bolder {
-  font:
-    700 16px/1.5 Roboto,
-    sans-serif;
-  text-align: left;
 }
 
 .sub-lead-custom {
