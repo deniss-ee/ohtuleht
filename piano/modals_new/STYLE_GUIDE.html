@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Õhtuleht Piano Modals - Style Guide</title>
+  
+  <!-- Import the design system CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Style guide specific styles -->
+  <style>
+    /* Style guide container and layout */
+    .style-guide {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--spacing__8);
+      font-family: var(--font__family__inter);
+      background: var(--ol__monochrome__50);
+    }
+    
+    .style-guide__header {
+      background: var(--white);
+      padding: var(--spacing__8);
+      border-radius: var(--radius__lg);
+      margin-bottom: var(--spacing__8);
+    }
+    
+    .style-guide__title {
+      font-family: var(--font__family__fira);
+      font-size: var(--font__size__5xl);
+      font-weight: var(--font__weight__bold);
+      color: var(--ol__red__700);
+      margin-bottom: var(--spacing__3);
+      line-height: 1.2;
+    }
+    
+    .style-guide__intro {
+      font-size: var(--font__size__lg);
+      color: var(--ol__monochrome__900);
+      line-height: 1.5;
+    }
+    
+    /* Section styling */
+    .sg-section {
+      background: var(--white);
+      padding: var(--spacing__6);
+      border-radius: var(--radius__lg);
+      margin-bottom: var(--spacing__6);
+    }
+    
+    .sg-section__title {
+      font-family: var(--font__family__fira);
+      font-size: var(--font__size__3xl);
+      font-weight: var(--font__weight__bold);
+      color: var(--ol__red__700);
+      margin-bottom: var(--spacing__4);
+      padding-bottom: var(--spacing__2);
+      border-bottom: var(--borderwidth__2) solid var(--ol__red__700);
+    }
+    
+    .sg-subsection {
+      margin-bottom: var(--spacing__6);
+    }
+    
+    .sg-subsection:last-child {
+      margin-bottom: 0;
+    }
+    
+    .sg-subsection__title {
+      font-size: var(--font__size__xl);
+      font-weight: var(--font__weight__bold);
+      color: var(--ol__monochrome__900);
+      margin-bottom: var(--spacing__3);
+    }
+    
+    .sg-description {
+      font-size: var(--font__size__base);
+      color: var(--ol__monochrome__700);
+      margin-bottom: var(--spacing__4);
+      line-height: 1.5;
+    }
+    
+    /* Example containers */
+    .sg-example {
+      border: var(--borderwidth__1) solid var(--ol__monochrome__200);
+      border-radius: var(--radius__md);
+      padding: var(--spacing__4);
+      margin-bottom: var(--spacing__3);
+      background: var(--white);
+    }
+    
+    .sg-example--gray {
+      background: var(--ol__monochrome__50);
+    }
+    
+    .sg-example-label {
+      font-size: var(--font__size__sm);
+      font-weight: var(--font__weight__medium);
+      color: var(--ol__monochrome__600);
+      margin-bottom: var(--spacing__2);
+      font-family: var(--font__family__mono);
+    }
+    
+    /* Color swatches */
+    .sg-color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--spacing__3);
+      margin-bottom: var(--spacing__4);
+    }
+    
+    .sg-color-swatch {
+      text-align: center;
+    }
+    
+    .sg-color-box {
+      width: 100%;
+      height: 80px;
+      border-radius: var(--radius__md);
+      margin-bottom: var(--spacing__2);
+      border: var(--borderwidth__1) solid var(--ol__monochrome__200);
+    }
+    
+    .sg-color-name {
+      font-size: var(--font__size__sm);
+      font-weight: var(--font__weight__medium);
+      color: var(--ol__monochrome__900);
+      margin-bottom: var(--spacing__1);
+    }
+    
+    .sg-color-hex {
+      font-size: var(--font__size__xs);
+      color: var(--ol__monochrome__600);
+      font-family: var(--font__family__mono);
+    }
+    
+    /* Typography examples */
+    .sg-type-example {
+      margin-bottom: var(--spacing__4);
+      padding: var(--spacing__3);
+      border-left: var(--borderwidth__4) solid var(--ol__red__700);
+      background: var(--ol__monochrome__50);
+    }
+    
+    .sg-type-meta {
+      font-size: var(--font__size__sm);
+      color: var(--ol__monochrome__600);
+      margin-top: var(--spacing__2);
+      font-family: var(--font__family__mono);
+    }
+    
+    /* Spacing grid */
+    .sg-spacing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: var(--spacing__3);
+    }
+    
+    .sg-spacing-item {
+      text-align: center;
+    }
+    
+    .sg-spacing-box {
+      background: var(--ol__red__700);
+      margin: 0 auto var(--spacing__2);
+      border-radius: var(--radius__sm);
+    }
+    
+    .sg-spacing-label {
+      font-size: var(--font__size__xs);
+      font-weight: var(--font__weight__medium);
+      color: var(--ol__monochrome__900);
+    }
+    
+    /* Component showcase grid */
+    .sg-component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing__4);
+    }
+    
+    /* Code block */
+    .sg-code {
+      background: var(--ol__monochrome__950);
+      color: var(--ol__yellow__500);
+      padding: var(--spacing__3);
+      border-radius: var(--radius__md);
+      font-family: var(--font__family__mono);
+      font-size: var(--font__size__sm);
+      overflow-x: auto;
+      white-space: pre;
+      margin-bottom: var(--spacing__3);
+    }
+    
+    /* Table of contents */
+    .sg-toc {
+      background: var(--ol__yellow__50);
+      padding: var(--spacing__4);
+      border-radius: var(--radius__md);
+      border-left: var(--borderwidth__4) solid var(--ol__yellow__500);
+      margin-bottom: var(--spacing__6);
+    }
+    
+    .sg-toc__title {
+      font-size: var(--font__size__lg);
+      font-weight: var(--font__weight__bold);
+      color: var(--ol__monochrome__900);
+      margin-bottom: var(--spacing__2);
+    }
+    
+    .sg-toc__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sg-toc__item {
+      margin-bottom: var(--spacing__1);
+    }
+    
+    .sg-toc__link {
+      color: var(--ol__red__700);
+      text-decoration: none;
+      font-weight: var(--font__weight__medium);
+    }
+    
+    .sg-toc__link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="style-guide">
+  
+  <!-- Header -->
+  <div class="style-guide__header">
+    <h1 class="style-guide__title">Õhtuleht Piano Modals</h1>
+    <p class="style-guide__intro">
+      Visual design system and component library for subscription modals and flows. 
+      Built with Tailwind CSS principles using CSS custom properties.
+    </p>
+  </div>
+  
+  <!-- Table of Contents -->
+  <div class="sg-toc">
+    <h2 class="sg-toc__title">Table of Contents</h2>
+    <ul class="sg-toc__list">
+      <li class="sg-toc__item"><a href="#typography" class="sg-toc__link">1. Typography</a></li>
+      <li class="sg-toc__item"><a href="#colors" class="sg-toc__link">2. Color Palette</a></li>
+      <li class="sg-toc__item"><a href="#spacing" class="sg-toc__link">3. Spacing & Layout</a></li>
+      <li class="sg-toc__item"><a href="#buttons" class="sg-toc__link">4. Buttons</a></li>
+      <li class="sg-toc__item"><a href="#forms" class="sg-toc__link">5. Form Elements</a></li>
+      <li class="sg-toc__item"><a href="#cards" class="sg-toc__link">6. Cards</a></li>
+      <li class="sg-toc__item"><a href="#modals" class="sg-toc__link">7. Modal Containers</a></li>
+      <li class="sg-toc__item"><a href="#components" class="sg-toc__link">8. Other Components</a></li>
+    </ul>
+  </div>
+  
+  <!-- 1. TYPOGRAPHY -->
+  <section id="typography" class="sg-section">
+    <h2 class="sg-section__title">1. Typography</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Font Families</h3>
+      <p class="sg-description">Two primary font families: Fira Sans Condensed for headlines and prices, Inter for body text and UI.</p>
+      
+      <div class="sg-type-example">
+        <div style="font-family: var(--font__family__fira); font-size: 24px; font-weight: 700;">
+          Fira Sans Condensed - Headlines & Prices
+        </div>
+        <div class="sg-type-meta">Font Family: "Fira Sans Condensed", sans-serif</div>
+      </div>
+      
+      <div class="sg-type-example">
+        <div style="font-family: var(--font__family__inter); font-size: 24px; font-weight: 500;">
+          Inter - Body Text & UI Elements
+        </div>
+        <div class="sg-type-meta">Font Family: "Inter", sans-serif</div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Text Styles</h3>
+      
+      <div class="sg-type-example">
+        <h1 class="pn-modal__title">Modal Title (24px)</h1>
+        <div class="sg-type-meta">Class: .pn-modal__title | Fira Sans Condensed, Bold (700), 24px, Line Height: 1.2</div>
+      </div>
+      
+      <div class="sg-type-example">
+        <h2 class="pn-modal__subtitle">Modal Subtitle (16px)</h2>
+        <div class="sg-type-meta">Class: .pn-modal__subtitle | Inter, Bold (700), 16px, Line Height: 1.35</div>
+      </div>
+      
+      <div class="sg-type-example">
+        <p class="pn-modal__text">Modal body text with medium weight. This is used for descriptions and general content within modals.</p>
+        <div class="sg-type-meta">Class: .pn-modal__text | Inter, Medium (500), 16px, Line Height: 1.35</div>
+      </div>
+      
+      <div class="sg-type-example">
+        <p class="pn-modal__footer">Footer text for disclaimers and fine print. Usually appears at the bottom of modals.</p>
+        <div class="sg-type-meta">Class: .pn-modal__footer | Inter, Medium (500), 12px, Line Height: 1.35</div>
+      </div>
+      
+      <div class="sg-type-example">
+        <div class="price--xl">
+          <span class="price__value">2,99 €</span>
+          <span class="price__period"> / kuu</span>
+        </div>
+        <div class="sg-type-meta">Class: .price--xl | Fira Sans Condensed, Bold (700), 48px</div>
+      </div>
+      
+      <div class="sg-type-example">
+        <div class="price--lg">
+          <span class="price__value">9,99 €</span>
+          <span class="price__period"> / kuu</span>
+        </div>
+        <div class="sg-type-meta">Class: .price--lg | Fira Sans Condensed, Bold (700), 36px</div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 2. COLOR PALETTE -->
+  <section id="colors" class="sg-section">
+    <h2 class="sg-section__title">2. Color Palette</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Primary - Red</h3>
+      <p class="sg-description">Primary brand color for CTAs, titles, and emphasis.</p>
+      <div class="sg-color-grid">
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__red__50);"></div>
+          <div class="sg-color-name">red-50</div>
+          <div class="sg-color-hex">#fff0f1</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__red__100);"></div>
+          <div class="sg-color-name">red-100</div>
+          <div class="sg-color-hex">#ffdddf</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__red__300);"></div>
+          <div class="sg-color-name">red-300</div>
+          <div class="sg-color-hex">#ff959c</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__red__500);"></div>
+          <div class="sg-color-name">red-500</div>
+          <div class="sg-color-hex">#ff2634</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__red__700); border: 3px solid var(--ol__yellow__500);"></div>
+          <div class="sg-color-name"><strong>red-700 ★</strong></div>
+          <div class="sg-color-hex">#e3000f</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__red__800);"></div>
+          <div class="sg-color-name">red-800</div>
+          <div class="sg-color-hex">#af0510</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__red__950);"></div>
+          <div class="sg-color-name">red-950</div>
+          <div class="sg-color-hex">#500005</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Secondary - Yellow</h3>
+      <p class="sg-description">Secondary color for backgrounds and accents.</p>
+      <div class="sg-color-grid">
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__50);"></div>
+          <div class="sg-color-name">yellow-50</div>
+          <div class="sg-color-hex">#ffffe7</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__100);"></div>
+          <div class="sg-color-name">yellow-100</div>
+          <div class="sg-color-hex">#fdffc1</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__300);"></div>
+          <div class="sg-color-name">yellow-300</div>
+          <div class="sg-color-hex">#fff641</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__400);"></div>
+          <div class="sg-color-name">yellow-400</div>
+          <div class="sg-color-hex">#ffe80d</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__500); border: 3px solid var(--ol__red__700);"></div>
+          <div class="sg-color-name"><strong>yellow-500 ★</strong></div>
+          <div class="sg-color-hex">#fcd700</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__600);"></div>
+          <div class="sg-color-name">yellow-600</div>
+          <div class="sg-color-hex">#d1a000</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__900);"></div>
+          <div class="sg-color-name">yellow-900</div>
+          <div class="sg-color-hex">#74490f</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__yellow__950);"></div>
+          <div class="sg-color-name">yellow-950</div>
+          <div class="sg-color-hex">#442604</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Neutral - Monochrome</h3>
+      <p class="sg-description">Neutral colors for text, borders, and subtle backgrounds.</p>
+      <div class="sg-color-grid">
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__50);"></div>
+          <div class="sg-color-name">mono-50</div>
+          <div class="sg-color-hex">#f5f6f6</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__100);"></div>
+          <div class="sg-color-name">mono-100</div>
+          <div class="sg-color-hex">#e5e8e8</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__200);"></div>
+          <div class="sg-color-name">mono-200</div>
+          <div class="sg-color-hex">#cdd3d4</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__400);"></div>
+          <div class="sg-color-name">mono-400</div>
+          <div class="sg-color-hex">#808d90</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__500);"></div>
+          <div class="sg-color-name">mono-500</div>
+          <div class="sg-color-hex">#657275</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__700);"></div>
+          <div class="sg-color-name">mono-700</div>
+          <div class="sg-color-hex">#4a5254</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__900);"></div>
+          <div class="sg-color-name">mono-900</div>
+          <div class="sg-color-hex">#3a3e3f</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--ol__monochrome__950);"></div>
+          <div class="sg-color-name">mono-950</div>
+          <div class="sg-color-hex">#17191a</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Base Colors</h3>
+      <div class="sg-color-grid">
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--white);"></div>
+          <div class="sg-color-name">white</div>
+          <div class="sg-color-hex">#ffffff</div>
+        </div>
+        <div class="sg-color-swatch">
+          <div class="sg-color-box" style="background: var(--black);"></div>
+          <div class="sg-color-name">black</div>
+          <div class="sg-color-hex">#000000</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 3. SPACING & LAYOUT -->
+  <section id="spacing" class="sg-section">
+    <h2 class="sg-section__title">3. Spacing & Layout</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Spacing Scale</h3>
+      <p class="sg-description">Based on a 4px grid system. Most commonly used values shown below.</p>
+      <div class="sg-spacing-grid">
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 4px; height: 4px;"></div>
+          <div class="sg-spacing-label">4px (1)</div>
+        </div>
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 8px; height: 8px;"></div>
+          <div class="sg-spacing-label">8px (2)</div>
+        </div>
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 12px; height: 12px;"></div>
+          <div class="sg-spacing-label">12px (3)</div>
+        </div>
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 16px; height: 16px;"></div>
+          <div class="sg-spacing-label">16px (4)</div>
+        </div>
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 24px; height: 24px;"></div>
+          <div class="sg-spacing-label">24px (6)</div>
+        </div>
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 32px; height: 32px;"></div>
+          <div class="sg-spacing-label">32px (8)</div>
+        </div>
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 48px; height: 48px;"></div>
+          <div class="sg-spacing-label">48px (12)</div>
+        </div>
+        <div class="sg-spacing-item">
+          <div class="sg-spacing-box" style="width: 64px; height: 64px;"></div>
+          <div class="sg-spacing-label">64px (16)</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Border Radius</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing__3);">
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: var(--ol__red__700); border-radius: var(--radius__sm); margin: 0 auto var(--spacing__2);"></div>
+          <div class="sg-spacing-label">sm (4px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: var(--ol__red__700); border-radius: var(--radius__md); margin: 0 auto var(--spacing__2);"></div>
+          <div class="sg-spacing-label">md (6px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: var(--ol__red__700); border-radius: var(--radius__lg); margin: 0 auto var(--spacing__2);"></div>
+          <div class="sg-spacing-label">lg (8px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: var(--ol__red__700); border-radius: var(--radius__xl); margin: 0 auto var(--spacing__2);"></div>
+          <div class="sg-spacing-label">xl (12px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: var(--ol__red__700); border-radius: var(--radius__2xl); margin: 0 auto var(--spacing__2);"></div>
+          <div class="sg-spacing-label">2xl (16px)</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: var(--ol__red__700); border-radius: var(--radius__full); margin: 0 auto var(--spacing__2);"></div>
+          <div class="sg-spacing-label">full (9999px)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 4. BUTTONS -->
+  <section id="buttons" class="sg-section">
+    <h2 class="sg-section__title">4. Buttons</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Button Variants</h3>
+      <p class="sg-description">Standard height: 56px. Use full-width modifier for mobile-first layouts.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.btn .btn--red</div>
+        <button class="btn btn--red">Telli kohe</button>
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.btn .btn--yellow</div>
+        <button class="btn btn--yellow">Liitu kohe</button>
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.btn .btn--black</div>
+        <button class="btn btn--black">Vaata rohkem</button>
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.btn .btn--red .btn--full</div>
+        <button class="btn btn--red btn--full">Osta artikkel</button>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Buttons in Context</h3>
+      <p class="sg-description">Buttons automatically adapt to their parent container's theme.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">Button in red modal background</div>
+        <div class="pn-modal pn-modal--red">
+          <p class="pn-modal__text">When inside a red modal, .btn--red becomes yellow</p>
+          <button class="btn btn--red">Telli kohe</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Compact Button (Riba)</h3>
+      <p class="sg-description">Reduced height (28px) used in the top banner bar component.</p>
+      
+      <div class="sg-example">
+        <div class="riba">
+          <div class="riba__text">Digipakett 2 € = 2 kuud</div>
+          <button class="btn btn--red">LIITU KOHE</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 5. FORM ELEMENTS -->
+  <section id="forms" class="sg-section">
+    <h2 class="sg-section__title">5. Form Elements</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Text Input</h3>
+      <p class="sg-description">Standard input height: 56px with rounded corners and border.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.input (default state)</div>
+        <input type="text" class="input" placeholder="Mobiiltelefoni number">
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.input (focus state - border turns red)</div>
+        <input type="email" class="input" placeholder="E-posti aadress" style="border-color: var(--ol__red__700);">
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.input .input--error</div>
+        <input type="email" class="input input--error" placeholder="vale@email" value="notvalid">
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Form Group</h3>
+      <p class="sg-description">Standard form layout with input and button stacked vertically.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.form-group</div>
+        <div class="form-group">
+          <input type="tel" class="input" placeholder="Mobiiltelefoni number">
+          <button class="btn btn--red btn--full">Osta artikkel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 6. CARDS -->
+  <section id="cards" class="sg-section">
+    <h2 class="sg-section__title">6. Cards</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Card Variants</h3>
+      
+      <div class="sg-component-grid">
+        <div>
+          <div class="sg-example-label">.card .card--white .card--center</div>
+          <div class="card card--white card--center">
+            <div class="price--lg">
+              <span class="price__value">2,99 €</span>
+              <span class="price__period"> / kuu</span>
+            </div>
+            <button class="btn btn--red">Telli kohe</button>
+            <p class="pn-modal__footer">Esimene kuu maksab 1,99 €</p>
+          </div>
+        </div>
+        
+        <div>
+          <div class="sg-example-label">.card .card--red .card--center</div>
+          <div class="card card--red card--center">
+            <div class="badge">TELLIJATE LEMMIK</div>
+            <p class="pn-modal__text">digipaketi püsitellimus</p>
+            <div class="price-box price-box--featured">
+              <div class="price--lg">
+                <span class="price__value">2 €</span>
+                <span class="price__period"> / 2 kuud</span>
+              </div>
+            </div>
+            <button class="btn btn--yellow">Liitu kohe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Price Components</h3>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.price-box (standard)</div>
+        <div class="price-box">
+          <div class="price--lg">
+            <span class="price__value">9,99 €</span>
+            <span class="price__period"> / kuu</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.price-box .price-box--featured</div>
+        <div class="price-box price-box--featured">
+          <div class="price--lg">
+            <span class="price__value">2 €</span>
+            <span class="price__period"> / 2 kuud</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.price-group (with original price)</div>
+        <div class="price-group">
+          <div class="price--xl">
+            <span class="price__value">2 €</span>
+            <span class="price__period"> / 2 kuud</span>
+          </div>
+          <p class="price__original">Tavahind 10,49 € / kuu</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 7. MODAL CONTAINERS -->
+  <section id="modals" class="sg-section">
+    <h2 class="sg-section__title">7. Modal Containers</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Modal Backgrounds</h3>
+      
+      <div class="sg-example--gray">
+        <div class="sg-example-label">.pn-modal .pn-modal--white .pn-modal--left</div>
+        <div class="pn-modal pn-modal--white pn-modal--left">
+          <h1 class="pn-modal__title">Liitu digipaketiga</h1>
+          <p class="pn-modal__text">Õhtuleht Kirjastuse digipakett toob Sinuni olulised uudised ja kaasahaarava meelelahutuse.</p>
+          <button class="btn btn--red">Telli kohe</button>
+          <p class="pn-modal__footer">Digipakett tagab ligipääsu kõikidele väljaannetele.</p>
+        </div>
+      </div>
+      
+      <div class="sg-example--gray" style="margin-top: var(--spacing__4);">
+        <div class="sg-example-label">.pn-modal .pn-modal--yellow .pn-modal--left</div>
+        <div class="pn-modal pn-modal--yellow pn-modal--left">
+          <h1 class="pn-modal__title">Soovid rohkem näha ja teada?</h1>
+          <h2 class="pn-modal__subtitle">Telli digipakett ja saad:</h2>
+          <ul class="list">
+            <li class="list__item">
+              <div class="list__bullet"></div>
+              <div class="list__text">ligipääsu <strong>kogu</strong> tasulisele sisule</div>
+            </li>
+            <li class="list__item">
+              <div class="list__bullet"></div>
+              <div class="list__text"><strong>lahendada</strong> digiristsõnu</div>
+            </li>
+          </ul>
+          <button class="btn btn--red">Telli kohe</button>
+        </div>
+      </div>
+      
+      <div class="sg-example--gray" style="margin-top: var(--spacing__4);">
+        <div class="sg-example-label">.pn-modal .pn-modal--red .pn-modal--center</div>
+        <div class="pn-modal pn-modal--red pn-modal--center">
+          <h1 class="pn-modal__title">Eripakkumine!</h1>
+          <p class="pn-modal__text">Liitu nüüd ja säästa 50%</p>
+          <button class="btn btn--red">Liitu kohe</button>
+          <p class="pn-modal__footer">Pakkumine kehtib uutele tellijatele.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 8. OTHER COMPONENTS -->
+  <section id="components" class="sg-section">
+    <h2 class="sg-section__title">8. Other Components</h2>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Lists</h3>
+      <p class="sg-description">Bulleted lists with checkmark icons that adapt to background color.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.list (on white background)</div>
+        <ul class="list">
+          <li class="list__item">
+            <div class="list__bullet"></div>
+            <div class="list__text">ligipääsu <strong>kogu</strong> Õhtulehe tasulisele sisule</div>
+          </li>
+          <li class="list__item">
+            <div class="list__bullet"></div>
+            <div class="list__text"><strong>lahendada</strong> digiristsõnu</div>
+          </li>
+          <li class="list__item">
+            <div class="list__bullet"></div>
+            <div class="list__text">jagada lugemisõigust kuni <strong>nelja sõbra või pereliikmega</strong></div>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="sg-example" style="background: var(--ol__red__700); padding: var(--spacing__4);">
+        <div class="sg-example-label" style="color: var(--white);">.list (on red background - yellow checkmarks)</div>
+        <ul class="list">
+          <li class="list__item">
+            <div class="list__bullet"></div>
+            <div class="list__text" style="color: var(--white);">ligipääs kogu sisule</div>
+          </li>
+          <li class="list__item">
+            <div class="list__bullet"></div>
+            <div class="list__text" style="color: var(--white);">ÕL TV ja Raadio</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Banner</h3>
+      <p class="sg-description">Used for login prompts and secondary CTAs.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.banner</div>
+        <div class="banner">
+          <p class="banner__text">Tellimus olemas? <span class="banner__link">Logi sisse →</span></p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Badge</h3>
+      <p class="sg-description">Highlight label for featured options.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.badge</div>
+        <div class="badge">TELLIJATE LEMMIK</div>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Links</h3>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.link</div>
+        <p class="link">Vaata kõiki digipakette</p>
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.link .link--bold</div>
+        <p class="link link--bold">Tutvu tingimustega</p>
+      </div>
+    </div>
+    
+    <div class="sg-subsection">
+      <h3 class="sg-subsection__title">Sections</h3>
+      <p class="sg-description">Full-width background containers for grouping content.</p>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.section .section--red-light</div>
+        <div class="section section--red-light">
+          <p style="color: var(--ol__monochrome__900); font-weight: 500;">This section has a light red background (--ol__red__100)</p>
+        </div>
+      </div>
+      
+      <div class="sg-example">
+        <div class="sg-example-label">.section .section--yellow-bright</div>
+        <div class="section section--yellow-bright">
+          <p style="color: var(--ol__yellow__950); font-weight: 500;">This section has a bright yellow background (--ol__yellow__400)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <div style="text-align: center; padding: var(--spacing__8); color: var(--ol__monochrome__600);">
+    <p style="font-size: var(--font__size__sm); margin-bottom: var(--spacing__1);">
+      <strong>Õhtuleht Piano Modals Design System</strong>
+    </p>
+    <p style="font-size: var(--font__size__xs);">
+      Last updated: January 19, 2026
+    </p>
+  </div>
+  
+</div>
+
+</body>
+</html>

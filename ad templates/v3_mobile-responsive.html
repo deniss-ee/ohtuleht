@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsive 600x500 Banner</title>
+    <style>
+      /* ====================================================================
+         GLOBAL RESET AND BASE STYLES
+         ==================================================================== */
+
+      /* Reset all margins and paddings, set cursor to pointer for interactivity */
+      html,
+      body,
+      div,
+      img,
+      video,
+      iframe,
+      a,
+      button {
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Remove focus outlines for cleaner UI */
+      a:focus,
+      button:focus {
+        outline: none;
+      }
+
+      button:hover {
+        opacity: 1;
+      }
+
+      /* ====================================================================
+         HIDDEN ELEMENTS
+         These elements store tracking codes and HTML content but are not 
+         displayed by default
+         ==================================================================== */
+
+      #tracking-code,
+      #impression-code,
+      #html {
+        display: none;
+      }
+
+      /* ====================================================================
+         VIDEO CONTROLS
+         Custom play/pause and mute/unmute buttons for video banners
+         Positioned at top-right of video container
+         Hidden by default, shown when videoButtons variable is set
+         ==================================================================== */
+
+      #video-controls {
+        display: none;
+        /* Hidden by default, shown via JavaScript when needed */
+        position: absolute;
+        top: 10px;
+        right: 30px;
+        /* Moved to 30px for better visual balance and spacing from edge */
+        z-index: 100;
+        /* Above video content */
+      }
+
+      #video-controls > button {
+        position: relative;
+        background-color: transparent;
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 48px;
+        height: 48px;
+        border: none;
+        opacity: 0.7;
+        border-radius: 24px;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      #video-controls > button:hover {
+        opacity: 1;
+      }
+
+      /* Remove focus outlines and prevent blue container effect */
+      #video-controls > button:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
+      /* Ensure SVG elements don't trigger unwanted focus effects */
+      #video-controls > button svg {
+        pointer-events: none;
+        /* Prevents SVG from being the focus target */
+      }
+
+      /* Volume button - no background image, uses inline SVG */
+      #video-control-audio {
+        background-image: none !important;
+      }
+
+      /* ====================================================================
+         CLICK OVERLAY
+         Transparent clickable layer that covers the entire content area
+         Handles click-through to destination URL for iframe banners
+         
+         USAGE: Activated when [%iframeClickTagType%] is set to "simple"
+         
+         PURPOSE:
+         - Some iframe banners don't have built-in click handling
+         - This overlay catches clicks and redirects to destination URL
+         - Only shows for iframes with "simple" click tag type
+         - Images and videos use direct onclick handlers instead
+         ==================================================================== */
+
+      #click-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        /* Above content but below video controls */
+        top: 0;
+        display: none;
+        /* Hidden by default, shown when iframeClickTagType === "simple" */
+      }
+
+      /* ====================================================================
+         MAIN CONTAINER
+         Responsive container that adapts to available space
+         Uses flexbox for content centering
+         ==================================================================== */
+
+      #container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        font: 400 16px/1.5 "Roboto", sans-serif;
+
+        /* Flexbox for centering content */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Horizontal centering */
+        justify-content: center;
+        /* Vertical centering */
+      }
+
+      /* Prevent focus outline on container */
+      #container:focus {
+        outline: none;
+      }
+
+      /* ====================================================================
+         ASPECT RATIO CONTAINER
+         This is the key to maintaining 600×500 proportions
+         Uses modern CSS aspect-ratio property with fallback calculations
+         ==================================================================== */
+
+      #canvas {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+
+        /* 
+         * ASPECT RATIO CALCULATION:
+         * 600÷500 = 1.2 (6:5 ratio)
+         * This ensures content always maintains original proportions
+         * regardless of screen size or orientation
+         */
+        aspect-ratio: 600 / 500;
+
+        /* 
+         * RESPONSIVE SIZING:
+         * Container will scale to fit viewport while maintaining aspect ratio
+         * On narrow screens: width-constrained
+         * On short screens: height-constrained
+         */
+
+        /* Background for debugging - can be removed */
+        background-color: transparent;
+
+        /* Ensure content doesn't overflow the aspect ratio box */
+        overflow: hidden;
+      }
+
+      /* Prevent focus outline on canvas */
+      #canvas:focus {
+        outline: none;
+      }
+
+      /* 
+       * FALLBACK FOR BROWSERS WITHOUT ASPECT-RATIO SUPPORT
+       * Uses padding-top trick: (500/600)*100 = 83.33%
+       * This creates the same aspect ratio using vertical padding
+       */
+      @supports not (aspect-ratio: 600 / 500) {
+        #canvas {
+          height: 0;
+          padding-top: 83.33%;
+          /* (500/600)*100 */
+        }
+
+        #canvas > * {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      /* ====================================================================
+         CONTENT CONTAINERS
+         Separate containers for different banner types (image, video, iframe, HTML)
+         All positioned absolutely to fill the canvas
+         ==================================================================== */
+
+      #image,
+      #video,
+      #iframe,
+      #html {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Prevent focus effects on content containers */
+      #image:focus,
+      #video:focus,
+      #iframe:focus,
+      #html:focus {
+        outline: none;
+      }
+
+      /* Images should fill container while maintaining aspect ratio */
+      #image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* Maintains aspect ratio, adds letterboxing if needed */
+        display: block;
+      }
+
+      /* Video element styling - fills container with aspect ratio preservation */
+      #video video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* Maintains video aspect ratio, adds letterboxing if needed */
+        display: block;
+      }
+
+      /* Iframe styling for HTML banners */
+      #iframe iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        overflow: hidden;
+      }
+
+      /* HTML content container */
+      #html {
+        display: none;
+        /* Hidden by default, shown when HTML content is used */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- MAIN CONTAINER: Responsive wrapper with centering -->
+    <div id="container">
+      <!-- CLICK OVERLAY: Handles clicks to destination URL for iframe banners -->
+      <!-- 
+        FUNCTIONALITY FROM mobile-responsive old.html:
+        - Only visible when [%iframeClickTagType%] === "simple"
+        - Creates transparent layer over iframe content
+        - Catches all clicks and redirects to destination
+        - onclick stops event propagation to prevent conflicts
+        - Calls banner.handleClick() method to handle clickthrough
+        
+        WHY NEEDED:
+        Some third-party iframe banners don't implement proper clickTag
+        This overlay provides click-through functionality for such banners
+      -->
+      <div id="click-overlay" onclick="event.stopPropagation(); banner.handleClick();"></div>
+
+      <!-- ASPECT RATIO CANVAS: Maintains 600×500 proportions -->
+      <!-- 
+        - All content types render inside this container
+        - aspect-ratio CSS property ensures proportional scaling
+        - Max constraints prevent overflow on any screen size
+      -->
+      <div id="canvas">
+        <!-- IMAGE BANNER CONTAINER -->
+        <!-- 
+          - Dynamically populated when imageUrl variable is provided
+          - onclick handler allows clicking image to navigate
+
+        -->
+        <div id="image" onclick="banner.handleClick()"></div>
+
+        <!-- VIDEO BANNER CONTAINER -->
+        <!-- 
+          - Dynamically populated when videoUrl variable is provided
+          - Uses HTML5 video element with mobile-optimized attributes
+          - autoplay: Starts automatically (muted for mobile compatibility)
+          - loop: Repeats continuously
+          - muted: Required for autoplay on mobile browsers
+          - playsinline: Plays inline on iOS instead of fullscreen
+          - poster: Optional thumbnail image shown before playback
+          - onclick: Allows clicking video to navigate to destination
+        -->
+        <div id="video">
+          <video autoplay loop muted playsinline onclick="banner.handleClick()">
+            <!-- Video source dynamically added via JavaScript -->
+          </video>
+          <!-- VIDEO CONTROLS: Mute/unmute button with inline SVG -->
+          <div id="video-controls">
+            <button id="video-control-audio" onclick="event.stopPropagation(); banner.toggleVideoAudio();">
+              <!-- Volume On SVG (default state - video starts muted) -->
+              <svg class="volume-on" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" style="display: none">
+                <path
+                  d="M38.4231 23.95C38.4231 20.936 37.5831 18.2148 35.9031 15.7865C34.2231 13.3578 32.0118 11.5803 29.2691 10.454C28.9461 10.313 28.7206 10.1072 28.5926 9.83649C28.4643 9.56616 28.4689 9.29033 28.6066 9.00899C28.7383 8.70299 28.9739 8.50066 29.3136 8.40199C29.6533 8.30333 29.9949 8.32449 30.3386 8.46549C33.4489 9.79383 35.9521 11.8487 37.8481 14.63C39.7441 17.4117 40.6921 20.5182 40.6921 23.9495C40.6921 27.3805 39.7441 30.487 37.8481 33.269C35.9521 36.051 33.4489 38.1062 30.3386 39.4345C29.9949 39.5755 29.6533 39.5967 29.3136 39.498C28.9739 39.3993 28.7383 39.197 28.6066 38.891C28.4689 38.6097 28.4643 38.3338 28.5926 38.0635C28.7206 37.7928 28.9461 37.587 29.2691 37.446C32.0118 36.3197 34.2231 34.5422 35.9031 32.1135C37.5831 29.6852 38.4231 26.964 38.4231 23.95ZM14.7311 29H8.75011C8.33277 29 7.98811 28.864 7.71611 28.592C7.44411 28.3197 7.30811 27.9748 7.30811 27.5575V20.4425C7.30811 20.0252 7.44411 19.6803 7.71611 19.408C7.98811 19.136 8.33277 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9477 22.5941 12.143C23.0698 12.338 23.3076 12.6827 23.3076 13.177V34.8035C23.3076 35.3108 23.0698 35.662 22.5941 35.857C22.1184 36.0523 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM32.3076 24.002C32.3076 25.4933 31.9641 26.8517 31.2771 28.077C30.5898 29.3027 29.6109 30.268 28.3406 30.973C28.1109 31.1217 27.8878 31.1255 27.6711 30.9845C27.4544 30.8435 27.3461 30.646 27.3461 30.392V17.5385C27.3461 17.2848 27.4544 17.0907 27.6711 16.956C27.8878 16.8213 28.1109 16.8208 28.3406 16.9545C29.6109 17.6618 30.5898 18.6457 31.2771 19.906C31.9641 21.166 32.3076 22.5313 32.3076 24.002ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
+                  fill="white"></path>
+              </svg>
+              <!-- Volume Off SVG (shown when video is muted - initial state) -->
+              <svg class="volume-off" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path
+                  d="M35.5271 25.6305L30.7921 30.396C30.5691 30.619 30.3058 30.7338 30.0021 30.7405C29.6981 30.7468 29.4346 30.632 29.2116 30.396C28.9756 30.1603 28.8576 29.8887 28.8576 29.581C28.8576 29.273 28.9756 29.0012 29.2116 28.7655L33.9271 24.031L29.1616 19.296C28.9386 19.073 28.8239 18.8128 28.8176 18.5155C28.8109 18.2182 28.9256 17.9515 29.1616 17.7155C29.3976 17.4795 29.6726 17.3615 29.9866 17.3615C30.3006 17.3615 30.5691 17.4795 30.7921 17.7155L35.5271 22.431L40.2616 17.6655C40.4846 17.4425 40.7481 17.331 41.0521 17.331C41.3558 17.331 41.6256 17.4425 41.8616 17.6655C42.0976 17.9015 42.2156 18.1765 42.2156 18.4905C42.2156 18.8045 42.0976 19.073 41.8616 19.296L37.1271 24.031L41.8921 28.7655C42.1154 28.9885 42.2303 29.252 42.2366 29.556C42.2429 29.8597 42.1281 30.1295 41.8921 30.3655C41.6564 30.6012 41.3848 30.719 41.0771 30.719C40.7694 30.719 40.4976 30.6012 40.2616 30.3655L35.5271 25.6305ZM14.7311 29H8.75011C8.32977 29 7.98427 28.8647 7.71361 28.594C7.44327 28.3237 7.30811 27.9782 7.30811 27.5575V20.4425C7.30811 20.0218 7.44327 19.6763 7.71361 19.406C7.98427 19.1353 8.32977 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9462 22.5941 12.1385C23.0698 12.3308 23.3076 12.677 23.3076 13.177V34.8035C23.3076 35.3165 23.0698 35.6692 22.5941 35.8615C22.1184 36.0538 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
+                  fill="white"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- IFRAME BANNER CONTAINER -->
+        <!-- 
+          - Used for external HTML5 banners
+          - clickTag and clickMacro passed as URL parameters
+          - Scrolling disabled, no borders for seamless integration
+        -->
+        <div id="iframe"></div>
+
+        <!-- INLINE HTML BANNER CONTAINER -->
+        <!-- 
+          - Used for HTML code provided directly in template
+          - Hidden by default, shown when [%html%] variable has content
+        -->
+        <div id="html">[%html%]</div>
+      </div>
+
+      <!-- ADDITIONAL TRACKING CODE -->
+      <!-- 
+        - Custom tracking scripts can be injected via [%trackingCode%] variable
+        - Hidden container, scripts execute but don't display
+      -->
+      <div id="tracking-code">[%trackingCode%]</div>
+    </div>
+
+    <script>
+      /* ====================================================================
+         BANNER CONTROLLER - Main JavaScript Module
+         
+         Architecture:
+         - Modular functions for better code organization
+         - Semantic naming for improved readability
+         - Single responsibility principle for each method
+         ==================================================================== */
+
+      var banner = {
+        /* ==================================================================
+                 BUILD METHOD - Entry point, called on page load
+                 Orchestrates the entire banner initialization sequence
+                 ================================================================== */
+
+        build: function () {
+          this.setVariables(); // Step 1: Parse all macro and template variables
+          this.fillCanvas(); // Step 2: Determine content type and render
+          this.configureFrame(); // Step 3: Style parent iframe if needed
+        },
+
+        /* ==================================================================
+                 SET VARIABLES - Parse Google Ad Manager Macros and Template Variables
+                 
+                 GOOGLE AD MANAGER MACROS (replaced by GAM at runtime):
+                 - %%CACHEBUSTER%% : Random number to prevent caching
+                 - %%CLICK_URL_ESC%% : Click tracking URL (URL-encoded)
+                 - %%DEST_URL_ESC%% : Final destination URL (URL-encoded)
+                 
+                 CUSTOM TEMPLATE VARIABLES (set in GAM creative):
+                 - [%imageUrl%] : URL for static image banner
+                 - [%videoUrl%] : URL for video banner (MP4)
+                 - [%posterUrl%] : Video poster/thumbnail image
+                 - [%videoControls%] : Show/hide video controls ("visible" or empty)
+                 - [%iframeUrl%] : URL for external HTML5 banner
+                 - [%iframeClickTagType%] : Iframe click handling type
+                                             "simple" = Shows transparent overlay to catch clicks
+                                             empty/other = Iframe handles its own clicks
+                 - [%html%] : Inline HTML code for banner
+                 - [%reTargetingPixelUrl%] : Retargeting pixel URL
+                 - [%trackingCode%] : Additional tracking scripts
+                 ================================================================== */
+
+        setVariables: function () {
+          this.variables = {};
+
+          // Google Ad Manager macros
+          this.setVariable("cachebuster", "%%CACHEBUSTER%%");
+          this.setVariable("clickMacroUrl", "%%CLICK_URL_ESC%%");
+          this.setVariable("destinationUrl", "%%DEST_URL_ESC%%");
+
+          // Custom template variables for different banner types
+          this.setVariable("imageUrl", "[%imageUrl%]");
+          this.setVariable("videoUrl", "[%videoUrl%]");
+          this.setVariable("iframeUrl", "[%iframeUrl%]");
+
+          // Video-specific configuration
+          this.setVariable("posterUrl", "[%posterUrl%]");
+          this.setVariable("videoControls", "[%videoControls%]");
+
+          // Iframe configuration (from mobile-responsive old.html)
+          // iframeClickTagType controls how clicks are handled:
+          // - "simple": Shows transparent overlay, catches all clicks
+          // - empty/other: Iframe handles its own click events via clickTag parameter
+          this.setVariable("iframeClickTagType", "[%iframeClickTagType%]");
+
+          // Tracking
+          this.setVariable("reTargetingPixelUrl", "[%reTargetingPixelUrl%]");
+        },
+
+        /* ==================================================================
+                 SET VARIABLE - Helper method to safely set variable values
+                 
+                 Parameters:
+                 - name: Variable identifier
+                 - value: Macro or template variable string
+                 
+                 Provides consistent empty string fallback to prevent
+                 undefined values from causing issues in conditional checks
+                 ================================================================== */
+
+        setVariable: function (name, value) {
+          this.variables[name] = value.length > 0 ? value : "";
+        },
+
+        /* ==================================================================
+                 HANDLE CLICK - Process user clicks on banner
+                 
+                 Clicktag Integration:
+                 1. Fire retargeting pixel if configured (for audience tracking)
+                 2. Construct full click URL: clickMacroUrl + destinationUrl
+                 3. Open destination in new tab (_blank)
+                 
+                 IMPORTANT: This is the standard Google Ad Manager clickTag pattern
+                 ================================================================== */
+
+        handleClick: function () {
+          // Fire retargeting pixel for audience segmentation
+          if (this.variables.reTargetingPixelUrl.length > 0) {
+            this.appendReTargetingPixel();
+          }
+
+          // Open destination URL with click tracking
+          this.openDestination();
+        },
+
+        /* ==================================================================
+                 OPEN DESTINATION - Handle clickthrough to destination URL
+                 
+                 Makes it easier to modify click behavior without touching pixel logic
+                 ================================================================== */
+
+        openDestination: function () {
+          var clickUrl = this.variables.clickMacroUrl + this.variables.destinationUrl;
+          window.open(clickUrl, "_blank");
+        },
+
+        /* ==================================================================
+                 APPEND RETARGETING PIXEL - Fire retargeting tracking pixel
+                 
+                 Purpose: Adds users to retargeting audiences
+                 Method: Creates hidden 1×1 image with pixel URL
+                 Timing: Called immediately before clickthrough
+                 ================================================================== */
+
+        appendReTargetingPixel: function () {
+          var pixelImg = document.createElement("img");
+          pixelImg.src = this.variables.reTargetingPixelUrl;
+          pixelImg.style.display = "none";
+          pixelImg.style.width = "1px";
+          pixelImg.style.height = "1px";
+          document.getElementById("container").appendChild(pixelImg);
+        },
+
+        /* ==================================================================
+             FILL CANVAS - Determine content type and render appropriate banner
+             
+             PRIORITY ORDER (first match wins):
+             1. Video banner (videoUrl)
+             2. Image banner (imageUrl)
+             3. Iframe banner (iframeUrl)
+             4. Inline HTML (html)
+             
+             IFRAME CLICK TAG TYPE HANDLING:
+             After rendering content, check if iframeClickTagType is "simple"
+             - "simple" = Show transparent click overlay to catch all clicks
+             - empty/other = Let iframe handle its own click events
+             
+             This logic comes from the original mobile-responsive banner and
+             ensures compatibility with iframes that don't implement clickTag
+             ================================================================== */
+
+        fillCanvas: function () {
+          if (this.variables.videoUrl.length > 0) {
+            this.setVideoContent();
+          } else if (this.variables.imageUrl.length > 0) {
+            this.setImageContent();
+          } else if (this.variables.iframeUrl.length > 0) {
+            this.setIframeContent();
+          } else {
+            document.getElementById("html").style.display = "block";
+          }
+
+          // Show click overlay for simple iframe clicktags (from mobile-responsive old.html)
+          // When iframeClickTagType === "simple", display transparent overlay
+          // that catches all clicks and redirects to destination URL
+          if (this.variables.iframeClickTagType === "simple") {
+            document.getElementById("click-overlay").style.display = "block";
+          }
+        },
+
+        setVideoContent: function () {
+          var video = document.querySelector("#video video");
+
+          // Create and append video source
+          var source = document.createElement("source");
+          source.src = this.variables.videoUrl;
+          source.type = "video/mp4"; // Can be extended to support other formats
+          video.appendChild(source);
+
+          // Set poster image if provided (shown before playback starts)
+          if (this.variables.posterUrl.length > 0) {
+            video.poster = this.variables.posterUrl;
+          }
+
+          // Show video controls if videoControls variable is set to "visible"
+          if (this.variables.videoControls === "visible") {
+            document.getElementById("video-controls").style.display = "block";
+          }
+
+          // Set viewport-based sizing for full width display on actual websites
+          this.setStylesToElement(video, {
+            width: "100vw",
+            height: "83.3333vw", // Maintains 6:5 aspect ratio (500/600 = 0.8333)
+          });
+
+          this.configureFrame();
+        },
+
+        /* ==================================================================
+             SET IMAGE CONTENT - Render static image banner
+             
+             Uses background-image CSS property for better compatibility
+             Background sizing ensures image maintains aspect ratio and fills container
+             ================================================================== */
+
+        setImageContent: function () {
+          this.setStylesToElement(document.getElementById("image"), {
+            width: "100%",
+            height: "100%",
+            backgroundImage: 'url("' + this.variables.imageUrl + '")',
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            backgroundSize: "contain",
+          });
+        },
+
+        /* ==================================================================
+             SET IFRAME CONTENT - Render external HTML5 banner
+             
+             Creates iframe with clickTag and clickMacro URL parameters
+             This allows the iframe content to handle clicks properly
+             ================================================================== */
+
+        setIframeContent: function () {
+          var iframe = document.createElement("iframe");
+
+          // Construct URL with clickTag parameters
+          iframe.src = this.variables.iframeUrl + "?clickTag=" + this.variables.clickMacroUrl + this.variables.destinationUrl + "&clickMacro=" + this.variables.clickMacroUrl;
+
+          // Iframe configuration for seamless integration
+          iframe.scrolling = "no";
+          iframe.rel = "nofollow";
+          iframe.width = "100%";
+          iframe.height = "100%";
+          iframe.frameborder = "0";
+          iframe.style.border = "none";
+          iframe.style.overflow = "hidden";
+
+          document.getElementById("iframe").appendChild(iframe);
+
+          // Set viewport-based sizing for full width display on actual websites
+          this.setStylesToElement(iframe, {
+            width: "100vw",
+            height: "83.3333vw", // Maintains 6:5 aspect ratio (500/600 = 0.8333)
+          });
+
+          this.configureFrame();
+        },
+
+        /* ==================================================================
+             CONFIGURE FRAME - Setup parent iframe sizing
+             
+             From mobile-responsive old.html:
+             - Sets parent iframe to viewport width and maintains aspect ratio
+             - Ensures banner displays at full width on actual websites
+             - Uses 83.3333vw height to maintain 6:5 (600x500) aspect ratio
+             ================================================================== */
+
+        configureFrame: function () {
+          // Check if running inside an iframe (production environment)
+          if (window.frameElement) {
+            // Set parent iframe to full viewport width with aspect ratio height
+            // This ensures consistent full-width display on actual websites
+            this.setStylesToElement(window.frameElement, {
+              width: "100vw",
+              height: "83.3333vw", // Maintains 6:5 aspect ratio (500/600 = 0.8333)
+            });
+          }
+        },
+
+        /* ==================================================================
+             TOGGLE VIDEO AUDIO - Mute/unmute video control
+             
+             UPDATED METHOD: Handles user interaction with audio button
+             
+             Functionality:
+             - Checks current mute state
+             - Toggles audio on/off
+             - Swaps inline SVG icons (volume-on ↔ volume-off)
+             
+             Implementation:
+             - Uses inline SVG elements instead of CSS background images
+             - Toggles display property on SVG elements
+             - volume-off shown by default (video starts muted)
+             - volume-on shown when user unmutes
+             
+             Mobile Considerations:
+             - Videos start muted for autoplay compatibility
+             - User can unmute by clicking this button
+             - Respects mobile browser autoplay policies
+             ================================================================== */
+
+        toggleVideoAudio: function () {
+          var video = document.querySelector("#video video");
+          var button = document.getElementById("video-control-audio");
+          var volumeOnIcon = button.querySelector(".volume-on");
+          var volumeOffIcon = button.querySelector(".volume-off");
+
+          if (video.muted) {
+            // Unmute video and show volume-on icon
+            video.muted = false;
+            volumeOnIcon.style.display = "block";
+            volumeOffIcon.style.display = "none";
+          } else {
+            // Mute video and show volume-off icon
+            video.muted = true;
+            volumeOnIcon.style.display = "none";
+            volumeOffIcon.style.display = "block";
+          }
+        },
+
+        /* ==================================================================
+             SET STYLES TO ELEMENT - Apply multiple CSS styles to element
+             
+             Parameters:
+             - el: DOM element to style
+             - styles: Object with CSS properties and values
+             
+             Features:
+             - Handles single values: { color: "red" }
+             - Handles arrays for vendor prefixes: { display: ["-webkit-flex", "flex"] }
+             ================================================================== */
+
+        setStylesToElement: function (el, styles) {
+          var keys = Object.keys(styles);
+          keys.forEach(function (key) {
+            if (Array.isArray(styles[key])) {
+              // Handle arrays (vendor prefixes)
+              var css = el.style.cssText;
+              styles[key].forEach(function (value) {
+                css = css + " " + key + ": " + value + ";";
+              });
+              el.style.cssText = css;
+            } else {
+              // Handle single values
+              el.style[key] = styles[key];
+            }
+          });
+        },
+      }; /* ====================================================================
+           INITIALIZATION
+           Start the banner build process when script loads
+           ==================================================================== */
+
+      banner.build();
+    </script>
+  </body>
+</html>
+
