@@ -1,0 +1,84 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../piano-id-layout.css" />
+  </head>
+  <body>
+    <!-- PIANO-->
+
+    <div class="ol-template">
+      <p class="lead"><t>Login into your account.</t></p>
+
+      <p class="sub-lead">
+        <span *showIfSocialAuthNotAvailable><t>Login into your account.</t></span>
+      </p>
+
+      <errors-list></errors-list>
+
+      <div *showIfSocialAuthAvailable class="social-wrapper">
+        <div class="social-buttons-wrapper social-buttons-custom">
+          <social-sign-in></social-sign-in>
+        </div>
+      </div>
+
+      <p>või kasuta sisenemiseks e-posti:</p>
+
+      <p class="input-group with-icon">
+        <input fieldLoginEmail type="text" pn-autofocus />
+        <span class="placeholder"><i class="icon icon-email"></i><t>E-post</t></span>
+        <span showIfEmailInvalid class="error-message"><t>E-posti aadress on vajalik</t></span>
+        <span showIfEmailInvalidBy="SERVER_ERROR" class="error-message" setEmailServerErrorMessage></span>
+      </p>
+      <p *hideIfPasswordlessOrCreatePasswordlessUser class="input-group with-icon">
+        <input fieldLoginPassword type="password" />
+        <span class="placeholder"><i class="icon icon-password"></i><t>Password</t></span>
+        <span class="float">
+          <i showLoginPassword class="icon icon-show"></i>
+          <i hideLoginPassword class="icon icon-hide"></i>
+        </span>
+        <span showIfPasswordInvalidBy="PASSWORD_REQUIRED" class="error-message"><t>Password is required</t></span>
+        <span showIfPasswordInvalidBy="SERVER_ERROR" class="error-message" setPasswordServerErrorMessage></span>
+      </p>
+
+      <p class="cf remember-and-restore" *hideIfPasswordlessOrCreatePasswordlessUser>
+        <span class="pull-left">
+          <a showScreen="restore" class="link red-link"><t>I forgot my password</t></a>
+        </span>
+      </p>
+
+      <re-captcha></re-captcha>
+
+      <p *hideIfSingleStep data-e2e="hideIfSingleStep">
+        <button actionLogin class="btn prime">
+          <span *hideIfPasswordlessOrCreatePasswordlessUser><t>Login</t></span>
+          <span *showIfPasswordlessOrCreatePasswordlessUser><t>Next</t></span>
+        </button>
+      </p>
+
+      <div class="divider"></div>
+
+      <ng-container *hideIfAuthCompleted>
+        <p class="final bolder" *hideIfCreatePasswordlessUser>
+          <span *hideIfPasswordlessOrCreatePasswordlessUser><t>You don't have an account?</t></span>
+        </p>
+      </ng-container>
+
+      <p class="final" *hideIfCreatePasswordlessUser>
+        <button showScreen="register" class="btn prime">
+          <span *hideIfPasswordlessOrCreatePasswordlessUser><t>I don't have an account</t></span>
+        </button>
+      </p>
+    </div>
+
+    <!---->
+  </body>
+</html>

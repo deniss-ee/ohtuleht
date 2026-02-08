@@ -1,0 +1,145 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../piano-id-layout.css" />
+  </head>
+  <body>
+    <!-- PIANO-->
+    <div class="ol-template">
+      <p class="lead"><t>Sign Up</t></p>
+      <p class="sub-lead">
+        <span>Konto loomine on vajalik digipaketi kasutamiseks.</span>
+      </p>
+      <p class="sub-lead"></p>
+
+      <ng-container *hideIfAuthCompleted>
+        <div *showIfSocialAuthAvailable class="social-wrapper">
+          <span class="social-buttons-wrapper">
+            <social-sign-in></social-sign-in>
+          </span>
+        </div>
+      </ng-container>
+
+      <p class="" style="font-family: &quot;Roboto&quot;; font-style: normal; font-weight: 400; font-size: 16px; margin: 0; margin-bottom: 8px">või kasuta konto loomiseks e-posti:</p>
+
+      <p class="sub-lead">
+        <span *showIfSocialAuthNotAvailable><t>Sign up a new account.</t></span>
+      </p>
+      <custom-fields-multi-step-indicator *showIfMultistep></custom-fields-multi-step-indicator>
+      <div formStepTitle *showIfMultistep></div>
+
+      <ng-container *showIfFirstStep>
+        <p class="input-group with-icon">
+          <input fieldRegisterEmail type="text" value="" pn-autofocus />
+          <span class="placeholder"><i class="icon icon-email"></i><t>E-post</t></span>
+          <span showIfEmailInvalid class="error-message"><t>E-post on nõutav</t></span>
+          <span showIfEmailInvalidBy="SERVER_ERROR" class="error-message" setEmailServerErrorMessage></span>
+          <span mailcheck></span>
+        </p>
+        <p class="input-group with-icon" *showIfRequireConfirm="'email'">
+          <input fieldConfirmRegisterEmail type="text" value="" />
+          <span class="placeholder"><i class="icon icon-email"></i><t>confirm email</t></span>
+          <span showIfRegisterConfirmEmailInvalidBy="EMAIL_NOT_CONFIRMED" class="error-message"><t>Email and Confirm email does not match</t></span>
+          <span showIfRegisterConfirmEmailInvalidBy="SERVER_ERROR" class="error-message" setConfirmEmailServerErrorMessage></span>
+        </p>
+        <ng-container *hideIfAuthCompleted>
+          <p class="input-group with-icon" *hideIfGeneralPasswordlessRegistration>
+            <input fieldRegisterPassword type="password" value="" />
+            <span class="placeholder"><i class="icon icon-password"></i><t>Password</t></span>
+            <span class="float">
+              <i showRegisterPassword class="icon icon-show"></i>
+              <i hideRegisterPassword class="icon icon-hide"></i>
+            </span>
+            <span showIfPasswordInvalidBy="PASSWORD_REQUIRED" class="error-message"><t>Password is required</t></span>
+            <span showIfPasswordInvalidBy="PASSWORD_MIXED_CASE" class="error-message"><t>Password must contain lowercase and uppercase letters</t></span>
+            <span showIfPasswordInvalidBy="PASSWORD_ALPHANUMERIC" class="error-message"><t>Password must contain both letters and numbers</t></span>
+            <span showIfPasswordInvalidBy="PASSWORD_SPECIAL_CHARACTERS" class="error-message"><t>Password must contain any characters</t></span>
+            <span showIfPasswordInvalidBy="PASSWORD_CANT_CONTAIN_EMAIL" class="error-message"><t>Password can not contain the user's email address</t></span>
+            <span showIfPasswordInvalidBy="PASSWORD_MIN_LENGTH" class="error-message"><t>Minimum number of characters required for user password.</t></span>
+            <span showIfPasswordInvalidBy="SERVER_ERROR" class="error-message" setPasswordServerErrorMessage></span>
+          </p>
+
+          <p class="input-group with-icon" *showIfRequireConfirm="'password'">
+            <input fieldConfirmPassword type="password" value="" />
+            <span class="placeholder"><i class="icon icon-password"></i><t>Confirm password</t></span>
+            <span class="float">
+              <i showPassword class="icon icon-show"></i>
+              <i hidePassword class="icon icon-hide"></i>
+            </span>
+            <span showIfRegisterConfirmPasswordInvalidBy="PASSWORD_NOT_CONFIRMED" class="error-message"><t>Password and Confirm password does not match</t></span>
+            <span showIfRegisterConfirmPasswordInvalidBy="SERVER_ERROR" class="error-message" setConfirmPasswordServerErrorMessage></span>
+          </p>
+        </ng-container>
+      </ng-container>
+      <span
+        >Jätkates nõustun, et olen tutvunud <a href="https://www.ohtulehtkirjastus.ee/uldtingimused/" target="_blank" rel="noopener noreferrer" style="color: #e3000f; text-decoration: underline">üldtingimustega</a> ja
+        <a href="https://www.ohtulehtkirjastus.ee/andmekaitsetingimused/" target="_blank" rel="noopener noreferrer" style="color: #e3000f; text-decoration: underline">andmekaitsetingimustega</a> ning et minu andmeid kasutatakse konto loomiseks ja säilitamiseks.</span
+      >
+      <custom-fields></custom-fields>
+
+      <ng-container *hideIfAuthCompleted>
+        <p class="consents-block">
+          <consent-boxes></consent-boxes>
+        </p>
+        <!--
+  <div class="cf remember-and-restore">
+      <span class="pull-left">
+          <label class="remember-me">
+              <remember-me></remember-me>
+              <t>Stay logged in</t>
+          </label>
+      </span>
+  </div>
+-->
+      </ng-container>
+
+      <re-captcha *hideIfAuthCompleted></re-captcha>
+
+      <p>
+        <button *hideIfAuthCompleted actionRegister class="btn prime">
+          <t>Sign Up</t>
+        </button>
+      </p>
+
+      <div *showIfMultistep class="multi-step-actions">
+        <ng-container *hideIfFirstStep>
+          <button actionStepBack *showIfAuthCompleted class="btn prime outline">
+            <t>Back</t>
+          </button>
+        </ng-container>
+        <button actionStepNext *showIfAuthCompleted class="btn prime">
+          <t *hideIfLastStep>Next</t>
+          <t *showIfLastStep>Finish</t>
+        </button>
+      </div>
+
+      <errors-list></errors-list>
+
+      <div class="divider"></div>
+
+      <ng-container *hideIfAuthCompleted>
+        <p class="final bolder" *hideIfCreatePasswordlessUser>
+          <span *hideIfPasswordlessOrCreatePasswordlessUser><t>I have an account</t></span>
+        </p>
+      </ng-container>
+
+      <ng-container *hideIfAuthCompleted>
+        <p class="final" *hideIfCreatePasswordlessUser>
+          <button showScreen="login" class="btn prime">
+            <t>Login</t>
+          </button>
+        </p>
+      </ng-container>
+    </div>
+    <!---->
+  </body>
+</html>
