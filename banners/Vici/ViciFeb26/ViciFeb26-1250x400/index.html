@@ -1,0 +1,88 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ViciFeb26-1250x400</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="banner-container">
+      <div class="banner-wrapper">
+        <div class="header">
+          <img src="logo.svg" alt="Vici" class="logo" />
+          <img src="text.svg" alt="PIDULAUD VIČI ÕLITA  HEERINGAGA" class="text" />
+          <img onclick="window.open(olBanner.getClickTag('https://vici.eu/et/category/koik/?product=soolatud-ja-marineeritud-kala&time='), '_blank')" style="cursor: pointer" src="cta.svg" alt="VAATA RETSEPTE" class="cta" />
+        </div>
+
+        <div class="content">
+          <div onclick="window.open(olBanner.getClickTag('https://vici.eu/et/heeringaleivad-kodujuustu-avokaadokattega/'), '_blank')" class="retsept">
+            <div class="img-wrapper">
+              <img src="img-1.jpg" alt="" class="img" />
+            </div>
+            <div class="info-wrapper">
+              <p class="info">heeringaleivad kodujuustu avokaadokattega</p>
+            </div>
+          </div>
+
+          <div onclick="window.open(olBanner.getClickTag('https://vici.eu/et/heeringa-porru-salat/'), '_blank')" class="retsept">
+            <div class="img-wrapper">
+              <img src="img-2.jpg" alt="" class="img" />
+            </div>
+            <div class="info-wrapper">
+              <p class="info">heeringa-porru salat</p>
+            </div>
+          </div>
+
+          <div onclick="window.open(olBanner.getClickTag('https://vici.eu/et/heeringasalat-sinepiseemnetega/'), '_blank')" class="retsept">
+            <div class="img-wrapper">
+              <img src="img-3.jpg" alt="" class="img" />
+            </div>
+            <div class="info-wrapper">
+              <p class="info">heeringasalat sinepiseemnetega</p>
+            </div>
+          </div>
+
+          <div onclick="window.open(olBanner.getClickTag('https://vici.eu/et/rullbiskviit-heeringa-munakreemiga/'), '_blank')" class="retsept">
+            <div class="img-wrapper">
+              <img src="img-4.jpg" alt="" class="img" />
+            </div>
+            <div class="info-wrapper">
+              <p class="info">rullbiskviit heeringa-munakreemiga</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="shape"></div>
+      </div>
+    </div>
+    <script>
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+    </script>
+  </body>
+</html>

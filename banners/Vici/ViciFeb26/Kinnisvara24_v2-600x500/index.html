@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;750;800&display=swap" rel="stylesheet" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="swiper-bundle.min.css" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="header">
+        <span class="title">REGISTEERI HUVI</span>
+        <img src="logo.svg" alt="Kinnisvara 24" class="logo" />
+      </div>
+      <div class="property-cards-container">
+        <div class="arrow-button button-prev"><div class="caret left"></div></div>
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <!-- Property cards will be dynamically inserted here -->
+          </div>
+        </div>
+        <div class="arrow-button button-next"><div class="caret right"></div></div>
+      </div>
+    </div>
+
+    <!-- Swiper JS Library -->
+    <script src="swiper-bundle.min.js"></script>
+
+    <!-- Property Data & Slider Initialization -->
+    <script>
+      /**
+       * PROPERTY DATA PLACEHOLDERS
+       * These will be replaced with JSON data in production
+       * Each property contains: image, location, name, description, price range, and click URL
+       */
+      const propertyData = [
+        {
+          image: "https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-29/J3kbwLZ77b.png",
+          location: "Tallinn",
+          name: "ÕÕÕÕÕÕ ",
+          description: "Elamise kunst keset linna. Elamise kunst keset linna. Elamise kunst keset linna. Elamise kunst keset linna.",
+          price: "141 800 - 1 619 000 €",
+          url: "https://www.kinnisvara24.ee/placeholder-url-1",
+        },
+        {
+          image: "https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-29/MWGAgyoYPE.png",
+          location: "Tallinn",
+          name: "Raadi Roosipark",
+          description: "Ajatu elegants rooside keskel",
+          price: "86 000 - 219 000 €",
+          url: "https://www.kinnisvara24.ee/placeholder-url-2",
+        },
+        {
+          image: "https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-29/BXAiii9RLT.png",
+          location: "Tallinn",
+          name: "Telliskivi 8",
+          description: "Telliskivi 8 uusarendus valmib 2025 detsember",
+          price: "199 000 - 515 000 €",
+          url: "https://www.kinnisvara24.ee/placeholder-url-3",
+        },
+        {
+          image: "https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-29/AbHLpMtnC6.png",
+          location: "Tartu",
+          name: "Placeholder Property 4",
+          description: "Additional property for slider demo",
+          price: "100 000 - 250 000 €",
+          url: "https://www.kinnisvara24.ee/placeholder-url-4",
+        },
+        {
+          image: "https://codia-f2c.s3.us-west-1.amazonaws.com/image/2025-12-29/J3kbwLZ77b.png",
+          location: "Pärnu",
+          name: "Placeholder Property 5",
+          description: "Another property for continuous loop",
+          price: "150 000 - 300 000 €",
+          url: "https://www.kinnisvara24.ee/placeholder-url-5",
+        },
+      ];
+
+      /**
+       * Generate HTML for a single property card
+       * @param {Object} property - Property data object
+       * @returns {string} HTML string for the property card
+       */
+      function createPropertyCard(property) {
+        return `
+          <a href="${property.url}" target="_blank" rel="noopener noreferrer" class="property-card">
+            <div class="property-image" style="background: url('${property.image}') no-repeat center">
+              <div class="location-tag">
+                <span class="location">${property.location}</span>
+              </div>
+            </div>
+            <div class="property-info">
+              <div class="property-details">
+                <span class="property-name">${property.name}</span>
+                <span class="property-description">${property.description}</span>
+              </div>
+              <span class="property-price">${property.price}</span>
+            </div>
+          </a>
+        `;
+      }
+
+      /**
+       * Populate slider with property cards
+       * Dynamically generates swiper slides from property data
+       */
+      const swiperWrapper = document.querySelector(".swiper-wrapper");
+      propertyData.forEach((property) => {
+        const slide = document.createElement("div");
+        slide.className = "swiper-slide";
+        slide.innerHTML = createPropertyCard(property);
+        swiperWrapper.appendChild(slide);
+      });
+
+      /**
+       * Initialize Swiper slider
+       * Configuration optimized for 600x500 vertical banner:
+       * - Shows 1 slide at a time (vertical layout)
+       * - Continuous loop for infinite scrolling
+       * - Auto-play with 2.5 second intervals
+       * - Navigation via arrow buttons
+       * - Smooth 500ms transitions (slower for vertical format)
+       * - Vertical direction for card stacking effect
+       */
+      const swiper = new Swiper(".swiper", {
+        direction: "horizontal", // Horizontal sliding for this layout
+        speed: 500, // Transition speed in milliseconds
+        autoplay: {
+          delay: 2500, // 2.5 seconds between auto-scrolls
+          disableOnInteraction: false, // Continue autoplay after user interaction
+        },
+        loop: true, // Enable continuous loop mode
+        slidesPerView: 1, // Show 1 property card at a time
+        centeredSlides: false, // Align slides to the left
+        navigation: {
+          nextEl: ".button-next", // Right arrow button
+          prevEl: ".button-prev", // Left arrow button
+        },
+      });
+    </script>
+  </body>
+</html>

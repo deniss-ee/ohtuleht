@@ -1,0 +1,367 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-size: 1em;
+  line-height: 100%;
+  font-family: "Manrope", sans-serif;
+  text-decoration: none;
+}
+code,
+kbd,
+samp,
+pre,
+tt,
+var,
+textarea,
+input,
+select,
+isindex,
+listing,
+xmp,
+plaintext {
+  font: inherit;
+  font-size: 1em;
+  white-space: normal;
+}
+dfn,
+i,
+cite,
+var,
+address,
+em {
+  font-style: normal;
+}
+th,
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+a,
+img,
+a img,
+iframe,
+form,
+fieldset,
+abbr,
+acronym,
+object,
+applet,
+table {
+  border: none;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+caption,
+th,
+td,
+center {
+  text-align: left;
+  vertical-align: top;
+}
+body {
+  color: black;
+  line-height: 1;
+  background: white;
+}
+q {
+  quotes: "" "";
+}
+ul,
+ol,
+dir,
+menu {
+  list-style: none;
+}
+sub,
+sup {
+  vertical-align: baseline;
+}
+a {
+  color: inherit;
+}
+hr {
+  display: none;
+}
+font {
+  color: inherit !important;
+  font: inherit !important;
+}
+marquee {
+  -moz-binding: none;
+  overflow: inherit !important;
+}
+blink {
+  text-decoration: none;
+}
+nobr {
+  white-space: normal;
+}
+.main-container {
+  overflow: hidden;
+}
+
+.main-container,
+.main-container * {
+  box-sizing: border-box;
+}
+
+input,
+select,
+textarea,
+button {
+  outline: 0;
+}
+
+.main-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100vw;
+  height: 83.33vw;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #ffffff;
+}
+.header {
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  min-width: 62.5vw;
+  max-width: 208.33vw;
+  height: 9.33vw;
+  padding: 0 3.67vw 0 3.67vw;
+  overflow: hidden;
+  background: linear-gradient(90deg, #0284c7, #bae6fd);
+}
+.title {
+  position: relative;
+  flex-shrink: 0;
+  flex-basis: auto;
+  height: 4vw;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 4vw;
+  line-height: 4vw;
+  text-align: left;
+}
+.logo {
+  position: relative;
+  flex-shrink: 0;
+  width: 23.33vw;
+  height: 8vw;
+  overflow: hidden;
+}
+.property-cards-container {
+  gap: 2vw;
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  min-width: 0;
+  min-height: 0;
+  padding: 2vw 2vw 2vw 2vw;
+}
+.arrow-button {
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 8vw;
+  height: 8vw;
+  border-radius: 0.67vw;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0284c7;
+  transition: background-color 0.2s ease;
+}
+
+.arrow-button:hover {
+  background: #0369a1;
+}
+
+.arrow-button:active {
+  background: #075985;
+}
+
+.caret {
+  position: relative;
+  flex-shrink: 0;
+  width: 1.89vw;
+  height: 3.23vw;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.caret.left {
+  background: url("caret-left.svg") no-repeat center;
+  background-size: contain;
+}
+.caret.right {
+  background: url("caret-right.svg") no-repeat center;
+  background-size: contain;
+}
+.frame {
+  gap: 2.67vw;
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  align-items: center;
+  align-self: stretch;
+}
+
+/* Swiper container styling */
+.swiper {
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  align-items: center;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+/* Swiper wrapper - contains all slides */
+.swiper-wrapper {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+/* Individual slide container */
+.swiper-slide {
+  display: flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+}
+
+.property-card {
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border: 0.17vw solid rgba(0, 0, 0, 0.125);
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.property-image {
+  gap: 1vw;
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  align-self: stretch;
+  height: 43.33vw;
+  overflow: hidden;
+  background-size: cover !important;
+}
+.location-tag {
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  align-items: center;
+  height: 8vw;
+  padding: 0 2vw 0 2vw;
+  background: rgba(0, 0, 0, 0.6);
+}
+.location {
+  position: relative;
+  flex-shrink: 0;
+  flex-basis: auto;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 3.5vw;
+  line-height: 3.5vw;
+  text-align: left;
+}
+.property-info {
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  padding: 2vw 2vw 2vw 2vw;
+  background: #ffffff;
+}
+.property-details {
+  gap: 1.5vw;
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+.property-name {
+  position: relative;
+  flex-shrink: 0;
+  flex-basis: auto;
+  align-self: stretch;
+  color: #0c254d;
+  font-weight: 750;
+  font-size: 4.5vw;
+  line-height: 4.5vw;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+.property-description {
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-self: stretch;
+  color: #0c254d;
+  font-weight: 400;
+  font-size: 3.5vw;
+  line-height: 4.2vw;
+  text-align: left;
+}
+.property-price {
+  position: relative;
+  flex-shrink: 0;
+  flex-basis: auto;
+  height: 4.5vw;
+  color: #fa3944;
+  font-weight: 800;
+  font-size: 4.5vw;
+  line-height: 4.5vw;
+  text-align: left;
+}
