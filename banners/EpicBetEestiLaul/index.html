@@ -1,0 +1,70 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Epicbet</title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="banner-container">
+      <div class="banner-wrapper">
+        <img class="logo-h" src="logo-h.svg" alt="Epicbet" />
+        <img class="logo-v" src="logo-v.svg" alt="Epicbet" />
+        <p class="header">LAULUVÕISTLUSENI ON JÄÄNUD</p>
+        <p class="subheader">PANUSED <strong>EPICBET.COM</strong></p>
+        <div class="countdown-wrapper">
+          <p class="count-d">0p</p>
+          <p class="count-h">0t</p>
+          <p class="count-m">0m</p>
+        </div>
+        <p class="foo">Tähelepanu! Tegemist on hasartmängu reklaamiga. Hasartmäng pole sobiv viis rahaliste probleemide lahendamiseks. Tutvuge reeglitega ja käituge vastutustundlikult!</p>
+      </div>
+    </div>
+
+    <script>
+      // Countdown to 14 February 2026, 19:15
+      const targetDate = new Date("2026-02-14T19:15:00");
+
+      function updateCountdown() {
+        const now = new Date();
+        const timeDiff = targetDate - now;
+
+        // Check if countdown has ended
+        if (timeDiff <= 0) {
+          clearInterval(countdownInterval);
+          document.querySelector(".countdown-wrapper").innerHTML = '<p style="text-align: center; width: 100%;">The countdown has ended.</p>';
+          return;
+        }
+
+        // Calculate time units
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+        // Update DOM
+        const countD = document.querySelector(".count-d");
+        const countH = document.querySelector(".count-h");
+        const countM = document.querySelector(".count-m");
+
+        if (countD) countD.textContent = days + "p";
+        if (countH) countH.textContent = hours + "t";
+        if (countM) countM.textContent = minutes + "m";
+      }
+
+      // Initialize countdown
+      updateCountdown();
+      const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
