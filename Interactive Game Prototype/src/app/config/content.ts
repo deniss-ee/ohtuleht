@@ -79,7 +79,7 @@ const APP_CONTENT: AppContent = {
     },
     submission: {
       endpoint: "https://s.ohtuleht.ee/customer/insert",
-      campaignId: 64,
+      campaignId: 65,
       agrees: [1, 54],
       errorText: "Midagi l\u00e4ks valesti. Palun proovi uuesti!",
     },
