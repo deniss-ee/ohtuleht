@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import type { Plugin } from 'vite'
 
-const rootDir = new URL('.', import.meta.url).pathname
+const rootDir = decodeURIComponent(new URL('.', import.meta.url).pathname)
 
 // Resolves Figma Make's "figma:asset/<hash>.png" imports to local src/assets/ files
 function figmaAssetPlugin(): Plugin {
@@ -20,6 +20,7 @@ function figmaAssetPlugin(): Plugin {
 }
 
 export default defineConfig({
+  base: './',
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them

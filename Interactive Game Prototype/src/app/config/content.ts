@@ -98,27 +98,27 @@ const APP_CONTENT: AppContent = {
     tiers: [
       {
         minScore: 0,
-        header: "PLACEHOLDER HEADER (< 100)",
-        subHeader: "Placeholder subheader (< 100)",
+        header: "Juba päris hea! Natuke veel ja Õ-d on sinu! Juba selle töönädala lõpus selgub võitja!",
+        subHeader: "Seniks hoia ennast kursis viimaste uudistega.",
       },
       {
         minScore: 100,
-        header: "PLACEHOLDER HEADER (100+)",
-        subHeader: "Placeholder subheader (100+)",
+        header: "Õ-d kadusid kiiremini kui ilmusid! Väga tubli! Juba selle töönädala lõpus selgub võitja!",
+        subHeader: "Seniks hoia ennast kursis viimaste uudistega.",
       },
       {
         minScore: 200,
-        header: "PLACEHOLDER HEADER (200+)",
-        subHeader: "Placeholder subheader (200+)",
+        header: "Sa oled Õ-tähtede magnet! Super! Juba selle töönädala lõpus selgub võitja!",
+        subHeader: "Seniks hoia ennast kursis viimaste uudistega.",
       },
       {
         minScore: 300,
-        header: "PLACEHOLDER HEADER (300+)",
-        subHeader: "Placeholder subheader (300+)",
+        header: "Absoluutne tipp – Õ-meistrite meister! Erakordne saavutus! Juba selle töönädala lõpus selgub võitja!",
+        subHeader: "Seniks hoia ennast kursis viimaste uudistega.",
       },
     ],
-    ctaButton: "LOE ÕHTULEHTE",
-    ctaUrl: "https://ohtuleht.ee",
+    ctaButton: "TELLI.OHTULEHT.EE",
+    ctaUrl: "http://telli.ohtuleht.ee/",
     bottomHeader: "Meiega näed rohkem!",
   },
 } as const;

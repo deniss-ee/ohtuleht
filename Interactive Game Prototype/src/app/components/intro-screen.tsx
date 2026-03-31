@@ -41,8 +41,10 @@ export function IntroScreen({ email, emailEntered, consentChecked, onEmailChange
       } else {
         showError();
       }
-    } catch {
-      showError();
+    } catch (err) {
+      // Offline / file:// / CORS — bypass API and start the game anyway
+      console.warn("Running offline: API bypassed", err);
+      onStart();
     } finally {
       setIsSubmitting(false);
     }

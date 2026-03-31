@@ -129,6 +129,24 @@ const CATCH_Y_END = PLAYER_TOP + PLAYER_HEIGHT - 20; // End slightly before bott
 // HYPER-TUNED: Miss triggers ~45px earlier than before (~180ms faster at avg speed)
 const MISS_THRESHOLD = CATCH_Y_START + 40; // Reduced from +50; combined with raised start = ~Y671 (was ~716)
 
+/**
+ * Score-based difficulty curve (2× compounded 25% boost).
+ * - 0 pts   → 1.5625×
+ * - 100 pts → 1.86×
+ * - 200 pts → 2.25×
+ * - 300 pts → 2.74×
+ * - 350 pts → 3.23×  (ramp steepens here)
+ * - 400 pts → 3.92×
+ * - 500 pts → 5.01×
+ */
+function getDifficulty(score: number): number {
+  if (score < 100) return 1.5625 + score * 0.002344;           // gentle: 1.56 → 1.80
+  if (score < 200) return 1.7969 + (score - 100) * 0.003125;   // moderate: 1.80 → 2.11
+  if (score < 300) return 2.1094 + (score - 200) * 0.003906;   // harder: 2.11 → 2.50
+  if (score < 350) return 2.5 + (score - 300) * 0.007813;      // steep: 2.50 → 2.89
+  return 2.8906 + (score - 350) * 0.010938;                     // brutal: 2.89 → 3.98+ at 450
+}
+
 export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife, gameState }: GameScreenProps) {
   const scale = useViewportScale(GAME_WIDTH, GAME_HEIGHT, 32);
   const [playerX, setPlayerX] = useState(GAME_WIDTH / 2); // Center position
@@ -143,6 +161,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
   const animFrameRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
   const spawnTimerRef = useRef<number>(0);
+  const scoreRef = useRef(score);
   const playerXRef = useRef(playerX);
   const prevLivesRef = useRef(lives);
 
@@ -150,6 +169,11 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
   useEffect(() => {
     playerXRef.current = playerX;
   }, [playerX]);
+
+  // Keep scoreRef in sync with score prop
+  useEffect(() => {
+    scoreRef.current = score;
+  }, [score]);
 
   // Trigger shake animation when lives decrease
   useEffect(() => {
@@ -173,6 +197,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
 
   // Spawn items
   const spawnItem = useCallback(() => {
+    const diff = getDifficulty(scoreRef.current) * speedMultiplier;
     const type = Math.random() > 0.5 ? "rolled" : "flat";
     const item: FallingItem = {
       id: nextId.current++,
@@ -180,7 +205,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
       y: -135, // Updated for eye size
       rotation: Math.random() * 360,
       rotationSpeed: (Math.random() - 0.5) * 200,
-      speed: (180 + Math.random() * 120) * speedMultiplier, // Increased from 120+80 to 180+120 for faster falling
+      speed: (180 + Math.random() * 120) * diff, // Dynamic: ramps with score
       type,
       caught: false,
     };
@@ -199,7 +224,8 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
       lastTimeRef.current = now;
       spawnTimerRef.current += dt;
 
-      const spawnInterval = Math.max(0.8, 2.0 / speedMultiplier);
+      const diff = getDifficulty(scoreRef.current) * speedMultiplier;
+      const spawnInterval = Math.max(0.5, 2.0 / diff); // Faster spawns at higher scores
       if (spawnTimerRef.current >= spawnInterval) {
         spawnTimerRef.current = 0;
         spawnItem();
