@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        ! function (e, n, t) {
+            "use strict";
+            var o = "https://fonts.googleapis.com/css?family=Fira+Sans:400,700",
+                r = "__3perf_googleFonts_126cb";
+
+            function c(e) {
+                (n.head || n.body).appendChild(e)
+            }
+
+            function a() {
+                var e = n.createElement("link");
+                e.href = o, e.rel = "stylesheet", c(e)
+            }
+
+            function f(e) {
+                if (!n.getElementById(r)) {
+                    var t = n.createElement("style");
+                    t.id = r, c(t)
+                }
+                n.getElementById(r).innerHTML = e
+            }
+            e.FontFace && e.FontFace.prototype.hasOwnProperty("display") ? (t[r] && f(t[r]), fetch(o).then(function (e) {
+                return e.text()
+            }).then(function (e) {
+                return e.replace(/@font-face {/g, "@font-face{font-display:swap;")
+            }).then(function (e) {
+                return t[r] = e
+            }).then(f).catch(a)) : a()
+        }(window, document, localStorage);
+    </script>
+    <!-- End of code snippet for Google Fonts -->
+
+    <link rel="stylesheet" href="style.css">
+    <title>Ohtuleht</title>
+</head>
+
+<body>
+    <!--Loading-->
+    <div class="popup-wrap">
+        <div class="popup popup_data-sent is-hidden">
+            <p class="popup__text">Andmed edastatud</p>
+        </div>
+
+        <div class="popup popup_data-notsent is-hidden">
+            <p class="popup__text">Tekkis viga :(</p>
+        </div>
+
+        <div class="popup popup_loading is-hidden">
+            <svg>
+                <circle cx="25" cy="25" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"></circle>
+            </svg>
+        </div>
+    </div>
+    <div class="banner" id="banner">
+        <!--Left block-->
+        <div class="block block_info">
+            <!--Logo-->
+            <img src="logo.svg" alt="" class="logo">
+            <!--Header-->
+            <h1 class="info-header"><strong>Vasta küsimustele, sisesta andmed ja võid võita kingituse Epicbetilt!</strong></h1>
+            <!--Text-->
+            <!--
+                <p class="info-text">Mängus osalemiseks sisesta oma andmed.</p>
+            -->
+            <input onclick="moveView();" type="button" value="osalen">
+        </div>
+        <!--Right block-->
+        <div class="block block_form">
+
+            <form name="form-submit" method="POST" target="block_form__iframe" onsubmit="submitted=true;">
+                <!--Name-->
+                <input type="text" name="GivenName" placeholder="Ees- ja perekonnanimi" value="" required>
+                <!--Email-->
+                <input type="email" name="Email" placeholder="E-post" value="" required>
+                <!--Rules_1-->
+                <div class="form-checkbox">
+                    <label for="form-input_1">
+                        <input id="form-input_1" name="rules_1" type="checkbox" class="check-custom" required>
+                        <span class="check-toggle"></span>
+                        <p class="form-checkbox__text">Nõustun <a href="https://www.ohtulehtkirjastus.ee/uldtingimused/" target="_blank">Õhtulehe üldtingimustega</a> ja <a href="reeglid.html" target="_blank">mängu tingimustega</a></p>
+                    </label>
+                </div>
+                <!--Rules_2-->
+                <div class="form-checkbox">
+                    <label for="form-input_2">
+                        <input id="form-input_2" name="rules_2" type="checkbox" class="check-custom" required>
+                        <span class="check-toggle"></span>
+                        <p class="form-checkbox__text">Annan nõusoleku saada uudiseid ning turunduspakkumisi</p>
+                    </label>
+                </div>
+                <!--Button-->
+                <input type="submit" value="saada">
+            </form>
+        </div>
+    </div>
+    <!--Scripts-->
+    <script>
+        /* Data saatmine */
+
+        const scriptURL = 'https://s.ohtuleht.ee/customer/insert'
+        const form = document.forms['form-submit']
+        const loading = document.querySelector('.popup_loading')
+        const successMessage = document.querySelector('.popup_data-sent')
+        const errorMessage = document.querySelector('.popup_data-notsent')
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault()
+            showLoadingIndicator()
+            var formData = new FormData(form),
+                result = {};
+
+            for (var entry of formData.entries()) {
+                result[entry[0]] = entry[1];
+            }
+
+            result["Agrees"] = [1, 54];
+
+            result["CampaignId"] = 65;
+
+            result["Status"] = 1;
+            result = JSON.stringify(result);
+            var request = new XMLHttpRequest();
+            request.open('POST', scriptURL, true);
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.onload = function () {
+                if (request.status >= 200 && request.status < 400) {
+                    showSuccessMessage(request.response)
+                } else {
+                    showErrorMessage(request.statusText)
+                }
+            };
+            request.send(result);
+        })
+
+        function showLoadingIndicator() {
+            form.classList.add('is-hidden')
+            loading.classList.remove('is-hidden')
+        }
+
+        function showErrorMessage(error) {
+            console.log('Error!', error)
+            setTimeout(function () {
+                errorMessage.classList.remove('is-hidden')
+                loading.classList.add('is-hidden')
+            }, 500)
+        }
+
+        function showSuccessMessage(response) {
+            console.log('Success!', response)
+            setTimeout(function () {
+                successMessage.classList.remove('is-hidden')
+                loading.classList.add('is-hidden')
+            }, 500)
+        }
+
+        /* Body move */
+
+        function moveView() {
+            var bannerContainer = document.getElementById('banner');
+            bannerContainer.style.top = '-200px';
+        }
+    </script>
+</body>
+
+</html>

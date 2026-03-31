@@ -9,6 +9,7 @@ export default function App() {
   const {
     state,
     setEmail,
+    setConsent,
     startGame,
     addScore,
     loseLife,
@@ -42,7 +43,9 @@ export default function App() {
         <IntroScreen
           email={state.email}
           emailEntered={state.emailEntered}
+          consentChecked={state.consentChecked}
           onEmailChange={setEmail}
+          onConsentChange={setConsent}
           onStart={startGame}
         />
       )}

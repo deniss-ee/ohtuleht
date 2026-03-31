@@ -78,6 +78,13 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* Reusable brand link style */
+.brand-link {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #f20312;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

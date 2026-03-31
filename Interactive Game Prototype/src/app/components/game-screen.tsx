@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useViewportScale } from "./useViewportScale";
 import svgPaths from "../../imports/svg-e1lcuzjlyy";
+import APP_CONTENT from "../config/content";
+
+const gt = APP_CONTENT.gameScreen;
 import imgBg1 from "figma:asset/bbaf13cd8c71b44f152d6c1e5d2665bb3bef2f61.png";
 import imgEye1 from "figma:asset/fdb3780b83284206df830d8179cedfba4b63215a.png";
 import imgNewspaper1 from "figma:asset/5c0d3e5dc22b81c08c1e3b563f56c73e9f38b973.png";
@@ -100,7 +103,7 @@ function ScorePopup({ x, y }: { x: number; y: number }) {
         className="font-['Fira_Sans',sans-serif] text-[48px] text-[#f20312] whitespace-nowrap"
         style={{ fontWeight: 700 }}
       >
-        +10
+        {gt.scorePopup}
       </p>
     </div>
   );
@@ -118,13 +121,13 @@ const VISIBLE_BOX_HEIGHT = 108; // Height of actual visible box artwork (60% of 
 const PLAYER_BOTTOM = -1; // Bottom position from Figma
 const PLAYER_TOP = GAME_HEIGHT - PLAYER_HEIGHT + PLAYER_BOTTOM; // Top of player frame
 
-// ADJUSTED: Move hitbox higher - catch zone starts 25px higher to trigger sooner
-const CATCH_ZONE_OFFSET = PLAYER_HEIGHT - VISIBLE_BOX_HEIGHT - 25; // Moved up 25px
-const CATCH_Y_START = PLAYER_TOP + CATCH_ZONE_OFFSET; // Start of catch area (higher now)
+// HYPER-TUNED: Hitbox raised 60px above visible artwork so catch triggers at approach
+const CATCH_ZONE_OFFSET = PLAYER_HEIGHT - VISIBLE_BOX_HEIGHT - 60; // Raised from -25 to -60
+const CATCH_Y_START = PLAYER_TOP + CATCH_ZONE_OFFSET; // ~Y631, well above newspaper art
 const CATCH_Y_END = PLAYER_TOP + PLAYER_HEIGHT - 20; // End slightly before bottom
 
-// ADJUSTED: Miss triggers at the TOP of the catch zone (eye passing top of visible box)
-const MISS_THRESHOLD = CATCH_Y_START + 50; // Triggers right after missing the catch window
+// HYPER-TUNED: Miss triggers ~45px earlier than before (~180ms faster at avg speed)
+const MISS_THRESHOLD = CATCH_Y_START + 40; // Reduced from +50; combined with raised start = ~Y671 (was ~716)
 
 export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife, gameState }: GameScreenProps) {
   const scale = useViewportScale(GAME_WIDTH, GAME_HEIGHT, 32);
@@ -320,7 +323,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
       >
         {/* HUD - Score (Dynamic) */}
         <div className="absolute content-stretch flex gap-[8px] items-center leading-[1.5] left-[31px] not-italic text-[24px] top-[31px] whitespace-nowrap z-10" data-name="Container">
-          <p className="font-['Fira_Sans',sans-serif] relative shrink-0 text-[#53535a] tracking-[-0.3px]">Punktid:</p>
+          <p className="font-['Fira_Sans',sans-serif] relative shrink-0 text-[#53535a] tracking-[-0.3px]">{gt.scoreLabel}</p>
           <p className="font-['Fira_Sans',sans-serif] relative shrink-0 text-[#f20312]" style={{ fontWeight: 700 }}>
             {score}
           </p>
@@ -329,7 +332,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
         {/* HUD - Lives (Dynamic) */}
         <div className="absolute content-stretch flex gap-[8px] items-center justify-end right-[31px] top-[31px] z-10" data-name="Label and Icons Container">
           <p className="font-['Fira_Sans',sans-serif] leading-[1.5] not-italic relative shrink-0 text-[#53535a] text-[24px] tracking-[-0.3px] whitespace-nowrap">
-            Elud:
+            {gt.livesLabel}
           </p>
           <div className="content-stretch flex items-center relative shrink-0" data-name="Icons Container">
             {lives >= 1 ? <ActiveHeart /> : <InactiveHeart />}

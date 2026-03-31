@@ -5,6 +5,7 @@ export interface GameState {
   lives: number;
   speedMultiplier: number;
   emailEntered: boolean;
+  consentChecked: boolean;
   gameState: "idle" | "playing" | "over";
   email: string;
 }
@@ -14,6 +15,7 @@ const DEFAULT_STATE: GameState = {
   lives: 3,
   speedMultiplier: 1.0,
   emailEntered: false,
+  consentChecked: false,
   gameState: "idle",
   email: "",
 };
@@ -24,6 +26,10 @@ export function useGameState() {
   const setEmail = useCallback((email: string) => {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     setState((s) => ({ ...s, email, emailEntered: isValid }));
+  }, []);
+
+  const setConsent = useCallback((checked: boolean) => {
+    setState((s) => ({ ...s, consentChecked: checked }));
   }, []);
 
   const startGame = useCallback(() => {
@@ -65,6 +71,7 @@ export function useGameState() {
   return {
     state,
     setEmail,
+    setConsent,
     startGame,
     addScore,
     loseLife,
