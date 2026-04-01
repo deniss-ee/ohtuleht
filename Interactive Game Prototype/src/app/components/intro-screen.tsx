@@ -56,9 +56,9 @@ export function IntroScreen({ email, emailEntered, consentChecked, onEmailChange
   }
 
   return (
-    <div className="bg-[#f7f7f7] relative size-full flex items-center justify-center overflow-y-auto" data-name="Game Intro">
-      <div className="content-stretch flex flex-col gap-8 sm:gap-12 md:gap-16 lg:gap-[96px] items-center justify-center w-full max-w-[823px] px-5 md:px-8 lg:px-0 py-8 md:py-0">
-        <div className="h-[24px] md:h-[48px] overflow-clip relative shrink-0 w-[126px] md:w-[252px]" data-name="Logo / Ohtuleht">
+    <div className="intro-screen-shell bg-[#f7f7f7] relative size-full flex items-center justify-center" data-name="Game Intro">
+      <div className="intro-screen-content content-stretch flex flex-col gap-8 sm:gap-12 md:gap-16 lg:gap-[96px] items-center justify-center w-full max-w-[823px] px-5 md:px-8 lg:px-0 py-8 md:py-0">
+        <div className="intro-outro-logo h-[24px] md:h-[48px] overflow-clip relative shrink-0 w-[126px] md:w-[252px]" data-name="Logo / Ohtuleht">
           <div className="absolute contents inset-0" data-name="Clip path group">
             <div
               className="absolute inset-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[0px_0px] mask-size-[336px_64px]"
@@ -80,11 +80,11 @@ export function IntroScreen({ email, emailEntered, consentChecked, onEmailChange
             </div>
           </div>
         </div>
-        <div className="content-stretch flex flex-col gap-3 md:gap-[24px] items-center justify-center not-italic relative shrink-0 text-center w-full">
-          <p className="font-['Fira_Sans',sans-serif] leading-[1.25] relative shrink-0 text-[#f20312] text-[28px] sm:text-[40px] md:text-[56px] lg:text-[72px] tracking-[-0.9px] w-full" style={{ fontWeight: 600 }}>
+        <div className="intro-outro-text-stack content-stretch flex flex-col gap-3 md:gap-[24px] items-center justify-center not-italic relative shrink-0 text-center w-full">
+          <p className="intro-outro-main-header font-['Fira_Sans',sans-serif] leading-[1.25] relative shrink-0 text-[#f20312] text-[28px] sm:text-[40px] md:text-[56px] lg:text-[72px] tracking-[-0.9px] w-full" style={{ fontWeight: 600 }}>
             {t.mainHeader}
           </p>
-          <p className="font-['Inter',sans-serif] leading-[1.375] relative shrink-0 text-[#46464e] text-[16px] sm:text-[22px] md:text-[24px] lg:text-[36px] tracking-[-0.6px] w-full">
+          <p className="intro-outro-sub-header font-['Inter',sans-serif] leading-[1.375] relative shrink-0 text-[#46464e] text-[16px] sm:text-[22px] md:text-[24px] lg:text-[36px] tracking-[-0.6px] w-full">
             {t.subHeader}
           </p>
         </div>

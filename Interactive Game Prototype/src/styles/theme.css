@@ -1,5 +1,11 @@
 @custom-variant dark (&:is(.dark *));
 
+/* Primary desktop/tablet transition:
+   lg now starts at 1366px, so <1366px gets non-lg (tablet/fluid) styles. */
+@theme {
+  --breakpoint-lg: 90.375rem; /* 1366px */
+}
+
 :root {
   --font-size: 16px;
   --background: #ffffff;
@@ -264,5 +270,96 @@
 
   .animate-shake-inner-aggressive {
     animation: shakeInnerAggressive 500ms ease-in-out;
+  }
+
+  /* Game screen typography (rem-based for accessibility scaling) */
+  .game-hud-text {
+    font-size: 1.5rem; /* 24px */
+  }
+
+  .game-score-popup-text {
+    font-size: 3rem; /* 48px */
+  }
+
+  .game-instruction-text {
+    font-size: 1.25rem; /* 20px */
+  }
+
+  /* Intro/Outro short-height desktop fit (keeps vertical/horizontal centering) */
+  .intro-screen-shell,
+  .outro-screen-shell {
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .intro-screen-content,
+  .outro-screen-content {
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  /* Below --breakpoint-lg (90.375rem / ~1446px): compact Intro/Outro for browser chrome */
+  @media (min-width: 769px) and (max-width: 90.374rem) {
+    /* Logo: 75% of desktop (252×48 → 189×36), then 85% (161×31) */
+    .intro-outro-logo {
+      width: 10.0625rem !important;  /* 161px */
+      height: 1.9375rem !important;  /* 31px */
+    }
+
+    /* Main stack gap: 75% of 96px → 72px, then 85% → 61px */
+    .intro-screen-content,
+    .outro-screen-content {
+      gap: 3.8125rem !important;     /* 61px */
+    }
+
+    /* Text stack gap: 75% of 24px → 18px, then 85% → 15px */
+    .intro-outro-text-stack {
+      gap: 0.9375rem !important;     /* 15px */
+    }
+
+    /* Main header: 54px × 0.85 → 46px */
+    .intro-outro-main-header {
+      font-size: 2.875rem !important; /* 46px */
+    }
+
+    /* Sub header (Intro): 27px × 0.85 → 23px */
+    .intro-outro-sub-header {
+      font-size: 1.4375rem !important; /* 23px */
+    }
+
+    /* Sub header small (Outro): 21px × 0.85 → 18px */
+    .intro-outro-sub-header-small {
+      font-size: 1.125rem !important; /* 18px */
+    }
+  }
+
+  /* Apply only on desktop/tablet widths; do not affect <1024 mobile layouts */
+  @media (min-width: 1024px) and (max-width: 1365px) and (max-height: 800px) {
+    .intro-screen-content,
+    .outro-screen-content {
+      transform: scale(clamp(0.86, 100vh / 860, 1));
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1365px) and (max-height: 720px) {
+    .intro-screen-content,
+    .outro-screen-content {
+      transform: scale(clamp(0.8, 100vh / 900, 0.92));
+    }
+  }
+
+  /* Mobile text +25% (e.g. 24→30, 48→60, 20→25) */
+  @media (max-width: 768px) {
+    .game-hud-text {
+      font-size: 1.875rem;
+    }
+
+    .game-score-popup-text {
+      font-size: 3.75rem;
+    }
+
+    .game-instruction-text {
+      font-size: 1.5625rem;
+    }
   }
 }

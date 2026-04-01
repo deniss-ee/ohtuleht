@@ -100,7 +100,7 @@ function ScorePopup({ x, y }: { x: number; y: number }) {
       }}
     >
       <p
-        className="font-['Fira_Sans',sans-serif] text-[48px] text-[#f20312] whitespace-nowrap"
+        className="font-['Fira_Sans',sans-serif] game-score-popup-text text-[#f20312] whitespace-nowrap"
         style={{ fontWeight: 700 }}
       >
         {gt.scorePopup}
@@ -164,6 +164,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
   const scoreRef = useRef(score);
   const playerXRef = useRef(playerX);
   const prevLivesRef = useRef(lives);
+  const lastSpawnXRef = useRef<number>(-1000); // Tracks last spawn X for anti-clustering
 
   // Keep playerXRef in sync with playerX state
   useEffect(() => {
@@ -199,9 +200,23 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
   const spawnItem = useCallback(() => {
     const diff = getDifficulty(scoreRef.current) * speedMultiplier;
     const type = Math.random() > 0.5 ? "rolled" : "flat";
+
+    // Anti-clustering: retry until the new X is at least MIN_SPAWN_GAP px
+    // away from the previous spawn, preventing consecutive identical columns.
+    const MIN_SPAWN_GAP = 160;
+    const SPAWN_MIN_X = 10;
+    const SPAWN_MAX_X = GAME_WIDTH - 135; // 465
+    let x = Math.random() * (SPAWN_MAX_X - SPAWN_MIN_X) + SPAWN_MIN_X;
+    let attempts = 0;
+    while (Math.abs(x - lastSpawnXRef.current) < MIN_SPAWN_GAP && attempts < 8) {
+      x = Math.random() * (SPAWN_MAX_X - SPAWN_MIN_X) + SPAWN_MIN_X;
+      attempts++;
+    }
+    lastSpawnXRef.current = x;
+
     const item: FallingItem = {
       id: nextId.current++,
-      x: Math.random() * (GAME_WIDTH - 135) + 10, // Updated for eye size (135px)
+      x,
       y: -135, // Updated for eye size
       rotation: Math.random() * 360,
       rotationSpeed: (Math.random() - 0.5) * 200,
@@ -338,9 +353,12 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
   }, [gameState]);
 
   return (
-    <div className="bg-[#f7f7f7] relative size-full flex items-center justify-center overflow-hidden">
-      {/* Scaling wrapper – takes the actual visual space in the layout */}
-      <div className="relative" style={{ width: GAME_WIDTH * scale, height: GAME_HEIGHT * scale }}>
+    <div className="bg-[#f7f7f7] relative w-full h-full min-h-dvh overflow-visible">
+      {/* Absolute center fallback keeps the game frame perfectly centered even on reduced viewports (e.g. 1280×720 effective). */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{ width: GAME_WIDTH * scale, height: GAME_HEIGHT * scale }}
+      >
       {/* EXACT FIGMA FRAME – stays 600×800, visually scaled via CSS transform */}
       <div
         ref={gameAreaRef}
@@ -348,7 +366,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
         style={{ width: GAME_WIDTH, height: GAME_HEIGHT, transform: `scale(${scale})`, transformOrigin: 'top left' }}
       >
         {/* HUD - Score (Dynamic) */}
-        <div className="absolute content-stretch flex gap-[8px] items-center leading-[1.5] left-[31px] not-italic text-[24px] top-[31px] whitespace-nowrap z-10" data-name="Container">
+        <div className="absolute content-stretch flex gap-[8px] items-center leading-[1.5] left-[31px] not-italic game-hud-text top-[31px] whitespace-nowrap z-10" data-name="Container">
           <p className="font-['Fira_Sans',sans-serif] relative shrink-0 text-[#53535a] tracking-[-0.3px]">{gt.scoreLabel}</p>
           <p className="font-['Fira_Sans',sans-serif] relative shrink-0 text-[#f20312]" style={{ fontWeight: 700 }}>
             {score}
@@ -357,7 +375,7 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
 
         {/* HUD - Lives (Dynamic) */}
         <div className="absolute content-stretch flex gap-[8px] items-center justify-end right-[31px] top-[31px] z-10" data-name="Label and Icons Container">
-          <p className="font-['Fira_Sans',sans-serif] leading-[1.5] not-italic relative shrink-0 text-[#53535a] text-[24px] tracking-[-0.3px] whitespace-nowrap">
+          <p className="font-['Fira_Sans',sans-serif] game-hud-text leading-[1.5] not-italic relative shrink-0 text-[#53535a] tracking-[-0.3px] whitespace-nowrap">
             {gt.livesLabel}
           </p>
           <div className="content-stretch flex items-center relative shrink-0" data-name="Icons Container">
@@ -366,6 +384,11 @@ export function GameScreen({ score, lives, speedMultiplier, onScore, onLoseLife,
             {lives >= 3 ? <ActiveHeart /> : <InactiveHeart />}
           </div>
         </div>
+
+        {/* Instructional text – inside game window, below HUD */}
+        <p className="absolute left-1/2 -translate-x-1/2 top-[72px] font-['Fira_Sans',sans-serif] game-hud-text text-[#98989f] tracking-[-0.1px] text-center pointer-events-none select-none z-10 w-[calc(100%-60px)]">
+          Liiguta ajalehte ja püüa Õ-tähti!
+        </p>
 
         {/* Background Illustration - NEW ASSET FROM FIGMA */}
         <div className="-translate-x-1/2 absolute bottom-[-1px] h-[484px] left-1/2 w-[600px] z-[1]" data-name="bg 1">

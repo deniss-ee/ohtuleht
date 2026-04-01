@@ -60,7 +60,7 @@ const APP_CONTENT: AppContent = {
   introScreen: {
     mainHeader: "Mängi ja võid võita!",
     subHeader:
-      "Aprillis loosime kõigi osalejate vahel igal nädalal välja Õhtuleht Kirjastuse üllatuspaki! Pane oma tähelepanu ja kiirus proovile. Meiega näed ja võidad rohkem!",
+      "Aprillis loosime igal nädalal kõigi osalejate vahel välja Õhtuleht Kirjastuse üllatuspaki! Pane oma tähelepanu ja kiirus proovile. Meiega näed ja võidad rohkem!",
     emailPlaceholder: "E-mail",
     consentLabel:
       "Annan Õhtuleht Kirjastus AS-ile õiguse töödelda minu e-posti aadressi pakkumiste ja uudiskirjade saatmiseks.",
