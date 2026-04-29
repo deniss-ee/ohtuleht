@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page break iframe v2.5.11fggk</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: transparent;
+      }
+      .container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+      .content {
+        position: relative;
+        width: 100vw;
+        height: 100%;
+        max-width: 600px;
+        max-height: none;
+        aspect-ratio: unset;
+        overflow: hidden;
+      }
+      iframe {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        border: 0;
+        display: block;
+        margin: 0 auto;
+      }
+      .fallback-image {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        width: 100vw;
+        height: auto;
+        border: 0;
+        display: none;
+        transform: translateX(-50%);
+      }
+      #video-controls {
+        display: none;
+        /* Hidden by default, shown in video mode via JavaScript */
+        position: fixed;
+        top: 10px;
+        right: 30px;
+        z-index: 2147483647 !important;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+        gap: 8px;
+        background: transparent !important;
+        pointer-events: auto !important;
+        isolation: isolate;
+      }
+
+      #video-controls > button {
+        position: relative;
+        z-index: 1;
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent !important;
+        background-color: transparent !important;
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: none;
+        opacity: 0.7;
+        border-radius: 24px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 0;
+        box-shadow: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #video-controls > button:hover {
+        opacity: 1;
+      }
+
+      /* Remove focus outlines and prevent blue container effect */
+      #video-controls > button:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
+      /* Ensure SVG elements don't trigger unwanted focus effects */
+      #video-controls > button svg {
+        pointer-events: none;
+        /* Prevents SVG from being the focus target */
+      }
+
+      /* Volume button - no background image, uses inline SVG */
+      #video-control-audio {
+        background-image: none !important;
+      }
+
+      #video-control-playback {
+        background-image: none !important;
+      }
+      /**/
+      #video,
+      #html {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Prevent focus effects on content containers */
+      #video:focus,
+      #html:focus {
+        outline: none;
+      }
+      /* Video element styling - fills container with aspect ratio preservation */
+      #video {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        width: 100vw;
+        height: auto;
+        display: none;
+        transform: translateX(-50%);
+        overflow: hidden;
+      }
+      #video video {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    </style>
+  </head>
+  <script>
+    const variables = {};
+    setVariable("clickMacroUrl", "%%CLICK_URL_ESC%%");
+    setVariable("clickThroughUrl", "%%DEST_URL%%");
+    setVariable("viewUrl", "%%VIEW_URL_ESC%%");
+    // Video-specific configuration
+    setVariable("videoUrl", "[%videoUrl%]");
+    setVariable("videoControls", "[%videoControls%]");
+    function setVariable(name, value) {
+      variables[name] = value;
+    }
+  </script>
+  <body>
+    <img src="[%ThirdPartyImpressionTracker%]" width="1" height="1" style="display: none" />
+    <div class="container">
+      <div class="content">
+        <iframe id="adIframe" src="[%iframeUrl%]" scrolling="no" allowtransparency="true"></iframe>
+        <img class="fallback-image" id="adImage" src="[%imageUrl%]" alt />
+        <div id="video">
+          <video autoplay loop muted playsinline>
+            <!-- Video source dynamically added via JavaScript -->
+          </video>
+          <!-- VIDEO CONTROLS: Mute/unmute button with inline SVG -->
+          <div id="video-controls">
+            <button
+              id="video-control-audio"
+              onclick="
+                event.stopPropagation();
+                toggleVideoAudio();
+              ">
+              <!-- Volume On SVG (default state - video starts muted) -->
+              <svg class="volume-on" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" style="display: none">
+                <path
+                  d="M38.4231 23.95C38.4231 20.936 37.5831 18.2148 35.9031 15.7865C34.2231 13.3578 32.0118 11.5803 29.2691 10.454C28.9461 10.313 28.7206 10.1072 28.5926 9.83649C28.4643 9.56616 28.4689 9.29033 28.6066 9.00899C28.7383 8.70299 28.9739 8.50066 29.3136 8.40199C29.6533 8.30333 29.9949 8.32449 30.3386 8.46549C33.4489 9.79383 35.9521 11.8487 37.8481 14.63C39.7441 17.4117 40.6921 20.5182 40.6921 23.9495C40.6921 27.3805 39.7441 30.487 37.8481 33.269C35.9521 36.051 33.4489 38.1062 30.3386 39.4345C29.9949 39.5755 29.6533 39.5967 29.3136 39.498C28.9739 39.3993 28.7383 39.197 28.6066 38.891C28.4689 38.6097 28.4643 38.3338 28.5926 38.0635C28.7206 37.7928 28.9461 37.587 29.2691 37.446C32.0118 36.3197 34.2231 34.5422 35.9031 32.1135C37.5831 29.6852 38.4231 26.964 38.4231 23.95ZM14.7311 29H8.75011C8.33277 29 7.98811 28.864 7.71611 28.592C7.44411 28.3197 7.30811 27.9748 7.30811 27.5575V20.4425C7.30811 20.0252 7.44411 19.6803 7.71611 19.408C7.98811 19.136 8.33277 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9477 22.5941 12.143C23.0698 12.338 23.3076 12.6827 23.3076 13.177V34.8035C23.3076 35.3108 23.0698 35.662 22.5941 35.857C22.1184 36.0523 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM32.3076 24.002C32.3076 25.4933 31.9641 26.8517 31.2771 28.077C30.5898 29.3027 29.6109 30.268 28.3406 30.973C28.1109 31.1217 27.8878 31.1255 27.6711 30.9845C27.4544 30.8435 27.3461 30.646 27.3461 30.392V17.5385C27.3461 17.2848 27.4544 17.0907 27.6711 16.956C27.8878 16.8213 28.1109 16.8208 28.3406 16.9545C29.6109 17.6618 30.5898 18.6457 31.2771 19.906C31.9641 21.166 32.3076 22.5313 32.3076 24.002ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
+                  fill="white"></path>
+              </svg>
+              <!-- Volume Off SVG (shown when video is muted - initial state) -->
+              <svg class="volume-off" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path
+                  d="M35.5271 25.6305L30.7921 30.396C30.5691 30.619 30.3058 30.7338 30.0021 30.7405C29.6981 30.7468 29.4346 30.632 29.2116 30.396C28.9756 30.1603 28.8576 29.8887 28.8576 29.581C28.8576 29.273 28.9756 29.0012 29.2116 28.7655L33.9271 24.031L29.1616 19.296C28.9386 19.073 28.8239 18.8128 28.8176 18.5155C28.8109 18.2182 28.9256 17.9515 29.1616 17.7155C29.3976 17.4795 29.6726 17.3615 29.9866 17.3615C30.3006 17.3615 30.5691 17.4795 30.7921 17.7155L35.5271 22.431L40.2616 17.6655C40.4846 17.4425 40.7481 17.331 41.0521 17.331C41.3558 17.331 41.6256 17.4425 41.8616 17.6655C42.0976 17.9015 42.2156 18.1765 42.2156 18.4905C42.2156 18.8045 42.0976 19.073 41.8616 19.296L37.1271 24.031L41.8921 28.7655C42.1154 28.9885 42.2303 29.252 42.2366 29.556C42.2429 29.8597 42.1281 30.1295 41.8921 30.3655C41.6564 30.6012 41.3848 30.719 41.0771 30.719C40.7694 30.719 40.4976 30.6012 40.2616 30.3655L35.5271 25.6305ZM14.7311 29H8.75011C8.32977 29 7.98427 28.8647 7.71361 28.594C7.44327 28.3237 7.30811 27.9782 7.30811 27.5575V20.4425C7.30811 20.0218 7.44327 19.6763 7.71361 19.406C7.98427 19.1353 8.32977 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9462 22.5941 12.1385C23.0698 12.3308 23.3076 12.677 23.3076 13.177V34.8035C23.3076 35.3165 23.0698 35.6692 22.5941 35.8615C22.1184 36.0538 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
+                  fill="white"></path>
+              </svg>
+            </button>
+            <button
+              id="video-control-playback"
+              onclick="
+                event.stopPropagation();
+                toggleVideoPlayback();
+              ">
+              <svg class="playback-pause" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path d="M17 13C17 12.4477 17.4477 12 18 12H22C22.5523 12 23 12.4477 23 13V35C23 35.5523 22.5523 36 22 36H18C17.4477 36 17 35.5523 17 35V13Z" fill="white"></path>
+                <path d="M25 13C25 12.4477 25.4477 12 26 12H30C30.5523 12 31 12.4477 31 13V35C31 35.5523 30.5523 36 30 36H26C25.4477 36 25 35.5523 25 35V13Z" fill="white"></path>
+              </svg>
+              <svg class="playback-play" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" style="display: none">
+                <path d="M19 13.8C19 12.9319 19.9808 12.4299 20.6838 12.9397L33.3338 22.1397C33.9131 22.561 33.9131 23.439 33.3338 23.8603L20.6838 33.0603C19.9808 33.5701 19 33.0681 19 32.2V13.8Z" fill="white"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <!-- End of video -->
+      </div>
+    </div>
+
+    <script>
+      const clickTagValues = ["[%clickTag1%]"];
+      const childIframe = document.getElementById("adIframe");
+      const fallbackImage = document.getElementById("adImage");
+      const videoContainer = document.getElementById("video");
+      const multipleClickTags = !!clickTagValues[1];
+
+      const iframeUrl = childIframe ? childIframe.getAttribute("src") || "" : "";
+      const imageUrl = fallbackImage ? fallbackImage.getAttribute("src") || "" : "";
+      const videoUrl = variables.videoUrl || "";
+
+      function hasRealValue(value) {
+        return !!value && !value.includes("[%") && !value.includes("%%");
+      }
+
+      const hasVideoUrl = hasRealValue(videoUrl);
+      const hasIframeUrl = hasRealValue(iframeUrl);
+      const hasImageUrl = hasRealValue(imageUrl);
+      const isVideoMode = hasVideoUrl;
+      const isIframeMode = !isVideoMode && hasIframeUrl;
+      const isImageMode = !isVideoMode && !hasIframeUrl && hasImageUrl;
+      const IFRAME_TOP_OFFSET_PX = 70;
+      const CONTENT_MAX_WIDTH_PX = 600;
+      let clickLayerElement = null;
+
+      function getContentFrame() {
+        const width = Math.min(window.innerWidth, CONTENT_MAX_WIDTH_PX);
+        const left = Math.max(0, Math.floor((window.innerWidth - width) / 2));
+        return { width, left };
+      }
+
+      function updateIframeFrame() {
+        if (!isIframeMode || !childIframe) return;
+
+        const contentFrame = getContentFrame();
+        childIframe.style.left = `${contentFrame.left}px`;
+        childIframe.style.right = "auto";
+        childIframe.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
+        childIframe.style.width = `${contentFrame.width}px`;
+        childIframe.style.height = `calc(100vh - ${IFRAME_TOP_OFFSET_PX}px)`;
+        childIframe.style.minHeight = `calc(100vh - ${IFRAME_TOP_OFFSET_PX}px)`;
+
+        if (clickLayerElement) {
+          clickLayerElement.style.left = `${contentFrame.left}px`;
+          clickLayerElement.style.width = `${contentFrame.width}px`;
+          clickLayerElement.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
+          clickLayerElement.style.height = `calc(100vh - ${IFRAME_TOP_OFFSET_PX}px)`;
+        }
+      }
+
+      if (hasVideoUrl && (hasIframeUrl || hasImageUrl)) {
+        console.warn("videoUrl is set. Ignoring iframeUrl and imageUrl.");
+      } else if (hasIframeUrl && hasImageUrl) {
+        console.warn("Both iframeUrl and imageUrl are set. Using iframeUrl and hiding imageUrl.");
+      }
+
+      if (videoContainer) {
+        videoContainer.style.display = isVideoMode ? "block" : "none";
+      }
+
+      if (childIframe) {
+        childIframe.style.position = "fixed";
+        childIframe.style.bottom = isIframeMode ? "auto" : "0";
+        if (isIframeMode) {
+          updateIframeFrame();
+        } else {
+          childIframe.style.top = "0";
+          childIframe.style.right = "0";
+          childIframe.style.left = "0";
+          childIframe.style.width = "100vw";
+          childIframe.style.height = "100vh";
+          childIframe.style.minHeight = "100vh";
+        }
+      }
+
+      if (fallbackImage) {
+        fallbackImage.style.display = isImageMode ? "block" : "none";
+        if (!isImageMode) {
+          fallbackImage.removeAttribute("src");
+        }
+      }
+
+      if (childIframe) {
+        if (!isIframeMode) {
+          childIframe.style.display = "none";
+          childIframe.removeAttribute("src");
+        }
+      }
+
+      function fitImageToViewport() {
+        if (!fallbackImage || !isImageMode) return;
+        const naturalWidth = fallbackImage.naturalWidth || 0;
+        const naturalHeight = fallbackImage.naturalHeight || 0;
+        if (!naturalWidth || !naturalHeight) return;
+
+        const viewportWidth = window.innerWidth;
+        const bottomBarHeight = 70;
+        const viewportHeight = Math.max(0, window.innerHeight - bottomBarHeight);
+        const ratio = naturalHeight / naturalWidth;
+
+        let displayWidth = viewportWidth;
+        let displayHeight = displayWidth * ratio;
+
+        if (displayHeight < viewportHeight) {
+          displayHeight = viewportHeight;
+          displayWidth = displayHeight / ratio;
+        } else if (displayHeight > viewportHeight) {
+          displayHeight = viewportHeight;
+          displayWidth = displayHeight / ratio;
+        }
+
+        fallbackImage.style.width = `${displayWidth}px`;
+        fallbackImage.style.height = `${displayHeight}px`;
+      }
+
+      function fitVideoToViewport() {
+        if (!videoContainer || !isVideoMode) return;
+
+        const video = videoContainer.querySelector("video");
+        if (!video) return;
+
+        const naturalWidth = video.videoWidth || 0;
+        const naturalHeight = video.videoHeight || 0;
+        if (!naturalWidth || !naturalHeight) return;
+
+        const viewportWidth = window.innerWidth;
+        const bottomBarHeight = 0;
+        const viewportHeight = Math.max(0, window.innerHeight - bottomBarHeight);
+        const ratio = naturalHeight / naturalWidth;
+        const displayHeight = Math.max(viewportHeight, viewportWidth * ratio);
+
+        videoContainer.style.width = `${viewportWidth}px`;
+        videoContainer.style.height = `${displayHeight}px`;
+        video.style.width = `${viewportWidth}px`;
+        video.style.height = `${displayHeight}px`;
+      }
+
+      if (fallbackImage) {
+        fallbackImage.addEventListener("load", fitImageToViewport);
+      }
+      window.addEventListener("resize", fitImageToViewport, { passive: true });
+      window.addEventListener("resize", fitVideoToViewport, { passive: true });
+      window.addEventListener("resize", updateIframeFrame, { passive: true });
+      updateIframeFrame();
+      fitImageToViewport();
+
+      function setupFriendlyIframe() {
+        try {
+          const gptIframe = window.frameElement;
+          if (!gptIframe) return false;
+
+          const parentDoc = window.parent.document;
+          let parent = gptIframe.parentElement;
+          let cursor = parent;
+          while (cursor && cursor !== parentDoc.body) {
+            if (cursor.getAttribute("role") === "region") {
+              parent = cursor;
+              break;
+            }
+            cursor = cursor.parentElement;
+          }
+
+          const IFRAME_CLASS = "page-break-iframe";
+          const SLOT_CLASS = "page-break-slot";
+          const STYLE_ID = "page-break-interscroller-style";
+          const EXTRA_SCROLL_ROOM_PX = 60;
+
+          gptIframe.classList.add(IFRAME_CLASS);
+          parent.classList.add(SLOT_CLASS);
+          parent.style.setProperty("height", `calc(100vh + ${EXTRA_SCROLL_ROOM_PX}px)`, "important");
+
+          gptIframe.style.position = "fixed";
+          gptIframe.style.top = "0";
+          gptIframe.style.left = "0";
+          gptIframe.style.width = "100vw";
+          gptIframe.style.height = "100vh";
+          gptIframe.style.zIndex = "0";
+          gptIframe.style.opacity = "0";
+          gptIframe.style.visibility = "hidden";
+          gptIframe.style.pointerEvents = "none";
+          gptIframe.removeAttribute("width");
+          gptIframe.removeAttribute("height");
+          gptIframe.setAttribute("gam-creative-template", "true");
+
+          function fitFixedIframeToViewport() {
+            gptIframe.style.top = "0";
+            gptIframe.style.height = "100vh";
+
+            const rect = gptIframe.getBoundingClientRect();
+            const topOffset = rect.top;
+            if (Math.abs(topOffset) > 1) {
+              gptIframe.style.top = `${-topOffset}px`;
+              gptIframe.style.height = `calc(100vh + ${topOffset}px)`;
+            }
+          }
+
+          requestAnimationFrame(fitFixedIframeToViewport);
+
+          if (!parentDoc.getElementById(STYLE_ID)) {
+            const style = parentDoc.createElement("style");
+            style.id = STYLE_ID;
+            style.textContent = `
+          .page-break-slot[gam-creative-slot], .page-break-slot {
+            position: relative !important;
+            height: calc(100vh + ${EXTRA_SCROLL_ROOM_PX}px) !important;
+            width: 100vw !important;
+            margin-left: calc(50% - 50vw) !important;
+            background: transparent !important;
+            z-index: 0 !important;
+            overflow: hidden !important;
+          }
+
+          .page-break-iframe[gam-creative-template], .page-break-iframe {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+          }
+
+          .page-break-iframe.page-break-active {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+          }
+
+          /* Ensure adjacent article sections scroll above the fixed creative */
+          main section {
+            position: relative !important;
+            z-index: 1 !important;
+          }
+        `;
+            parentDoc.head.appendChild(style);
+          }
+
+          function clipAdToGap() {
+            const slotRect = parent.getBoundingClientRect();
+            const vpHeight = parentWin.innerHeight;
+            const revealShift = Math.max(0, Math.min(EXTRA_SCROLL_ROOM_PX, -slotRect.top));
+
+            if (isIframeMode && childIframe) {
+              childIframe.style.top = `${IFRAME_TOP_OFFSET_PX - revealShift}px`;
+              if (clickLayerElement) {
+                clickLayerElement.style.top = `${IFRAME_TOP_OFFSET_PX - revealShift}px`;
+                clickLayerElement.style.height = `calc(100vh - ${IFRAME_TOP_OFFSET_PX - revealShift}px)`;
+              }
+            }
+
+            const top = Math.max(0, slotRect.top);
+            const bottom = Math.min(vpHeight, slotRect.bottom);
+
+            if (top < bottom) {
+              gptIframe.style.clipPath = `inset(${top}px 0px ${vpHeight - bottom}px 0px)`;
+              gptIframe.style.opacity = "1";
+              gptIframe.style.visibility = "visible";
+              gptIframe.style.pointerEvents = "auto";
+              gptIframe.classList.add("page-break-active");
+              positionVideoControls(slotRect, vpHeight);
+            } else {
+              gptIframe.style.clipPath = "inset(100% 0px 0px 0px)";
+              gptIframe.style.opacity = "0";
+              gptIframe.style.visibility = "hidden";
+              gptIframe.style.pointerEvents = "none";
+              gptIframe.classList.remove("page-break-active");
+              positionVideoControls(slotRect, vpHeight);
+            }
+          }
+
+          function positionVideoControls(slotRect, vpHeight) {
+            if (!isVideoMode) return;
+
+            const controls = document.getElementById("video-controls");
+            if (!controls) return;
+
+            const visibleTop = Math.max(0, slotRect.top);
+            const visibleBottom = Math.min(vpHeight, slotRect.bottom);
+
+            if (visibleTop >= visibleBottom) {
+              controls.style.visibility = "hidden";
+              controls.style.pointerEvents = "none";
+              return;
+            }
+
+            const controlsHeight = controls.offsetHeight || 48;
+            const targetTop = visibleTop + 10;
+            const maxTop = Math.max(visibleTop, visibleBottom - controlsHeight - 10);
+
+            controls.style.top = `${Math.min(targetTop, maxTop)}px`;
+            controls.style.right = "30px";
+            controls.style.visibility = "visible";
+            controls.style.pointerEvents = "auto";
+          }
+
+          const parentWin = window.parent;
+          let clipUpdateScheduled = false;
+
+          function scheduleClipAdToGap() {
+            if (clipUpdateScheduled) return;
+            clipUpdateScheduled = true;
+            parentWin.requestAnimationFrame(() => {
+              clipUpdateScheduled = false;
+              clipAdToGap();
+            });
+          }
+
+          fitFixedIframeToViewport();
+          scheduleClipAdToGap();
+          parentWin.addEventListener("scroll", scheduleClipAdToGap, { passive: true });
+          parentWin.addEventListener("resize", () => {
+            fitFixedIframeToViewport();
+            scheduleClipAdToGap();
+          });
+
+          return true;
+        } catch (e) {
+          console.warn("Cross-origin restriction. Cannot create interscroller effect.", e);
+          return false;
+        }
+      }
+
+      const isFriendly = isIframeMode || isImageMode || isVideoMode ? setupFriendlyIframe() : false;
+      function sendClickTags() {
+        if (!childIframe || !childIframe.contentWindow) return;
+        childIframe.contentWindow.postMessage(
+          {
+            type: "SET_CLICKTAGS",
+            clickTag: variables.clickMacroUrl + variables.clickThroughUrl,
+            clickTag1: variables.clickMacroUrl + clickTagValues[0],
+          },
+          "*",
+        );
+      }
+
+      function coverAdWithClickLayer() {
+        const clickLayer = document.createElement("div");
+        clickLayerElement = clickLayer;
+        const clickLayerTop = isIframeMode ? `${IFRAME_TOP_OFFSET_PX}px` : "0";
+        const clickLayerHeight = isIframeMode ? `calc(100vh - ${IFRAME_TOP_OFFSET_PX}px)` : "100vh";
+        clickLayer.style.cssText = `position:fixed;top:${clickLayerTop};left:0;width:100vw;height:${clickLayerHeight};cursor:pointer;z-index:1000;background:transparent;`;
+        clickLayer.addEventListener("click", (event) => {
+          // Allow video controls to be interacted with through the click layer.
+          if (isVideoMode) {
+            const x = event.clientX;
+            const y = event.clientY;
+
+            clickLayer.style.pointerEvents = "none";
+            const targetUnderLayer = document.elementFromPoint(x, y);
+            clickLayer.style.pointerEvents = "auto";
+
+            const controls = targetUnderLayer ? targetUnderLayer.closest("#video-controls") : null;
+            if (controls) {
+              const controlButton = targetUnderLayer.closest("button") || controls.querySelector("button");
+              if (controlButton) {
+                controlButton.click();
+                return;
+              }
+            }
+          }
+
+          window.open(variables.clickMacroUrl + variables.clickThroughUrl, "_blank");
+        });
+        document.body.appendChild(clickLayer);
+      }
+
+      if (multipleClickTags) {
+        sendClickTags();
+        if (childIframe) childIframe.addEventListener("load", sendClickTags);
+      } else {
+        coverAdWithClickLayer();
+        updateIframeFrame();
+      }
+
+      function setVideoContent() {
+        var video = document.querySelector("#video video");
+        if (!video || !isVideoMode) return;
+
+        // Create and append video source
+        var source = document.createElement("source");
+        source.src = videoUrl;
+        source.type = "video/mp4"; // Can be extended to support other formats
+        video.appendChild(source);
+        video.addEventListener("loadedmetadata", fitVideoToViewport);
+        video.addEventListener("canplay", fitVideoToViewport);
+        video.addEventListener("play", updateVideoPlaybackButton);
+        video.addEventListener("pause", updateVideoPlaybackButton);
+        video.addEventListener("loadeddata", () => {
+          updateVideoAudioButton();
+          updateVideoPlaybackButton();
+        });
+        video.load();
+        fitVideoToViewport();
+
+        // Set poster image if provided (shown before playback starts)
+        /*if (this.variables.posterUrl.length > 0) {
+      video.poster = this.variables.posterUrl;
+    }*/
+
+        // In video mode controls are always visible.
+        var controls = document.getElementById("video-controls");
+        if (controls) {
+          controls.style.display = "flex";
+          if (isFriendly) {
+            try {
+              const slotRect = window.frameElement && window.frameElement.parentElement ? window.frameElement.parentElement.getBoundingClientRect() : null;
+              if (slotRect) {
+                const vpHeight = window.parent && window.parent.innerHeight ? window.parent.innerHeight : window.innerHeight;
+                const visibleTop = Math.max(0, slotRect.top);
+                const visibleBottom = Math.min(vpHeight, slotRect.bottom);
+                const controlsHeight = controls.offsetHeight || 48;
+                const targetTop = visibleTop + 10;
+                const maxTop = Math.max(visibleTop, visibleBottom - controlsHeight - 10);
+                controls.style.top = `${Math.min(targetTop, maxTop)}px`;
+              }
+            } catch (e) {
+              controls.style.top = "10px";
+            }
+          }
+        }
+
+        updateVideoAudioButton();
+        updateVideoPlaybackButton();
+      }
+
+      function updateVideoAudioButton() {
+        var video = document.querySelector("#video video");
+        var button = document.getElementById("video-control-audio");
+        if (!video || !button) return;
+
+        var volumeOnIcon = button.querySelector(".volume-on");
+        var volumeOffIcon = button.querySelector(".volume-off");
+        if (!volumeOnIcon || !volumeOffIcon) return;
+
+        if (video.muted) {
+          volumeOnIcon.style.display = "none";
+          volumeOffIcon.style.display = "block";
+        } else {
+          volumeOnIcon.style.display = "block";
+          volumeOffIcon.style.display = "none";
+        }
+      }
+
+      function toggleVideoAudio() {
+        var video = document.querySelector("#video video");
+        if (!video) return;
+
+        video.muted = !video.muted;
+        updateVideoAudioButton();
+      }
+
+      function updateVideoPlaybackButton() {
+        var video = document.querySelector("#video video");
+        var button = document.getElementById("video-control-playback");
+        if (!video || !button) return;
+
+        var pauseIcon = button.querySelector(".playback-pause");
+        var playIcon = button.querySelector(".playback-play");
+        if (!pauseIcon || !playIcon) return;
+
+        if (video.paused) {
+          pauseIcon.style.display = "none";
+          playIcon.style.display = "block";
+        } else {
+          pauseIcon.style.display = "block";
+          playIcon.style.display = "none";
+        }
+      }
+
+      function toggleVideoPlayback() {
+        var video = document.querySelector("#video video");
+        if (!video) return;
+
+        if (video.paused) {
+          var playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(function () {
+              updateVideoPlaybackButton();
+            });
+          }
+        } else {
+          video.pause();
+        }
+
+        updateVideoPlaybackButton();
+      }
+
+      if (isVideoMode) {
+        setVideoContent();
+        fitVideoToViewport();
+      }
+    </script>
+  </body>
+</html>

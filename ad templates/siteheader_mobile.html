@@ -1,0 +1,559 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mobile siteheader fixed oh v1.3.7</title>
+    <style>
+      html,
+      body,
+      div,
+      img,
+      video,
+      iframe,
+      a,
+      button {
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+      }
+      a:focus,
+      button:focus {
+        outline: none;
+      }
+      button:hover {
+        opacity: 1;
+      }
+      #container {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        cursor: pointer;
+        background-color: white;
+      }
+      #canvas {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+      #sticky-canvas {
+        display: none;
+        height: 100%;
+        width: 100%;
+      }
+      #click-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        top: 0;
+        display: none;
+        cursor: pointer;
+      }
+      #tracking-code,
+      #video-buttons,
+      #html {
+        display: none;
+      }
+      video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        min-width: 100vw;
+        min-height: 100vh;
+        width: auto;
+        height: auto;
+        transform: translateX(-50%) translateY(-50%);
+        z-index: 2;
+      }
+      #video-buttons > button {
+        position: absolute;
+        background-color: transparent;
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 48px;
+        height: 48px;
+        border: none;
+        z-index: 10;
+        opacity: 0.7;
+        border-radius: 24px;
+        top: 12px;
+        right: 52px;
+        cursor: pointer;
+      }
+      #video-buttons > button:focus {
+        outline: none;
+        box-shadow: none;
+      }
+      #video-buttons > button svg {
+        pointer-events: none;
+      }
+      #video-control-audio {
+        background-image: none !important;
+      }
+      #close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 30px;
+        height: 30px;
+        border: none;
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        padding: 0;
+        cursor: pointer;
+        z-index: 11;
+      }
+      #close svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div
+        id="click-overlay"
+        onclick="
+          event.stopPropagation();
+          banner.click();
+        "></div>
+      <div id="canvas">
+        <div id="image" onclick="banner.click()"></div>
+        <div id="video">
+          <div id="video-buttons">
+            <button
+              id="video-control-audio"
+              onclick="
+                event.stopPropagation();
+                banner.toggleVideoAudio();
+              ">
+              <svg class="volume-on" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" style="display: none">
+                <path
+                  d="M38.4231 23.95C38.4231 20.936 37.5831 18.2148 35.9031 15.7865C34.2231 13.3578 32.0118 11.5803 29.2691 10.454C28.9461 10.313 28.7206 10.1072 28.5926 9.83649C28.4643 9.56616 28.4689 9.29033 28.6066 9.00899C28.7383 8.70299 28.9739 8.50066 29.3136 8.40199C29.6533 8.30333 29.9949 8.32449 30.3386 8.46549C33.4489 9.79383 35.9521 11.8487 37.8481 14.63C39.7441 17.4117 40.6921 20.5182 40.6921 23.9495C40.6921 27.3805 39.7441 30.487 37.8481 33.269C35.9521 36.051 33.4489 38.1062 30.3386 39.4345C29.9949 39.5755 29.6533 39.5967 29.3136 39.498C28.9739 39.3993 28.7383 39.197 28.6066 38.891C28.4689 38.6097 28.4643 38.3338 28.5926 38.0635C28.7206 37.7928 28.9461 37.587 29.2691 37.446C32.0118 36.3197 34.2231 34.5422 35.9031 32.1135C37.5831 29.6852 38.4231 26.964 38.4231 23.95ZM14.7311 29H8.75011C8.33277 29 7.98811 28.864 7.71611 28.592C7.44411 28.3197 7.30811 27.9748 7.30811 27.5575V20.4425C7.30811 20.0252 7.44411 19.6803 7.71611 19.408C7.98811 19.136 8.33277 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9477 22.5941 12.143C23.0698 12.338 23.3076 12.6827 23.3076 13.177V34.8035C23.3076 35.3108 23.0698 35.662 22.5941 35.857C22.1184 36.0523 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM32.3076 24.002C32.3076 25.4933 31.9641 26.8517 31.2771 28.077C30.5898 29.3027 29.6109 30.268 28.3406 30.973C28.1109 31.1217 27.8878 31.1255 27.6711 30.9845C27.4544 30.8435 27.3461 30.646 27.3461 30.392V17.5385C27.3461 17.2848 27.4544 17.0907 27.6711 16.956C27.8878 16.8213 28.1109 16.8208 28.3406 16.9545C29.6109 17.6618 30.5898 18.6457 31.2771 19.906C31.9641 21.166 32.3076 22.5313 32.3076 24.002ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
+                  fill="white"></path>
+              </svg>
+              <svg class="volume-off" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path
+                  d="M35.5271 25.6305L30.7921 30.396C30.5691 30.619 30.3058 30.7338 30.0021 30.7405C29.6981 30.7468 29.4346 30.632 29.2116 30.396C28.9756 30.1603 28.8576 29.8887 28.8576 29.581C28.8576 29.273 28.9756 29.0012 29.2116 28.7655L33.9271 24.031L29.1616 19.296C28.9386 19.073 28.8239 18.8128 28.8176 18.5155C28.8109 18.2182 28.9256 17.9515 29.1616 17.7155C29.3976 17.4795 29.6726 17.3615 29.9866 17.3615C30.3006 17.3615 30.5691 17.4795 30.7921 17.7155L35.5271 22.431L40.2616 17.6655C40.4846 17.4425 40.7481 17.331 41.0521 17.331C41.3558 17.331 41.6256 17.4425 41.8616 17.6655C42.0976 17.9015 42.2156 18.1765 42.2156 18.4905C42.2156 18.8045 42.0976 19.073 41.8616 19.296L37.1271 24.031L41.8921 28.7655C42.1154 28.9885 42.2303 29.252 42.2366 29.556C42.2429 29.8597 42.1281 30.1295 41.8921 30.3655C41.6564 30.6012 41.3848 30.719 41.0771 30.719C40.7694 30.719 40.4976 30.6012 40.2616 30.3655L35.5271 25.6305ZM14.7311 29H8.75011C8.32977 29 7.98427 28.8647 7.71361 28.594C7.44327 28.3237 7.30811 27.9782 7.30811 27.5575V20.4425C7.30811 20.0218 7.44327 19.6763 7.71361 19.406C7.98427 19.1353 8.32977 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9462 22.5941 12.1385C23.0698 12.3308 23.3076 12.677 23.3076 13.177V34.8035C23.3076 35.3165 23.0698 35.6692 22.5941 35.8615C22.1184 36.0538 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
+                  fill="white"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="iframe"></div>
+        <div id="html">[%html%]</div>
+      </div>
+      <div id="sticky-canvas">
+        <div id="sticky-image" onclick="banner.click()"></div>
+        <div id="sticky-iframe"></div>
+      </div>
+      <button id="close" onclick="banner.close()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <path d="M24 25.6L30.623 32.223C30.846 32.446 31.1095 32.5608 31.4135 32.5675C31.7172 32.5738 31.987 32.459 32.223 32.223C32.459 31.987 32.577 31.7203 32.577 31.423C32.577 31.1257 32.459 30.859 32.223 30.623L25.6 24L32.223 17.377C32.446 17.154 32.5608 16.8905 32.5675 16.5865C32.5738 16.2828 32.459 16.013 32.223 15.777C31.987 15.541 31.7203 15.423 31.423 15.423C31.1257 15.423 30.859 15.541 30.623 15.777L24 22.4L17.377 15.777C17.154 15.554 16.8905 15.4392 16.5865 15.4325C16.2828 15.4262 16.013 15.541 15.777 15.777C15.541 16.013 15.423 16.2797 15.423 16.577C15.423 16.8743 15.541 17.141 15.777 17.377L22.4 24L15.777 30.623C15.554 30.846 15.4392 31.1095 15.4325 31.4135C15.4262 31.7172 15.541 31.987 15.777 32.223C16.013 32.459 16.2797 32.577 16.577 32.577C16.8743 32.577 17.141 32.459 17.377 32.223L24 25.6ZM24.0035 43C21.3962 43 18.9395 42.5013 16.6335 41.504C14.3275 40.5067 12.311 39.1448 10.584 37.4185C8.857 35.6922 7.4945 33.6765 6.4965 31.3715C5.49883 29.0668 5 26.6108 5 24.0035C5 21.3755 5.49867 18.9053 6.496 16.593C7.49333 14.2807 8.85517 12.2693 10.5815 10.559C12.3078 8.84867 14.3235 7.4945 16.6285 6.4965C18.9332 5.49883 21.3892 5 23.9965 5C26.6245 5 29.0947 5.49867 31.407 6.496C33.7193 7.49333 35.7307 8.84683 37.441 10.5565C39.1513 12.2662 40.5055 14.2767 41.5035 16.588C42.5012 18.8993 43 21.3688 43 23.9965C43 26.6038 42.5013 29.0605 41.504 31.3665C40.5067 33.6725 39.1532 35.689 37.4435 37.416C35.7338 39.143 33.7233 40.5055 31.412 41.5035C29.1007 42.5012 26.6312 43 24.0035 43ZM24 40.7305C28.6563 40.7305 32.6088 39.1012 35.8575 35.8425C39.1062 32.5835 40.7305 28.636 40.7305 24C40.7305 19.3437 39.1062 15.3912 35.8575 12.1425C32.6088 8.89383 28.6563 7.2695 24 7.2695C19.364 7.2695 15.4165 8.89383 12.1575 12.1425C8.89883 15.3912 7.2695 19.3437 7.2695 24C7.2695 28.636 8.89883 32.5835 12.1575 35.8425C15.4165 39.1012 19.364 40.7305 24 40.7305Z" fill="white"></path>
+        </svg>
+      </button>
+      <img id="impression-code" src="%%VIEW_URL_UNESC%%" />
+      <div id="tracking-code">[%trackingCode%]</div>
+    </div>
+
+    <script>
+      var banner = {
+        build: function () {
+          this.setVariables();
+          //var actualHeight = (window.frameElement.parentNode.parentNode.parentNode.parentNode.parentNode.clientWidth * 250) / 600;
+          //var actualHeightSticky = (window.frameElement.parentNode.parentNode.parentNode.parentNode.parentNode.clientWidth * 100) / 600;
+          this.fillCanvas();
+          this.configureFrame();
+          this.initDL();
+        },
+
+        setVariables: function () {
+          this.variables = {};
+          this.setVariable("adUnit", "%%ADUNIT%%");
+          this.setVariable("cachebuster", "%%CACHEBUSTER%%");
+          this.setVariable("clickMacroUrl", "%%CLICK_URL_ESC%%");
+          this.setVariable("destinationUrl", "%%DEST_URL_ESC%%");
+          //this.setVariable("height", (window.parent.innerWidth * "[%height%]") / 600);
+          //this.setVariable("stickyHeight", (window.parent.innerWidth * "[%stickyHeight%]") / 600);
+          this.setVariable("height", (window.frameElement.parentNode.parentNode.parentNode.parentNode.parentNode.clientWidth * 250) / 600);
+          this.setVariable("stickyHeight", (window.frameElement.parentNode.parentNode.parentNode.parentNode.parentNode.clientWidth * 100) / 600);
+          this.setVariable("imageUrl", "[%imageUrl%]");
+          this.setVariable("videoUrl", "[%videoUrl%]");
+          this.setVariable("iframeUrl", "[%iframeUrl%]");
+          this.setVariable("stickyImageUrl", "[%stickyImageUrl%]");
+          this.setVariable("stickyIframeUrl", "[%stickyIframeUrl%]");
+          this.setVariable("iframeClickTagType", "[%iframeClickTagType%]");
+          this.setVariable("videoButtons", "[%videoButtons%]");
+          this.setVariable("reTargetingPixelUrl", "[%reTargetingPixelUrl%]");
+          this.setVariable("promoName", "[%promoName%]");
+          this.setVariable("promoId", "[%promoId%]");
+          this.setVariable("creativeName", "[%creativeName%]");
+          this.setVariable("creativeSlot", "[%creativeSlot%]");
+          this.setVariable("smallRibbon", "[%smallRibbon%]");
+          this.setVariable("prevScroll", window.parent.onscroll);
+          this.setVariable("auth", "%%PATTERN:siteName%%");
+          this.setVariable("newm", "%%PATTERN:NewMobilePage%%");
+        },
+
+        setVariable: function (name, value) {
+          this.variables[name] = value;
+        },
+
+        click: function (customDestinationUrl) {
+          if (this.variables.reTargetingPixelUrl.length > 0) {
+            this.appendReTargetingPixel();
+          }
+          if (!!this.variables.destinationUrl) {
+            window.open(this.variables.clickMacroUrl + this.variables.destinationUrl, "_blank");
+          }
+
+          if (this.variables.promoName != "") {
+            parent.dataLayer.push({ ecommerce: null });
+            parent.dataLayer.push({
+              event: "select_promotion",
+              ecommerce: {
+                creative_name: "" + this.variables.creativeName,
+                creative_slot: "" + this.variables.creativeSlot,
+                promotion_id: "" + this.variables.promoId,
+                promotion_name: "" + this.variables.promoName,
+                items: [
+                  {
+                    item_id: "1",
+                    item_name: "Turundus",
+                  },
+                ],
+              },
+            });
+          }
+        },
+
+        initDL: function () {
+          if (this.variables.promoName != "") {
+            parent.dataLayer.push({ ecommerce: null });
+            parent.dataLayer.push({
+              event: "view_promotion",
+              ecommerce: {
+                creative_name: "" + this.variables.creativeName,
+                creative_slot: "" + this.variables.creativeSlot,
+                promotion_id: "" + this.variables.promoId,
+                promotion_name: "" + this.variables.promoName,
+                items: [
+                  {
+                    item_id: "1",
+                    item_name: "Turundus",
+                  },
+                ],
+              },
+            });
+          }
+        },
+
+        appendReTargetingPixel: function () {
+          var pixelImg = document.createElement("img");
+          pixelImg.src = this.variables.reTargetingPixelUrl;
+          document.getElementById("container").appendChild(pixelImg);
+        },
+
+        fillCanvas: function () {
+          if (this.variables.iframeClickTagType === "noopen") {
+            this.setVariable("destinationUrl", "");
+            this.setVariable("clickMacroUrl", "");
+          }
+          if (this.variables.imageUrl.length > 0) {
+            this.setImageContent();
+          } else if (this.variables.videoUrl.length > 0) {
+            this.setVideoContent();
+          } else if (this.variables.iframeUrl.length > 0) {
+            this.setIframeContent();
+          } else {
+            document.getElementById("html").style.display = "block";
+          }
+
+          if (this.variables.stickyImageUrl.length > 0) {
+            this.setStickyImageContent();
+          } else if (this.variables.stickyIframeUrl.length > 0) {
+            this.setStickyIframeContent();
+          }
+
+          if (this.variables.iframeClickTagType === "simple") {
+            document.getElementById("click-overlay").style.display = "block";
+          }
+
+          if (this.variables.smallRibbon !== "false") {
+            if ((window.parent.pageYOffset || window.parent.document.documentElement.scrollTop) > 0) {
+              window.frameElement.style.height = this.variables.stickyHeight + "px";
+              var sth = window.parent.document.getElementsByClassName("sticky-header")[0];
+              if (typeof sth != "undefined" && sth != null) {
+                window.parent.document.getElementsByClassName("sticky-header")[0].style.top = this.variables.stickyHeight + "px";
+              }
+
+              document.getElementById("canvas").style.display = "none";
+              document.getElementById("sticky-canvas").style.display = "block";
+            } else {
+              document.getElementById("canvas").style.height = this.variables.height + "px";
+              document.getElementById("sticky-canvas").style.height = this.variables.stickyHeight + "px";
+            }
+          } else {
+            document.getElementById("canvas").style.height = this.variables.height + "px";
+          }
+        },
+
+        setImageContent: function () {
+          this.setStylesToElement(document.getElementById("image"), {
+            width: "100%",
+            height: this.variables.height + "px",
+            backgroundImage: 'url("' + this.variables.imageUrl + '")',
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            backgroundSize: "contain",
+            margin: "0 auto",
+          });
+        },
+
+        setStickyImageContent: function () {
+          this.setStylesToElement(document.getElementById("sticky-image"), {
+            width: "100%",
+            height: this.variables.stickyHeight + "px",
+            backgroundImage: 'url("' + this.variables.stickyImageUrl + '")',
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            backgroundSize: "contain",
+            margin: "0 auto",
+          });
+        },
+
+        setIframeContent: function () {
+          var iframe = document.createElement("iframe");
+          iframe.src = this.variables.iframeUrl + "?clickTag=" + this.variables.clickMacroUrl + this.variables.destinationUrl + "&clickMacro=" + this.variables.clickMacroUrl;
+          iframe.scrolling = "no";
+          iframe.rel = "nofollow";
+          iframe.width = "100%";
+          iframe.height = this.variables.height + "px";
+          iframe.frameborder = "0px";
+          iframe.style.border = "none";
+          iframe.style.overflow = "hidden";
+          iframe.style.transform = "translateX(-50%)";
+          iframe.style.left = "50%";
+          iframe.style.position = "absolute";
+          iframe.align = "middle";
+          document.getElementById("iframe").appendChild(iframe);
+        },
+
+        setStickyIframeContent: function () {
+          var iframe = document.createElement("iframe");
+          iframe.src = this.variables.stickyIframeUrl + "?clickTag=" + this.variables.clickMacroUrl + this.variables.destinationUrl + "&clickMacro=" + this.variables.clickMacroUrl;
+          iframe.scrolling = "no";
+          iframe.rel = "nofollow";
+          iframe.width = "100%";
+          iframe.height = this.variables.stickyHeight + "px";
+          iframe.frameborder = "0px";
+          iframe.style.border = "none";
+          iframe.style.overflow = "hidden";
+          iframe.style.transform = "translateX(-50%)";
+          iframe.style.left = "50%";
+          iframe.style.position = "absolute";
+          iframe.align = "middle";
+          document.getElementById("sticky-iframe").appendChild(iframe);
+        },
+
+        setVideoContent: function () {
+          var video = document.createElement("video");
+          video.autoplay = "autoplay";
+          video.loop = "loop";
+          video.muted = "muted";
+          video.setAttribute("playsinline", "");
+          video.style.height = this.variables.height + "px";
+          video.style.width = "100%";
+          video.onclick = function () {
+            this.click();
+          }.bind(this);
+          document.getElementById("video").appendChild(video);
+
+          var source = document.createElement("source");
+          source.src = this.variables.videoUrl;
+          document.getElementsByTagName("video")[0].appendChild(source);
+
+          document.getElementById("video-buttons").style.display = this.variables.videoButtons === "visible" ? "block" : "none";
+        },
+
+        toggleVideoAudio: function () {
+          var video = document.getElementsByTagName("video")[0];
+          var button = document.getElementById("video-control-audio");
+          var volumeOnIcon = button.querySelector(".volume-on");
+          var volumeOffIcon = button.querySelector(".volume-off");
+
+          if (video.muted) {
+            video.muted = false;
+            volumeOnIcon.style.display = "block";
+            volumeOffIcon.style.display = "none";
+          } else {
+            video.muted = true;
+            volumeOnIcon.style.display = "none";
+            volumeOffIcon.style.display = "block";
+          }
+        },
+
+        configureFrame: function () {
+          const pw = window.frameElement?.parentNode?.parentNode?.parentNode?.getBoundingClientRect().width ?? window.innerWidth;
+          var isDs = pw >= 1000;
+
+          if (this.variables.smallRibbon !== "false") {
+            this.setStylesToElement(window.frameElement.parentNode.parentNode.parentNode, {
+              height: "auto",
+              marginTop: this.variables.height + "px",
+              width: "100%",
+              zIndex: "9001",
+            });
+          }
+
+          if (typeof window.parent.document.getElementsByClassName("root-wrapper-prediction")[0] != "undefined") {
+            window.parent.document.getElementsByClassName("root-wrapper-prediction")[0].style.marginTop = "0px";
+            if (this.variables.smallRibbon !== "false") {
+              this.setStylesToElement(window.frameElement.parentNode.parentNode.parentNode, {
+                marginTop: "0px",
+              });
+            }
+          }
+
+          this.setStylesToElement(window.frameElement, {
+            height: this.variables.height + "px",
+            position: this.variables.smallRibbon !== "false" ? "fixed" : "relative",
+            top: "0px",
+            left: "0px",
+            zIndex: "9001",
+            width: window.frameElement.parentNode.parentNode.parentNode.parentNode.parentNode.clientWidth + "px",
+            maxWidth: "100%",
+          });
+
+          this.setStylesToElement(window.parent.document.getElementsByClassName("page-header")[0], {
+            position: ["sticky", "-webkit-sticky"],
+          });
+
+          if (window.parent.innerWidth < 768 && typeof window.parent.document.getElementsByClassName("page-subheader--inner")[0] != "undefined") {
+            window.parent.document.getElementsByClassName("page-subheader--inner")[0].style.marginTop = "0px";
+          }
+
+          /*if(this.variables.adUnit.indexOf("kliendilehed") !== -1){
+            this.setStylesToElement(window.parent.document.getElementsByClassName("header_menu")[0], {
+              height: "60px",
+            });
+          }*/
+
+          if (this.variables.auth === "ohtuleht-mobile") {
+            if (isDs) {
+              /*let this stay, sh probably changes*/
+              /*this.setStylesToElement(window.frameElement, {
+                width: pw + 'px',
+                width: '500px',
+                height: "250px",
+                position: 'fixed',
+                left: '50%',
+                transform: 'translateX(-50%)',
+              });*/
+            }
+          }
+
+          if (this.variables.smallRibbon !== "false") {
+            this.trackScrolling = true;
+            window.parent.document.addEventListener("scroll", this.parentScrollFunction.bind(this));
+          }
+        },
+
+        parentScrollFunction: function () {
+          if (this.trackScrolling) {
+            var scrollFromTop = window.parent.pageYOffset || window.parent.document.documentElement.scrollTop;
+
+            if (this.variables.adUnit.indexOf("kliendilehed") !== -1) {
+              if (scrollFromTop > eval(this.variables.height - this.variables.stickyHeight)) {
+                /*void previous onscroll*/
+                window.parent.onscroll = function () {};
+                window.frameElement.style.height = this.variables.stickyHeight + "px";
+                window.parent.document.getElementsByClassName("header_menu")[0].style.top = eval(this.variables.stickyHeight - 3) + "px";
+                //window.parent.document.getElementsByClassName("header_menu")[0].style.height = "60px";
+                document.getElementById("canvas").style.display = "none";
+                document.getElementById("sticky-canvas").style.display = "block";
+              } else if (scrollFromTop < eval(this.variables.height - this.variables.stickyHeight)) {
+                window.parent.onscroll = this.variables.prevScroll;
+                window.frameElement.style.height = eval(this.variables.height - scrollFromTop) + "px";
+                window.parent.document.getElementsByClassName("header_menu")[0].style.top = eval(this.variables.height - scrollFromTop) + "px";
+                //window.parent.document.getElementsByClassName("header_menu")[0].style.height = "60px";
+                document.getElementById("canvas").style.display = "block";
+                document.getElementById("sticky-canvas").style.display = "none";
+              }
+            } else {
+              if (scrollFromTop > eval(this.variables.height - this.variables.stickyHeight)) {
+                window.frameElement.style.height = this.variables.stickyHeight + "px";
+                window.parent.document.getElementsByClassName("sticky-header")[0].style.top = this.variables.stickyHeight + "px";
+                document.getElementById("canvas").style.display = "none";
+                document.getElementById("sticky-canvas").style.display = "block";
+              } else if (scrollFromTop < eval(this.variables.height - this.variables.stickyHeight)) {
+                window.frameElement.style.height = eval(this.variables.height - scrollFromTop) + "px";
+                window.parent.document.getElementsByClassName("sticky-header")[0].style.top = "0";
+                document.getElementById("canvas").style.display = "block";
+                document.getElementById("sticky-canvas").style.display = "none";
+              }
+            }
+          }
+        },
+
+        setStylesToElement: function (el, styles) {
+          if (el === null || typeof el == "undefined") {
+            return null;
+          }
+
+          var keys = Object.keys(styles);
+          keys.forEach(function (key) {
+            if (Array.isArray(styles[key])) {
+              var css = el.style.cssText;
+              styles[key].forEach(function (value) {
+                css = css + " " + key + ": " + value + ";";
+              });
+              el.style.cssText = css;
+            } else {
+              el.style[key] = styles[key];
+            }
+          });
+        },
+
+        close: function () {
+          if (typeof window.parent.document.getElementsByClassName("sticky-header")[0] != "undefined") {
+            window.parent.document.getElementsByClassName("sticky-header")[0].style.top = "0";
+          }
+
+          if (typeof window.parent.document.getElementsByClassName("page-header")[0] != "undefined") {
+            window.parent.document.getElementsByClassName("page-header")[0].style.position = "";
+          }
+
+          var mnw = window.parent.document.getElementsByClassName("main_wrapper")[0];
+          if (typeof mnw != "undefined" && mnw != null) {
+            window.parent.document.getElementsByClassName("header_menu")[0].style.top = "0";
+            window.parent.document.getElementsByClassName("header_menu")[0].style.marginTop = "0";
+            window.parent.document.getElementsByClassName("header_menu")[0].style.height = "60px";
+            window.parent.document.getElementById("sitehat").style.display = "none";
+            window.parent.onscroll = this.variables.prevScroll;
+          } else {
+            window.frameElement.parentNode.parentNode.parentNode.style.display = "none";
+          }
+
+          window.parent.document.removeEventListener("scroll", this.parentScrollFunction.bind(this));
+          this.trackScrolling = false;
+        },
+      };
+
+      banner.build();
+    </script>
+  </body>
+</html>
