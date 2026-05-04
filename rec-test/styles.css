@@ -1,0 +1,261 @@
+/* ================================================================
+   Audio Recorder Banner — styles.css
+   Base design: 600×500 (aspect ratio 6:5).
+
+   All sizing (font-size, padding, gap, border-radius, etc.) is
+   expressed in `vw` units.  Because the iframe always carries the
+   same 6:5 aspect ratio, 1 vw equals 1% of the banner width at
+   every supported size:
+     600×500  → 1 vw = 6 px
+     300×250  → 1 vw = 3 px   (half scale)
+     1200×1000→ 1 vw = 12 px  (double scale)
+   Everything therefore scales proportionally with zero JavaScript.
+   ================================================================ */
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Root ───────────────────────────────────────────────────────── */
+html,
+body {
+  width: 100%;
+  min-width: 1250px;
+  min-height: 1334px;
+  padding-bottom: 64px;
+  overflow-x: hidden;
+  color: #e8e8f0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #0f0f1a url("bg.jpg") center top / auto no-repeat fixed;
+}
+
+/* ── Page shell ─────────────────────────────────────────────────── */
+.page-shell {
+  position: absolute;
+  top: 460px;
+  left: 50%;
+  width: 1250px;
+  height: 350px;
+  overflow: hidden;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    min-width: 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-attachment: scroll;
+    background-position: center top;
+    background-size: cover;
+  }
+
+  .page-shell {
+    position: relative;
+    top: auto;
+    left: auto;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 12px 12px;
+    overflow: visible;
+    transform: none;
+  }
+
+  .banner {
+    position: relative;
+    top: 96px;
+    left: auto;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    margin: 0 auto;
+    padding: 8px 8px;
+    border-radius: 16px;
+    transform: none;
+  }
+
+  .banner * {
+    max-width: 100%;
+  }
+
+  .controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .playback {
+    width: 100%;
+  }
+}
+
+/* ── Banner wrapper ─────────────────────────────────────────────── */
+.banner {
+  /* Fill the shell container */
+  gap: 18px;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+
+  /* Scale all internals down proportionally */
+  transform: scale(0.85);
+  transform-origin: top center;
+}
+
+/* ── Title ──────────────────────────────────────────────────────── */
+.banner__title {
+  color: #dde4ff;
+  font-weight: 700;
+  font-size: 30px;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(100, 150, 255, 0.45);
+  letter-spacing: 0.05em;
+}
+
+/* ── Status indicator ───────────────────────────────────────────── */
+.status {
+  gap: 7px;
+  display: flex;
+  align-items: center;
+  color: #9090b8;
+  font-size: 13px;
+}
+
+.status__dot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #44445a;
+  transition: background 0.3s ease;
+}
+
+/* Pulsing red dot while recording */
+.status__dot--recording {
+  background: #e74c3c;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.35);
+  }
+}
+
+/* ── Control buttons ────────────────────────────────────────────── */
+.controls {
+  gap: 18px;
+  display: flex;
+}
+
+.btn {
+  padding: 9px 21px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  /* Override the hover transform below when disabled */
+  transform: none !important;
+}
+
+.btn--start {
+  color: #fff;
+  background: #4c6ef5;
+}
+
+.btn--start:not(:disabled):hover,
+.btn--start:not(:disabled):focus-visible {
+  background: #364fc7;
+  transform: translateY(-2px);
+}
+
+.btn--stop {
+  color: #fff;
+  background: #e74c3c;
+}
+
+.btn--stop:not(:disabled):hover,
+.btn--stop:not(:disabled):focus-visible {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Accessible focus ring that works on all backgrounds */
+.btn:focus-visible {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 2px;
+}
+
+/* ── Playback section ───────────────────────────────────────────── */
+.playback {
+  gap: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 78%;
+}
+
+.playback__label {
+  color: #8080a8;
+  font-size: 11px;
+}
+
+/* Allow the native <audio> element to fill the container */
+.playback__player {
+  width: 100%;
+}
+
+/* ── User messages ──────────────────────────────────────────────── */
+.message {
+  min-height: 16px;
+  padding: 0 12px;
+  color: #ff8c69;
+  /* Reserve space so layout does not jump when text appears/disappears */
+  font-size: 11px;
+  text-align: center;
+}
+
+/* ── Fallback (unsupported browsers) ────────────────────────────── */
+.fallback {
+  max-width: 80%;
+  padding: 18px 24px;
+  border: 2px solid #ff8c69;
+  border-radius: 6px;
+  color: #ff8c69;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+}

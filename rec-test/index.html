@@ -1,0 +1,80 @@
+<!doctype html>
+<!--
+  Audio Recorder Banner — index.html
+  Base design size: 600×500 (aspect ratio 6:5).
+  All sizing uses vw units in styles.css so the layout scales
+  automatically when the iframe is resized to e.g. 300×250 or 1200×1000.
+
+  Embedding example (same-origin):
+    <iframe src="index.html" width="600" height="500"
+            allow="microphone"></iframe>
+
+  The `allow="microphone"` attribute is required for cross-origin iframes
+  so that getUserMedia can prompt for permission inside this document.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <!-- Prevent the browser from scaling the page on mobile viewports -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recorder Banner</title>
+    <link href="styles.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="page-shell">
+      <!-- ── Main banner wrapper ───────────────────────────────────────────
+       Designed at 600×500; vw-based sizing in CSS handles proportional
+       scaling for any iframe size with the same 6:5 aspect ratio.
+  ──────────────────────────────────────────────────────────────────── -->
+      <main class="banner">
+        <h1 class="banner__title">Voice Recorder</h1>
+
+        <!-- ── Status indicator ──────────────────────────────────────────
+         aria-live="polite" announces state changes to screen readers
+         without interrupting ongoing speech.
+    ──────────────────────────────────────────────────────────────── -->
+        <div class="status" aria-live="polite">
+          <span class="status__dot" id="statusDot" aria-hidden="true"></span>
+          <span class="status__text" id="statusText">Ready</span>
+        </div>
+
+        <!-- ── Record controls ───────────────────────────────────────────
+         stopBtn starts disabled; JS enables it only during recording.
+    ──────────────────────────────────────────────────────────────── -->
+        <div class="controls" id="controls">
+          <button class="btn btn--start" id="startBtn" type="button">Start Recording</button>
+          <button class="btn btn--stop" id="stopBtn" type="button" disabled>Stop Recording</button>
+        </div>
+
+        <!-- ── Playback section ──────────────────────────────────────────
+         Hidden until a recording is available; shown by JS after stop.
+    ──────────────────────────────────────────────────────────────── -->
+        <div class="playback" id="playbackSection" hidden>
+          <p class="playback__label">Recorded audio:</p>
+          <audio class="playback__player" id="audioPlayer" controls></audio>
+        </div>
+
+        <!-- ── User-facing messages (errors / info) ──────────────────────
+         aria-live="assertive" interrupts screen-reader speech for
+         urgent feedback (e.g. permission denied).
+    ──────────────────────────────────────────────────────────────── -->
+        <p class="message" id="message" role="alert" aria-live="assertive"></p>
+
+        <!-- ── Fallback for unsupported browsers ─────────────────────────
+         Shown by JS when MediaRecorder or getUserMedia is absent.
+         The `hidden` attribute hides it until then.
+    ──────────────────────────────────────────────────────────────── -->
+        <div class="fallback" id="fallback" hidden>
+          <p>
+            Your browser does not support audio recording.<br>
+            Please use a modern browser such as Chrome, Firefox, or Edge.
+          </p>
+        </div>
+      </main>
+    </div>
+    <!-- /.page-shell -->
+
+    <script src="script.js"></script>
+  </body>
+</html>
