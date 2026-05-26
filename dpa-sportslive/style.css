@@ -1,0 +1,319 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", system-ui !important;
+}
+
+/* Kommentieren Sie einfach die Variablen ein, die Sie anpassen möchten. */
+
+:root {
+    /***************** Global spacing *****************/
+    --element-spacing--small: 4px;
+    --element-spacing--default: 8px;
+    --element-spacing--large: 16px;
+
+    /***************** General background colors *****************/
+    --background__color--default: #232a43;
+    --background__color--default-rgb: 27, 34, 60;
+    --background__color--secondary: #232b47;
+    --background__color--neutral: var(--background__color--secondary);
+    --background__color--dark: #141a30;
+    --background__color--pitch: #1a3a1a;
+    --background__color--live: #c5e900;
+    --background__color--icon-var: #c5e900;
+    --background__color--icon-yellow-card: #f5c400;
+    --background__color--icon-red-card: #d63a3a;
+    --background__color--icon-substitute-in: #2ea84f;
+    --background__color--icon-own-goal: var(--background__color--icon-red-card);
+    --background__color--icon-substitute-out: var(
+        --background__color--icon-red-card
+    );
+    --background__color--icon-penalty-goal: var(
+        --background__color--icon-red-card
+    );
+    --background__color--icon-penalty-miss: var(
+        --background__color--icon-red-card
+    );
+
+    /***************** Text *****************/
+    --text__font-family--default: "Poppins", system-ui !important;
+    /* ca. 14px */
+    --text__size--default: 0.875rem;
+    /* ca. 18px */
+    --text__size--medium: 1.125rem;
+    /* ca. 24px */
+    --text__size--large: 1.5rem;
+    --text__font-weight--default: 400;
+    --text__font-weight--bold: 700;
+    --text__color--default: #b6b8c8;
+    --text__color--light: #5c6280;
+    --text__color--live: #c5e900;
+    --text__color--active: var(--text__color--live);
+    --text__color--positive: #7ecb35;
+    --text__color--negative: #d63a3a;
+    --text__color--neutral: #3d4566;
+    --text__color--inverse: #e8eaf0;
+    --icon-stroke__color--default: #1b223c;
+
+    /***************** Buttons *****************/
+    --button__text-color--default: var(--text__color--default);
+    --text-button__color--active: var(--text__color--live);
+    --button__background--active: #2c3558;
+    --button__background--hover: #232b47;
+    --slider-button__min-height: 24px;
+    --slider-button__min-width: 24px;
+    --text-button__text-decoration--default: none;
+    --text-button__text-decoration--active: underline;
+    --text-button__text-decoration--hover: none;
+    --text-button__background--default: transparent;
+    --text-button__background--active: transparent;
+    --text-button__background--hover: transparent;
+    --back-to-top-button__background--default: var(--background__color--live);
+    --back-to-top-button__background--hover: var(--background__color--dark);
+    --back-to-top-button__size: 48px;
+    --back-to-top-button__border: 2px solid var(--background__color--default);
+    --back-to-top-button__border-radius: 100%;
+    --back-to-top-button__shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.5);
+    --back-to-top-button__position--bottom: calc(
+        var(--element-spacing--default) * 2
+    );
+    --back-to-top-button__position--right: calc(
+        var(--element-spacing--default) * 2
+    );
+
+    /***************** Borders *****************/
+    --border__color: #2c3558;
+    --border__width: 1px;
+    --border__radius--default: 2px;
+    --border__radius--md: 4px;
+    --border__radius--lg: 8px;
+    --border__style: solid;
+    --border: var(--border__width) var(--border__style) var(--border__color);
+
+    /***************** Event Icons *****************/
+    --event-icon-container__size--micro: 6px;
+    --event-icon-container__size--small: 12px;
+    --event-icon-container__size--default: 24px;
+    --timeline-event-icon__size: var(--event-icon-container__size--default);
+    --timeline-event-multiple-indicator--size: var(
+        --event-icon-container__size--micro
+    );
+    --lineup-event-icon__size: var(--event-icon-container__size--small);
+    --ticker-event-icon__size: var(--event-icon-container__size--default);
+    --keyfacts-event-icon__size: var(--event-icon-container__size--default);
+
+    /***************** Default Navigation *****************/
+    --default-navigation-text__font-size: var(--text__size--default);
+    --default-navigation-text__font-weight--default: var(
+        --text__font-weight--default
+    );
+    --default-navigation-text__font-weight--hover: var(
+        --text__font-weight--bold
+    );
+    --default-navigation-text__font-weight--active: var(
+        --text__font-weight--bold
+    );
+    --default-navigation__gap: var(--element-spacing--default);
+    --default-navigation-separator__width: 1px;
+    --default-navigation-separator__background-color: var(
+        --button__background--hover
+    );
+    --default-navigation-separator__margin: 16px 0;
+    --default-navigation-container__border-bottom: var(--border);
+
+    /***************** Shadows *****************/
+    --drop-shadow: 0px 4px 6px -6px rgba(0, 0, 0, 0.6);
+
+    /***************** Switch *****************/
+    --switch-container__background: #141a30;
+    --switch-container__border-radius: calc(var(--switch-label__height) / 2);
+    --switch-container__padding: 2px;
+    --switch-label__border-radius: var(--switch-container__border-radius);
+    --switch-label__width: 250px;
+    --switch-label__height: 44px;
+    --switch-label__background--inactive: transparent;
+    --switch-label__background--active: var(--background__color--default);
+    --switch-label__font-weight: bold;
+    --switch-container-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.4) inset;
+    --switch-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
+    --switch-radio-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.4);
+
+    /***************** Styling Scrollbar *****************/
+    --scrollbar-foreground__color--default: #3d4566;
+    --scrollbar-background__color--default: #141a30;
+    /* Mostly for vertical scrollbars */
+    --scrollbar__width--default: 6px;
+    /* Mostly for horizontal scrollbars */
+    --scrollbar__height--default: 6px;
+
+    /***************** Widget height *****************/
+    --max-height--widget-default: 800px;
+    --max-height--ticker-widget: var(--max-height--widget-default);
+    --max-height--key-facts-widget: var(--max-height--widget-default);
+    --max-height--line-ups-widget: var(--max-height--widget-default);
+    --max-height--statistics-widget: var(--max-height--widget-default);
+    --max-height--standing-widget: var(--max-height--widget-default);
+    --max-height--fixtures-widget: var(--max-height--widget-default);
+
+    /***************** Table ranking mark colors *****************/
+    --standing-ranking-mark__background-color--1: #c5e900;
+    --standing-ranking-mark__background-color--2: #c5e900;
+    --standing-ranking-mark__background-color--3: #c5e900;
+    --standing-ranking-mark__background-color--4: #2d6be4;
+    --standing-ranking-mark__background-color--5: #2d6be4;
+    --standing-ranking-mark__background-color--6: #e4e727;
+    --standing-ranking-mark__background-color--7: #c44e34;
+    --standing-ranking-mark__background-color--8: #d63a3a;
+
+    /***************** Images & Logos *****************/
+    --team-logo__size--small: 24px;
+    --team-logo__size--default: 32px;
+    --team-logo__size--large: 64px;
+    --player-image__size--default: 32px;
+    --player-image__size--large: 48px;
+    --player-image__size--x-large: 64px;
+
+    /***************** Draw *****************/
+    --draw-team-logo-container__size: var(--team-logo__size--default);
+
+    /***************** Lineup *****************/
+    --lineup-starting-title-logo-container--size: var(
+        --team-logo__size--default
+    );
+
+    /***************** Standing *****************/
+    --standing-team-logo-container__size: var(--team-logo__size--small);
+
+    /***************** Statistics *****************/
+    --statistics-player-image__size: 40px;
+    --statistics-player-image__border-radius: 50%;
+    --statistics-player-image__border-width: 2px;
+    --statistics-player-image__border: var(
+            --statistics-player-image__border-width
+        )
+        solid var(--border__color);
+    --statistics-team-image__size: 40px;
+    --statistics-header__height--default: 40px;
+
+    /***************** Dropdown *****************/
+    --dropdown__max-height: 250px;
+    /***************** Set to 0px if you want to remove the margin *****************/
+    --dropdown__margin: var(--element-spacing--default);
+    --dropdown__border-radius: 4px;
+    --dropdown-arrow__size: 12px;
+
+    /***************** General spacing from the left and right edges *****************/
+    --edge__spacing--default: var(--element-spacing--default);
+    --edge__spacing--text: var(--element-spacing--default);
+
+    /***************** General spacing to the element above and below *****************/
+    --top-bottom__spacing--small: var(--element-spacing--small);
+    --top-bottom__spacing--default: var(--element-spacing--default);
+
+    /***************** General spacing to the element above *****************/
+    --top__spacing--default: var(--top-bottom__spacing--default);
+
+    /***************** General spacing to the element below *****************/
+    --bottom__spacing--default: var(--top-bottom__spacing--default);
+
+    --flex-gap--default: var(--element-spacing--default);
+    --flex-gap--small: var(--element-spacing--small);
+    --flex-gap--large: var(--element-spacing--large);
+
+    /***************** Timeline: Works only with even values *****************/
+    --timeline-progress__color--default: #2c3558;
+    --timeline-progress__color--live: var(--text__color--live);
+    --timeline-container__height: 40px;
+    --timeline-progress__height: 2px;
+    --timeline-event__size: 4px;
+
+    /***************** Tooltip *****************/
+    --tooltip-content__text-color: #e8eaf0;
+    --tooltip-content__background-color: #232b47;
+    --tooltip__box-shadow-color: rgba(0, 0, 0, 0.5);
+
+    /***************** Matchday *****************/
+    --matchday-match-indicator__size--default: 6px;
+    --matchday-match-indicator__border-radius: 100%;
+    --matchday-match-indicator__border: none;
+    --matchday-match-indicator__background-color--default: var(
+        --text__color--light
+    );
+    --matchday-match-indicator__background-color--active: var(
+        --text__color--live
+    );
+
+    /***************** z-index *****************/
+    --title-elements__z-index: 11;
+    --top-elements__z-index: 21;
+
+    /***************** Footer link *****************/
+    --custom-footer-link__color: #c5e900;
+    /***************** Footer link position: flex-start (left), center, flex-end (right) *****************/
+    --custom-footer-link__justify-content: flex-start;
+    --custom-footer-link__hover-color: #a8cc00;
+    /***************** Footer link arrow *****************/
+    --custom-footer-link-arrow__width: 16px;
+    --custom-footer-link-arrow__height: 14px;
+    /***************** moves arrow to the right on hover, set to 0px if not wanted *****************/
+    --custom-footer-link-arrow__hover-animation: 4px;
+}
+
+:root[data-theme="dark"] {
+    /***************** General background colors *****************/
+    --background__color--default: #1b223c;
+    --background__color--default-rgb: 27, 34, 60;
+    --background__color--secondary: #232b47;
+    --background__color--dark: #141a30;
+    --background__color--pitch: #1a3a1a;
+
+    /***************** Text *****************/
+    --text__color--default: #b6b8c8;
+    --text__color--light: #5c6280;
+    --text__color--live: #c5e900;
+    --text__color--positive: #7ecb35;
+    --text__color--negative: #d63a3a;
+    --text__color--neutral: #3d4566;
+    --text__color--inverse: #e8eaf0;
+    --icon-stroke__color--default: #1b223c;
+
+    /***************** Buttons *****************/
+    --button__text-color--default: #b6b8c8;
+    --button__background--active: #2c3558;
+    --button__background--hover: #232b47;
+
+    /***************** Borders *****************/
+    --border__color: #2c3558;
+
+    /***************** Shadows *****************/
+    --drop-shadow: 0px 4px 6px -6px rgba(0, 0, 0, 0.6);
+
+    /***************** Scrollbar *****************/
+    --scrollbar-foreground__color--default: #3d4566;
+    --scrollbar-background__color--default: #141a30;
+
+    /***************** Table ranking mark colors *****************/
+    --standing-ranking-mark__background-color--1: #c5e900;
+    --standing-ranking-mark__background-color--2: #c5e900;
+    --standing-ranking-mark__background-color--3: #c5e900;
+    --standing-ranking-mark__background-color--4: #2d6be4;
+    --standing-ranking-mark__background-color--5: #2d6be4;
+    --standing-ranking-mark__background-color--6: #e4e727;
+    --standing-ranking-mark__background-color--7: #c44e34;
+    --standing-ranking-mark__background-color--8: #d63a3a;
+
+    /***************** Timeline *****************/
+    --timeline-progress__color--default: #2c3558;
+
+    /***************** Tooltip *****************/
+    --tooltip-content__text-color: #e8eaf0;
+    --tooltip-content__background-color: #232b47;
+    --tooltip__box-shadow-color: rgba(0, 0, 0, 0.5);
+
+    /***************** Footer link *****************/
+    --custom-footer-link__color: #c5e900;
+    --custom-footer-link__hover-color: #a8cc00;
+}

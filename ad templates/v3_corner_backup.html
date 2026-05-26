@@ -311,7 +311,7 @@
       </div>
 
       <!-- Tracking -->
-      <img id="impression-code" style="display: none" />
+      <img id="impression-code" src="%%VIEW_URL_UNESC%%" style="display: none" />
       <div id="tracking-code">[%trackingCode%]</div>
     </div>
 
@@ -335,19 +335,6 @@
           this.configureFrame();
           this.fillCanvas();
           this.initializeCloseButtonCountdown();
-          this.fireImpressionPixel();
-        },
-
-        /* ==================================================================
-             FIRE IMPRESSION PIXEL
-             Only fires if the macro was replaced by the ad server
-             ==================================================================== */
-
-        fireImpressionPixel: function () {
-          var url = "%%VIEW_URL_UNESC%%";
-          if (url.indexOf("%%") === -1) {
-            document.getElementById("impression-code").src = url;
-          }
         },
 
         /* ==================================================================
