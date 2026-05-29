@@ -5,7 +5,8 @@ var CLUBS = [
       left: 168,
       top: 189,
     },
-    name: "JK Vaprus",
+    label: { offsetX: -50, offsetY: 0 },
+    name: "Pärnu<br>JK Vaprus",
     city: "Pärnu",
     logo: "vaprus.png",
     overlay: {
@@ -22,7 +23,8 @@ var CLUBS = [
       left: 184,
       top: 205,
     },
-    name: "JK Poseidon",
+    label: { offsetX: 50, offsetY: 0 },
+    name: "Pärnu<br>JK Poseidon",
     city: "Pärnu",
     logo: "poseidon.png",
     overlay: {
@@ -39,12 +41,12 @@ var CLUBS = [
       left: 330,
       top: 45,
     },
-    name: "JK Tarvas",
+    name: "Rakvere<br>JK  Tarvas",
     city: "Rakvere",
     logo: "tarvas.png",
     overlay: {
       fields: [
-        { label: "peatreener", value: "Reijo Kuusik", icon: "person.svg" },
+        { label: "peatreener", value: "Reijo Kuusik", icon: "person.svg", hidden: true },
         { label: "E-post", value: "noored@jktarvas.ee", icon: "mail.svg" },
       ],
       url: "https://jktarvas.ee/",
@@ -53,10 +55,10 @@ var CLUBS = [
   {
     id: "harju-jalgpallikool",
     pin: {
-      left: 135,
+      left: 185,
       top: 45,
     },
-    name: "Harju Jalgpallikool",
+    name: "Harju<br>Jalgpallikool",
     city: "Laagri",
     logo: "harju.png",
     overlay: {
@@ -73,6 +75,7 @@ var CLUBS = [
       left: 355,
       top: 205,
     },
+    label: { offsetX: 0, offsetY: 0 },
     name: "FC Helios",
     city: "Tartu",
     logo: "helios.png",

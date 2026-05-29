@@ -75,7 +75,13 @@
             pin.style.position = "absolute";
             pin.style.left = club.pin.left + "px";
             pin.style.top = club.pin.top + "px";
-            pin.innerHTML = '<div class="pin"><img src="pin.svg" alt /></div>' + '<div class="pin-info">' + '<p class="pin-name">' + club.name + "</p>" + '<p class="pin-city">' + club.city + "</p>" + "</div>";
+            var labelStyle = '';
+            if (club.label) {
+              var ox = club.label.offsetX || 0;
+              var oy = club.label.offsetY || 0;
+              labelStyle = ' style="position:relative;left:' + ox + 'px;top:' + oy + 'px;"';
+            }
+            pin.innerHTML = '<div class="pin"><img src="pin.svg" alt /></div>' + '<div class="pin-info"' + labelStyle + '>' + '<p class="pin-name">' + club.name + "</p>" + '<p class="pin-city">' + club.city + "</p>" + "</div>";
             pin.addEventListener("click", function () {
               openOverlay(club, pin);
             });
@@ -112,6 +118,7 @@
         function openOverlay(club, pinElement) {
           var fieldsHTML = "";
           club.overlay.fields.forEach(function (field) {
+            if (field.hidden) return;
             fieldsHTML += '<div class="info-block">' + (field.icon ? '<img class="icon" src="' + field.icon + '" alt="" />' : "") + '<div class="data-wrapper">' + '<p class="data-1">' + field.label + "</p>" + '<p class="data-2">' + field.value + "</p>" + "</div></div>";
           });
 

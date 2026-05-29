@@ -546,11 +546,10 @@ h2 {
   color: var(--ronaldo-lime-100);
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 100%;
   font-family: "Barlow Semi Condensed", sans-serif;
   text-align: center;
-  text-transform: uppercase;
 }
 
 .pin-city {
@@ -564,19 +563,9 @@ h2 {
   text-align: center;
 }
 
-/* Pin hover animation */
+/* Pin labels — always visible */
 .pin-info {
-  opacity: 0;
   pointer-events: none;
-  transition:
-    opacity 220ms ease,
-    transform 220ms ease;
-  transform: translateY(6px);
-}
-
-.pin-wrapper .pin:hover ~ .pin-info {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .pin-wrapper {
