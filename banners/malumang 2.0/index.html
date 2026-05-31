@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <title>Ohtuleht</title>
+  </head>
+
+  <body>
+    <!-- Popup overlays for loading, success, and error states -->
+    <div class="popup-wrap">
+      <div class="popup popup_data-sent is-hidden">
+        <p class="popup__text">Andmed edastatud</p>
+      </div>
+
+      <div class="popup popup_data-notsent is-hidden">
+        <p class="popup__text">Tekkis viga :(</p>
+      </div>
+
+      <div class="popup popup_loading is-hidden">
+        <svg>
+          <circle cx="25" cy="25" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <div class="banner" id="banner">
+      <!-- Info block — logo, heading, mobile CTA -->
+      <div class="block block_info">
+        <img class="logo" src="logo.png" alt />
+        <h1 class="info-header"><strong>Testi oma jalgpalliteadmisi!</strong></h1>
+        <h2 class="info-subheader"><strong>Vasta küsimustele ja võida äge auhind!</strong></h2>
+        <input type="button" onclick="moveView()" value="osalen" />
+      </div>
+
+      <!-- Form block — data collection -->
+      <div class="block block_form">
+        <form name="form-submit" method="POST" target="block_form__iframe" onsubmit="submitted = true">
+          <input name="GivenName" type="text" placeholder="Ees- ja perekonnanimi" value required />
+          <input name="Email" type="email" placeholder="E-post" value required />
+          <div class="form-checkbox">
+            <label for="form-input_1">
+              <input class="check-custom" id="form-input_1" name="rules_1" type="checkbox" required />
+              <span class="check-toggle"></span>
+              <p class="form-checkbox__text">Nõustun <a href="reeglid.html" target="_blank">kampaaniatingimustega</a> ja <a href="https://www.ohtulehtkirjastus.ee/andmekaitsetingimused/" target="_blank">andmekaitsetingimustega</a></p>
+            </label>
+          </div>
+          <div class="form-checkbox">
+            <label for="form-input_2">
+              <input class="check-custom" id="form-input_2" name="rules_2" type="checkbox" required />
+              <span class="check-toggle"></span>
+              <p class="form-checkbox__text">Annan nõusoleku saada uudiseid ning turunduspakkumisi</p>
+            </label>
+          </div>
+          <input type="submit" value="saada" />
+        </form>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ── Configuration ── */
+        var CONFIG = {
+          SUBMIT_URL: "https://s.ohtuleht.ee/customer/insert",
+          CAMPAIGN_ID: 68,
+          AGREES: [1, 2, 56],
+          STATUS: 1,
+          MESSAGE_DELAY_MS: 500,
+        };
+
+        /* ── DOM References ── */
+        var form = document.forms["form-submit"];
+        var loading = document.querySelector(".popup_loading");
+        var successMessage = document.querySelector(".popup_data-sent");
+        var errorMessage = document.querySelector(".popup_data-notsent");
+
+        /* ── Form Submission ── */
+
+        // Build JSON payload from form data plus campaign metadata
+        function buildPayload() {
+          var formData = new FormData(form);
+          var result = {};
+          for (var entry of formData.entries()) {
+            result[entry[0]] = entry[1];
+          }
+          result["Agrees"] = CONFIG.AGREES;
+          result["CampaignId"] = CONFIG.CAMPAIGN_ID;
+          result["Status"] = CONFIG.STATUS;
+          return JSON.stringify(result);
+        }
+
+        // Send data to the server via XHR POST
+        function submitData(payload) {
+          var request = new XMLHttpRequest();
+          request.open("POST", CONFIG.SUBMIT_URL, true);
+          request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+              showSuccessMessage(request.response);
+            } else {
+              showErrorMessage(request.statusText);
+            }
+          };
+          request.onerror = function () {
+            showErrorMessage("Network error");
+          };
+          request.send(payload);
+        }
+
+        // Handle form submit event
+        if (form) {
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            showLoadingIndicator();
+            submitData(buildPayload());
+          });
+        }
+
+        /* ── UI State Toggles ── */
+
+        // Show spinner, hide form
+        function showLoadingIndicator() {
+          if (form) form.classList.add("is-hidden");
+          if (loading) loading.classList.remove("is-hidden");
+        }
+
+        // Show a result popup (success or error) after delay
+        function showResultMessage(element, label, detail) {
+          console.log(label, detail);
+          setTimeout(function () {
+            if (element) element.classList.remove("is-hidden");
+            if (loading) loading.classList.add("is-hidden");
+          }, CONFIG.MESSAGE_DELAY_MS);
+        }
+
+        function showErrorMessage(error) {
+          showResultMessage(errorMessage, "Error!", error);
+        }
+
+        function showSuccessMessage(response) {
+          showResultMessage(successMessage, "Success!", response);
+        }
+
+        /* ── Mobile View Scroll ── */
+
+        // Scroll banner up to reveal form on mobile
+        window.moveView = function () {
+          var bannerContainer = document.getElementById("banner");
+          if (bannerContainer) bannerContainer.classList.add("banner--scrolled");
+        };
+      })();
+    </script>
+  </body>
+</html>

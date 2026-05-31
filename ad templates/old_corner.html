@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Corner new v1</title>
+    <style>
+        html,
+        body,
+        div,
+        img,
+        video,
+        iframe,
+        a,
+        button {
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+        }
+
+        a:focus,
+        button:focus {
+            outline: none;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+
+        #tracking-code,
+        #video-buttons,
+        #impression-code,
+        #html {
+            display: none;
+        }
+
+        #video-buttons>button {
+            position: absolute;
+            background-color: transparent;
+            background-size: cover;
+            width: 44px;
+            height: 44px;
+            border: none;
+            z-index: 10;
+            opacity: 0.7;
+            border-radius: 0px;
+            bottom: 0px;
+        }
+
+        #close {
+            position: absolute;
+            background-color: transparent;
+            background-size: cover;
+            border-radius: 0px;
+            width: 44px;
+            height: 44px;
+            border: none;
+            z-index: 100000000;
+            opacity: 0.9;
+            top: 0px;
+        }
+
+        .spin-mouse-on {
+            animation: spinMouseOn 0.5s ease;
+        }
+
+        .spin-mouse-off {
+            animation: spinMouseOff 0.5s ease;
+        }
+
+        /* @keyframes spinMouseOn {
+            100% {
+                transform: rotate(0.5turn);
+            }
+        }
+
+        @keyframes spinMouseOff {
+            100% {
+                transform: rotate(-0.5turn);
+            }
+        } */
+
+        .close-btn {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYBAMAAACDuy0HAAAAMFBMVEUAAADoABfqABXkABHkAA/jAA///////f396+z84ePwdX3oMj7oLDjmFybkBRTjAA9NThDNAAAABnRSTlMACyR51vrnDCStAAAA8UlEQVR42u2WsQ3CMBBFESvAAKzABIiCOg093UEWoGAAKtdegVVCg0fIABQUhC7BSHdCFMZ8dA0iul9d8fyUxPblBhZLLzNaxLdZTlN2WMRMmkkCj2M28wSe5eFrAhd5uEngVR6+JXD8EIN/DHenZ3WuIXwogxSt3yG425KTqqJ1DeCWaBO42BMFAN89kRMxlRcAx4rVLHYRwULJGggLJkswzJyIISxqFmNY1CzGsKhZDGFRs1gBqx8DvyD+dP6lxptyZPW3281qxUFSHFF8+FXXSn9hcSvATeZfGqPB6EevGCEUwwkce7QDFR7VLJY+5gGF/qr/i4fi0wAAAABJRU5ErkJggg==')
+        }
+
+        .play-btn {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEUAAADoABfqABXkABHjABDkAA/jAA///////Pz+9fb97e785Ob73uD60tX4vsL2sLX2rbL1oafzkJbxgonweYHvaXLsUlzqQUzpOEToKTbnIS7mGyjlEiDkChjjBBPjAA/AtzyMAAAAB3RSTlMACyR509n6n4iSdAAAANRJREFUeNrt2FsOgjAQhWFLSwtyUamCCLX736UZE58rDSdhkvkX8L0Q2umcJEmSpKOmtLFxQ9Zo9Y9blHFzZZF2FbnbZZWEdcxKJ2GTB5skbPNgm4RjZgILfHA4TDMEXhrn+icAHhx1W3aHL+5bfQ8ImGpHCEz1Mwh21bAiYOr8eCNgqpsgMHV9gWBX+4CAqWaEwJRHwVXgBntWH6/2gdMP0k2cDqFqWDkd9O3I5DL9Xf98BhYasZgNhQILnBnskQ5bK8AWIbDVDWrZBFuPSZIkSQftA26SUXhYmHnjAAAAAElFTkSuQmCC')
+        }
+
+        .pause-btn {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYBAMAAACDuy0HAAAALVBMVEUAAADoABfqABXkABHkAA/jAA/////85ef83+HyipHvb3ftUlzqQEvmFiTjAA/4U3uoAAAABnRSTlMACyR51vrnDCStAAAAm0lEQVR42mMYBaNgWAJh13dYQYghplomv3c4wBMFDMUi73ACRwzFdrgVP8ZQ7Idb8RMMxXG4FT/FUPwODxhVPNCK36xatffdu9urVp0jQvG0tLT0d+/K0tIyiVDclpaWdu5NWlpaBrGKX48qHlU8qnhAFb/BUEyFouA1vJAZOgXjqGICFT3ZTQjCjRPymz2EG1TEN9VGwSgYjgAAlbQ0U62V1RkAAAAASUVORK5CYII=')
+        }
+
+        .mute-btn {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEUAAADoABfqABXkABHjABDkAA/jAA//////+vr98fL96uv84OL61tj5zM/5xcj4v8P2rrP1oaf0lpzwdn7uYGntW2XsTljqPEfpN0PpNEDoJjPnIC3mGCblDBrkAxLjAA/CIInZAAAAB3RSTlMACyR509n6n4iSdAAAARtJREFUeNrt2NuugjAQheGNIAMbUDwh1Nq+/1t6CMk44aJSlgkX8z/Ad0UydP1pmqZpay1Js9zPKM/S5Bt3s/Wz227CbsLuHDkJwqmPKg3CWRycBeE8Ds6DsI9MYYUXw4OBwuxS0fnP3KneXQGwKaTsWiL6d9Ew1wn5vqdXFgAL2Tb07rYYlrKtCQizbCoCwizfKwLDbpT7Egu7pmcZCV+pZBkJX0jIOPhMQkbCUkbCUkbCUkbCUkZ9FRPZQuCeJjLo5jUTGQTbQ1U+K4S8HGa/FjIC5vvBMgbmi8cyAma5FTIO9u4gZCDsj0S086MMgLmuPd7GO2hwsLywAxLmzLDO31iFFcY+0vGzAn4I+f10gx+b8POYpmmattIe2/RYlYscW0EAAAAASUVORK5CYII=')
+        }
+
+        .audio-btn {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABYCAMAAABGS8AGAAAAYFBMVEUAAADoABfqABXkABHjABDkAA/jAA/////+9vf98PH96On84+X73d/609b5yMv4vsL3sbb1o6nzlJrzkJfyho3xgIfxeoLuZG3uYGnsVF7qQUzoJDHmGSblDBrkBRTjAA91Cyb1AAAAB3RSTlMACyR509n6n4iSdAAAAQ5JREFUeNrt2NGOgyAQheG1Ws9WwNVuq90VnPd/yyXZKxITWmASTed/gO/GAON8SJIkSXutqpuWXqht6uoZ93Smlzuf4m7l3QS5isI1JVVH4YaSaqJwS0m1UZgSE1jgw8DLr+OA1yugbHl4HeCbisPuC/B9l4ZtDxbYGrDAi0YA22zY/Ux3n0IADzAuD7Ya/wWwBXDLg0dswasCPl0WrDdhegCYs+DLNrxegJEDpgEwLPAV6I4FD4DZ58fT2/AMYN7nAbGK6UiTe9x9ty6AaUTvCl2bKoDJlbvoNcD0NBkmmFyfCUee6YljYBmBbjnSiHXEaVPgN4VTf9LZ1gpsixC21Q3XsoltPSZJkiTttD8yqFKwnGc4ogAAAABJRU5ErkJggg==')
+        }
+
+        #click-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            top: 0;
+            display: none;
+        }
+        #image {
+            width: 100vw;
+            height: auto;
+        }
+        #image img {
+            width: 100vw !important;
+            height: auto !important;
+        }
+        #video video {
+            width: 100vw !important;
+            height: auto !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="click-overlay" onclick="event.stopPropagation(); banner.click();"></div>
+        <div id="canvas">
+            <div id="image" onclick="banner.click()"></div>
+            <div id="video">
+                <div id="video-buttons">
+                    <button id="video-buttons-playback" class="pause-btn"
+                            onclick="banner.toggleVideoPlayback()"></button>
+                    <button id="video-buttons-audio" class="audio-btn" onclick="banner.toggleVideoAudio()"></button>
+                </div>
+            </div>
+            <div id="iframe"></div>
+            <div id="html">[%html%]</div>
+        </div>
+        <button id="close" class="close-btn" onclick="banner.close()"></button>
+        <img id="impression-code" src="%%VIEW_URL_UNESC%%" />
+        <div id="tracking-code">[%trackingCode%]</div>
+    </div>
+
+    <script>
+        var banner = {
+            build: function () {
+                this.setVariables()
+                this.fillCanvas()
+                this.configureFrame()
+            },
+
+
+            setVariables: function () {
+                this.variables = {}
+                this.setVariable('adUnit', '%%ADUNIT%%')
+                this.setVariable('width', '[%width%]')
+                this.setVariable('height', '[%height%]')
+                this.setVariable('cachebuster', '%%CACHEBUSTER%%')
+                this.setVariable('clickMacroUrl', '%%CLICK_URL_ESC%%')
+                this.setVariable('destinationUrl', '%%DEST_URL_ESC%%')
+                this.setVariable('imageUrl', '[%imageUrl%]')
+                this.setVariable('videoUrl', '[%videoUrl%]')
+                this.setVariable('iframeUrl', '[%iframeUrl%]')
+                this.setVariable('iframeClickTagType', '[%iframeClickTagType%]')
+                this.setVariable('position', '[%position%]')
+                this.setVariable('videoButtons', '[%videoButtons%]')
+                this.setVariable('reTargetingPixelUrl', '[%reTargetingPixelUrl%]')
+            },
+
+
+            setVariable: function (name, value) {
+                this.variables[name] = value.length > 0 ? value : ''
+            },
+
+
+            click: function () {
+                if (this.variables.reTargetingPixelUrl.length > 0) {
+                    this.appendReTargetingPixel();
+                }
+                window.open(this.variables.clickMacroUrl + this.variables.destinationUrl, '_blank')
+            },
+
+            appendReTargetingPixel: function () {
+                var pixelImg = document.createElement('img');
+                pixelImg.src = this.variables.reTargetingPixelUrl;
+                document.getElementById('container').appendChild(pixelImg);
+            },
+
+            fillCanvas: function () {
+                if (this.variables.imageUrl.length > 0) {
+                    this.setImageContent()
+                } else if (this.variables.videoUrl.length > 0) {
+                    this.setVideoContent()
+                } else if (this.variables.iframeUrl.length > 0) {
+                    this.setIframeContent()
+                } else {
+                    document.getElementById('html').style.display = 'block'
+                }
+
+                if (this.variables.iframeClickTagType === 'simple') {
+                    document.getElementById('click-overlay').style.display = 'block';
+                }
+            },
+
+
+            setImageContent: function () {
+                var image = document.createElement('img')
+                image.src = this.variables.imageUrl
+                document.getElementById('image').appendChild(image)
+            },
+
+
+            setVideoContent: function () {
+                var video = document.createElement('video')
+                video.autoplay = 'autoplay'
+                video.loop = 'loop'
+                video.muted = 'muted'
+                video.onclick = function () { this.click() }.bind(this)
+                video.setAttribute('playsinline', '')
+                document.getElementById('video').appendChild(video)
+
+                var source = document.createElement('source')
+                source.src = this.variables.videoUrl
+                document.getElementsByTagName('video')[0].appendChild(source)
+
+                document.getElementById('video-buttons').style.display = this.variables.videoButtons === 'visible' ? 'block' : 'none'
+
+                if (this.variables.position === 'right') {
+                    document.getElementById('video-buttons-playback').style.left = '0px'
+                    document.getElementById('video-buttons-audio').style.left = '44px'
+                } else {
+                    document.getElementById('video-buttons-playback').style.right = '44px'
+                    document.getElementById('video-buttons-audio').style.right = '0px'
+                }
+            },
+
+
+            setIframeContent: function () {
+                var iframe = document.createElement('iframe')
+                iframe.src = this.variables.iframeUrl + '?clickTag=' + this.variables.clickMacroUrl + this.variables.destinationUrl + '&clickMacro=' + this.variables.clickMacroUrl
+                iframe.scrolling = 'no'
+                iframe.rel = 'nofollow'
+                iframe.width = this.variables.width + 'px'
+                iframe.height = this.variables.height + 'px'
+                iframe.frameborder = '0px';
+                iframe.style.border = 'none';
+                iframe.style.overflow = 'hidden';
+                document.getElementById('iframe').appendChild(iframe)
+            },
+
+
+            toggleVideoPlayback: function () {
+                var video = document.getElementsByTagName('video')[0]
+                var button = document.getElementById('video-buttons-playback');
+
+                if (video.paused) {
+                    video.play();
+                    button.classList.remove('play-btn');
+                    button.classList.add('pause-btn');
+                } else {
+                    video.pause();
+                    button.classList.remove('pause-btn');
+                    button.classList.add('play-btn');
+                }
+            },
+
+
+            toggleVideoAudio: function () {
+                var video = document.getElementsByTagName('video')[0]
+                var button = document.getElementById('video-buttons-audio');
+
+                if (video.muted) {
+                    video.muted = false;
+                    button.classList.remove('audio-btn');
+                    button.classList.add('mute-btn');
+                } else {
+                    video.muted = true;
+                    button.classList.remove('mute-btn');
+                    button.classList.add('audio-btn');
+                }
+            },
+
+
+            configureFrame: function () {
+                this.setStylesToElement(window.frameElement, {
+                    position: 'fixed',
+                    width: this.variables.width + 'px',
+                    height: this.variables.height + 'px',
+                    bottom: '0px',
+                    overflow: 'visible',
+                    zIndex: '890',
+                })
+
+                if (this.variables.position === 'left') {
+                    this.setStylesToElement(window.frameElement, {
+                        left: '0px',
+                    })
+                } else if (this.variables.position === 'right') {
+                    this.setStylesToElement(window.frameElement, {
+                        right: '0px',
+                    })
+                }
+
+                window.frameElement.classList.add('corner-banner-iframe')
+
+                var closeBtn = document.getElementById('close')
+/* 
+                closeBtn.addEventListener('mouseover', function () {
+                    closeBtn.classList.remove('spin-mouse-off')
+                    closeBtn.classList.add('spin-mouse-on')
+                })
+
+                closeBtn.addEventListener('mouseleave', function () {
+                    closeBtn.classList.remove('spin-mouse-on')
+                    closeBtn.classList.add('spin-mouse-off')
+                })
+
+                */ if (this.variables.position === 'right') {
+                    closeBtn.style.left = '0px'
+                } else {
+                    closeBtn.style.right = '0px'
+                }
+
+                var css = '.corner-banner-iframe{box-shadow:rgb(0,0,0,.35) 0 0 25px!important;animation:easeCornerBannerIn 1s ease}@keyframes easeCornerBannerIn{0%{opacity:0}100%{opacity:1}}'
+                this.appendStyleToParent(css)
+            },
+
+
+            close: function () {
+                window.frameElement.outerHTML = '';
+            },
+
+
+            appendStyleToParent: function (css) {
+                var style = document.createElement('style')
+                style.type = 'text/css'
+
+                if (style.styleSheet) {
+                    style.styleSheet.cssText = css
+                } else {
+                    style.appendChild(document.createTextNode(css))
+                }
+
+                window.parent.document.getElementsByTagName('head')[0].appendChild(style)
+            },
+
+
+            setStylesToElement: function (el, styles) {
+                var keys = Object.keys(styles)
+                keys.forEach(function (key) {
+                    if (Array.isArray(styles[key])) {
+                        var css = el.style.cssText
+                        styles[key].forEach(function (value) {
+                            css = css + ' ' + key + ': ' + value + ';'
+                        })
+                        el.style.cssText = css
+                    } else {
+                        el.style[key] = styles[key]
+                    }
+                })
+            },
+        }
+
+        banner.build()
+    </script>
+</body>
+
+</html>

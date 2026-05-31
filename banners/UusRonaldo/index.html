@@ -1,0 +1,187 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="style.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TWLBVEFSRT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TWLBVEFSRT');
+    </script>
+  </head>
+
+  <body>
+    <div class="banner-wrapper">
+      <div class="overlay-wrapper" style="display: none">
+        <div class="card-wrapper" style="display: none"></div>
+      </div>
+
+      <div class="intro-wrapper">
+        <h1>Kas sinu lapsest<br />saab järgmine<br /><span class="green">ronaldo?</span></h1>
+        <h2>Leia lähim jalgpallitrenn!</h2>
+        <div class="cta-wrapper"><span>Kliki markerit, et leida klubi</span><img src="arrow-right.svg" alt="->" /></div>
+      </div>
+
+      <div class="map-wrapper">
+        <img class="map" src="map.png" alt="Estonia" />
+      </div>
+    </div>
+    <script src="clubs.js"></script>
+    <script>
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+
+      (function () {
+        var UTM = "?utm_source=oleht&utm_medium=banner&utm_campaign=uusRonaldo&utm_id=uusRonaldo";
+        var ctaClickCounts = {}; // GA4 tracking: per-session click count per club
+
+        var mapWrapper = document.querySelector(".map-wrapper");
+        var overlayWrapper = document.querySelector(".overlay-wrapper");
+        var cardWrapper = document.querySelector(".card-wrapper");
+
+        function appendUTM(url) {
+          return url + (url.indexOf("?") === -1 ? UTM : UTM.replace("?", "&"));
+        }
+
+        function renderPins() {
+          CLUBS.forEach(function (club) {
+            var pin = document.createElement("div");
+            pin.className = "pin-wrapper";
+            pin.style.position = "absolute";
+            pin.style.left = club.pin.left + "px";
+            pin.style.top = club.pin.top + "px";
+            var labelStyle = '';
+            if (club.label) {
+              var ox = club.label.offsetX || 0;
+              var oy = club.label.offsetY || 0;
+              labelStyle = ' style="position:relative;left:' + ox + 'px;top:' + oy + 'px;"';
+            }
+            pin.innerHTML = '<div class="pin"><img src="pin.svg" alt /></div>' + '<div class="pin-info"' + labelStyle + '>' + '<p class="pin-name">' + club.name + "</p>" + '<p class="pin-city">' + club.city + "</p>" + "</div>";
+            pin.addEventListener("click", function () {
+              openOverlay(club, pin);
+            });
+            mapWrapper.appendChild(pin);
+          });
+        }
+
+        function positionCard(club, pinElement) {
+          var cardW = cardWrapper.offsetWidth;
+          var cardH = cardWrapper.offsetHeight;
+          var padding = 16;
+
+          // Get pin icon's actual center relative to banner
+          var pinIcon = pinElement.querySelector(".pin");
+          var pinRect = pinIcon.getBoundingClientRect();
+          var bannerRect = overlayWrapper.parentElement.getBoundingClientRect();
+          var pinCenterX = pinRect.left + pinRect.width / 2 - bannerRect.left;
+
+          var left = pinCenterX - cardW / 2;
+
+          // Clamp horizontal
+          if (left < padding) left = padding;
+          if (left + cardW > bannerRect.width - padding) left = bannerRect.width - padding - cardW;
+
+          // Vertical: centered within banner
+          var top = (bannerRect.height - cardH) / 2;
+
+          cardWrapper.style.position = "absolute";
+          cardWrapper.style.left = left + "px";
+          cardWrapper.style.top = top + "px";
+          cardWrapper.style.zIndex = "1001";
+        }
+
+        function openOverlay(club, pinElement) {
+          var fieldsHTML = "";
+          club.overlay.fields.forEach(function (field) {
+            if (field.hidden) return;
+            fieldsHTML += '<div class="info-block">' + (field.icon ? '<img class="icon" src="' + field.icon + '" alt="" />' : "") + '<div class="data-wrapper">' + '<p class="data-1">' + field.label + "</p>" + '<p class="data-2">' + field.value + "</p>" + "</div></div>";
+          });
+
+          var destinationUrl = appendUTM(club.overlay.url);
+
+          cardWrapper.classList.remove("card-visible");
+          cardWrapper.innerHTML =
+            '<div class="header">' +
+            '<div class="logo-container"><img src="./logo/' +
+            club.logo +
+            '" alt /></div>' +
+            '<div class="name-container">' +
+            '<p class="name">' +
+            club.name +
+            "</p>" +
+            '<p class="city">' +
+            club.city +
+            "</p>" +
+            "</div></div>" +
+            '<div class="info-container">' +
+            '<div class="info">' +
+            fieldsHTML +
+            "</div>" +
+            '<div class="btn-wrapper">' +
+            '<div class="cta" id="cta-link">loe lähemalt</div>' +
+            '<button class="back">tagasi</button>' +
+            "</div></div>";
+
+          document.getElementById("cta-link").addEventListener("click", function () {
+            // --- GA4 Tracking ---
+            if (!ctaClickCounts[club.id]) ctaClickCounts[club.id] = 0;
+            ctaClickCounts[club.id]++;
+            console.log("[GA4 Debug]", "Banner_click_uusRonaldo", { event_label: club.name, answer: String(ctaClickCounts[club.id]) });
+            gtag("event", "Banner_click_uusRonaldo", {
+              'event_category': 'CTA Click',
+              'event_label': club.name,
+              'answer': String(ctaClickCounts[club.id])
+            });
+            // --- End Tracking ---
+            window.open(olBanner.getClickTag(destinationUrl), "_blank");
+          });
+
+          cardWrapper.querySelector(".back").addEventListener("click", function () {
+            cardWrapper.classList.remove("card-visible");
+            overlayWrapper.classList.add("overlay-hiding");
+            setTimeout(function () {
+              overlayWrapper.style.display = "none";
+              overlayWrapper.classList.remove("overlay-hiding");
+              cardWrapper.style.display = "none";
+            }, 150);
+          });
+
+          overlayWrapper.style.display = "";
+          cardWrapper.style.display = "flex";
+          positionCard(club, pinElement);
+
+          requestAnimationFrame(function () {
+            cardWrapper.classList.add("card-visible");
+          });
+        }
+
+        renderPins();
+      })();
+    </script>
+  </body>
+</html>
