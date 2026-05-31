@@ -325,27 +325,27 @@
 
     const QUESTIONS = [
       {
-        q: "What is the mood of the story?",
+        q: "Where should the story happen?",
         options: [
-          { label: "Dramatic and tense",    value: "dramatic and tense" },
-          { label: "Hopeful and uplifting",  value: "hopeful and uplifting" },
-          { label: "Neutral and documentary",value: "neutral and documentary" },
+          { label: "🪖 War zone",          value: "a bombed-out war zone with rubble, smoke and fire in the background" },
+          { label: "🚀 Outer space",        value: "the surface of Mars with a red rocky alien landscape and stars above" },
+          { label: "🌴 Amazon jungle",      value: "a dense tropical Amazon jungle with thick foliage and dramatic light rays" },
         ]
       },
       {
-        q: "What time of day does it feel like?",
+        q: "What are they wearing?",
         options: [
-          { label: "Golden hour / warm light",   value: "golden hour / warm light" },
-          { label: "Cold and overcast",           value: "cold and overcast" },
-          { label: "Night / dramatic shadows",    value: "night / dramatic shadows" },
+          { label: "🪖 Military gear",      value: "full military combat gear with helmet, body armour and tactical vest" },
+          { label: "👨‍🚀 Spacesuit",          value: "a NASA-style spacesuit with a visor helmet" },
+          { label: "🎙️ Field journalist",   value: "a field journalist outfit with a press vest, microphone and notebook" },
         ]
       },
       {
-        q: "How should the photo look?",
+        q: "What's the cinematic vibe?",
         options: [
-          { label: "Cinematic and filmic",  value: "cinematic and filmic" },
-          { label: "Clean and editorial",   value: "clean and editorial" },
-          { label: "Raw and authentic",     value: "raw and authentic" },
+          { label: "🎬 Epic blockbuster",   value: "epic cinematic blockbuster style, dramatic lighting, movie poster quality" },
+          { label: "📰 Raw documentary",    value: "raw gritty documentary style, handheld feel, high contrast black and white" },
+          { label: "🌅 Golden hour drama",  value: "golden hour magic light, warm emotional tones, cinematic depth of field" },
         ]
       },
     ];
@@ -446,7 +446,7 @@
 
       const loadingTyping = addTypingIndicator();
 
-      const moodPrompt = `Edit this photo to look ${answers[0]}, with ${answers[1]} lighting, in a ${answers[2]} style. Keep all people and faces exactly as they are, only change the mood and color grading.`;
+      const moodPrompt = `Take the person from this photo and place them into a completely new scene: ${answers[0]}. Dress them in ${answers[1]}. Render the whole image in ${answers[2]}. CRITICAL: the person's face must be preserved pixel-perfect — same face, same skin, same eyes, same nose, same mouth, same hair, same expression, completely unchanged. Do not modify the face in any way. Only change the background and clothing.`;
 
       try {
         const [photoResult, articleResult] = await Promise.all([
