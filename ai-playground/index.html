@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>NewsFrame</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      min-height: 100dvh;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+      position: relative;
+    }
+
+    /* ── Header ── */
+    header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: #e3000f;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #111;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: #999;
+      margin-left: auto;
+      font-weight: 400;
+    }
+
+    /* ── Chat area ── */
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 80px 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* ── Bubbles ── */
+    .bubble {
+      max-width: 82%;
+      padding: 11px 14px;
+      border-radius: 18px;
+      font-size: 15px;
+      line-height: 1.45;
+      animation: slideIn 0.28s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .bubble.received {
+      align-self: flex-start;
+      background: #f0f0f0;
+      color: #111;
+      border-bottom-left-radius: 5px;
+    }
+
+    .bubble.sent {
+      align-self: flex-end;
+      background: #e3000f;
+      color: #fff;
+      border-bottom-right-radius: 5px;
+    }
+
+    /* ── Answer options ── */
+    .options-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 4px 0 8px;
+      animation: slideIn 0.28s ease forwards;
+      opacity: 0;
+    }
+
+    .option-btn {
+      background: #fff;
+      border: 1.5px solid #e3000f;
+      color: #e3000f;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      font-weight: 500;
+    }
+
+    .option-btn:hover {
+      background: #e3000f;
+      color: #fff;
+    }
+
+    /* ── Typing indicator ── */
+    .typing-bubble {
+      align-self: flex-start;
+      background: #f0f0f0;
+      border-radius: 18px;
+      border-bottom-left-radius: 5px;
+      padding: 13px 16px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      animation: slideIn 0.28s ease forwards;
+      opacity: 0;
+    }
+
+    .typing-bubble span {
+      display: block;
+      width: 7px;
+      height: 7px;
+      background: #999;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30%            { transform: translateY(-5px); }
+    }
+
+    /* ── Upload area ── */
+    .upload-area {
+      animation: slideIn 0.28s ease forwards;
+      opacity: 0;
+      padding: 4px 0 8px;
+    }
+
+    #upload-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #e3000f;
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    #upload-label:hover { opacity: 0.88; }
+
+    #upload-label svg { width: 16px; height: 16px; fill: #fff; }
+
+    #photo-input { display: none; }
+
+    /* ── Result card ── */
+    .result-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      animation: slideIn 0.35s ease forwards;
+      opacity: 0;
+    }
+
+    #result-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.12);
+      overflow: hidden;
+      width: 100%;
+      max-width: 340px;
+    }
+
+    #result-card .card-photo img {
+      width: 100%;
+      display: block;
+      max-height: 240px;
+      object-fit: cover;
+    }
+
+    #result-card .card-body {
+      padding: 14px 16px 16px;
+    }
+
+    #result-card .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #e3000f;
+      margin-bottom: 7px;
+    }
+
+    #result-card .card-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 19px;
+      line-height: 1.25;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    #result-card .card-divider {
+      height: 1px;
+      background: #e8e8e8;
+      margin-bottom: 10px;
+    }
+
+    #result-card .card-article {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    #result-card .card-footer {
+      font-size: 10px;
+      color: #bbb;
+      margin-top: 12px;
+      font-style: italic;
+    }
+
+    /* ── Download button ── */
+    #download-btn {
+      display: none;
+      background: #e3000f;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.15s;
+      align-self: center;
+      margin: 8px auto 16px;
+    }
+
+    #download-btn:hover { opacity: 0.88; }
+
+    /* Error bubble */
+    .error-bubble {
+      align-self: flex-start;
+      background: #fff0f0;
+      color: #c00;
+      border: 1px solid #fcc;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 13px;
+      animation: slideIn 0.28s ease forwards;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/></svg>
+      </div>
+      <span class="logo-text">NewsFrame</span>
+      <span class="logo-sub">AI Photo Editor</span>
+    </header>
+
+    <div id="chat"></div>
+
+    <button id="download-btn">⬇ Download Page</button>
+  </div>
+
+  <input type="file" id="photo-input" accept="image/*" />
+
+  <script>
+    const chat = document.getElementById('chat');
+    const downloadBtn = document.getElementById('download-btn');
+    const photoInput = document.getElementById('photo-input');
+
+    const QUESTIONS = [
+      {
+        q: "What is the mood of the story?",
+        options: [
+          { label: "Dramatic and tense",    value: "dramatic and tense" },
+          { label: "Hopeful and uplifting",  value: "hopeful and uplifting" },
+          { label: "Neutral and documentary",value: "neutral and documentary" },
+        ]
+      },
+      {
+        q: "What time of day does it feel like?",
+        options: [
+          { label: "Golden hour / warm light",   value: "golden hour / warm light" },
+          { label: "Cold and overcast",           value: "cold and overcast" },
+          { label: "Night / dramatic shadows",    value: "night / dramatic shadows" },
+        ]
+      },
+      {
+        q: "How should the photo look?",
+        options: [
+          { label: "Cinematic and filmic",  value: "cinematic and filmic" },
+          { label: "Clean and editorial",   value: "clean and editorial" },
+          { label: "Raw and authentic",     value: "raw and authentic" },
+        ]
+      },
+    ];
+
+    const answers = {};
+    let currentQuestion = 0;
+
+    function scrollToBottom() {
+      setTimeout(() => chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' }), 40);
+    }
+
+    function addBubble(html, side, extraClass = '') {
+      const el = document.createElement('div');
+      el.className = `bubble ${side} ${extraClass}`.trim();
+      el.innerHTML = html;
+      chat.appendChild(el);
+      scrollToBottom();
+      return el;
+    }
+
+    function addTypingIndicator() {
+      const el = document.createElement('div');
+      el.className = 'typing-bubble';
+      el.innerHTML = '<span></span><span></span><span></span>';
+      chat.appendChild(el);
+      scrollToBottom();
+      return el;
+    }
+
+    function removeEl(el) {
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    }
+
+    function showQuestion(index) {
+      const q = QUESTIONS[index];
+      const typing = addTypingIndicator();
+
+      setTimeout(() => {
+        removeEl(typing);
+        addBubble(q.q, 'received');
+
+        const optRow = document.createElement('div');
+        optRow.className = 'options-row';
+
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-btn';
+          btn.textContent = opt.label;
+          btn.addEventListener('click', () => handleAnswer(index, opt, optRow));
+          optRow.appendChild(btn);
+        });
+
+        chat.appendChild(optRow);
+        scrollToBottom();
+      }, 800);
+    }
+
+    function handleAnswer(index, opt, optRow) {
+      removeEl(optRow);
+      answers[index] = opt.value;
+      addBubble(opt.label, 'sent');
+      currentQuestion++;
+
+      if (currentQuestion < QUESTIONS.length) {
+        setTimeout(() => showQuestion(currentQuestion), 600);
+      } else {
+        setTimeout(() => showUploadStep(), 700);
+      }
+    }
+
+    function showUploadStep() {
+      const typing = addTypingIndicator();
+      setTimeout(() => {
+        removeEl(typing);
+        addBubble('Now upload your photo.', 'received');
+
+        const area = document.createElement('div');
+        area.className = 'upload-area';
+
+        const label = document.createElement('label');
+        label.id = 'upload-label';
+        label.htmlFor = 'photo-input';
+        label.innerHTML = `
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Choose photo
+        `;
+        area.appendChild(label);
+        chat.appendChild(area);
+        scrollToBottom();
+      }, 800);
+    }
+
+    photoInput.addEventListener('change', async () => {
+      const file = photoInput.files[0];
+      if (!file) return;
+
+      addBubble('📷 Photo selected — processing…', 'sent');
+
+      const loadingTyping = addTypingIndicator();
+
+      const moodPrompt = `Edit this photo to look ${answers[0]}, with ${answers[1]} lighting, in a ${answers[2]} style. Keep all people and faces exactly as they are, only change the mood and color grading.`;
+
+      try {
+        const [photoResult, articleResult] = await Promise.all([
+          uploadAndEditPhoto(file, moodPrompt),
+          generateArticle(answers[0], answers[1], answers[2]),
+        ]);
+
+        removeEl(loadingTyping);
+        showResult(photoResult, articleResult);
+      } catch (err) {
+        removeEl(loadingTyping);
+        const errEl = document.createElement('div');
+        errEl.className = 'error-bubble';
+        errEl.textContent = 'Something went wrong: ' + (err.message || 'Unknown error');
+        chat.appendChild(errEl);
+        scrollToBottom();
+      }
+    });
+
+    async function uploadAndEditPhoto(file, prompt) {
+      const formData = new FormData();
+      formData.append('photo', file);
+      formData.append('prompt', prompt);
+
+      const res = await fetch('/edit-photo', { method: 'POST', body: formData });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+      return res.json();
+    }
+
+    async function generateArticle(mood, lighting, style) {
+      const res = await fetch('/generate-article', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mood, lighting, style }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+      return res.json();
+    }
+
+    function showResult(photoData, articleData) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'result-wrapper';
+
+      const card = document.createElement('div');
+      card.id = 'result-card';
+
+      const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+      card.innerHTML = `
+        <div class="card-photo">
+          <img src="data:${photoData.mimeType};base64,${photoData.image}" alt="Edited photo" />
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Breaking News</div>
+          <div class="card-headline">${escapeHtml(articleData.headline)}</div>
+          <div class="card-divider"></div>
+          <div class="card-article">${escapeHtml(articleData.body)}</div>
+          <div class="card-footer">NewsFrame · ${today}</div>
+        </div>
+      `;
+
+      wrapper.appendChild(card);
+      chat.appendChild(wrapper);
+      scrollToBottom();
+
+      downloadBtn.style.display = 'block';
+      downloadBtn.onclick = () => downloadCard(card);
+    }
+
+    function downloadCard(card) {
+      downloadBtn.textContent = 'Preparing…';
+      downloadBtn.disabled = true;
+
+      html2canvas(card, {
+        useCORS: true,
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false,
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'newsframe.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }).finally(() => {
+        downloadBtn.textContent = '⬇ Download Page';
+        downloadBtn.disabled = false;
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Kick off the conversation
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => showQuestion(0), 500);
+    });
+  </script>
+</body>
+</html>
