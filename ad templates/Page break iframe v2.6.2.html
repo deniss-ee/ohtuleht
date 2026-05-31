@@ -1,67 +1,3 @@
-<!--
-  ╔══════════════════════════════════════════════════════════════════╗
-  ║  Page Break (Interscroller) Ad Template                        ║
-  ║  Version: 2.6.2                                                ║
-  ╚══════════════════════════════════════════════════════════════════╝
-
-  PURPOSE:
-  Renders a fixed-position ad creative that is revealed as the user
-  scrolls past a slot in the parent page. Content fills a 9:16
-  aspect ratio container, centered horizontally, capped at 600px wide.
-
-  ─── CONFIGURABLE VARIABLES ───────────────────────────────────────
-
-  GAM Macros (populated by Google Ad Manager automatically):
-    %%CLICK_URL_ESC%%      Click tracking macro (URL-escaped)
-    %%DEST_URL%%           Destination/landing page URL
-
-  Template Variables (set in GAM creative template UI):
-    [%iframeUrl%]          URL of HTML5 banner to load in iframe
-    [%imageUrl%]           URL of static image fallback
-    [%videoUrl%]           URL of MP4 video creative
-    [%videoControls%]      "visible" | "hidden" (default: visible)
-    [%iframeClickTagType%] "simple" | "custom" (default: custom)
-    [%reTargetingPixelUrl%] Retargeting pixel URL (fired on click)
-    [%trackingCode%]       Arbitrary HTML/JS tracking snippet
-
-  ─── MEDIA TYPES (priority order) ─────────────────────────────────
-
-  1. Video   — autoplay, loop, muted, with optional controls
-  2. Iframe  — responsive HTML5 banner (e.g., Swiper carousel)
-  3. Image   — static fallback, object-fit: contain
-
-  Only one type is active per impression. Priority: video > iframe > image.
-
-  ─── CLICKTAG MODES ───────────────────────────────────────────────
-
-  Image/Video modes:
-    Always use a transparent overlay. Click opens destination URL.
-    Retargeting pixel fires on click if configured.
-
-  Iframe mode — "simple":
-    Overlay covers iframe. All clicks handled by this template.
-    Banner inside iframe does NOT need its own click handling.
-
-  Iframe mode — "custom" (default):
-    No overlay. Banner handles its own clicks via URL query params:
-      ?clickTag=<macro+destination>&clickMacro=<macro>
-    Retargeting pixel does NOT fire (banner manages its own tracking).
-
-  ─── TRACKING ─────────────────────────────────────────────────────
-
-  trackingCode:     Rendered in hidden div on load. GAM injects content.
-  reTargetingPixelUrl: 1×1 pixel image appended on click (overlay modes only).
-
-  ─── INTERSCROLLER MECHANISM ──────────────────────────────────────
-
-  setupFriendlyIframe() accesses the parent page DOM to:
-    - Fix the GAM iframe to viewport (position: fixed)
-    - Create a scroll-height slot in the article flow
-    - Clip visibility to the slot's viewport intersection
-    - Add white background layers to content below the slot
-
-  Requires same-origin (friendly iframe) context.
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -95,9 +31,11 @@
         width: 100vw;
         height: 100%;
         max-width: 600px;
+        max-height: none;
+        aspect-ratio: unset;
         overflow: hidden;
       }
-      #adIframe {
+      iframe {
         position: fixed;
         top: 0;
         left: 0;
@@ -284,18 +222,6 @@
     </div>
 
     <script>
-      /*
-       * EXECUTION ORDER:
-       * 1. Config variables parsed (in <script> block above <body>)
-       * 2. DOM elements resolved (childIframe, fallbackImage, videoContainer)
-       * 3. Media mode detected (isVideoMode > isIframeMode > isImageMode)
-       * 4. Initial sizing applied (updateIframeFrame / updateVideoFrame / fitImageToViewport)
-       * 5. setupFriendlyIframe() — configures interscroller in parent page
-       * 6. Click layer created (coverAdWithClickLayer or appendClickTagsToIframeSrc)
-       * 7. Media-specific init (setVideoContent for video mode)
-       */
-
-      // childIframe: the ad content iframe inside this template (loads the banner creative)
       const childIframe = document.getElementById("adIframe");
       const fallbackImage = document.getElementById("adImage");
       const videoContainer = document.getElementById("video");
@@ -348,33 +274,17 @@
         return { width, left };
       }
 
-      /**
-       * Applies the shared 9:16 sizing and positioning to a content element and the click layer.
-       * @param {HTMLElement} element - The element to size (iframe, video container, or image)
-       * @param {object} [options]
-       * @param {boolean} [options.setMinHeight] - Also set minHeight (used for iframe)
-       * @param {HTMLElement} [options.innerVideoElement] - Inner <video> to fill the container (used for video)
-       */
-      function applyContentFrame(element, options) {
-        const opts = options || {};
+      function updateIframeFrame() {
+        if (!isIframeMode || !childIframe) return;
+
         const contentFrame = getContentFrame();
         const height = Math.min(contentFrame.width * (16 / 9), window.innerHeight - IFRAME_TOP_OFFSET_PX);
-
-        element.style.left = `${contentFrame.left}px`;
-        element.style.right = "auto";
-        element.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
-        element.style.width = `${contentFrame.width}px`;
-        element.style.height = `${height}px`;
-
-        if (opts.setMinHeight) {
-          element.style.minHeight = `${height}px`;
-        }
-
-        if (opts.innerVideoElement) {
-          opts.innerVideoElement.style.width = "100%";
-          opts.innerVideoElement.style.height = "100%";
-          opts.innerVideoElement.style.top = "0px";
-        }
+        childIframe.style.left = `${contentFrame.left}px`;
+        childIframe.style.right = "auto";
+        childIframe.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
+        childIframe.style.width = `${contentFrame.width}px`;
+        childIframe.style.height = `${height}px`;
+        childIframe.style.minHeight = `${height}px`;
 
         if (clickLayerElement) {
           clickLayerElement.style.left = `${contentFrame.left}px`;
@@ -384,15 +294,31 @@
         }
       }
 
-      function updateIframeFrame() {
-        if (!isIframeMode || !childIframe) return;
-        applyContentFrame(childIframe, { setMinHeight: true });
-      }
-
       function updateVideoFrame() {
         if (!isVideoMode || !videoContainer) return;
+
+        const contentFrame = getContentFrame();
+        const height = Math.min(contentFrame.width * (16 / 9), window.innerHeight - IFRAME_TOP_OFFSET_PX);
         videoContainer.style.transform = "none";
-        applyContentFrame(videoContainer, { innerVideoElement: videoContainer.querySelector("video") });
+        videoContainer.style.left = `${contentFrame.left}px`;
+        videoContainer.style.right = "auto";
+        videoContainer.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
+        videoContainer.style.width = `${contentFrame.width}px`;
+        videoContainer.style.height = `${height}px`;
+
+        const video = videoContainer.querySelector("video");
+        if (video) {
+          video.style.width = "100%";
+          video.style.height = "100%";
+          video.style.top = "0px";
+        }
+
+        if (clickLayerElement) {
+          clickLayerElement.style.left = `${contentFrame.left}px`;
+          clickLayerElement.style.width = `${contentFrame.width}px`;
+          clickLayerElement.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
+          clickLayerElement.style.height = `${height}px`;
+        }
       }
 
       if (hasVideoUrl && (hasIframeUrl || hasImageUrl)) {
@@ -431,7 +357,21 @@
 
       function fitImageToViewport() {
         if (!fallbackImage || !isImageMode) return;
-        applyContentFrame(fallbackImage);
+
+        const contentFrame = getContentFrame();
+        const height = Math.min(contentFrame.width * (16 / 9), window.innerHeight - IFRAME_TOP_OFFSET_PX);
+        fallbackImage.style.left = `${contentFrame.left}px`;
+        fallbackImage.style.right = "auto";
+        fallbackImage.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
+        fallbackImage.style.width = `${contentFrame.width}px`;
+        fallbackImage.style.height = `${height}px`;
+
+        if (clickLayerElement) {
+          clickLayerElement.style.left = `${contentFrame.left}px`;
+          clickLayerElement.style.width = `${contentFrame.width}px`;
+          clickLayerElement.style.top = `${IFRAME_TOP_OFFSET_PX}px`;
+          clickLayerElement.style.height = `${height}px`;
+        }
       }
 
       function fitVideoToViewport() {
@@ -454,7 +394,6 @@
 
       function setupFriendlyIframe() {
         try {
-          // gptIframe: the GAM wrapper iframe that contains THIS template in the parent page
           const gptIframe = window.frameElement;
           if (!gptIframe) return false;
 
@@ -746,12 +685,32 @@
             const topForFrame = top <= SNAP_TOP_TOLERANCE_PX ? 0 : top;
 
             if (isIframeMode && childIframe) {
-              applyContentFrame(childIframe, { setMinHeight: true });
+              const contentFrame = getContentFrame();
+              const frameTop = IFRAME_TOP_OFFSET_PX;
+              const frameHeight = Math.min(contentFrame.width * (16 / 9), vpHeight - IFRAME_TOP_OFFSET_PX);
+
+              childIframe.style.top = `${frameTop}px`;
+              childIframe.style.height = `${frameHeight}px`;
+              childIframe.style.minHeight = `${frameHeight}px`;
+
+              if (clickLayerElement) {
+                clickLayerElement.style.top = `${frameTop}px`;
+                clickLayerElement.style.height = `${frameHeight}px`;
+              }
             }
 
             if (isVideoMode && videoContainer) {
-              videoContainer.style.transform = "none";
-              applyContentFrame(videoContainer, { innerVideoElement: videoContainer.querySelector("video") });
+              const contentFrame = getContentFrame();
+              const frameTop = IFRAME_TOP_OFFSET_PX;
+              const frameHeight = Math.min(contentFrame.width * (16 / 9), window.innerHeight - IFRAME_TOP_OFFSET_PX);
+
+              videoContainer.style.top = `${frameTop}px`;
+              videoContainer.style.height = `${frameHeight}px`;
+
+              if (clickLayerElement) {
+                clickLayerElement.style.top = `${frameTop}px`;
+                clickLayerElement.style.height = `${frameHeight}px`;
+              }
             }
 
             const bottom = Math.min(vpHeight, slotRect.bottom);
@@ -883,21 +842,13 @@
         if (!hasRealValue(iframeUrl)) return;
         var clickTag = variables.clickMacroUrl + variables.clickThroughUrl;
         var clickMacro = variables.clickMacroUrl;
-        // Use '&' if the URL already has query params, otherwise start with '?'
-        var separator = iframeUrl.includes("?") ? "&" : "?";
-        childIframe.src = iframeUrl + separator + "clickTag=" + clickTag + "&clickMacro=" + clickMacro;
+        childIframe.src = iframeUrl + "?clickTag=" + clickTag + "&clickMacro=" + clickMacro;
       }
 
       if (isImageMode || isVideoMode) {
         coverAdWithClickLayer();
-        // Size the click layer immediately to match the 9:16 content area.
-        // Without this, the layer stays at 100vw × 100vh until the next resize or load event.
-        if (isImageMode) fitImageToViewport();
-        if (isVideoMode) updateVideoFrame();
       } else if (isIframeMode) {
-        // Only treat as "simple" if the macro resolved to that exact value.
-        // Unresolved "[%iframeClickTagType%]" falls through to the custom/default path.
-        if (hasRealValue(variables.iframeClickTagType) && variables.iframeClickTagType === "simple") {
+        if (variables.iframeClickTagType === "simple") {
           coverAdWithClickLayer();
         } else {
           appendClickTagsToIframeSrc();
@@ -930,6 +881,11 @@
         });
         video.load();
         fitVideoToViewport();
+
+        // Set poster image if provided (shown before playback starts)
+        /*if (this.variables.posterUrl.length > 0) {
+      video.poster = this.variables.posterUrl;
+    }*/
 
         // In video mode controls are always visible.
         var controls = document.getElementById("video-controls");

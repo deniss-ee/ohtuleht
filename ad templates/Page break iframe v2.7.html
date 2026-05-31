@@ -1,67 +1,3 @@
-<!--
-  ╔══════════════════════════════════════════════════════════════════╗
-  ║  Page Break (Interscroller) Ad Template                        ║
-  ║  Version: 2.6.2                                                ║
-  ╚══════════════════════════════════════════════════════════════════╝
-
-  PURPOSE:
-  Renders a fixed-position ad creative that is revealed as the user
-  scrolls past a slot in the parent page. Content fills a 9:16
-  aspect ratio container, centered horizontally, capped at 600px wide.
-
-  ─── CONFIGURABLE VARIABLES ───────────────────────────────────────
-
-  GAM Macros (populated by Google Ad Manager automatically):
-    %%CLICK_URL_ESC%%      Click tracking macro (URL-escaped)
-    %%DEST_URL%%           Destination/landing page URL
-
-  Template Variables (set in GAM creative template UI):
-    [%iframeUrl%]          URL of HTML5 banner to load in iframe
-    [%imageUrl%]           URL of static image fallback
-    [%videoUrl%]           URL of MP4 video creative
-    [%videoControls%]      "visible" | "hidden" (default: visible)
-    [%iframeClickTagType%] "simple" | "custom" (default: custom)
-    [%reTargetingPixelUrl%] Retargeting pixel URL (fired on click)
-    [%trackingCode%]       Arbitrary HTML/JS tracking snippet
-
-  ─── MEDIA TYPES (priority order) ─────────────────────────────────
-
-  1. Video   — autoplay, loop, muted, with optional controls
-  2. Iframe  — responsive HTML5 banner (e.g., Swiper carousel)
-  3. Image   — static fallback, object-fit: contain
-
-  Only one type is active per impression. Priority: video > iframe > image.
-
-  ─── CLICKTAG MODES ───────────────────────────────────────────────
-
-  Image/Video modes:
-    Always use a transparent overlay. Click opens destination URL.
-    Retargeting pixel fires on click if configured.
-
-  Iframe mode — "simple":
-    Overlay covers iframe. All clicks handled by this template.
-    Banner inside iframe does NOT need its own click handling.
-
-  Iframe mode — "custom" (default):
-    No overlay. Banner handles its own clicks via URL query params:
-      ?clickTag=<macro+destination>&clickMacro=<macro>
-    Retargeting pixel does NOT fire (banner manages its own tracking).
-
-  ─── TRACKING ─────────────────────────────────────────────────────
-
-  trackingCode:     Rendered in hidden div on load. GAM injects content.
-  reTargetingPixelUrl: 1×1 pixel image appended on click (overlay modes only).
-
-  ─── INTERSCROLLER MECHANISM ──────────────────────────────────────
-
-  setupFriendlyIframe() accesses the parent page DOM to:
-    - Fix the GAM iframe to viewport (position: fixed)
-    - Create a scroll-height slot in the article flow
-    - Clip visibility to the slot's viewport intersection
-    - Add white background layers to content below the slot
-
-  Requires same-origin (friendly iframe) context.
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -77,6 +13,7 @@
         overflow: hidden;
         background: transparent;
       }
+
       .container {
         position: fixed;
         top: 0;
@@ -90,6 +27,7 @@
         align-items: center;
         overflow: hidden;
       }
+
       .content {
         position: relative;
         width: 100vw;
@@ -97,6 +35,7 @@
         max-width: 600px;
         overflow: hidden;
       }
+
       #adIframe {
         position: fixed;
         top: 0;
@@ -108,6 +47,7 @@
         display: block;
         margin: 0 auto;
       }
+
       .fallback-image {
         position: fixed;
         top: 0;
@@ -119,12 +59,14 @@
         object-fit: contain;
         aspect-ratio: 9 / 16;
       }
+
       #tracking-code {
         display: none;
       }
+
       #video-controls {
         display: none;
-        /* Hidden by default, shown in video mode via JavaScript */
+
         position: fixed;
         top: 67px;
         right: 45px;
@@ -168,22 +110,18 @@
         opacity: 1;
       }
 
-      /* Remove focus outlines and prevent blue container effect */
       #video-controls > button:focus {
         outline: none;
         box-shadow: none;
       }
 
-      /* Ensure SVG elements don't trigger unwanted focus effects */
       #video-controls > button svg {
         pointer-events: none;
-        /* Prevents SVG from being the focus target */
         position: relative;
         z-index: 1;
-        filter: drop-shadow(0 0 2px rgba(38, 38, 38, 0.92)) drop-shadow(0 0 6px rgba(56, 56, 56, 0.78)) drop-shadow(0 0 10px rgba(74, 74, 74, 0.58));
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 4px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 8px rgba(0, 0, 0, 0.25));
       }
 
-      /* Volume button - no background image, uses inline SVG */
       #video-control-audio {
         background-image: none !important;
       }
@@ -191,13 +129,11 @@
       #video-control-playback {
         background-image: none !important;
       }
-      /**/
 
-      /* Prevent focus effects on content containers */
       #video:focus {
         outline: none;
       }
-      /* Video element styling - fills container with aspect ratio preservation */
+
       #video {
         position: fixed;
         top: 0;
@@ -209,6 +145,7 @@
         transform: translateX(-50%);
         overflow: hidden;
       }
+
       #video video {
         position: absolute;
         top: 0;
@@ -221,27 +158,60 @@
     </style>
   </head>
   <script>
-    const variables = {};
-    setVariable("clickMacroUrl", "%%CLICK_URL_ESC%%");
-    setVariable("clickThroughUrl", "%%DEST_URL%%");
-    // Video controls configuration
-    setVariable("videoControls", "[%videoControls%]");
-    setVariable("iframeClickTagType", "[%iframeClickTagType%]");
-    setVariable("reTargetingPixelUrl", "[%reTargetingPixelUrl%]");
-    function setVariable(name, value) {
-      variables[name] = value;
-    }
+    const CONFIG = {
+      gam: {
+        clickMacroUrl: "%%CLICK_URL_ESC%%",
+        clickThroughUrl: "%%DEST_URL%%",
+      },
+
+      template: {
+        videoControls: "[%videoControls%]",
+        iframeClickTagType: "[%iframeClickTagType%]",
+        reTargetingPixelUrl: "[%reTargetingPixelUrl%]",
+      },
+
+      layout: {
+        contentMaxWidthPx: 600,
+        iframeTopOffsetPx: 0,
+        videoControlsTopPx: 67,
+        videoControlsRightPx: 45,
+      },
+
+      interscroller: {
+        extraScrollRoomPx: 80,
+        snapTopTolerancePx: 1,
+        nextContentTopBleedPx: 52,
+      },
+
+      classes: {
+        iframe: "page-break-iframe",
+        slot: "page-break-slot",
+        styleId: "page-break-interscroller-style",
+        nextContentTarget: "page-break-next-content-target",
+        nextContentActive: "page-break-next-content-active",
+        nextContentLayer: "page-break-next-content-bg-layer",
+      },
+    };
+
+    const variables = {
+      clickMacroUrl: CONFIG.gam.clickMacroUrl,
+      clickThroughUrl: CONFIG.gam.clickThroughUrl,
+      videoControls: CONFIG.template.videoControls,
+      iframeClickTagType: CONFIG.template.iframeClickTagType,
+      reTargetingPixelUrl: CONFIG.template.reTargetingPixelUrl,
+    };
   </script>
+
   <body>
     <div class="container">
       <div class="content">
         <iframe id="adIframe" src="[%iframeUrl%]" scrolling="no" allowtransparency="true"></iframe>
-        <img id="adImage" class="fallback-image" src="[%imageUrl%]" alt="" />
+        <img class="fallback-image" id="adImage" src="[%imageUrl%]" alt />
         <div id="video">
           <video autoplay loop muted playsinline>
             <source src="[%videoUrl%]" type="video/mp4" />
           </video>
-          <!-- VIDEO CONTROLS: Mute/unmute button with inline SVG -->
+
           <div id="video-controls">
             <button
               id="video-control-audio"
@@ -249,13 +219,12 @@
                 event.stopPropagation();
                 toggleVideoAudio();
               ">
-              <!-- Volume On SVG (default state - video starts muted) -->
               <svg class="volume-on" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" style="display: none">
                 <path
                   d="M38.4231 23.95C38.4231 20.936 37.5831 18.2148 35.9031 15.7865C34.2231 13.3578 32.0118 11.5803 29.2691 10.454C28.9461 10.313 28.7206 10.1072 28.5926 9.83649C28.4643 9.56616 28.4689 9.29033 28.6066 9.00899C28.7383 8.70299 28.9739 8.50066 29.3136 8.40199C29.6533 8.30333 29.9949 8.32449 30.3386 8.46549C33.4489 9.79383 35.9521 11.8487 37.8481 14.63C39.7441 17.4117 40.6921 20.5182 40.6921 23.9495C40.6921 27.3805 39.7441 30.487 37.8481 33.269C35.9521 36.051 33.4489 38.1062 30.3386 39.4345C29.9949 39.5755 29.6533 39.5967 29.3136 39.498C28.9739 39.3993 28.7383 39.197 28.6066 38.891C28.4689 38.6097 28.4643 38.3338 28.5926 38.0635C28.7206 37.7928 28.9461 37.587 29.2691 37.446C32.0118 36.3197 34.2231 34.5422 35.9031 32.1135C37.5831 29.6852 38.4231 26.964 38.4231 23.95ZM14.7311 29H8.75011C8.33277 29 7.98811 28.864 7.71611 28.592C7.44411 28.3197 7.30811 27.9748 7.30811 27.5575V20.4425C7.30811 20.0252 7.44411 19.6803 7.71611 19.408C7.98811 19.136 8.33277 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9477 22.5941 12.143C23.0698 12.338 23.3076 12.6827 23.3076 13.177V34.8035C23.3076 35.3108 23.0698 35.662 22.5941 35.857C22.1184 36.0523 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM32.3076 24.002C32.3076 25.4933 31.9641 26.8517 31.2771 28.077C30.5898 29.3027 29.6109 30.268 28.3406 30.973C28.1109 31.1217 27.8878 31.1255 27.6711 30.9845C27.4544 30.8435 27.3461 30.646 27.3461 30.392V17.5385C27.3461 17.2848 27.4544 17.0907 27.6711 16.956C27.8878 16.8213 28.1109 16.8208 28.3406 16.9545C29.6109 17.6618 30.5898 18.6457 31.2771 19.906C31.9641 21.166 32.3076 22.5313 32.3076 24.002ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
                   fill="white"></path>
               </svg>
-              <!-- Volume Off SVG (shown when video is muted - initial state) -->
+
               <svg class="volume-off" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
                 <path
                   d="M35.5271 25.6305L30.7921 30.396C30.5691 30.619 30.3058 30.7338 30.0021 30.7405C29.6981 30.7468 29.4346 30.632 29.2116 30.396C28.9756 30.1603 28.8576 29.8887 28.8576 29.581C28.8576 29.273 28.9756 29.0012 29.2116 28.7655L33.9271 24.031L29.1616 19.296C28.9386 19.073 28.8239 18.8128 28.8176 18.5155C28.8109 18.2182 28.9256 17.9515 29.1616 17.7155C29.3976 17.4795 29.6726 17.3615 29.9866 17.3615C30.3006 17.3615 30.5691 17.4795 30.7921 17.7155L35.5271 22.431L40.2616 17.6655C40.4846 17.4425 40.7481 17.331 41.0521 17.331C41.3558 17.331 41.6256 17.4425 41.8616 17.6655C42.0976 17.9015 42.2156 18.1765 42.2156 18.4905C42.2156 18.8045 42.0976 19.073 41.8616 19.296L37.1271 24.031L41.8921 28.7655C42.1154 28.9885 42.2303 29.252 42.2366 29.556C42.2429 29.8597 42.1281 30.1295 41.8921 30.3655C41.6564 30.6012 41.3848 30.719 41.0771 30.719C40.7694 30.719 40.4976 30.6012 40.2616 30.3655L35.5271 25.6305ZM14.7311 29H8.75011C8.32977 29 7.98427 28.8647 7.71361 28.594C7.44327 28.3237 7.30811 27.9782 7.30811 27.5575V20.4425C7.30811 20.0218 7.44327 19.6763 7.71361 19.406C7.98427 19.1353 8.32977 19 8.75011 19H14.7311L21.3346 12.3965C21.6986 12.0322 22.1184 11.9462 22.5941 12.1385C23.0698 12.3308 23.3076 12.677 23.3076 13.177V34.8035C23.3076 35.3165 23.0698 35.6692 22.5941 35.8615C22.1184 36.0538 21.6986 35.9678 21.3346 35.6035L14.7311 29ZM21.0386 16.1575L15.7541 21.2695H9.5771V26.7305H15.7541L21.0386 31.873V16.1575Z"
@@ -269,33 +238,21 @@
                 toggleVideoPlayback();
               ">
               <svg class="playback-pause" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <path d="M17 13C17 12.4477 17.4477 12 18 12H22C22.5523 12 23 12.4477 23 13V35C23 35.5523 22.5523 36 22 36H18C17.4477 36 17 35.5523 17 35V13Z" fill="white" />
-                <path d="M25 13C25 12.4477 25.4477 12 26 12H30C30.5523 12 31 12.4477 31 13V35C31 35.5523 30.5523 36 30 36H26C25.4477 36 25 35.5523 25 35V13Z" fill="white" />
+                <path d="M17 13C17 12.4477 17.4477 12 18 12H22C22.5523 12 23 12.4477 23 13V35C23 35.5523 22.5523 36 22 36H18C17.4477 36 17 35.5523 17 35V13Z" fill="white"></path>
+                <path d="M25 13C25 12.4477 25.4477 12 26 12H30C30.5523 12 31 12.4477 31 13V35C31 35.5523 30.5523 36 30 36H26C25.4477 36 25 35.5523 25 35V13Z" fill="white"></path>
               </svg>
               <svg class="playback-play" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" style="display: none">
-                <path d="M19 13.8C19 12.9319 19.9808 12.4299 20.6838 12.9397L33.3338 22.1397C33.9131 22.561 33.9131 23.439 33.3338 23.8603L20.6838 33.0603C19.9808 33.5701 19 33.0681 19 32.2V13.8Z" fill="white" />
+                <path d="M19 13.8C19 12.9319 19.9808 12.4299 20.6838 12.9397L33.3338 22.1397C33.9131 22.561 33.9131 23.439 33.3338 23.8603L20.6838 33.0603C19.9808 33.5701 19 33.0681 19 32.2V13.8Z" fill="white"></path>
               </svg>
             </button>
           </div>
         </div>
-        <!-- End of video -->
       </div>
+
       <div id="tracking-code">[%trackingCode%]</div>
     </div>
 
     <script>
-      /*
-       * EXECUTION ORDER:
-       * 1. Config variables parsed (in <script> block above <body>)
-       * 2. DOM elements resolved (childIframe, fallbackImage, videoContainer)
-       * 3. Media mode detected (isVideoMode > isIframeMode > isImageMode)
-       * 4. Initial sizing applied (updateIframeFrame / updateVideoFrame / fitImageToViewport)
-       * 5. setupFriendlyIframe() — configures interscroller in parent page
-       * 6. Click layer created (coverAdWithClickLayer or appendClickTagsToIframeSrc)
-       * 7. Media-specific init (setVideoContent for video mode)
-       */
-
-      // childIframe: the ad content iframe inside this template (loads the banner creative)
       const childIframe = document.getElementById("adIframe");
       const fallbackImage = document.getElementById("adImage");
       const videoContainer = document.getElementById("video");
@@ -328,13 +285,15 @@
       const hasIframeUrl = hasRealValue(iframeUrl);
       const hasImageUrl = hasRealValue(imageUrl);
       const showVideoControls = shouldShowVideoControls(variables.videoControls || "");
+
       const isVideoMode = hasVideoUrl;
       const isIframeMode = !isVideoMode && hasIframeUrl;
       const isImageMode = !isVideoMode && !hasIframeUrl && hasImageUrl;
-      const IFRAME_TOP_OFFSET_PX = 0;
-      const VIDEO_CONTROLS_FIXED_TOP_PX = 67;
-      const VIDEO_CONTROLS_FIXED_RIGHT_PX = 35;
-      const CONTENT_MAX_WIDTH_PX = 600;
+
+      const IFRAME_TOP_OFFSET_PX = CONFIG.layout.iframeTopOffsetPx;
+      const VIDEO_CONTROLS_FIXED_TOP_PX = CONFIG.layout.videoControlsTopPx;
+      const VIDEO_CONTROLS_FIXED_RIGHT_PX = CONFIG.layout.videoControlsRightPx;
+      const CONTENT_MAX_WIDTH_PX = CONFIG.layout.contentMaxWidthPx;
       let clickLayerElement = null;
 
       function applyFixedVideoControlsPosition(controls) {
@@ -348,13 +307,6 @@
         return { width, left };
       }
 
-      /**
-       * Applies the shared 9:16 sizing and positioning to a content element and the click layer.
-       * @param {HTMLElement} element - The element to size (iframe, video container, or image)
-       * @param {object} [options]
-       * @param {boolean} [options.setMinHeight] - Also set minHeight (used for iframe)
-       * @param {HTMLElement} [options.innerVideoElement] - Inner <video> to fill the container (used for video)
-       */
       function applyContentFrame(element, options) {
         const opts = options || {};
         const contentFrame = getContentFrame();
@@ -454,7 +406,6 @@
 
       function setupFriendlyIframe() {
         try {
-          // gptIframe: the GAM wrapper iframe that contains THIS template in the parent page
           const gptIframe = window.frameElement;
           if (!gptIframe) return false;
 
@@ -469,16 +420,16 @@
             cursor = cursor.parentElement;
           }
 
-          const IFRAME_CLASS = "page-break-iframe";
-          const SLOT_CLASS = "page-break-slot";
-          const STYLE_ID = "page-break-interscroller-style";
-          const EXTRA_SCROLL_ROOM_PX = 80;
-          const SNAP_TOP_TOLERANCE_PX = 1;
-          const NEXT_CONTENT_TOP_BLEED_PX = 52;
+          const IFRAME_CLASS = CONFIG.classes.iframe;
+          const SLOT_CLASS = CONFIG.classes.slot;
+          const STYLE_ID = CONFIG.classes.styleId;
+          const EXTRA_SCROLL_ROOM_PX = CONFIG.interscroller.extraScrollRoomPx;
+          const SNAP_TOP_TOLERANCE_PX = CONFIG.interscroller.snapTopTolerancePx;
+          const NEXT_CONTENT_TOP_BLEED_PX = CONFIG.interscroller.nextContentTopBleedPx;
           const parentWin = window.parent;
-          const NEXT_CONTENT_TARGET_CLASS = "page-break-next-content-target";
-          const NEXT_CONTENT_ACTIVE_CLASS = "page-break-next-content-active";
-          const NEXT_CONTENT_LAYER_CLASS = "page-break-next-content-bg-layer";
+          const NEXT_CONTENT_TARGET_CLASS = CONFIG.classes.nextContentTarget;
+          const NEXT_CONTENT_ACTIVE_CLASS = CONFIG.classes.nextContentActive;
+          const NEXT_CONTENT_LAYER_CLASS = CONFIG.classes.nextContentLayer;
           let nextContentElements = [];
           let nextContentTargetsResolved = false;
           let nextContentAnchor = null;
@@ -552,8 +503,7 @@
             pointer-events: auto !important;
           }
 
-          /* Ensure adjacent article sections scroll above the fixed creative */
-          main section {
+main section {
             position: relative !important;
             z-index: 1 !important;
           }
@@ -842,7 +792,6 @@
         const clickLayerHeight = useFramedLayout ? `calc(100vh - ${IFRAME_TOP_OFFSET_PX}px)` : "100vh";
         clickLayer.style.cssText = `position:fixed;top:${clickLayerTop};left:0;width:100vw;height:${clickLayerHeight};cursor:pointer;z-index:1000;background:transparent;`;
         clickLayer.addEventListener("click", (event) => {
-          // Allow video controls to be interacted with through the click layer.
           if (isVideoMode) {
             const x = event.clientX;
             const y = event.clientY;
@@ -883,20 +832,17 @@
         if (!hasRealValue(iframeUrl)) return;
         var clickTag = variables.clickMacroUrl + variables.clickThroughUrl;
         var clickMacro = variables.clickMacroUrl;
-        // Use '&' if the URL already has query params, otherwise start with '?'
+
         var separator = iframeUrl.includes("?") ? "&" : "?";
         childIframe.src = iframeUrl + separator + "clickTag=" + clickTag + "&clickMacro=" + clickMacro;
       }
 
       if (isImageMode || isVideoMode) {
         coverAdWithClickLayer();
-        // Size the click layer immediately to match the 9:16 content area.
-        // Without this, the layer stays at 100vw × 100vh until the next resize or load event.
+
         if (isImageMode) fitImageToViewport();
         if (isVideoMode) updateVideoFrame();
       } else if (isIframeMode) {
-        // Only treat as "simple" if the macro resolved to that exact value.
-        // Unresolved "[%iframeClickTagType%]" falls through to the custom/default path.
         if (hasRealValue(variables.iframeClickTagType) && variables.iframeClickTagType === "simple") {
           coverAdWithClickLayer();
         } else {
@@ -931,7 +877,6 @@
         video.load();
         fitVideoToViewport();
 
-        // In video mode controls are always visible.
         var controls = document.getElementById("video-controls");
         if (controls) {
           if (!showVideoControls) {
