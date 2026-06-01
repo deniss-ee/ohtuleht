@@ -1,0 +1,73 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>JALGPALLI MM 2026</title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="banner-wrapper">
+
+      <div class="block left">
+        <h1>JALGPALLI MM 2026</h1>
+        <div class="url-wrapper">
+          <a href="https://www.ohtuleht.ee/1159101" target="_blank" rel="noopener noreferrer">Ajakava</a>
+          <a href="https://www.ohtuleht.ee/1159104" target="_blank" rel="noopener noreferrer">Koosseisud</a>
+        </div>
+      </div>
+
+      <div class="block right">
+        <img src="epicbet.svg" alt="Epicbet" class="epicbet">
+      </div>
+    </div>
+    <script>
+      (function() {
+        var blocks = document.querySelectorAll('.block');
+        var mql = window.matchMedia('(max-width: 639px)');
+        var interval = null;
+        var active = 0;
+
+        function show(index) {
+          blocks.forEach(function(b, i) {
+            b.classList.toggle('mobile-hidden', i !== index);
+          });
+        }
+
+        function start() {
+          active = 0;
+          // Suppress transition on initial setup
+          blocks.forEach(function(b) { b.style.transition = 'none'; });
+          show(active);
+          // Force reflow then restore transition
+          blocks[0].offsetHeight;
+          blocks.forEach(function(b) { b.style.transition = ''; });
+          interval = setInterval(function() {
+            active = (active + 1) % blocks.length;
+            show(active);
+          }, 3000);
+        }
+
+        function stop() {
+          clearInterval(interval);
+          interval = null;
+          blocks.forEach(function(b) { b.classList.remove('mobile-hidden'); });
+        }
+
+        function handleChange(e) {
+          if (e.matches) start(); else stop();
+        }
+
+        mql.addEventListener('change', handleChange);
+        if (mql.matches) start();
+      })();
+    </script>
+  </body>
+</html>

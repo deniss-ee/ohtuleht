@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+<ng-container ng-show="isMobileUserAgent()">
+    <div class="pn-modal pn-modal--[%% modal-color %%] pn-modal--[%% modal-alignment %%]">
+      <img src="https://b.ohtuleht.ee/html5/Ohtuleht/Piano/2026/May/foto.png" alt="" class="kuldmedal" />
+      <img class="pn-modal__logo [%% logo-visibility %%]" src="https://b.ohtuleht.ee/html5/Ohtuleht/Piano/logo-ol-[%% logo-color %%].svg" alt="Õhtuleht" />
+      <h1 class="pn-modal__title">[%% modal-h1 %%]</h1>
+      <p class="pn-modal__text" style="width: 100%">[%% modal-p %%]</p>
+      <button class="btn btn--[%% btn-color %%]" ng-click="startCheckout('TM6P0L2K0R1Q')" href="[%% btn-url %%]">[%% btn-text %%]</button>
+      <p class="pn-modal__footer" style="width: 75%">[%% modal-foo %%]</p>
+    </div>
+</ng-container>
+<ng-container ng-hide="isMobileUserAgent()">
+    <div class="pn-modal pn-modal--[%% modal-color %%] pn-modal--[%% modal-alignment %%]">
+      <img src="https://b.ohtuleht.ee/html5/Ohtuleht/Piano/2026/May/foto.png" alt="" class="kuldmedal" />
+      <img class="pn-modal__logo [%% logo-visibility %%]" src="https://b.ohtuleht.ee/html5/Ohtuleht/Piano/logo-ol-[%% logo-color %%].svg" alt="Õhtuleht" />
+      <h1 class="pn-modal__title">[%% modal-h1 %%]</h1>
+      <p class="pn-modal__text" style="width: 100%">[%% modal-p %%]</p>
+      <button class="btn btn--[%% btn-color %%]" ng-click="startCheckout('TM6P0L2K0R1Q')" href="[%% btn-url %%]">[%% btn-text %%]</button>
+      <p class="pn-modal__footer" style="width: 75%">[%% modal-foo %%]</p>
+    </div>
+</ng-container>
+    </body>
+</html>

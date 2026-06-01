@@ -1,0 +1,191 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="style.css" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TWLBVEFSRT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TWLBVEFSRT');
+    </script>
+  </head>
+
+  <body>
+    <div class="banner-wrapper">
+
+      <!-- Slide 1: Intro — click anywhere to proceed to the map -->
+      <div class="slide slide-intro" id="slide-intro">
+        <h1>Kas sinu lapsest<br />saab järgmine<br /><span class="green">ronaldo?</span></h1>
+        <h2>Leia lähim jalgpallitrenn!</h2>
+        <div class="cta-wrapper">
+          <span>Kliki markerit, et leida klubi</span>
+          <img src="../arrow-right.svg" alt="->" />
+        </div>
+      </div>
+
+      <!-- Slide 2: Map with pins -->
+      <div class="slide slide-map" id="slide-map">
+        <div class="map-inner" id="map-inner">
+          <img class="map" src="../map.png" alt="Estonia" />
+        </div>
+        <div class="overlay-wrapper" id="overlay-wrapper" style="display: none">
+          <div class="card-wrapper" id="card-wrapper" style="display: none"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="../clubs.js"></script>
+    <script>
+      // Proportional scaling: banner is authored at 600×500; scale to fit any container
+      function applyScale() {
+        var scale = Math.min(window.innerWidth / 600, window.innerHeight / 500);
+        document.querySelector('.banner-wrapper').style.transform = 'scale(' + scale + ')';
+      }
+      window.addEventListener('resize', applyScale);
+      applyScale();
+
+      var olBanner = {
+        getQueryStringValue: function (key) {
+          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+        },
+        getClickTag: function (customDestinationUrl) {
+          this.clickMacro = this.getQueryStringValue("clickMacro");
+          this.clickTag = this.getQueryStringValue("clickTag");
+          if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
+            return this.clickMacro + customDestinationUrl;
+          } else {
+            return this.clickTag;
+          }
+        },
+      };
+      var clickTag = "";
+
+      (function () {
+        // Original map dimensions used for proportional pin placement
+        var MAP_W = 543;
+        var MAP_H = 354;
+
+        var UTM = "?utm_source=oleht&utm_medium=banner&utm_campaign=uusRonaldo&utm_id=uusRonaldo";
+        var ctaClickCounts = {};
+
+        var slideIntro    = document.getElementById('slide-intro');
+        var slideMap      = document.getElementById('slide-map');
+        var mapInner      = document.getElementById('map-inner');
+        var overlayWrapper = document.getElementById('overlay-wrapper');
+        var cardWrapper   = document.getElementById('card-wrapper');
+
+        function appendUTM(url) {
+          return url + (url.indexOf("?") === -1 ? UTM : UTM.replace("?", "&"));
+        }
+
+        // Slide 1 → Slide 2 transition
+        slideIntro.addEventListener('click', function () {
+          slideIntro.classList.add('slide-out');
+          slideMap.classList.add('slide-in');
+        });
+
+        function renderPins() {
+          CLUBS.forEach(function (club) {
+            var pin = document.createElement("div");
+            pin.className = "pin-wrapper";
+            pin.style.left = (club.pin.left / MAP_W * 100) + '%';
+            pin.style.top  = (club.pin.top  / MAP_H * 100) + '%';
+
+            var labelStyle = '';
+            if (club.label) {
+              var ox = club.label.offsetX || 0;
+              var oy = club.label.offsetY || 0;
+              labelStyle = ' style="position:relative;left:' + ox + 'px;top:' + oy + 'px;"';
+            }
+
+            pin.innerHTML =
+              '<div class="pin"><img src="../pin.svg" alt /></div>' +
+              '<div class="pin-info"' + labelStyle + '>' +
+              '<p class="pin-name">' + club.name + '</p>' +
+              '<p class="pin-city">' + club.city + '</p>' +
+              '</div>';
+
+            pin.addEventListener('click', function (e) {
+              e.stopPropagation();
+              openCard(club);
+            });
+
+            mapInner.appendChild(pin);
+          });
+        }
+
+        function openCard(club) {
+          var fieldsHTML = '';
+          club.overlay.fields.forEach(function (field) {
+            if (field.hidden) return;
+            fieldsHTML +=
+              '<div class="info-block">' +
+              (field.icon ? '<img class="icon" src="../' + field.icon + '" alt="" />' : '') +
+              '<div class="data-wrapper">' +
+              '<p class="data-1">' + field.label + '</p>' +
+              '<p class="data-2">' + field.value + '</p>' +
+              '</div></div>';
+          });
+
+          var destinationUrl = appendUTM(club.overlay.url);
+
+          cardWrapper.classList.remove('card-visible');
+          cardWrapper.innerHTML =
+            '<div class="header">' +
+            '<div class="logo-container"><img src="../logo/' + club.logo + '" alt /></div>' +
+            '<div class="name-container">' +
+            '<p class="name">' + club.name + '</p>' +
+            '<p class="city">' + club.city + '</p>' +
+            '</div></div>' +
+            '<div class="info-container">' +
+            '<div class="info">' + fieldsHTML + '</div>' +
+            '<div class="btn-wrapper">' +
+            '<div class="cta" id="cta-link">loe lähemalt</div>' +
+            '<button class="back">tagasi</button>' +
+            '</div></div>';
+
+          document.getElementById('cta-link').addEventListener('click', function () {
+            if (!ctaClickCounts[club.id]) ctaClickCounts[club.id] = 0;
+            ctaClickCounts[club.id]++;
+            gtag('event', 'Banner_click_uusRonaldo', {
+              'event_category': 'CTA Click',
+              'event_label': club.name,
+              'answer': String(ctaClickCounts[club.id])
+            });
+            window.open(olBanner.getClickTag(destinationUrl), '_blank');
+          });
+
+          cardWrapper.querySelector('.back').addEventListener('click', function () {
+            cardWrapper.classList.remove('card-visible');
+            overlayWrapper.classList.add('overlay-hiding');
+            setTimeout(function () {
+              overlayWrapper.style.display = 'none';
+              overlayWrapper.classList.remove('overlay-hiding');
+              cardWrapper.style.display = 'none';
+            }, 150);
+          });
+
+          overlayWrapper.style.display = 'flex';
+          cardWrapper.style.display = 'flex';
+
+          requestAnimationFrame(function () {
+            cardWrapper.classList.add('card-visible');
+          });
+        }
+
+        renderPins();
+      })();
+    </script>
+  </body>
+</html>

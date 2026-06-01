@@ -1,0 +1,344 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@700&display=swap");
+
+:root {
+  --mm26-blue: #00142d;
+  --mm26-green: #b6ea00;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  min-width: 0;
+  border-width: 0;
+  border-style: solid;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.15;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: block;
+}
+
+p,
+table,
+blockquote,
+address,
+pre,
+iframe,
+form,
+figure,
+dl {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+dt {
+  font-weight: 700;
+}
+
+dd {
+  margin-left: 0;
+}
+
+hr {
+  clear: both;
+  box-sizing: content-box;
+  height: 0;
+  margin: 0;
+  border-top-width: 1px;
+  overflow: visible;
+  color: inherit;
+}
+
+pre {
+  font-size: inherit;
+  font-family: monospace, monospace;
+}
+
+address {
+  font-style: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+code,
+kbd,
+samp {
+  font-size: inherit;
+  font-family: monospace, monospace;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+svg,
+img,
+embed,
+object,
+iframe {
+  -webkit-user-drag: none;
+  vertical-align: bottom;
+  pointer-events: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  vertical-align: middle;
+  background: transparent;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[type="button"]:disabled,
+[type="reset"]:disabled,
+[type="submit"]:disabled {
+  cursor: default;
+}
+
+:-moz-focusring {
+  outline: auto;
+}
+
+select:disabled {
+  opacity: inherit;
+}
+
+option {
+  padding: 0;
+}
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type="search"] {
+  outline-offset: -2px;
+}
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+[type="number"] {
+  -moz-appearance: textfield;
+}
+
+label[for] {
+  cursor: pointer;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+[contenteditable]:focus {
+  outline: auto;
+}
+
+table {
+  border-color: inherit;
+  border-collapse: collapse;
+}
+
+caption {
+  text-align: left;
+}
+
+td,
+th {
+  padding: 0;
+  vertical-align: top;
+}
+
+th {
+  font-weight: 700;
+  text-align: left;
+}
+
+.banner-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1248px;
+  height: 68px;
+  background: url("bg.jpg");
+  background-position: center;
+  background-size: cover;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.block {
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px; /* 100% */
+  font-family: "Fira Sans Condensed";
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.url-wrapper {
+  gap: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.url-wrapper > a {
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #00142d;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px; /* 100% */
+  font-family: "Fira Sans Condensed";
+  text-transform: uppercase;
+  background: rgba(182, 234, 0, 0.9);
+  transition: all 0.1s ease-in-out;
+}
+
+.url-wrapper > a:hover {
+  background: rgba(182, 234, 0, 1);
+}
+
+@media (max-width: 639px) {
+  .block {
+    transition: opacity 0.4s ease;
+  }
+  .block.mobile-hidden {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .banner-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+  .block {
+    gap: 16px;
+    flex-direction: row;
+  }
+}
