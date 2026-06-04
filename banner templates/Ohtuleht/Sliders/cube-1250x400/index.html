@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="utf-8">
+  <title>Banner 1250x400</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #000; }
+
+    .banner-wrap {
+      position: relative;
+      width: 1250px;
+      height: 400px;
+      overflow: hidden;
+            background: #fff;
+    }
+
+    .swiper {
+      position: absolute;
+      inset: 0;
+    }
+
+    .swiper-slide {
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 1250px;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .nav-btn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      opacity: .8;
+      transition: opacity .15s;
+    }
+    .nav-btn:hover { opacity: 1; }
+    .nav-btn--prev { top: 8px; }
+    .nav-btn--next { bottom: 8px; }
+    .nav-btn svg { width: 100%; height: 100%; display: block; }
+  </style>
+</head>
+<body>
+  <script>
+        var olBanner = {
+      getQueryStringValue: function(key) {
+        return decodeURIComponent(window.location.search.replace(
+          new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g,"$&") + "(?:=([^&]*))?)?.*$","i"), "$1"
+        ));
+      },
+      getClickTag: function(url) {
+        this.clickMacro = this.getQueryStringValue("clickMacro");
+        this.clickTag   = this.getQueryStringValue("clickTag");
+        return (url && url.length) ? this.clickMacro + url : this.clickTag;
+      }
+    };
+    var clickTag = "";
+  </script>
+
+  <div class="banner-wrap">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://onoff.ee/promo'),'_blank')">
+          <img src="https://picsum.photos/seed/onoff1/1250/400" alt="">
+        </div>
+        <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://onoff.ee/et/71-pesumasinad'),'_blank')">
+          <img src="https://picsum.photos/seed/onoff2/1250/400" alt="">
+        </div>
+        <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://onoff.ee/et/brand/505-dreame'),'_blank')">
+          <img src="https://picsum.photos/seed/onoff3/1250/400" alt="">
+        </div>
+        <div class="swiper-slide" onclick="window.open(olBanner.getClickTag('https://onoff.ee/et/brand/45-philips'),'_blank')">
+          <img src="https://picsum.photos/seed/onoff4/1250/400" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="nav-btn nav-btn--prev"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42">
+      <path fill="#000" fill-opacity=".333" d="M38,42H4C1.8,42,0,40.2,0,38V4C0,1.8,1.8,0,4,0h34C40.2,0,42,1.8,42,4v34C42,40.2,40.2,42,38,42Z"/>
+      <path fill="#fff" d="M21,17.2l-9.2,9.2-2.8-2.8,12-12,12,12-2.8,2.8L21,17.2Z"/>
+    </svg></div>
+    <div class="nav-btn nav-btn--next"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42">
+      <path fill="#000" fill-opacity=".333" d="M38,42H4C1.8,42,0,40.2,0,38V4C0,1.8,1.8,0,4,0h34C40.2,0,42,1.8,42,4v34C42,40.2,40.2,42,38,42Z"/>
+      <path fill="#fff" d="M21,24.8l9.2-9.2,2.8,2.8-12,12-12-12,2.8-2.8L21,24.8Z"/>
+    </svg></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+  <script>
+    new Swiper(".mySwiper", {
+      direction: "vertical",
+      effect: "cube",
+      cubeEffect: { shadow: false },
+      loop: true,
+      speed: 500,
+      autoplay: { delay: 2500, disableOnInteraction: false },
+      navigation: { prevEl: ".nav-btn--prev", nextEl: ".nav-btn--next" }
+    });
+  </script>
+</body>
+</html>
