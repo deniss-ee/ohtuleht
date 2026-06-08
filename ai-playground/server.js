@@ -1,15 +1,20 @@
 require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
-const Groq = require('groq-sdk');
 const path = require('path');
 
 const app = express();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 app.use(express.json({ limit: '25mb' }));
 app.use(express.static(path.join(__dirname)));
+
+function fallbackArticle({ mood, lighting, style }) {
+  return {
+    headline: 'Breaking News Update',
+    body: `A developing story is unfolding in ${mood}, with reporters on site describing ${lighting}. Images from the scene reflect a ${style} look while officials continue to verify details. Authorities say updates will be released as soon as more information is confirmed.`,
+  };
+}
 
 app.post('/edit-photo', upload.single('photo'), async (req, res) => {
   try {
@@ -22,7 +27,9 @@ app.post('/edit-photo', upload.single('photo'), async (req, res) => {
     form.append('prompt', `${prompt} Do not alter any faces, people, or their expressions in any way. Only adjust color grading, lighting mood, and overall tone.`);
     form.append('model', 'gptimage-large');
 
-    const headers = { Authorization: `Bearer ${process.env.POLLINATIONS_KEY}` };
+    const headers = process.env.POLLINATIONS_KEY
+      ? { Authorization: `Bearer ${process.env.POLLINATIONS_KEY}` }
+      : {};
 
     const polRes = await fetch('https://gen.pollinations.ai/v1/images/edits', {
       method: 'POST',
@@ -56,19 +63,39 @@ app.post('/generate-article', async (req, res) => {
   try {
     const { mood, lighting, style } = req.body;
 
-    const prompt = `Write a short news article (3-4 sentences) for a news photo with the following characteristics: mood is ${mood}, lighting is ${lighting}, visual style is ${style}. Write it as a real news article with a headline. English language. Keep it neutral and journalistic in tone. Return JSON only, no markdown, in this format: { "headline": string, "body": string }`;
+    const prompt = [
+      'Write a short news article (3-4 sentences) for a news photo.',
+      `Mood: ${mood}.`,
+      `Lighting/outfit context: ${lighting}.`,
+      `Visual style: ${style}.`,
+      'Use neutral, journalistic English.',
+      'Return JSON only (no markdown) in this exact shape:',
+      '{"headline":"...","body":"..."}',
+    ].join(' ');
 
-    const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'user', content: prompt }],
-      response_format: { type: 'json_object' },
+    const encodedPrompt = encodeURIComponent(prompt);
+    const textRes = await fetch(`https://text.pollinations.ai/${encodedPrompt}`, {
+      headers: {
+        Authorization: process.env.POLLINATIONS_KEY ? `Bearer ${process.env.POLLINATIONS_KEY}` : undefined,
+      },
     });
 
-    const parsed = JSON.parse(completion.choices[0].message.content);
-    res.json(parsed);
+    if (!textRes.ok) {
+      return res.json(fallbackArticle({ mood, lighting, style }));
+    }
+
+    const raw = (await textRes.text()).trim();
+    const jsonCandidate = raw.match(/\{[\s\S]*\}/)?.[0] || raw;
+    const parsed = JSON.parse(jsonCandidate);
+
+    res.json({
+      headline: parsed.headline || 'Breaking News Update',
+      body: parsed.body || fallbackArticle({ mood, lighting, style }).body,
+    });
   } catch (err) {
     console.error('generate-article error:', err);
-    res.status(500).json({ error: err.message || 'Article generation failed' });
+    const { mood = 'an active scene', lighting = 'field conditions', style = 'documentary framing' } = req.body || {};
+    res.json(fallbackArticle({ mood, lighting, style }));
   }
 });
 
