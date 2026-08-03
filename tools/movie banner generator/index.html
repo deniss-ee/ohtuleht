@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Video Banner Generator (Dynamic Size)</title>
@@ -86,28 +86,28 @@
   </head>
   <body>
     <div class="container" id="container">
-      <h2>Генератор Video Banner ZIP</h2>
-      <label>Фоновая картинка (1250px версия): <input type="file" accept="image/*" id="bg-input" /></label>
-      <label>Фоновая картинка (1280px версия): <input type="file" accept="image/*" id="bg-input-2" /></label>
-      <label>Видео: <input type="file" accept="video/mp4,video/webm" id="video-input" /></label>
-      <label>Высота видео (px): <input type="number" id="video-height" value="320" min="50" max="1000" /></label>
+      <h2>Video Banner ZIP Generator</h2>
+      <label>Background image (1250px version): <input type="file" accept="image/*" id="bg-input" /></label>
+      <label>Background image (1280px version): <input type="file" accept="image/*" id="bg-input-2" /></label>
+      <label>Video: <input type="file" accept="video/mp4,video/webm" id="video-input" /></label>
+      <label>Video height (px): <input type="number" id="video-height" value="320" min="50" max="1000" /></label>
       <label>
-        Позиция видео:
+        Video position:
         <select id="video-position">
-          <option value="left">Слева</option>
-          <option value="center" selected>По центру</option>
-          <option value="right">Справа</option>
+          <option value="left">Left</option>
+          <option value="center" selected>Center</option>
+          <option value="right">Right</option>
         </select>
       </label>
-      <label>Горизонтальный отступ (px): <input type="number" id="video-offset" value="40" min="0" max="500" /></label>
-      <label>URL для клика (необязательно): <input type="text" id="click-url" placeholder="https://example.com" /></label>
+      <label>Horizontal offset (px): <input type="number" id="video-offset" value="40" min="0" max="500" /></label>
+      <label>Click URL (optional): <input type="text" id="click-url" placeholder="https://example.com" /></label>
       <div class="info-row" id="size-info"></div>
       <div class="preview-wrap" id="preview-wrap" style="width: 600px; height: 400px">
         <img id="preview-bg" src="" alt="Background preview" hidden />
         <video id="preview-video" src="" autoplay muted loop playsinline hidden></video>
       </div>
       <div class="controls">
-        <button id="download-btn" disabled>Скачать ZIP</button>
+        <button id="download-btn" disabled>Download ZIP</button>
       </div>
     </div>
 
@@ -150,7 +150,7 @@
         if (videoFile) previewVideo.src = videoUrl;
 
         setPreviewSize(bgNaturalWidth, bgNaturalHeight);
-        sizeInfo.innerText = `Размер баннера: ${bgNaturalWidth} x ${bgNaturalHeight}px`;
+        sizeInfo.innerText = `Banner size: ${bgNaturalWidth} x ${bgNaturalHeight}px`;
 
         const h = parseInt(videoHeight.value) || 320;
         previewVideo.style.height = h + "px";
@@ -172,7 +172,7 @@
         }
       }
 
-      // Событие для фоновой картинки
+      // Background image 1 input event
       bgInput.addEventListener("input", function () {
         if (bgInput.files[0]) {
           bgFile = bgInput.files[0];
@@ -191,7 +191,7 @@
         }
       });
 
-      // Событие для второй фоновой картинки
+      // Background image 2 input event
       bgInput2.addEventListener("input", function () {
         if (bgInput2.files[0]) {
           bgFile2 = bgInput2.files[0];
@@ -206,7 +206,7 @@
         }
       });
 
-      // Событие для видео
+      // Video input event
       videoInput.addEventListener("input", function () {
         if (videoInput.files[0]) {
           videoFile = videoInput.files[0];
@@ -233,7 +233,7 @@
         const clickUrl = clickUrlInput.value.trim() || '';
         const bgName = bgFile.name;
         const bgName2 = bgFile2.name;
-        const videoName = "video.mp4"; // Всегда video.mp4
+        const videoName = "video.mp4"; // Always video.mp4
 
         let videoPosCSS = "";
         if (pos === "left") {
@@ -244,7 +244,7 @@
           videoPosCSS = `right:${offset}px; top:50%; transform:translateY(-50%);`;
         }
 
-        // Функция для создания HTML с правильным размером
+        // Function to generate banner HTML with correct dimensions
         function createBannerHTML(width, height, bgImageName) {
           return `<!DOCTYPE html>
 <html lang="en">
@@ -359,7 +359,7 @@ var clickTag = ""
 `;
         }
 
-        // Создаём первый архив (версия 1250)
+        // Create first archive (1250 version)
         const html1 = createBannerHTML(bgNaturalWidth, bgNaturalHeight, bgName);
         const zip1 = new JSZip();
         zip1.file("index.html", html1);
@@ -367,14 +367,14 @@ var clickTag = ""
         const videoBlob = videoFile.slice(0, videoFile.size, videoFile.type);
         zip1.file("video.mp4", videoBlob);
 
-        // Создаём второй архив (версия 1280)
+        // Create second archive (1280 version)
         const html2 = createBannerHTML(bgNaturalWidth2, bgNaturalHeight2, bgName2);
         const zip2 = new JSZip();
         zip2.file("index.html", html2);
         zip2.file(bgName2, bgFile2);
         zip2.file("video.mp4", videoBlob);
 
-        // Имена архивов на основе имён фоновых изображений
+        // Archive names based on background image names
         let archiveName1 = bgName;
         if (archiveName1.lastIndexOf(".") > 0) {
           archiveName1 = archiveName1.substring(0, archiveName1.lastIndexOf("."));
@@ -385,14 +385,14 @@ var clickTag = ""
           archiveName2 = archiveName2.substring(0, archiveName2.lastIndexOf("."));
         }
 
-        // Скачиваем первый архив
+        // Download first archive
         const blob1 = await zip1.generateAsync({ type: "blob" });
         const a1 = document.createElement("a");
         a1.href = URL.createObjectURL(blob1);
         a1.download = archiveName1 + "_1250.zip";
         a1.click();
         
-        // Небольшая задержка перед вторым скачиванием
+        // Short delay before second download
         setTimeout(async () => {
           const blob2 = await zip2.generateAsync({ type: "blob" });
           const a2 = document.createElement("a");
