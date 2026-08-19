@@ -1,0 +1,1714 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+  --black: #000000;
+  --borderwidth__0: 0px;
+  --borderwidth__1: 1px;
+  --borderwidth__2: 2px;
+  --borderwidth__4: 4px;
+  --borderwidth__8: 8px;
+  --font__family__fira: "Fira Sans Condensed", sans-serif;
+  --font__family__inter: "Inter", sans-serif;
+  --font__family__mono: "Fira Mono", monospace;
+  --font__family__serif: "Georgia", serif;
+  --font__size__2xl: 24px;
+  --font__size__3xl: 30px;
+  --font__size__4xl: 36px;
+  --font__size__5xl: 48px;
+  --font__size__6xl: 60px;
+  --font__size__7xl: 72px;
+  --font__size__8xl: 96px;
+  --font__size__9xl: 128px;
+  --font__size__base: 16px;
+  --font__size__lg: 18px;
+  --font__size__sm: 14px;
+  --font__size__xl: 20px;
+  --font__size__xs: 12px;
+  --font__style__italic: italic;
+  --font__style__notitalic: normal;
+  --font__weight__black: 900;
+  --font__weight__bold: 700;
+  --font__weight__extrabold: 800;
+  --font__weight__extralight: 200;
+  --font__weight__light: 300;
+  --font__weight__medium: 500;
+  --font__weight__normal: 400;
+  --font__weight__semibold: 600;
+  --font__weight__thin: 100;
+  --ol__cream__100: #ffebc4;
+  --ol__cream__200: #ffd688;
+  --ol__cream__300: #ffbc4a;
+  --ol__cream__400: #ffa220;
+  --ol__cream__50: #fff8eb;
+  --ol__cream__500: #f97d07;
+  --ol__cream__600: #dd5902;
+  --ol__cream__700: #b73a06;
+  --ol__cream__800: #942c0c;
+  --ol__cream__900: #7a250d;
+  --ol__cream__950: #461102;
+  --ol__monochrome__100: #e5e8e8;
+  --ol__monochrome__200: #cdd3d4;
+  --ol__monochrome__300: #aab3b6;
+  --ol__monochrome__400: #808d90;
+  --ol__monochrome__50: #f5f6f6;
+  --ol__monochrome__500: #657275;
+  --ol__monochrome__600: #566064;
+  --ol__monochrome__700: #4a5254;
+  --ol__monochrome__800: #414749;
+  --ol__monochrome__900: #3a3e3f;
+  --ol__monochrome__950: #17191a;
+  --ol__red__100: #ffdddf;
+  --ol__red__200: #ffc1c5;
+  --ol__red__300: #ff959c;
+  --ol__red__400: #ff5964;
+  --ol__red__50: #fff0f1;
+  --ol__red__500: #ff2634;
+  --ol__red__600: #fc0616;
+  --ol__red__700: #e3000f;
+  --ol__red__800: #af0510;
+  --ol__red__900: #900c15;
+  --ol__red__950: #500005;
+  --ol__yellow__100: #fdffc1;
+  --ol__yellow__200: #ffff86;
+  --ol__yellow__300: #fff641;
+  --ol__yellow__400: #ffe80d;
+  --ol__yellow__50: #ffffe7;
+  --ol__yellow__500: #fcd700;
+  --ol__yellow__600: #d1a000;
+  --ol__yellow__700: #a67302;
+  --ol__yellow__800: #89590a;
+  --ol__yellow__900: #74490f;
+  --ol__yellow__950: #442604;
+  --radius__2xl: 16px;
+  --radius__3xl: 24px;
+  --radius__4xl: 32px;
+  --radius__full: 9999px;
+  --radius__lg: 8px;
+  --radius__md: 6px;
+  --radius__none: 0px;
+  --radius__sm: 4px;
+  --radius__xl: 12px;
+  --radius__xs: 2px;
+  --spacing__0: 0px;
+  --spacing__1: 4px;
+  --spacing__10: 40px;
+  --spacing__11: 44px;
+  --spacing__12: 48px;
+  --spacing__14: 56px;
+  --spacing__16: 64px;
+  --spacing__2: 8px;
+  --spacing__20: 80px;
+  --spacing__24: 96px;
+  --spacing__28: 112px;
+  --spacing__3: 12px;
+  --spacing__32: 128px;
+  --spacing__36: 144px;
+  --spacing__4: 16px;
+  --spacing__40: 160px;
+  --spacing__44: 176px;
+  --spacing__48: 192px;
+  --spacing__5: 20px;
+  --spacing__52: 208px;
+  --spacing__56: 224px;
+  --spacing__6: 24px;
+  --spacing__60: 240px;
+  --spacing__64: 256px;
+  --spacing__7: 28px;
+  --spacing__72: 288px;
+  --spacing__8: 32px;
+  --spacing__80: 320px;
+  --spacing__9: 36px;
+  --spacing__96: 384px;
+  --white: #ffffff;
+}
+
+.tabs .ma-navigation__tab a,
+.tabs li a {
+  height: var(--spacing__10) !important;
+  margin-bottom: 2px !important;
+  /*
+  padding: 0 !important;
+  */
+  border: 0 !important;
+  border-radius: 4px !important;
+  color: var(--ol__monochrome__400) !important;
+  font-weight: 500 !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: var(--spacing__10) !important;
+  font-family: var(--font__family__inter) !important;
+  text-align: left !important;
+  background: #fff !important;
+}
+
+.tabs .ma-navigation__tab a:hover,
+.tabs li a:hover {
+  color: var(--ol__monochrome__950) !important;
+}
+
+.header-navigation-tabs .ma-navigation__tab.active a,
+.header-navigation-tabs li.active a,
+.header-navigation-tabs li.active:first-child a,
+.header-navigation-tabs .ma-navigation__tab.active:first-child a {
+  height: var(--spacing__10) !important;
+  /*
+  padding: 0 !important;
+  */
+  border: 0 !important;
+  color: var(--ol__red__700) !important;
+  line-height: var(--spacing__10) !important;
+  background: none !important;
+}
+
+.header-navigation-tabs .ma-navigation__tab.active,
+.header-navigation-tabs li.active {
+  /*
+  padding: 0 !important;
+  */
+  border: 0 !important;
+  border-right: 4px solid var(--ol__red__700) !important;
+  background: rgba(255, 240, 241, 0.75) !important;
+}
+
+.tabs a {
+  padding-left: 12px !important;
+}
+
+.header-navigation-tabs li.active:first-child a,
+.header-navigation-tabs .ma-navigation__tab.active:first-child a {
+  margin-left: -1px !important;
+}
+
+@media (min-width: 631px) {
+  .ma-main-controller {
+    display: flex !important;
+  }
+
+  .main {
+    width: 100% !important;
+  }
+
+  .header-navigation-tabs {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 256px !important;
+    padding-right: 16px !important;
+  }
+
+  .header-navigation-tabs li {
+    flex-basis: auto !important;
+  }
+}
+
+@media (max-width: 630px) {
+  .tabs .ma-navigation__tab a,
+  .tabs li a {
+    padding: 0 12px !important;
+  }
+
+  .header-navigation-tabs .ma-navigation__tab.active,
+  .header-navigation-tabs li.active {
+    border-right: none !important;
+    border-bottom: 4px solid var(--ol__red__700) !important;
+  }
+}
+
+/* ============================================
+   Transactions Section — Custom Styles
+   Scoped under .ma-transactions
+   Uses design tokens from style.css exclusively
+
+   Load alongside my-account-bundle.css.
+   Also requires style.css :root variables.
+   ============================================ */
+
+/* --- Main container background + padding --- */
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 512px;
+  padding: 1rem !important;
+  border-radius: var(--radius__sm) !important;
+  background: var(--ol__monochrome__50) !important;
+}
+
+/* --- Section header override --- */
+.ma-transactions .section-text {
+  display: block !important;
+  position: static !important;
+  top: auto !important;
+  float: none !important;
+  margin: 0 0 var(--spacing__5) 0 !important;
+  padding: 0 !important;
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__2xl) !important;
+  line-height: 1.2 !important;
+  font-family: var(--font__family__fira) !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* --- Scrollable area override --- */
+.ma-transactions .scrollable-content,
+.scrollable-content {
+  min-height: auto !important;
+  border-top: none !important;
+  overflow: visible !important;
+}
+
+/* --- Card list --- */
+.ma-tx-list {
+  gap: var(--spacing__2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Transaction card --- */
+.ma-tx-card {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing__4);
+  border-radius: var(--radius__lg);
+  background: var(--white);
+}
+
+/* --- Left: name + date --- */
+.ma-tx-info {
+  gap: var(--spacing__1);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ma-tx-name {
+  overflow: hidden;
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__sm);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ma-tx-date {
+  color: var(--ol__monochrome__500);
+  font-weight: var(--font__weight__normal);
+  font-size: var(--font__size__xs);
+  line-height: 1.4;
+  font-family: var(--font__family__inter);
+}
+
+.ma-tx-date strong {
+  font-weight: var(--font__weight__medium);
+}
+
+/* --- Right side --- */
+.ma-tx-right {
+  gap: var(--spacing__3);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin-left: var(--spacing__4);
+}
+
+/* --- Price --- */
+.ma-tx-price {
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__base);
+  font-family: var(--font__family__fira);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* --- Divider dot --- */
+.ma-tx-divider {
+  flex-shrink: 0;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--ol__monochrome__300);
+}
+
+/* --- Action buttons --- */
+.ma-tx-actions {
+  gap: 2px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.ma-tx-action-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius__md);
+  color: var(--ol__monochrome__400);
+  text-decoration: none;
+  transition:
+    background-color 125ms ease-in-out,
+    color 125ms ease-in-out;
+}
+
+.ma-tx-action-btn:hover {
+  color: var(--ol__red__700);
+  background-color: var(--ol__monochrome__50);
+}
+
+.ma-tx-action-btn:active {
+  color: var(--ol__red__800);
+  background-color: var(--ol__red__50);
+}
+
+.ma-tx-action-btn svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* --- Responsive: small screens --- */
+@media (max-width: 480px) {
+  .ma-tx-card {
+    gap: var(--spacing__3);
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ma-tx-right {
+    justify-content: space-between;
+    margin-left: 0;
+  }
+
+  .ma-tx-divider {
+    display: none;
+  }
+}
+
+/* ============================================
+   Library Section — Custom Styles
+   Scoped under .ma-library / .ma-library-items
+   Uses design tokens from style.css exclusively
+
+   Requires: transactions-custom.css loaded first
+   (shared .main and .section-text styles live there)
+   ============================================ */
+
+/* --- Section header (same pattern as transactions) --- */
+.ma-library .section-text {
+  display: block !important;
+  position: static !important;
+  top: auto !important;
+  float: none !important;
+  margin: 0 0 var(--spacing__5) 0 !important;
+  padding: 0 !important;
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__2xl) !important;
+  line-height: 1.2 !important;
+  font-family: var(--font__family__fira) !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* --- Tabs override --- */
+.ma-library .vanilla-flat-tabs {
+  gap: var(--spacing__1);
+  display: flex !important;
+  float: none !important;
+  margin: 0 0 var(--spacing__4) 0 !important;
+  font-size: var(--font__size__sm) !important;
+  text-transform: none !important;
+}
+
+.ma-library .vanilla-flat-tabs li {
+  height: auto !important;
+  margin: 0 !important;
+  line-height: normal !important;
+}
+
+.ma-library .vanilla-flat-tabs li .tab {
+  display: inline-block;
+  padding: var(--spacing__2) var(--spacing__4) !important;
+  border-radius: var(--radius__lg);
+  color: var(--ol__monochrome__500) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__sm) !important;
+  font-family: var(--font__family__inter) !important;
+  text-transform: none !important;
+  cursor: pointer;
+  background: transparent;
+  transition:
+    background-color 125ms ease-in-out,
+    color 125ms ease-in-out;
+}
+
+.ma-library .vanilla-flat-tabs li .tab:hover {
+  color: var(--ol__monochrome__950) !important;
+  background: var(--white);
+}
+
+.ma-library .vanilla-flat-tabs li.active {
+  border-bottom: none !important;
+}
+
+.ma-library .vanilla-flat-tabs li.active .tab {
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__bold) !important;
+  background: var(--white);
+}
+
+/* --- Scrollable area override --- */
+.ma-library .scrollable-content {
+  min-height: auto !important;
+  border-top: none !important;
+  overflow: visible !important;
+}
+
+/* --- Notice banners (postponed upgrades, shared access) --- */
+.ma-lib-notices {
+  gap: var(--spacing__2);
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 var(--spacing__3) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ma-lib-notice {
+  padding: var(--spacing__3) var(--spacing__4);
+  border-radius: var(--radius__lg);
+  color: var(--ol__monochrome__700);
+  font-weight: var(--font__weight__normal);
+  font-size: var(--font__size__xs);
+  line-height: 1.5;
+  font-family: var(--font__family__inter);
+  background: var(--ol__cream__50);
+}
+
+.ma-lib-notice b {
+  color: var(--ol__monochrome__950);
+  font-weight: var(--font__weight__semibold);
+}
+
+/* --- Card list --- */
+.ma-lib-list {
+  gap: var(--spacing__2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Subscription card --- */
+.ma-lib-card {
+  position: relative;
+  border-radius: var(--radius__lg);
+  background: var(--white);
+}
+
+.ma-lib-card__row {
+  gap: var(--spacing__3);
+  display: flex;
+  align-items: center;
+  padding: var(--spacing__4);
+}
+
+/* --- Left: subscription info --- */
+.ma-lib-card__info {
+  gap: var(--spacing__1);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ma-lib-card__name {
+  overflow: hidden;
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__sm);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ma-lib-card__details {
+  color: var(--ol__monochrome__500);
+  font-weight: var(--font__weight__normal);
+  font-size: var(--font__size__xs);
+  line-height: 1.5;
+  font-family: var(--font__family__inter);
+}
+
+.ma-lib-card__details a {
+  color: var(--ol__red__700);
+  text-decoration: none;
+}
+
+.ma-lib-card__details a:hover {
+  text-decoration: underline;
+}
+
+/* --- Right: price + actions --- */
+.ma-lib-card__right {
+  gap: var(--spacing__2);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.ma-lib-card__price {
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__base);
+  font-family: var(--font__family__fira);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.ma-lib-card__price strong {
+  font-weight: inherit;
+}
+
+/* --- Toggler: visually hidden, kept for binding --- */
+.ma-lib-toggler-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  clip: rect(0, 0, 0, 0) !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+/* --- Actions area --- */
+.ma-lib-card__actions {
+  gap: var(--spacing__2);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* --- Share button (Jaga sõpradega) ---
+   Bundle sets: button.button { min-height: 40px }
+                a.button { height: 40px; line-height: 40px }
+   Must override all of these to match dropdown toggle size
+   -------------------------------------------------------- */
+.ma-lib-card__actions .button.green {
+  gap: var(--spacing__1);
+  display: inline-flex !important;
+  align-items: center;
+  box-sizing: border-box !important;
+  min-width: auto !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  margin: 0 !important;
+  padding: 0 var(--spacing__3) !important;
+  border: none !important;
+  border-radius: var(--radius__md) !important;
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__xs) !important;
+  line-height: 1 !important;
+  font-family: var(--font__family__inter) !important;
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--ol__red__50) !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.ma-lib-card__actions .button.green:hover {
+  background: var(--ol__red__100) !important;
+}
+
+/* --- Manage dropdown button override (shared: library + wallet) --- */
+.btn-icons .btn {
+  padding: 4.5px 12px 4.5px 12px !important;
+}
+
+#my-account-container .my-account-container my-account-library .btn.dropdown-toggle {
+  padding: 4.5px 12px 4.5px 12px !important;
+}
+
+.ma-lib-card__actions .btn-group.dropdown .btn,
+.ma-wallet-footer .btn-group.dropdown .btn {
+  box-sizing: border-box !important;
+  min-width: auto !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  border: none !important;
+  border-radius: var(--radius__md) !important;
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__xs) !important;
+  line-height: 1 !important;
+  font-family: var(--font__family__inter) !important;
+  text-shadow: none !important;
+  background: var(--ol__monochrome__50) !important;
+  box-shadow: none !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.ma-lib-card__actions .btn-group.dropdown .btn:hover,
+.ma-wallet-footer .btn-group.dropdown .btn:hover {
+  background: var(--ol__monochrome__100) !important;
+}
+
+/* --- Caret override for wallet (match library's bundle-applied caret) --- */
+.ma-wallet-footer .dropdown-toggle .icon-caret {
+  opacity: 0.4;
+  position: relative;
+  top: -1px;
+  width: 6px !important;
+  height: 4px !important;
+  margin-left: 12px !important;
+  background-image: url("https://sandbox.tinypass.com/widget/dist/myaccount/css/img/img/shevron-down-icon.svg") !important;
+  background-position: center center !important;
+  background-size: 6px 4px !important;
+}
+
+.ma-wallet-footer .btn.dropdown-toggle:hover .icon-caret {
+  opacity: 1;
+}
+
+/* Dropdown menu styling (shared: library + wallet) */
+.ma-lib-card__actions .dropdown-menu,
+.ma-wallet-footer .dropdown-menu {
+  margin-top: var(--spacing__1) !important;
+  padding: var(--spacing__1) 0 !important;
+  border: var(--borderwidth__1) solid var(--ol__monochrome__100) !important;
+  border-radius: var(--radius__lg) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+.ma-lib-card__actions .dropdown-menu li,
+.ma-wallet-footer .dropdown-menu li {
+  padding: var(--spacing__2) var(--spacing__4) !important;
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__xs) !important;
+  font-family: var(--font__family__inter) !important;
+  cursor: pointer;
+  transition: background-color 125ms ease-in-out;
+}
+
+.ma-lib-card__actions .dropdown-menu li:hover,
+.ma-wallet-footer .dropdown-menu li:hover {
+  background: var(--ol__monochrome__50) !important;
+}
+
+/* --- Pending warning --- */
+.ma-lib-card__warning {
+  padding: var(--spacing__3) var(--spacing__4);
+  border-top: var(--borderwidth__1) solid var(--ol__monochrome__100);
+  border-radius: 0 0 var(--radius__lg) var(--radius__lg);
+  color: var(--ol__monochrome__500);
+  font-weight: var(--font__weight__normal);
+  font-size: var(--font__size__xs);
+  line-height: 1.5;
+  font-family: var(--font__family__inter);
+  background: var(--ol__cream__50);
+}
+
+/* --- Responsive: small screens --- */
+@media (max-width: 480px) {
+  .ma-lib-card__row {
+    gap: var(--spacing__3);
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ma-lib-card__right {
+    justify-content: space-between;
+  }
+}
+
+/* ============================================
+   Upgrade Options — Custom Styles
+   Scoped under .ma-library #library-shelf
+   (vahetaDigipaketti / reviewAndConfirmTheChanges)
+   Uses design tokens from style.css exclusively.
+
+   No markup or Angular bindings are targeted by
+   selector-renaming here — every selector below
+   matches classes that already exist verbatim on
+   the rendered templates, so ng-class/ng-show
+   toggles ('not-selectable', 'change-option-disabled',
+   'disabled', 'ng-hide', ...) keep working unchanged.
+   ============================================ */
+
+/* --- Choose-screen: option card list --- */
+.ma-library .list--change-option {
+  gap: var(--spacing__2) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: auto !important;
+  margin: 0 0 var(--spacing__5) 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.ma-library .list--change-option .list__row.list__item--separated {
+  gap: var(--spacing__3) !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: var(--spacing__4) !important;
+  border: none !important;
+  border-radius: var(--radius__lg) !important;
+  background: var(--white) !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.ma-library .list--change-option .list__cell--radiobutton {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  align-items: center !important;
+  padding: 2px 0 0 0 !important;
+  margin: 0 !important;
+  cursor: pointer;
+}
+
+/* --- Custom radio control ---
+   The bundled base stylesheet styles `.radiobutton` as a pill-shaped
+   toggle track; every box-model property is forced with !important
+   below so our 20x20 circle wins regardless of load order. */
+.ma-library .radiobutton {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  float: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  max-width: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: var(--radius__full) !important;
+  background: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+.ma-library .radiobutton::before,
+.ma-library .radiobutton::after {
+  content: none !important;
+  display: none !important;
+}
+
+.ma-library .radiobutton input[type="radio"] {
+  box-sizing: border-box !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  float: none !important;
+  cursor: pointer;
+}
+
+.ma-library .radiobutton__label {
+  box-sizing: border-box !important;
+  display: inline-block !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: 0 !important;
+  float: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  max-width: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: var(--borderwidth__2) solid var(--ol__monochrome__200) !important;
+  border-radius: var(--radius__full) !important;
+  background: var(--white) !important;
+  box-shadow: none !important;
+  transition:
+    border-color 125ms ease-in-out,
+    background-color 125ms ease-in-out;
+}
+
+.ma-library .radiobutton__label::before {
+  content: none !important;
+  display: none !important;
+}
+
+.ma-library .radiobutton input[type="radio"]:checked + .radiobutton__label {
+  border-color: var(--ol__red__700) !important;
+}
+
+.ma-library .radiobutton input[type="radio"]:checked + .radiobutton__label::after {
+  position: absolute !important;
+  top: 3px !important;
+  left: 3px !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 10px !important;
+  height: 10px !important;
+  margin: 0 !important;
+  border-radius: var(--radius__full) !important;
+  background: var(--ol__red__700) !important;
+  content: "" !important;
+}
+
+.ma-library .radiobutton.not-selectable {
+  cursor: default;
+}
+
+.ma-library .radiobutton.not-selectable .radiobutton__label {
+  border-color: var(--ol__monochrome__100) !important;
+  background: var(--ol__monochrome__50) !important;
+}
+
+/* --- Option copy --- */
+.ma-library .change-option-title {
+  display: block;
+  margin-bottom: var(--spacing__1);
+  color: var(--ol__monochrome__950);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__sm);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+}
+
+.ma-library .change-option-title.change-option-disabled,
+.ma-library .change-option-description.change-option-disabled {
+  color: var(--ol__monochrome__400);
+}
+
+.ma-library .change-option-restriction-message {
+  display: block;
+  margin-bottom: var(--spacing__1);
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__medium);
+  font-size: var(--font__size__xs);
+  font-family: var(--font__family__inter);
+}
+
+.ma-library .change-option-billing-plan,
+.ma-library .change-option-description {
+  color: var(--ol__monochrome__500);
+  font-weight: var(--font__weight__normal);
+  font-size: var(--font__size__xs);
+  line-height: 1.5;
+  font-family: var(--font__family__inter);
+}
+
+/* --- Confirm-screen: review summary list ---
+   list-style is forced to none on the <li> itself (not just the
+   parent <ul>) because the bundle re-asserts a native disc marker
+   on `.simple-list__item--with-dot` with higher specificity than
+   inheritance from the ul alone. */
+.ma-library .simple-list--review-and-confirm {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--spacing__2) !important;
+  width: auto !important;
+  margin: 0 0 var(--spacing__5) 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.ma-library .simple-list--review-and-confirm .simple-list__item {
+  position: relative !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: var(--spacing__3) var(--spacing__4) !important;
+  border: none !important;
+  border-radius: var(--radius__lg) !important;
+  color: var(--ol__monochrome__700) !important;
+  font-weight: var(--font__weight__normal) !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: 1.5 !important;
+  font-family: var(--font__family__inter) !important;
+  background: var(--white) !important;
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.ma-library .simple-list--review-and-confirm .simple-list__item::marker,
+.ma-library .simple-list--review-and-confirm .simple-list__item::before {
+  content: none !important;
+  display: none !important;
+}
+
+.ma-library .simple-list--review-and-confirm .simple-list__item b {
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__semibold) !important;
+}
+
+.ma-library .section-text--additional {
+  margin-top: var(--spacing__6) !important;
+}
+
+/* --- Shared footer (both screens) ---
+   margin/padding audited to be identical on both buttons: the
+   bundle applies its own default margin+min-width to `.button.big`
+   (confirm screen) that `.btn`/`.ma-wallet-card__default-btn`
+   (choose screen) don't get, which visually mismatched the pair —
+   every box-model property below is forced so both buttons render
+   with the exact same 40px-tall, gap-only spacing regardless of
+   which class combination is present. */
+.ma-library .my-account-footer {
+  gap: var(--spacing__3) !important;
+  display: flex !important;
+  align-items: center !important;
+  width: auto !important;
+  margin: var(--spacing__5) 0 0 0 !important;
+  padding: 0 !important;
+}
+
+/* Primary "Kinnita" button — same visual spec on both screens'
+   differing class combinations */
+.ma-library .btn.btn-green.my-account-footer__button,
+.ma-library .button.big.confirmation-button.my-account-footer__button {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 0 var(--spacing__5) !important;
+  border: none !important;
+  border-radius: var(--radius__md) !important;
+  vertical-align: middle !important;
+  color: var(--white) !important;
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: 40px !important;
+  font-family: var(--font__family__inter) !important;
+  text-transform: none !important;
+  text-shadow: none !important;
+  text-decoration: none !important;
+  background: var(--ol__red__700) !important;
+  box-shadow: none !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.ma-library .btn.btn-green.my-account-footer__button:hover,
+.ma-library .button.big.confirmation-button.my-account-footer__button:hover {
+  background: var(--ol__red__800) !important;
+}
+
+.ma-library .btn.btn-green.my-account-footer__button:disabled,
+.ma-library .btn.btn-green.my-account-footer__button[disabled],
+.ma-library .button.big.confirmation-button.my-account-footer__button.disabled {
+  cursor: default;
+  opacity: 0.5 !important;
+}
+
+/* Secondary "Tagasi" button — same visual spec on both screens'
+   differing class combinations */
+.ma-library .ma-wallet-card__default-btn.my-account-footer__button,
+.ma-library .btn.btn--gray.btn--large.btn--bold.my-account-footer__button {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 0 var(--spacing__5) !important;
+  border: none !important;
+  border-radius: var(--radius__md) !important;
+  vertical-align: middle !important;
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: 40px !important;
+  font-family: var(--font__family__inter) !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--ol__monochrome__50) !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.ma-library .ma-wallet-card__default-btn.my-account-footer__button:hover,
+.ma-library .btn.btn--gray.btn--large.btn--bold.my-account-footer__button:hover {
+  background: var(--ol__monochrome__100) !important;
+}
+
+/* --- Responsive: stack footer buttons full-width --- */
+@media (max-width: 600px) {
+  .ma-library .list--change-option .list__row.list__item--separated {
+    padding: var(--spacing__3);
+  }
+
+  .ma-library .my-account-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .ma-library .btn.btn-green.my-account-footer__button,
+  .ma-library .button.big.confirmation-button.my-account-footer__button,
+  .ma-library .ma-wallet-card__default-btn.my-account-footer__button,
+  .ma-library .btn.btn--gray.btn--large.btn--bold.my-account-footer__button {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Wallet Section — Custom Styles
+   Scoped under .ma-wallet
+   Uses design tokens from style.css exclusively
+
+   Requires: transactions-custom.css loaded first
+   (shared .main and .section-text styles live there)
+   ============================================ */
+
+/* --- Section header (reuses shared pattern) --- */
+.ma-wallet .section-text {
+  display: block !important;
+  position: static !important;
+  top: auto !important;
+  float: none !important;
+  margin: 0 0 var(--spacing__5) 0 !important;
+  padding: 0 !important;
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__2xl) !important;
+  line-height: 1.2 !important;
+  font-family: var(--font__family__fira) !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* --- Footer: positions "Add payment method" at bottom-right --- */
+.ma-wallet-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing__4);
+}
+
+/* --- Scrollable area override --- */
+.ma-wallet .scrollable-content {
+  min-height: auto !important;
+  border-top: none !important;
+  overflow: visible !important;
+}
+
+/* --- Card list --- */
+.ma-wallet-list {
+  gap: var(--spacing__2);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Payment method card --- */
+.ma-wallet-card {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing__4);
+  border-radius: var(--radius__lg);
+  background: var(--white);
+}
+
+/* --- Left: payment info --- */
+.ma-wallet-card__info {
+  gap: var(--spacing__1);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ma-wallet-card__name {
+  overflow: hidden;
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__bold);
+  font-size: var(--font__size__sm);
+  line-height: 1.35;
+  font-family: var(--font__family__inter);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ma-wallet-card__extra {
+  color: var(--ol__monochrome__500);
+  font-weight: var(--font__weight__normal);
+  font-size: var(--font__size__xs);
+  line-height: 1.4;
+  font-family: var(--font__family__inter);
+}
+
+.ma-wallet-card__expiry {
+  color: var(--ol__monochrome__500);
+  font-weight: var(--font__weight__normal);
+  font-size: var(--font__size__xs);
+  line-height: 1.4;
+  font-family: var(--font__family__inter);
+}
+
+/* --- Right side --- */
+.ma-wallet-card__right {
+  gap: var(--spacing__3);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin-left: var(--spacing__4);
+}
+
+/* --- State badge --- */
+.ma-wallet-card__badge {
+  color: #43c08b;
+  font-weight: var(--font__weight__semibold);
+  font-size: 11px;
+  font-family: var(--font__family__inter);
+  white-space: nowrap;
+}
+
+/* --- Default label / button --- */
+.ma-wallet-card__default-label {
+  color: var(--ol__monochrome__500);
+  font-weight: var(--font__weight__semibold);
+  font-size: 11px;
+  font-family: var(--font__family__inter);
+  white-space: nowrap;
+}
+
+.ma-wallet-card__default-btn {
+  height: 28px;
+  padding: 0 var(--spacing__3) !important;
+  border: none;
+  border-radius: var(--radius__sm);
+  color: var(--ol__monochrome__950);
+  font-weight: var(--font__weight__semibold);
+  font-size: 11px;
+  font-family: var(--font__family__inter);
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--ol__monochrome__50);
+  transition: background-color 125ms ease-in-out;
+}
+
+.ma-wallet-card__default-btn:hover {
+  background: var(--ol__monochrome__100);
+}
+
+/* --- Delete button --- */
+.ma-wallet-card__delete {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius__md);
+  color: var(--ol__monochrome__400);
+  text-decoration: none;
+  transition:
+    background-color 125ms ease-in-out,
+    color 125ms ease-in-out;
+}
+
+.ma-wallet-card__delete:hover {
+  color: var(--ol__red__700);
+  text-decoration: none;
+  background-color: var(--ol__red__50);
+}
+
+.ma-wallet-card__delete:active {
+  background-color: var(--ol__red__100);
+}
+
+.ma-wallet-card__delete svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+  .ma-wallet-card {
+    gap: var(--spacing__3);
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ma-wallet-card__right {
+    justify-content: space-between;
+    margin-left: 0;
+  }
+}
+
+/* ============================================
+     Newsletters Section — Custom Styles
+     Piano ID template (standalone)
+     Uses design tokens from style.css
+     ============================================ */
+
+/* --- Container --- */
+my-account-pianoid-newsletters .scrollable-content {
+  min-height: auto !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  border: none !important;
+  overflow-y: hidden !important;
+}
+
+.content-padding-tb {
+  padding: 0rem !important;
+}
+
+/* --- Heading --- */
+.ma-newsletters__title {
+  display: block;
+  margin: 0 0 var(--spacing__5) 0 !important;
+  padding: 0 !important;
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__2xl) !important;
+  line-height: 1.2;
+  font-family: var(--font__family__fira) !important;
+  letter-spacing: -0.02em;
+}
+
+/* --- Card wrapper for the list --- */
+newsletters-list {
+  display: block;
+  border-radius: var(--radius__lg);
+  overflow: hidden;
+  background: var(--white);
+}
+
+/* --- Newsletter item row --- */
+.newsletter-item {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: var(--spacing__4) !important;
+  border: none !important;
+  cursor: pointer;
+  background: var(--white) !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.newsletter-item:hover {
+  background: var(--ol__monochrome__50) !important;
+}
+
+/* --- Newsletter name --- */
+.newsletter-item span {
+  flex: 1;
+  min-width: 0;
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: 1.35;
+  font-family: var(--font__family__inter) !important;
+}
+
+/* --- Toggle checkbox spacing --- */
+.newsletter-item checkbox,
+.newsletter-item .checkbox-container {
+  flex-shrink: 0;
+  margin-right: var(--spacing__3) !important;
+}
+
+/* --- Toggle track --- */
+checkbox-control.toggle {
+  border-radius: 10px !important;
+  background: var(--ol__monochrome__300) !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+checkbox-control.toggle.checked {
+  background: var(--ol__red__700) !important;
+}
+
+/* --- Divider between items --- */
+.newsletter-item-divider {
+  height: 0;
+  margin: 0 var(--spacing__4) !important;
+  border: none !important;
+  border-bottom: var(--borderwidth__1) solid var(--ol__monochrome__100) !important;
+}
+
+/* Last divider hidden (handled by :last-child on newsletter-item if possible) */
+.newsletter-item-divider:last-child {
+  display: none;
+}
+
+/* --- Actions area --- */
+.actions {
+  margin-top: var(--spacing__5) !important;
+}
+
+.actions .btn-green,
+.actions .btn.btn-green {
+  height: 40px !important;
+  padding: 0 var(--spacing__5) !important;
+  border: none !important;
+  border-radius: var(--radius__md) !important;
+  color: var(--white) !important;
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: 40px !important;
+  font-family: var(--font__family__inter) !important;
+  text-shadow: none !important;
+  background: var(--ol__red__700) !important;
+  box-shadow: none !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.actions .btn-green:hover,
+.actions .btn.btn-green:hover {
+  background: var(--ol__red__800) !important;
+}
+
+.actions .btn-green *,
+.actions .btn.btn-green * {
+  font-family: var(--font__family__inter) !important;
+  text-transform: none !important;
+}
+
+/* ============================================
+   Shared Subscription — Red "Salvesta" button
+   Overrides the default blue .button.green in
+   the shared-subscription action-panel to match
+   the red complete-purchase style from checkout.
+   ============================================ */
+.myaccount-modal [shared-subscription-component] .action-panel .button.green,
+.myaccount-modal [shared-subscription-component] .action-panel button.button.green {
+  min-width: 130px !important;
+  border: none !important;
+  border-radius: var(--radius__sm) !important;
+  color: var(--white) !important;
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__base) !important;
+  font-family: var(--font__family__fira) !important;
+  text-transform: uppercase !important;
+  background-color: var(--ol__red__700) !important;
+  transition: background-color 125ms ease-in-out;
+}
+
+.myaccount-modal [shared-subscription-component] .action-panel .button.green:hover,
+.myaccount-modal [shared-subscription-component] .action-panel button.button.green:hover {
+  background-color: var(--ol__red__800) !important;
+}
+
+.myaccount-modal [shared-subscription-component] .action-panel .button.green:disabled,
+.myaccount-modal [shared-subscription-component] .action-panel button.button.green:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ============================================
+   Shared Subscription — Modern Redesign
+   Overrides legacy ss__* bundle styles to match
+   the established My Account visual language.
+   ============================================ */
+
+/* --- Modal content container --- */
+.myaccount-modal [shared-subscription-component] .modal-content {
+  padding: var(--spacing__6) !important;
+}
+
+/* --- Heading --- */
+.myaccount-modal .ss__h1,
+.myaccount-modal .ss__h1.ss__h1--mb25 {
+  margin-bottom: var(--spacing__5) !important;
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__semibold) !important;
+  font-size: var(--font__size__2xl) !important;
+  line-height: 1.2 !important;
+  font-family: var(--font__family__fira) !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* --- User list rows --- */
+.myaccount-modal .ss__border--top,
+.myaccount-modal .ss__border--bottom {
+  border-color: var(--ol__monochrome__100) !important;
+}
+
+.myaccount-modal .ss__indent {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* --- User info row --- */
+.myaccount-modal .ss__user-info-wrapper {
+  gap: var(--spacing__3);
+  min-height: 56px !important;
+  padding: var(--spacing__3) 0 !important;
+}
+
+.myaccount-modal .ss__flex-row--left-column {
+  padding: 0 !important;
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__sm) !important;
+  font-family: var(--font__family__inter) !important;
+}
+
+.myaccount-modal .ss__flex-row--right-column {
+  gap: var(--spacing__1);
+  display: flex;
+  align-items: center;
+  padding: 0 !important;
+}
+
+.myaccount-modal .ss__color--grey {
+  color: var(--ol__monochrome__500) !important;
+}
+
+.myaccount-modal .ss-redeemed-on {
+  margin-top: var(--spacing__1) !important;
+  color: var(--ol__monochrome__500) !important;
+  font-size: var(--font__size__xs) !important;
+  font-family: var(--font__family__inter) !important;
+}
+
+/* --- Row action buttons (Edit, Delete, Resend) --- */
+.myaccount-modal .ss__row-button {
+  opacity: 0.5 !important;
+  width: 28px !important;
+  height: 28px !important;
+  margin-right: 0 !important;
+  border-radius: var(--radius__md) !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: 16px 16px !important;
+  transition:
+    opacity 125ms ease-in-out,
+    background-color 125ms ease-in-out;
+}
+
+.myaccount-modal .ss__row-button:not(:disabled):hover {
+  opacity: 1 !important;
+  background-color: var(--ol__monochrome__50) !important;
+}
+
+/* --- Form area --- */
+.myaccount-modal .ss__form {
+  margin: 0 !important;
+  padding: var(--spacing__4) 0 !important;
+  border-top: var(--borderwidth__1) solid var(--ol__monochrome__100) !important;
+}
+
+.myaccount-modal .ss__single-form .ss__form {
+  padding-bottom: 0 !important;
+  border-top: var(--borderwidth__1) solid var(--ol__monochrome__100) !important;
+}
+
+/* --- Form rows --- */
+.myaccount-modal .ss__row {
+  overflow: visible !important;
+}
+
+.myaccount-modal .ss__row:not(:last-child) {
+  margin-bottom: var(--spacing__3) !important;
+}
+
+/* --- Input fields --- */
+.myaccount-modal input[type="text"].ss__row-input {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 40px !important;
+  padding: 0 var(--spacing__3) !important;
+  border: var(--borderwidth__1) solid var(--ol__monochrome__200) !important;
+  border-radius: var(--radius__md) !important;
+  outline: none !important;
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__normal) !important;
+  font-size: var(--font__size__sm) !important;
+  font-family: var(--font__family__inter) !important;
+  background: var(--white) !important;
+  transition:
+    border-color 125ms ease-in-out,
+    box-shadow 125ms ease-in-out;
+}
+
+.myaccount-modal input[type="text"].ss__row-input:focus {
+  border-color: var(--ol__red__700) !important;
+  box-shadow: 0 0 0 2px var(--ol__red__50) !important;
+}
+
+.myaccount-modal input[type="text"].ss__row-input::placeholder {
+  color: var(--ol__monochrome__400) !important;
+  font-weight: var(--font__weight__normal) !important;
+}
+
+/* --- Name fields row (first/last) --- */
+.myaccount-modal .ss__row-left-column__first-half,
+.myaccount-modal .ss__row-right-column__second-half {
+  padding-right: var(--spacing__2) !important;
+  padding-left: 0 !important;
+}
+
+.myaccount-modal .ss__row-right-column__second-half {
+  padding-right: 0 !important;
+  padding-left: var(--spacing__2) !important;
+}
+
+/* --- "Add shared account" link --- */
+.myaccount-modal .ss__add-shared-account {
+  padding-left: 24px !important;
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__sm) !important;
+  font-family: var(--font__family__inter) !important;
+  transition: color 125ms ease-in-out;
+}
+
+.myaccount-modal .ss__add-shared-account:hover {
+  color: var(--ol__red__800) !important;
+}
+
+.myaccount-modal .ss__add-shared-account::before {
+  opacity: 0.8 !important;
+  background: url(data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2221%22%20viewBox%3D%220%200%2020%2021%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M10%206.5H9V9.5H6V10.5H9V13.5H10V10.5H13V9.5H10V6.5Z%22%20fill%3D%22%23e3000f%22%2F%3E%3C%2Fsvg%3E) no-repeat !important;
+  background-size: 20px !important;
+}
+
+.myaccount-modal .ss__add-shared-account:hover::before {
+  opacity: 1 !important;
+}
+
+.myaccount-modal .ss__add-shared-account--limit {
+  color: var(--ol__monochrome__500) !important;
+}
+
+/* --- User control area --- */
+.myaccount-modal .user-control {
+  padding-top: var(--spacing__4) !important;
+  color: var(--ol__monochrome__500) !important;
+  font-size: var(--font__size__sm) !important;
+  font-family: var(--font__family__inter) !important;
+}
+
+/* --- Action panel (footer) --- */
+.myaccount-modal [shared-subscription-component] .action-panel {
+  padding: var(--spacing__4) var(--spacing__6) !important;
+  border-top: var(--borderwidth__1) solid var(--ol__monochrome__100) !important;
+}
+
+/* --- Cancel/Apply buttons in form row --- */
+.myaccount-modal .ss__row-button--cancel {
+  background-position: center center !important;
+  background-size: 14px 14px !important;
+}
+
+.myaccount-modal .ss__row-button--apply {
+  background-position: center center !important;
+  background-size: 14px 14px !important;
+}
+
+/* --- Responsive: small screens --- */
+@media (max-width: 500px) {
+  .myaccount-modal [shared-subscription-component] .modal-content {
+    padding: var(--spacing__4) !important;
+  }
+
+  .myaccount-modal [shared-subscription-component] .action-panel {
+    padding: var(--spacing__3) var(--spacing__4) !important;
+  }
+
+  .myaccount-modal .ss__row-left-column__first-half,
+  .myaccount-modal .ss__row-right-column__second-half {
+    float: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .myaccount-modal .ss__row-left-column__first-half {
+    margin-bottom: var(--spacing__3) !important;
+  }
+}
+
+/* ============================================
+   Mobile: Remove three-dots kebab override
+   Bundle turns .btn-control-actions .btn .icon-caret
+   into 3 gray circles at max-width: 600px.
+   We force the normal dropdown appearance on all screens.
+   ============================================ */
+@media (max-width: 600px) {
+  /* Restore button text + sizing */
+  .btn-control-actions .btn {
+    height: 32px !important;
+    padding: 4.5px 12px !important;
+    border: none !important;
+    font-size: var(--font__size__xs) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    background: var(--ol__monochrome__50) !important;
+  }
+
+  /* Restore caret to chevron (wallet) */
+  .btn-control-actions .btn .icon-caret,
+  .ma-wallet-footer .btn-control-actions .btn .icon-caret {
+    display: inline-block !important;
+    opacity: 0.4;
+    width: 6px !important;
+    height: 4px !important;
+    margin-left: 12px !important;
+    border-radius: 0 !important;
+    vertical-align: middle !important;
+    background: none !important;
+    background-image: url("https://sandbox.tinypass.com/widget/dist/myaccount/css/img/img/shevron-down-icon.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 6px 4px !important;
+  }
+
+  /* Restore caret to chevron (library — override bundle's high-specificity selector) */
+  #my-account-container .my-account-container my-account-library .btn.dropdown-toggle .icon-caret {
+    display: inline-block !important;
+    opacity: 0.4 !important;
+    width: 6px !important;
+    height: 4px !important;
+    margin-left: 12px !important;
+    border-radius: 0 !important;
+    vertical-align: middle !important;
+    background: none !important;
+    background-image: url("https://sandbox.tinypass.com/widget/dist/myaccount/css/img/img/shevron-down-icon.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 6px 4px !important;
+  }
+
+  /* Kill the ::before and ::after dots */
+  .btn-control-actions .btn .icon-caret::before,
+  .btn-control-actions .btn .icon-caret::after,
+  #my-account-container .my-account-container my-account-library .btn.dropdown-toggle .icon-caret::before,
+  #my-account-container .my-account-container my-account-library .btn.dropdown-toggle .icon-caret::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* Override library button alignment + margin-top */
+  #my-account-container .my-account-container my-account-library .btn.dropdown-toggle {
+    align-items: center !important;
+    margin-top: 0 !important;
+  }
+}

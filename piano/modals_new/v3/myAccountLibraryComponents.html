@@ -1,0 +1,1054 @@
+<script id="/widget/myaccount/partials/library/_library_item_cancel_confirm.shtml" type="text/ng-template">
+  <button type="button" ng-click="close()" class="tp-close" aria-label="{{'Close' | tc:'checkout.platform'}}"></button>
+  <div class="modal-content">
+
+      <div ng-if="libraryItem.trial">
+          <p><t context="checkout.platform">You are about to cancel your subscription.</t></p>
+          <p><t context="checkout.platform">Do you want to continue?</t></p>
+      </div>
+      <div ng-if="!libraryItem.trial && !libraryItem.scheduledForUpgrade">
+          <p><t context="checkout.platform">You are about to cancel your subscription.</t>
+              <t context="checkout.platform">After cancellation you will no longer be able to access this content.</t></p>
+          <p><t context="checkout.platform">Do you want to continue?</t></p>
+      </div>
+      <div ng-if="libraryItem.scheduledForUpgrade" class="pending-upgrade-confirmation">
+        <p><t context="checkout.platform">You are about to cancel your subscription.</t>
+          <t context="checkout.platform">After cancellation you will no longer be able to access this content, and a pending change to your subscription will also be cancelled.</t></p>
+        <p><t context="checkout.platform">Do you want to continue?</t></p>
+      </div>
+  </div>
+  <div class="action-panel">
+      <a href="#/library" class="button green" ng-click="confirm()"><t context="checkout.platform">Yes</t></a>
+      <a href="#/library" class="button gray" ng-click="close()"><t context="checkout.platform">No</t></a>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/_library_item_renew_confirm.shtml" type="text/ng-template">
+  <button type="button" ng-click="close()" class="tp-close" aria-label="{{'Close' | tc:'checkout.platform'}}"></button>
+  <div class="modal-content renewal-confirmation-modal">
+    <div class="confirm-message" ng-show="libraryItem.dynamicSubscriptionInternalRenew === true">
+      <t context="checkout.platform">Are you sure you want to renew your subscription?</t>
+      <t context="checkout.platform" arg0="{{libraryItem.renewalBillingPlanModel.firstRealPriceWithTax}}">Upcoming payment of <b>{0}</b> will be charged from your payment method right now.</t>
+    </div>
+    <div ng-show="libraryItem.dynamicSubscriptionInternalRenew === false">
+      <div>
+        <t context="checkout.platform">Are you sure you want to renew your subscription?</t>
+        <t context="checkout.platform">Your subscription is configured to change billing plan with the next renewal.</t>
+        <t context="checkout.platform">Future billing plan will be:</t>
+      </div>
+      <div class="renewal-confirmation-modal__table renewal-billing-plan-table">
+        <div class="renewal-billing-plan-table__column">
+          <div class="renewal-billing-plan-table__header"><t context="checkout.platform">Starting</t></div>
+          <div ng-repeat="billingPlanTable in libraryItem.renewalBillingPlanModel.billingPlanTable">{{billingPlanTable.date}}</div>
+        </div>
+        <div class="renewal-billing-plan-table__column">
+          <div class="renewal-billing-plan-table__header"><t context="checkout.platform">Duration</t></div>
+          <div ng-repeat="billingPlanTable in libraryItem.renewalBillingPlanModel.billingPlanTable">{{billingPlanTable.duration}}</div>
+        </div>
+        <div class="renewal-billing-plan-table__column">
+          <div class="renewal-billing-plan-table__header"><t context="checkout.platform">Price</t></div>
+          <div ng-repeat="billingPlanTable in libraryItem.renewalBillingPlanModel.billingPlanTable">{{billingPlanTable.price}}</div>
+        </div>
+        <div class="renewal-billing-plan-table__column" ng-if="hasTax()">
+          <div class="renewal-billing-plan-table__header"><t context="checkout.platform">Tax</t></div>
+          <div ng-repeat="billingPlanTable in libraryItem.renewalBillingPlanModel.billingPlanTable">{{billingPlanTable.tax}}</div>
+        </div>
+        <div class="renewal-billing-plan-table__column renewal-billing-plan-table__column--compact">
+          <div class="renewal-billing-plan-table__header"><t context="checkout.platform">Billing</t></div>
+          <div ng-repeat="billingPlanTable in libraryItem.renewalBillingPlanModel.billingPlanTable">{{billingPlanTable.billing}}</div>
+        </div>
+      </div>
+      <div class="confirm-message">
+        <t context="checkout.platform" arg0="{{libraryItem.renewalBillingPlanModel.firstRealPriceWithTax}}">Upcoming payment of <b>{0}</b> will be charged from your payment method right now.</t>
+        <t context="checkout.platform">Your access will be extended.</t>
+      </div>
+    </div>
+  </div>
+  <div class="action-panel">
+    <a href="#/library" class="button green" ng-click="confirm()">
+      <t context="checkout.platform">Yes</t>
+    </a>
+    <a href="#/library" class="button gray" ng-click="close()">
+      <t context="checkout.platform">No</t>
+    </a>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/_library_item_deferred_cancel_confirm.shtml" type="text/ng-template">
+  <button type="button" ng-click="close()" class="tp-close" aria-label="{{'Close' | tc:'checkout.platform'}}"></button>
+  <div class="modal-content">
+    <p><t context="checkout.platform">Are you sure you want to cancel your subscription? You will still be able to access this content until the end of your current paid period. Any pending changes to your subscription will be cancelled.</t></p>
+  </div>
+  <div class="action-panel">
+    <a href="#/library" class="button green" ng-click="confirm()"><t context="checkout.platform">Yes</t></a>
+    <a href="#/library" class="button gray" ng-click="close()"><t context="checkout.platform">No</t></a>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/_library_item_refund_confirm.shtml" type="text/ng-template">
+  <button type="button" ng-click="close()" class="tp-close" aria-label="{{'Close' | tc:'checkout.platform'}}"></button>
+  <div class="modal-content">
+      <p ng-show="!libraryItem.lastPayment.refundAmountRecalculated && !libraryItem.scheduledForUpgrade">
+          <t context="checkout.platform">Cancel and refund this purchase?</t>
+      </p>
+      <div ng-show="libraryItem.lastPayment.refundAmountRecalculated && !libraryItem.scheduledForUpgrade">
+          <h2 class="modal-content__title">
+              <t context="checkout.platform">Cancel and refund this purchase?</t>
+          </h2>
+          <p class="modal-content__paragraph modal-content__paragraph--refund-purchase">
+              <t context="checkout.platform">Please note that taxes are recalculated for the refund, changing the refund amount from the originally paid amount</t>
+          </p>
+          <table class="refund-overview-table">
+              <tr class="refund-overview-table__row">
+                  <th class="refund-overview-table__title">
+                      <t context="checkout.platform">Paid originally</t>
+                  </th>
+                  <td class="refund-overview-table__value">{{libraryItem.lastPayment.paidDisplayAmount}}</td>
+              </tr>
+              <tr class="refund-overview-table__row">
+                  <th class="refund-overview-table__title">
+                      <t context="checkout.platform">Refund amount</t>
+                  </th>
+                  <td class="refund-overview-table__value">{{libraryItem.lastPayment.refundDisplayAmount}}</td>
+              </tr>
+          </table>
+          <p class="modal-content__paragraph modal-content__paragraph--refund-purchase">
+              <t context="checkout.platform">Are you sure you wish to cancel and refund this purchase?</t>
+          </p>
+      </div>
+      <div ng-show="libraryItem.scheduledForUpgrade" class="pending-upgrade-confirmation">
+        <p><t context="checkout.platform">You are about to cancel and refund your subscription.</t>
+          <t context="checkout.platform"> After cancellation you will no longer be able to access this content, and a pending change to your subscription will also be cancelled.</t></p>
+        <p><t context="checkout.platform">Do you want to continue?</t></p>
+      </div>
+  </div>
+  <div class="action-panel">
+      <a href="#/library" class="button green" ng-click="confirm()"><t context="checkout.platform">Yes</t></a>
+      <a href="#/library" class="button gray" ng-click="close()"><t context="checkout.platform">No</t></a>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/_library_update_payment_method.shtml" type="text/ng-template">
+  <div ng-click="close()" class="tp-close">x</div>
+  <div class="update-payment-method" ng-show="stepManagePaymentMethod === 'loading'">
+      <div class="modal-content"></div>
+  </div>
+  <div class="update-payment-method update-payment-method__payments-list" ng-show="stepManagePaymentMethod === 'update'">
+      <div class="modal-content">
+          <div class="update-payment-method__header">
+              <span class="section-text">
+                  <t>Your payment methods</t>
+              </span>
+              <div class="btn-group dropdown add-new-method-dropdown" ng-if="paymentMethodsAddingAvailable === true">
+                  <button class="add-new-method-dropdown__btn dropdown-toggle" data-toggle="dropdown">
+                      <span class="add-new-method-dropdown__btn-inner">
+                          <t context="checkout.platform">Add new</t>
+                          <svg aria-hidden="true" class="add-new-method-dropdown__btn-icon" width="8" height="5" fill="none"><path d="M1 1l3 3 3-3" stroke="#428BCA"/></svg>
+                      </span>
+                  </button>
+                  <ul class="dropdown-menu add-new-method-dropdown__dropdown">
+                                            <li class="add-new-method-dropdown__list-item">
+                          <button
+                              type="button"
+                              class="add-new-method-dropdown__list-button"
+                              data-e2e="can-add-card"
+                              ng-if="canAddCreditCard"
+                              ng-click="addCard()">
+                              <t>Card</t>
+                          </button>
+                      </li>
+                      <li
+                          ng-if="canAddPayPal"
+                          ng-repeat="source in paypalSources"
+                          class="add-new-method-dropdown__list-item">
+                          <button
+                              type="button"
+                              class="add-new-method-dropdown__list-button paypal-source-{{source}}"
+                              ng-click="setStepManagePaymentMethod('createPayPal'); setPaypalSource(source)">
+                              <t context="checkout.platform">PayPal</t>
+                          </button>
+                      </li>
+                      <li
+                          ng-if="canAddPostfinance"
+                          class="add-new-method-dropdown__list-item">
+                          <button
+                              type="button"
+                              class="link-add-postfinance add-new-method-dropdown__list-button"
+                              ng-click="setStepManagePaymentMethod('createPostfinance')">
+                              <t context="checkout.platform">Postfinance</t>
+                          </button>
+                      </li>
+                      <li
+                        ng-repeat="metadataItem in getPaymentInstrumentsMetadata()"
+                        ng-if="canAddPaymentInstrument(metadataItem) && metadataItem.id !== 75  && metadataItem.id !== 40"
+                        class="add-new-method-dropdown__list-item">
+                        <button
+                          type="button"
+                          class="add-new-method-dropdown__list-button"
+                          data-e2e="add-{{metadataItem.key}}"
+                          ng-click="addPaymentInstrument(metadataItem)">
+                          {{getNewInstrumentButtonText(metadataItem)}}
+                        </button>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="update-payment-method-table-wrapper" ng-init="autoResizePaymentMethodsList()">
+            <table class="vanilla-table">
+                <tr ng-click="setPaymentMethod(card, $event)" ng-repeat="card in cards track by card.ccid" data-e2e="{{'pm-'+card.ccPubId}}"
+                    ng-class="{'payment-method-disabled': isPaymentMethodDisabled(card)}"
+                tp-tooltip tp-tooltip-title="{{card.tooltipTitle}}" tp-tooltip-css-class="payment-method-disabled">
+                    <td class="select-default">
+                        <input class="select-default-checkbox" type="radio" ng-disabled="!card.validForSubscription" ng-checked="card.ccPubId === currentPaymentMethod">
+                    </td>
+                    <td class="logo">
+                      <img ng-if="isRegularImage(card)" ng-src="/images2/{{getImageName(card.paymentType)}}.svg" />
+                      <img ng-if="isImageWithCustomName(card)" ng-src="/images2/{{getCustomImageName(card)}}.svg" />
+                    </td>
+                    <td class="title">
+                        <div class="resource-title" ng-bind-html="getPaymentMethodInfo(card)"></div>
+                    </td>
+                    <td class="expires-date">
+                        <div class="expiration-date expiration-warning" ng-if="card.expiration && card.expiration != 'never'">
+                            <t context="checkout.platform">Expires</t> {{card.expiration}}
+                        </div>
+                    </td>
+                    <td class="payment-method-card-cell payment-method-card-cell-default-payment" ng-show="canShowSetAsDefault(card)">
+                        <div class="payment-method-card-default-payment" ng-show="card.ccPubId === defaultPaymentMethodId"><t>Default</t></div>
+                        <button href="javascript:void(0)" ng-hide="card.ccPubId === defaultPaymentMethodId"
+                                ng-click="setAsDefaultPaymentMethod($event, card.ccPubId)"
+                                type="button"
+                                class="set-as-default-button"
+                        >
+                            <t>Set as default</t>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+          </div>
+      </div>
+      <div class="action-panel">
+          <div class="panel-wrapper-button">
+              <a href="#/updatePaymentMethod" class="button green" ng-click="update()"><t>Update</t></a>
+          </div>
+      </div>
+  </div>
+  <div class="update-payment-method" ng-show="stepManagePaymentMethod === 'createNewCard'">
+      <div class="modal-content" ng-form="cardForm">
+          <div class="clearfix section-delimiter">
+              <span class="section-text">{{getTitle()}}</span>
+              <button type="button" class="link-add-card" ng-click="goToUpdateState()">
+                <span class="link-add-card__inner">
+                  <svg class="link-add-card__icon" aria-hidden="true" width="7" height="10" fill="none"><path d="M5.5 1.5L2 5l3.5 3.5" stroke="#428BCA" stroke-width="2"/></svg>
+                  <t>Back to list</t>
+                </span>
+              </button>
+          </div>
+
+        <div ma-error-section errors="card.formErrors"></div>
+
+          <div ng-if="stepManagePaymentMethod === 'createNewCard'">
+              <new-flow-components-m-a
+                      class="my-account-new-flow"
+                      ng-if="hasNewFlow()"
+                      payment-source="paymentSource"
+                      readonly="false"
+                      require-collect-cardholder-name="cyberSourceCollectCardholderName"
+                      card="card">
+              </new-flow-components-m-a>
+              <div ng-show="!hasNewFlow()">
+                  <my-account-wallet-list-form ng-if="hasCustomForm() === false" cardset="card" readonly="isEditing" payment-source="paymentSource" callback-on-init="callbackOnInit"></my-account-wallet-list-form>
+                  <my-account-wallet-custom-form ng-if="hasCustomForm() === true" cardset="card" readonly="isEditing" payment-source="paymentSource" options="options"></my-account-wallet-custom-form>
+              </div>
+              <div
+                  ng-if="getVisibilityOfApply()"
+                  class="apply-this-method-checkbox"
+              >
+                  <input type="checkbox" id="default-payment-method" ng-model="card.needToApplyDefaultPaymentMethod">
+                  <label for="default-payment-method"><t>Apply this payment method to all active subscriptions</t></label>
+              </div>
+          </div>
+      </div>
+      <payment-method-captcha ng-if="isCaptchaV3Enabled && isCreateNewCardStep()"
+                              is-shown="isCaptchaV2Required"
+                              class="captcha-edit-renewal-method"
+      >
+      </payment-method-captcha>
+      <div class="action-panel" ng-show="getVisibilityOfSave()">
+          <div class="panel-wrapper-button">
+              <button ng-disabled="isSaveButtonDisabled || isCaptchaV2Unresolved" class="button green" ng-click="save()" data-e2e="update-payment-method-add-card">
+                <t context="checkout.platform">Add card</t>
+              </button>
+          </div>
+      </div>
+  </div>
+  <div class="update-payment-method" ng-show="stepManagePaymentMethod === 'createAccount'">
+      <div class="modal-content" ng-form="cardForm">
+          <div class="clearfix section-delimiter">
+              <span class="section-text"><t context="checkout.platform">{{getAccountBasedSectionTitle(paymentSource)}}</t></span>
+              <a class="link-add-card" href="#" ng-click="goToUpdateState()"><img ng-src="{{'/images2/back.svg'}}" class="return-back-image" /> <t context="checkout.platform">Return</t></a>
+          </div>
+          <div ma-error-section errors="card.formErrors"></div>
+          <div>
+              <new-flow-components-m-a
+                      class="my-account-new-flow"
+                      ng-if="hasNewFlowCreateAccountSection()"
+                      payment-source="paymentSource"
+                      readonly="false"
+                      card="card">
+              </new-flow-components-m-a>
+          </div>
+      </div>
+
+      <div class="action-panel" ng-show="card.showButtons">
+          <div class="panel-wrapper-button">
+            <button class="button green" data-e2e="save-card" ng-click="save()" ng-disabled="isButtonDisabled">
+              <t context="checkout.platform">Create</t>
+            </button>
+          </div>
+      </div>
+  </div>
+  <div class="update-payment-method" ng-show="stepManagePaymentMethod === 'createPayPal'">
+          <div class="modal-content">
+              <div class="clearfix section-delimiter">
+                  <span class="section-text"><t context="checkout.platform">Add new PayPal account</t></span>
+                  <button type="button" class="link-add-card" ng-click="goToUpdateState()">
+                      <span class="link-add-card__inner">
+                          <svg class="link-add-card__icon" aria-hidden="true" width="7" height="10" fill="none"><path d="M5.5 1.5L2 5l3.5 3.5" stroke="#428BCA" stroke-width="2"/></svg>
+                          <t>Back to list</t>
+                      </span>
+                  </button>
+              </div>
+
+              <div ng-if="stepManagePaymentMethod == 'createPayPal'">
+                  <my-account-wallet-paypal-form cardset="card" payment-source="currentPaypalSource" options="options"></my-account-wallet-paypal-form>
+              </div>
+          </div>
+
+      <div class="action-panel" ng-show="card.showButtons">
+          <div class="panel-wrapper-button">
+              <a href="#/createPaymentMethod" class="button green" ng-click="savePaypal()"><t context="checkout.platform">Create</t></a>
+          </div>
+      </div>
+  </div>
+  <div class="update-payment-method" ng-show="stepManagePaymentMethod === 'createPostfinance'">
+      <div class="modal-content">
+          <div class="clearfix section-delimiter">
+              <span class="section-text"><t context="checkout.platform">Add new Postfinance card</t></span>
+              <a class="link-add-card" href="#" ng-click="goToUpdateState()">< <t context="checkout.platform">Return to saved cards</t></a>
+          </div>
+
+          <div ng-if="stepManagePaymentMethod === 'createPostfinance'">
+              <my-account-wallet-form-datatrans-postfinance cardset="card"></my-account-wallet-form-datatrans-postfinance>
+          </div>
+      </div>
+
+      <div class="action-panel" ng-show="card.showButtons">
+          <div class="panel-wrapper-button">
+              <a href="#/createPaymentMethod" class="button green" ng-click="savePostfinance()"><t context="checkout.platform">Create</t></a>
+          </div>
+      </div>
+  </div>
+  <div class="update-payment-method" ng-if="stepManagePaymentMethod === 'createPaymentMethod'">
+    <div class="modal-content" ng-form="cardForm">
+      <div class="clearfix section-delimiter">
+        <span class="section-text"><t context="checkout.platform">{{getNewPaymentInstrumentFormTitle(paymentSource)}}</t></span>
+        <a class="link-add-card" href="javascript:void(0)" ng-click="goToUpdateState()"><img ng-src="{{'/images2/back.svg'}}" class="return-back-image" /> <t>Back to list</t></a>
+      </div>
+      <div ma-error-section errors="card.formErrors"></div>
+      <div>
+        <new-flow-components-m-a
+          class="my-account-new-flow"
+          payment-source="paymentSource"
+          readonly="false"
+          card="card">
+        </new-flow-components-m-a>
+      </div>
+    </div>
+
+    <div class="action-panel" ng-show="card.showButtons">
+      <div class="panel-wrapper-button">
+        <button class="button green" data-e2e="save-card" ng-click="save()" ng-disabled="isSaveButtonDisabled">
+          <t context="checkout.platform">Add</t>
+        </button>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/_library_list_item.shtml" type="text/ng-template">
+
+   <div class="ma-library-items">
+     <!-- Postponed upgrades notices -->
+     <ul
+       ng-if="postponedUpgrades.length"
+       class="ma-lib-notices">
+       <li ng-repeat="upgrade in postponedUpgrades"
+           class="ma-lib-notice">
+         <div ng-if="isPendingUpgrade(upgrade)">
+  			Uue digipaketi <b>{{upgrade.termToName}}</b> tasu võetakse {{upgrade.changeDate}}.
+  </div>
+         <div ng-if="!isPendingUpgrade(upgrade)">
+           <t context="checkout.platform">Your subscription to the</t> <b>{{upgrade.termFromName}}</b> <t context="checkout.platform">will expire on</t> {{upgrade.changeDate}} <t context="checkout.platform">and will not be changed to</t> <b>{{upgrade.termToName}}</b>.
+         </div>
+       </li>
+     </ul>
+
+     <!-- Shared access notices -->
+     <ul
+       ng-if="sharedAccessList.length"
+       class="ma-lib-notices">
+       <li ng-repeat="sharedAccess in sharedAccessList"
+           class="ma-lib-notice">
+           <t context="checkout.platform" arg0="{{sharedAccess.parentEmail}}">You have been named on a shared subscription purchased by <b>{0}</b>. Click the 'Redeem' button to obtain your access.</t>
+           <button id="redeem-shared-access-button"
+                   external-event="sharedSubscriptionAccepted"
+                   ng-click="redeemSharedAccess(sharedAccess)"
+                   class="btn btn--blue btn--medium pull-right"><t>Redeem</t></button>
+       </li>
+     </ul>
+
+     <!-- Subscription card list -->
+     <div class="ma-lib-list">
+       <div class="ma-lib-card" ng-repeat="libraryItem in collection | orderBy: 'resourceName' track by libraryItem.id">
+
+         <!-- Card main row -->
+         <div class="ma-lib-card__row">
+           <!-- Left: subscription info -->
+           <div class="ma-lib-card__info">
+             <div ng-if="!libraryItem.billingPlanModel.isSubscription" class="ma-lib-card__name">
+               {{libraryItem.termName === 'Access Granted' ? 'Digipakett' : (libraryItem.termName | tc:'term.name')}}
+               <span class="apple-small" ng-if="libraryItem.provider === 'Apple iTunes'"></span>
+             </div>
+             <div ng-if="libraryItem.billingPlanModel.isSubscription" class="ma-lib-card__name">
+               {{libraryItem.resourceName| tc:'resource.name'}}
+               <span class="apple-small" ng-if="libraryItem.provider === 'Apple iTunes'"></span>
+             </div>
+             <div class="ma-lib-card__details">
+               <span ng-bind-html="libraryItem.expirationMsg"></span>
+               <span ng-bind-html="getPaymentMethodInfo(libraryItem.card)"></span>
+             </div>
+           </div>
+
+           <!-- Right: price + actions -->
+           <div class="ma-lib-card__right">
+             <div class="ma-lib-card__price">
+               <span ng-show="!libraryItem.expired">{{libraryItem.billingPlanModel.nextChargeTotalAmount}}</span>
+               <span ng-show="libraryItem.expired">{{libraryItem.billingPlanModel.totalAmount}}</span>
+             </div>
+
+             <!-- Toggler: visually hidden, kept for Angular binding -->
+             <div class="ma-lib-toggler-hidden"
+                  ng-show="libraryItem.autoRenewChangeEnabled">
+               <div tp-toggle
+                    class="small"
+                    ng-model="libraryItem.autoRenew"
+                    ng-change="toggleRenew(libraryItem)"></div>
+               <div class="tp-toggler-label small"
+                    ng-class="{'on':libraryItem.autoRenew}"><t>Auto-renew</t></div>
+             </div>
+
+             <!-- Actions -->
+             <div class="ma-lib-card__actions">
+               <button class="button green" ng-if="libraryItem.sharedAccountLimit && !libraryItem.expired" ng-click="manageSharedAccounts(libraryItem)">
+                 <t>Manage shared accounts</t>
+               </button>
+               <button id="change-term-button" ng-if="libraryItem.termChangeOptions.length"
+                       ng-disabled="libraryItem.pending"
+                       ng-click="upgrade(libraryItem, libraryItem.termChangeOptions)"
+                       <button class="button green">Vaheta paketti</button>
+               <tp-menu ng-class="{'mobile-show': canShowActionMenuMobile(libraryItem)}"
+                        ng-show="canShowActionMenu(libraryItem)">
+                   <tp-menu-item class="mobile-show"
+                                 ng-click="toggleRenew(libraryItem);"
+                                 ng-if="libraryItem.autoRenewChangeEnabled">
+                       <span ng-if="libraryItem.autoRenew === true">
+                           <t>Disable auto renew</t>
+                       </span>
+                       <span ng-if="libraryItem.autoRenew === false">
+                           <t>Enable auto renew</t>
+                       </span>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-click="renewNow(libraryItem)"
+                                 ng-if="libraryItem.renewNowEnabled">
+                       <t>Renew now</t>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-click="cancelSubscription(libraryItem)" ng-if="libraryItem.cancelEnabled">
+                         <span>
+                             <t context="checkout.platform">Lõpeta püsimakse</t>
+                         </span>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-click="refundPayment(libraryItem)" ng-if="libraryItem.cancelAndRefundEnabled">
+                         <span>
+                             <t context="checkout.platform">Cancel and refund subscription</t>
+                         </span>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-click="deferredCancelSubscription(libraryItem)" ng-if="libraryItem.deferredCancelEnabled">
+                         <span>
+                             <t context="checkout.platform">Lõpeta püsimakse</t>
+                         </span>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-click="resumeSubscription(libraryItem)" ng-if="libraryItem.resumeEnabled">
+                         <span>
+                             <t context="checkout.platform">Aktiveeri püsimakse</t>
+                         </span>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-if="libraryItem.sharedAccountLimit && !libraryItem.expired" ng-click="manageSharedAccounts(libraryItem)">
+                       <t>Manage shared accounts</t>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-click="updatePaymentMethod(libraryItem)" ng-if="libraryItem.updatePaymentMethodEnabled">
+                       <span>
+                           <t>Update renewal payment method</t>
+                       </span>
+                   </tp-menu-item>
+
+                   <tp-menu-item ng-click="leaveFromParentSubscription(libraryItem)" ng-if="libraryItem.sharedSubscription">
+                       <span>
+                           <t context="checkout.platform">Lahku jagatud tellimusest</t>
+                       </span>
+                   </tp-menu-item>
+
+               </tp-menu>
+             </div>
+           </div>
+         </div>
+
+         <!-- Pending payment warning -->
+         <div class="ma-lib-card__warning" ng-if="libraryItem.pending">
+           <t>Due to the current pending status of the last transaction associated with subscription some of the subscription managing functions are not available until the bank confirms the payment.</t>
+         </div>
+
+       </div>
+     </div>
+
+     <!-- hidden button for 'jaga' -->
+     <ul class="tabs header-navigation-tabs ma-navigation" ng-repeat="libraryItem in collection" style="visibility:hidden;height:0;overflow:hidden;">
+       <li id="mach_sharer" ng-if="libraryItem.sharedAccountLimit && !libraryItem.expired" ng-click="manageSharedAccounts(libraryItem)"><a class="" href="#">.</a></li>
+     </ul>
+   </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/upgrade_options.shtml" type="text/ng-template">
+  <div ng-if="isChooseScreen">
+    <span class="section-text">
+     <t context="checkout.platform">Vaheta digipaketti</t>
+    </span>
+
+    <ul class="list list--change-option clearboth">
+      <li class="list__row list__item--separated"
+          ng-repeat="option in options">
+
+        <div class="list__cell list__cell--radiobutton" ng-click="option.changable? optionSelected(option.termChangeOptionId):''">
+          <label class="radiobutton" ng-class="{'not-selectable': !option.changable}" >
+            <input type="radio" ng-model="selectedOptionId" ng-value="option.termChangeOptionId" ng-disabled="option.changable === false">
+            <span class="radiobutton__label">
+            </span>
+          </label>
+        </div>
+        <div class="list__cell">
+          <div>
+              <span class="change-option-title" ng-class="{'change-option-disabled':!option.changable}">{{option.toTermName}}</span>
+              <span class="change-option-restriction-message" ng-show="!option.changable">{{option.tooltip}}</span>
+          </div>
+          <div class="change-option-billing-plan">
+            <!-- Switch of BILLING_TIMING -->
+            <span ng-if="option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 0">{{option.billingPlan}}, <t context="checkout.platform">access will begin immediately</t>, <t context="checkout.platform">you will be charged as from now</t></span>
+            <span ng-if="option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 1">{{option.billingPlan}}, <t context="checkout.platform">access will begin immediately</t>, <t ng-if="option.nextBillingDate" context="checkout.platform">tellimus uueneb</t> {{option.nextBillingDate}}</span>
+            <span ng-if="option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 2">{{option.billingPlan}}, <t context="checkout.platform">access will begin immediately</t>, <t ng-if="option.nextBillingDate" context="checkout.platform">tellimus uueneb</t> {{option.nextBillingDate}}</span>
+            <span ng-if="option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 3">{{option.billingPlan}}, <t context="checkout.platform">access will begin immediately</t>, <t ng-if="option.nextBillingDate" context="checkout.platform">tellimus uueneb</t> {{option.nextBillingDate}}</span>
+            <span ng-if="!option.immediateAccess && !option.upgradeWillBeImmediately">{{option.billingPlan}}, <t ng-if="option.nextBillingDate" context="checkout.platform">tellimus uueneb</t> {{option.nextBillingDate}}</span>
+            <span ng-if="option.upgradeWillBeImmediately">{{option.billingPlan}}, <t context="checkout.platform">access will begin immediately</t>, <t context="checkout.platform">you will be charged as from now</t></span>
+          </div>
+          <div class="change-option-description" ng-class="{'change-option-disabled':!option.changable}">
+            {{option.description}}
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="my-account-footer actions">
+        <button
+          ng-disabled="isUpgradeInProgress"
+          ng-click="goBack()"
+          class="ma-wallet-card__default-btn my-account-footer__button">
+          Tagasi</button>
+
+        <button
+          ng-if="!addressCollectionEnabled"
+          ng-disabled="isUpgradeInProgress || !selectedOptionId"
+          ng-click="onPick()"
+          class="btn btn-green my-account-footer__button">Kinnita</button>
+
+        <button
+          ng-if="addressCollectionEnabled"
+          ng-disabled="isUpgradeInProgress || !selectedOptionId"
+          ng-click="onAddressCollect()"
+          class="btn btn--blue btn--large btn--bold my-account-footer__button"><t context="checkout.platform">Next</t></button>
+      </div>
+  </div>
+  <div ng-if="isAddressScreen">
+      <div print-address-form address-list="addressList" countries-list="countriesList"></div>
+      <div class="my-account-footer">
+          <button
+                  ng-disabled="isUpgradeInProgress"
+                  ng-click="showPickScreen()"
+                  class="btn btn--gray btn--large btn--bold my-account-footer__button"><t context="checkout.platform">Back</t></button>
+          <button
+                  ng-click="saveNewUserAddress()"
+                  class="btn btn--blue btn--large btn--bold my-account-footer__button"><t context="checkout.platform">Salvesta</t></button>
+      </div>
+  </div>
+  <div ng-if="isConfirmScreen">
+    <span class="section-text small-break">
+     <t context="checkout.platform">Review and confirm the changes to your subscription</t>
+    </span>
+
+    <ul
+      class="simple-list simple-list--review-and-confirm clearboth">
+      <!--Access to current term-->
+      <li ng-if="isImmediatelyTiming(selectedOption)"
+          class="simple-list__item simple-list__item--with-dot"
+      >
+          <t context="checkout.platform">Your current access to the</t> {{upgradeFrom.termName}} <t context="checkout.platform">will end immediately</t>
+      </li>
+      <li ng-if="!isImmediatelyTiming(selectedOption)"
+          class="simple-list__item simple-list__item--with-dot"
+      >
+          <t context="checkout.platform">Your current access to the</t> {{upgradeFrom.termName}} <t context="checkout.platform">will end on</t> {{selectedOption.subscriptionEndDate | date:'mediumDate'}}
+      </li>
+
+      <!--Access to new term-->
+      <li ng-if="isImmediateAccess(selectedOption)"
+          class="simple-list__item simple-list__item--with-dot"
+      >
+          <t context="checkout.platform">Your new access to the</t> {{selectedOption.toTermName}} <t context="checkout.platform">will begin immediately</t>
+      </li>
+      <li ng-if="!isImmediateAccess(selectedOption)"
+          class="simple-list__item simple-list__item--with-dot"
+      >
+          <t context="checkout.platform">Your new access to the</t> {{selectedOption.toTermName}} <t context="checkout.platform">will begin on</t> {{selectedOption.accessStartDate | date:'mediumDate'}}
+      </li>
+
+      <!--Charged for new term-->
+      <li ng-if="isImmediatelyTiming(selectedOption)"
+          class="simple-list__item simple-list__item--with-dot"
+      >
+          <t context="checkout.platform">Your subscription for</t> <b>{{selectedOption.billingPlan}}</b> <t context="checkout.platform">will begin immediately</t>
+      </li>
+      <li ng-if="!isImmediatelyTiming(selectedOption)"
+          class="simple-list__item simple-list__item--with-dot"
+      >
+          <t context="checkout.platform">Your subscription for</t> <b>{{selectedOption.billingPlan}}</b> <t context="checkout.platform">will begin</t> {{selectedOption.billingDate | date:'mediumDate'}}
+      </li>
+
+      <li ng-if="selectedOption.prorateAccess && selectedOption.prorateRemaining" class="simple-list__item simple-list__item--with-dot"><t arg0="{{selectedOption.prorateRemaining}}" context="checkout.platform">You will be refunded {0} from your current subscription</t></li>
+      <li ng-if="selectedOption.prorateAccess && selectedOption.prorateCharged" class="simple-list__item simple-list__item--with-dot"><t arg0="{{selectedOption.prorateCharged}}" arg1="{{selectedOption.billingPlan}}" context="checkout.platform">You will be charged <b>{0}</b> today, and <b>{1}</b> for the rest of your subscription term</t></li>
+
+      <li class="simple-list__item simple-list__item--with-dot simple-list__item--with-dot-fixed-top"
+          ng-if="!isAddressEmpty()"
+      >
+          <span><t context="checkout.platform">The delivery address for this subscription is:</t></span><br>
+          <span ng-if="newAddress.firstName">{{newAddress.firstName}}</span>
+          <span ng-if="newAddress.lastName">{{newAddress.lastName}}</span>
+          <span ng-if="newAddress.companyName">{{newAddress.companyName}}</span>
+          <span ng-if="newAddress.phone">{{newAddress.phone}}</span><br>
+
+          <span ng-if="newAddress.line1 || newAddress.address1">{{newAddress.line1 || newAddress.address1}}</span>
+          <span ng-if="newAddress.line2 || newAddress.address2">{{newAddress.line2 || newAddress.address2}}</span><br>
+
+          <span ng-if="newAddress.countryName">{{newAddress.countryName}}</span>
+          <span ng-if="newAddress.regionName">{{newAddress.regionName}}</span>
+          <span ng-if="newAddress.city">{{newAddress.city}}</span>
+          <span ng-if="newAddress.postalCode || newAddress.postal">{{newAddress.postalCode || newAddress.postal}}</span>
+      </li>
+    </ul>
+
+    <span class="section-text small-break section-text--additional">
+     <t context="checkout.platform">Additional upgrade information</t>
+    </span>
+
+    <ul class="simple-list simple-list--review-and-confirm clearboth">
+      <li class="simple-list__item">
+        <span>
+          <t context="checkout.platform">Payment method: </t>
+          <span ng-show="upgradeFrom.card">
+            <t context="checkout.platform" arg0="{{upgradeFrom.card.paymentType}}" arg1="{{upgradeFrom.card.lastFour}}"><b>{0} *{1}</b></t>
+          </span>
+          <span ng-if="upgradeFrom.card.expiration">
+            <t context="checkout.platform" arg0="{{upgradeFrom.card.expiration}}"> expires in <b>{0}</b></t>
+          </span>
+        </span>
+      </li>
+    </ul>
+
+    <div class="my-account-footer">
+      <button
+        ng-disabled="isUpgradeInProgress"
+        ng-click="addressCollectionEnabled ? showAddressScreen() : showPickScreen()"
+        class="btn btn--gray btn--large btn--bold my-account-footer__button">Tagasi</button>
+      <button
+        ng-disabled="isUpgradeInProgress"
+        ng-click="onConfirm()"
+        ng-class="{'disabled':isUpgradeInProgress}"
+        class="button big confirmation-button my-account-footer__button">
+        Kinnita
+    </button>
+    </div>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/library_list.shtml" type="text/ng-template">
+  <div id="library-shelf" class="ma-library">
+    <!--Upgrade options-->
+    <div ng-if="isScreen(SCREEN_UPGRADE_OPTIONS)">
+      <upgrade-options upgrade-from="upgradeFrom" on-close="showScreen(SCREEN_SUBSCRIPTIONS)" on-success-update="onItemUpgraded()" options="upgradeOptions"></upgrade-options>
+    </div>
+    <div class="screen--my-subscriptions" ng-show="isScreen(SCREEN_SUBSCRIPTIONS)" ng-init="active = true;">
+      <div class="library-container">
+        <!-- Header Section -->
+        <header class="library-header">
+          <div>
+            <div class="error-section-v2" error-section ng-if="termChangeFails.length > 0" on-close-callback-fn="onCloseTermChangeFailErrorMessages()" errors="termChangeFails"></div>
+          </div>
+          <span class="section-text">
+            <t>My subscriptions</t>
+          </span>
+        </header>
+        <div tabset>
+          <tab heading="{{'Active' | tc:'checkout.platform'}}" select="$parent.active=true">
+            <div class="scrollable-content">
+              <!-- aktiivsed tellimused -->
+              <library-table
+                ng-if="$parent.active"
+                collection="activeLibrary"
+                postponed-upgrades="termChangeList"
+                toggle-renew-callback="toggleAutoRenew"
+                cancel-subscription-callback="cancelSubscription"
+                deferred-cancel-subscription-callback="deferredCancelSubscription"
+                resume-subscription-callback="resumeSubscription"
+                refund-payment-callback="refundPayment"
+                upgrade-library-item-callback="onUpgrade"
+                update-payment-method-callback="updatePaymentMethod"
+                get-user-address-callback="getUserAddress"
+                renew-now-callback="renewNow"
+                manage-shared-accounts-callback="manageSharedAccounts"
+                leave-from-parent-subscription-callback="leaveFromParentSubscription"
+                redeem-shared-access-callback="redeemSharedAccess"
+                shared-access-list="sharedAccessList"></library-table>
+            </div>
+          </tab>
+          <tab heading="{{'Expired' | tc:'checkout.platform'}}" select="$parent.active=false">
+            <div class="scrollable-content">
+              <!-- aegunud tellimused -->
+              <library-table postponed-upgrades="termChangeList" redeem-shared-access-callback="redeemSharedAccess" shared-access-list="sharedAccessList" ng-if="!$parent.active" collection="inactiveLibrary"></library-table>
+            </div>
+          </tab>
+        </div>
+      </div>
+    </div>
+
+    <my-account-print-address-form ng-if="isScreen(SCREEN_PRINT_COMPONENT)" heading="'Edit subscription address'" is-search-selects="true" address="userAddress" countries="countryList()" is-p-a-c="isPAC()" is-p-s-c="isPSC()" activeItem="model.activeItem" on-save="onPrintAddressSave" on-cancel="goBackToLibrary()">
+    </my-account-print-address-form>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/_library_item_leave_shared_subscription_confirm.shtml" type="text/ng-template">
+  <div class="modal-content">
+      <t context="checkout.platform">Kas soovid jagatud tellimusest lahkuda?</t>
+  </div>
+  <div class="action-panel">
+      <a href="javascript:void(0)" class="button green" ng-click="confirm()"><t context="checkout.platform">Jah</t></a>
+      <a href="javascript:void(0)" class="button gray" ng-click="close()"><t context="checkout.platform">Ei</t></a>
+  </div>
+</script>
+
+<script id="/widget/myaccount/partials/library/_library_item_shared_accounts.shtml" type="text/ng-template">
+  <div shared-subscription-component shared-accounts-config="saConfig"></div>
+</script>
+
+<!-- shared-subscription-component -->
+<script id="/widget/checkout/component/partials/shared-subscription-component.html" type="text/ng-template">
+  <div class="modal-content" data-e2e="shared-subscription">
+      <h1 class="ss__h1 ss__h1--mb25"><t>Manage your shared accounts</t></h1>
+      <div ma-error-section errors="errors"></div>
+
+      <div class="" ng-show="storage.users.length > 0">
+          <div class="ss__border--top ss__border--bottom ss__indent" ng-class="{'ss__editable__row--last': (storage.users.length === (storage.editableUserIndex+1)) && (storage.users.length === ($index+1)) && isEditingFormShown()}" ng-repeat="user in storage.users">
+              <div class="ss__user-info-wrapper ss__row" ng-show="storage.user.email !== user.email">
+                  <div class="ss__flex-row--left-column" data-e2e="user">
+                      {{user.email}}
+                      <span ng-if="user.completeName.length">
+                          -
+                          <span class="ss__color--grey">{{user.completeName}}</span>
+                      </span>
+                      <div class="ss-redeemed-on" ng-if="user.redeemed">
+                          <t context="checkout.platform" arg0="{{user.redeemed | date: 'mediumDate'}} {{user.redeemed | date: 'shortTime'}}">Redeemed on {0}</t>
+                      </div>
+                  </div>
+                  <div class="ss__flex-row--right-column">
+                      <button type="button" class="ss__row-button ss__row-button--send" ng-click="resendEmail(user)" ng-hide="user.userId !== null || isReadonly === true" ng-disabled="storage.showForm === true || isResendEmailInProcess === true" title="{{'Saada meil uuesti' | tc:'checkout.platform'}}"><t context="checkout.platform">Resend email</t></button>
+                      <button type="button" class="ss__row-button ss__row-button--edit" ng-click="editUser(user, $index)" ng-hide="isReadonly === true" ng-disabled="storage.showForm === true" title="{{'Edit account' | tc:'checkout.platform'}}"><t context="checkout.platform">Edit</t></button>
+                      <button type="button" class="ss__row-button ss__row-button--delete" tp-drop-confirm confirm="deleteUser(user)" confirm-message="{{'Are you sure you would like remove this shared account?' | tc:'checkout.platform'}}" confirm-yes="{{'Eemalda' | tc:'checkout.platform'}}" confirm-no="{{'Cancel' | tc:'checkout.platform'}}"  ng-hide="isReadonly === true" ng-disabled="storage.showForm === true" title="{{'Kustuta konto' | tc:'checkout.platform'}}"><t context="checkout.platform">Delete user</t></button>
+                  </div>
+              </div>
+              <div ng-if="storage.user.email === user.email">
+                  <div shared-subscription-form-component storage="storage"></div>
+              </div>
+          </div>
+      </div>
+
+      <div class="ss__single-form" ng-if="!isUsersExists() || (isEditingFormShown() && !isEditingUser())" shared-subscription-form-component storage="storage"></div>
+      <div class="user-control" ng-class="{'no-user-control': isEditingFormShown() && storage.sharedAccountsLimit > 0 && isUsersExists()}" ng-hide="isReadonly === true">
+          <div ng-if="!isUsersExists()"><t context="checkout.platform" arg0="{{storage.sharedAccountsLimit}}">Saad lisada kuni {0} jagatud kontot</t></div>
+          <button class="ss__add-shared-account" ng-show="canAddUser()" ng-click="addUser()"><t context="checkout.platform" arg0="{{storage.sharedAccountsLimit}}">Lisa jagatud konto <span class="ss__add-shared-account--limit">(veel {0})</span></t></button>
+          <span class="ss__color--grey" ng-show="storage.sharedAccountsLimit === 0"><t context="checkout.platform">Jagatud kontode limiit on täis</t></span>
+          <span class="ss__color--grey" ng-show="storage.sharedAccountsDifference > 0"><t context="checkout.platform" arg0="{{storage.sharedAccountsDifference}}">Please remove {0} account(s) to proceed</t></span>
+      </div>
+      <div class="user-control" ng-show="isReadonly === true">
+          <span class="ss__color--grey"><t context="checkout.platform">All accounts will be removed.</t></span>
+      </div>
+
+  </div>
+  <div class="action-panel">
+      <div ng-show="!isUsersExists() && !isFormDirty()">
+          <button type="button" ng-click="next()" class="button green" ng-disabled="isNextButtonDisabled || (storage.sharedAccountsDifference > 0 && isReadonly === false)">
+              <t context="checkout.platform">Salvesta</t>
+          </button>
+      </div>
+      <div ng-show="isUsersExists() || (!isUsersExists() && isFormDirty())">
+          <button type="button" ng-click="next()" class="button green" ng-disabled="isFormDirty() || isEditingFormShown() || isNextButtonDisabled || (storage.sharedAccountsDifference > 0 && isReadonly === false)">
+              <t context="checkout.platform">Salvesta</t>
+          </button>
+      </div>
+  </div>
+</script>
+
+<script id="/widget/checkout/component/partials/shared-subscription-form-component.html" type="text/ng-template">
+  <form name="manageSharedUserForm" class="ss__form">
+      <div class="ss__row">
+          <div class="ss__row-right-column" style="float: none !important;width: 96px !important;padding-top: 0 !important;display: flex !important;align-items: center !important;justify-content: space-between !important;position: absolute !important;right: 52px !important;margin-top: 6px !important;z-index: 100 !important;">
+              <button type="button" class="ss__row-button ss__row-button--cancel" ng-disabled="storage.users.length === 0" ng-click="cancelEditingUser()"><t context="checkout.platform">Cancel</t></button>
+              <button type="button" class="ss__row-button ss__row-button--apply" ng-disabled="storage.isFormDirty !== true" ng-click="validateUser()" style="opacity: 1 !important; width: 83px !important; height: 28px !important; background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MyIgaGVpZ2h0PSIyOCIgZmlsbD0ibm9uZSI+PHJlY3Qgd2lkdGg9IjgzIiBoZWlnaHQ9IjI4IiBmaWxsPSIjRTMwMDBGIiByeD0iNCI+PC9yZWN0PjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xOS4yMDYgOS4yOThWMTlIMTYuOTFWOS4yOThoMi4yOTZabTUuNTcyIDAtMy4wOTQgNC4zNTRMMjUuMDMgMTloLTIuNjZsLTMuMDk0LTUuMTggMy4wOC00LjUyMmgyLjQyMlptMy4yODcgMFYxOUgyNS43N1Y5LjI5OGgyLjI5NlpNMzcuMzQ3IDE5SDM0LjQybC0yLjgtNy41MThjLjA5My43MzcuMTYzIDEuMzkuMjEgMS45Ni4wNTYuNTYuMDg0IDEuMjI3LjA4NCAyLjAwMlYxOUgyOS44N1Y5LjI5OGgyLjg1NmwyLjg3IDcuNTMyYTIyLjg0IDIyLjg0IDAgMCAxLS4zMDgtMy42MTJ2LTMuOTJoMi4wNThWMTlabTkuMjgzIDBoLTIuOTI2bC0yLjgtNy41MThjLjA5My43MzcuMTYzIDEuMzkuMjEgMS45Ni4wNTYuNTYuMDg0IDEuMjI3LjA4NCAyLjAwMlYxOWgtMi4wNDRWOS4yOThoMi44NTZsMi44NyA3LjUzMmEyMi44NCAyMi44NCAwIDAgMS0uMzA4LTMuNjEydi0zLjkyaDIuMDU4VjE5Wm00LjEwMy05LjcwMlYxOWgtMi4yOTZWOS4yOThoMi4yOTZabTguNDQyIDAtLjIyNCAxLjc2NGgtMi4zOTRWMTlINTQuMjZ2LTcuOTM4aC0yLjUwNlY5LjI5OGg3LjQyWk02NC41MTIgMTlsLS41MDQtMi4wODZINjEuMThMNjAuNjkgMTloLTIuMzhsMi45MjYtOS43MDJoMi43ODZMNjYuOTQ4IDE5aC0yLjQzNlptLTIuOTQtMy43NTJoMi4wNDRsLTEuMDIyLTQuMjg0LTEuMDIyIDQuMjg0WiI+PC9wYXRoPjwvc3ZnPg==)no-repeat !important;"><t context="checkout.platform">Apply</t></button>
+          </div>
+          <div class="ss__row-left-column" style="margin-right: 0px !important;">
+              <input type="text"
+                     id="ss-user-email"
+                     class="ss__row-input regular-border"
+                     name="email"
+                     ng-model="user.email"
+                     ng-keydown="onKeyDown($event)"
+                     ng-change="checkIsFormValid()"
+                     placeholder="meiliaadress (kohustuslik)"
+                     autocomplete="off"
+                     auto-focus
+                     required />
+          </div>
+      </div>
+      <div class="ss__row">
+          <div class="ss__row-left-column" style="margin-right: 0px !important;">
+            <div class="ss__row-left-column__first-half">
+              <input
+                type="text"
+                class="ss__row-input regular-border"
+                ng-model="user.firstName"
+                name="firstName"
+                ng-keydown="onKeyDown($event)"
+                ng-change="checkIsFormValid()"
+                placeholder="eesnimi (valikuline)"
+                autocomplete="no-autocomplete" />
+            </div>
+
+            <div class="ss__row-right-column__second-half">
+              <input
+                type="text"
+                class="ss__row-input regular-border"
+                ng-model="user.lastName"
+                name="lastName"
+                ng-keydown="onKeyDown($event)"
+                ng-change="checkIsFormValid()"
+                placeholder="perekonnanimi (valikuline)"
+                autocomplete="no-autocomplete" />
+            </div>
+          </div>
+              </div>
+  </form>
+</script>
+<script id="/widget/checkout/component/partials/print-address-component.html" type="text/ng-template">
+
+  <h1 class="header-title-information">
+      <t>Enter Your Subscription Address</t>
+  </h1>
+
+  <div class="selectable-radio-list">
+      <label ng-repeat="item in addressList track by $index" class="selectable-list-item" ng-class="{'current': item.pubId === model.activeItem.pubId}">
+          <input type="radio" ng-model="model.activeItem" ng-value="item" class="selectable-list-radiobutton">
+          <div class="selectable-list-title">
+              <span ng-if="item.line1">{{item.line1}}</span><!--
+              --><span ng-if="item.city"><span ng-if="item.line1">, </span>{{item.city}}</span>
+              <span ng-if="item.postal">{{item.postal}}</span><!--
+              --><span ng-if="item.regionName"><span ng-if="item.line1 || item.city || item.postal">, </span>{{item.regionName}}</span><!--
+              --><span ng-if="item.countryName"><span ng-if="item.line1 || item.city || item.postal || item.regionName">, </span>{{item.countryName}}</span>
+          </div>
+          <div class="selectable-list-note">
+              <span ng-if="item.phone">{{item.phone}}</span><!--
+              --><span ng-if="item.firstName"><span ng-if="item.phone">, </span>{{item.firstName}}</span>
+              <span ng-if="item.lastName">{{item.lastName}}</span>
+          </div>
+      </label>
+      <label class="selectable-list-item" ng-class="{'current': 'add_new' === model.activeItem}">
+          <input type="radio" ng-model="model.activeItem" ng-value="'add_new'" id="add_new" class="selectable-list-radiobutton">
+          <div class="selectable-list-title-single"><t>New address</t></div>
+      </label>
+  </div>
+
+  <div ng-show="model.activeItem === 'add_new'">
+      <form name="printAddressForm" class="print-address-form" ng-class="{'validated': validated}">
+          <div class="floating-table" ng-class="{'pac-myaccount': model.activeItem === 'add_new'}">
+
+              <div class="floating-table-cell field-country">
+                  <div class="shake-element">
+                      <label for="country">
+                          <t>Country</t>
+                      </label>
+                      <div>
+                          <select id="country"
+                                  required
+                                  ng-model="model.country"
+                                  ng-options="country.countryName for country in countryList() track by country.countryName">
+                          </select>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-companyName">
+                  <div class="shake-element">
+                      <label for="companyName">
+                          <t>Company Name</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="companyName" class="flat" ng-model="form.companyName" type="text"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-firstName">
+                  <div class="shake-element">
+                      <label for="firstName">
+                          <t>First Name</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="firstName" class="flat" ng-model="form.firstName" type="text"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-lastName">
+                  <div class="shake-element">
+                      <label for="lastName">
+                          <t>Last Name</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="lastName" class="flat" ng-model="form.lastName" type="text"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-address1">
+                  <div class="shake-element">
+                      <label for="address1">
+                          <t>Address 1</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="address1" class="flat" ng-model="form.address1" type="text" required/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-address2">
+                  <div class="shake-element">
+                      <label for="address2">
+                          <t>Address 2</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="address2" class="flat" ng-model="form.address2" type="text"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-city">
+                  <div class="shake-element">
+                      <label for="city">
+                          <t>City</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="city" class="flat" ng-model="form.city" type="text" required/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-region">
+                  <div class="shake-element">
+                      <label for="region-dynamic">
+                          <t>State/Provinces</t>
+                      </label>
+                      <div>
+                          <region-select input-class="flat" wrapper-input-class="field-wrapper"
+                                         id="region"
+                                         input-id="region-dynamic"
+                                         region="model.region"
+                                         country="model.country"
+                                         countries="countryList()"
+                                         pre-select-first>
+                          </region-select>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-zipCode">
+                  <div class="shake-element">
+                      <label for="zipCode">
+                          <t>Postal Code</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="zipCode" class="flat" ng-model="form.postalCode" type="text" required/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="floating-table-cell field-phone">
+                  <div class="shake-element">
+                      <label for="phone">
+                          <t>Phone</t>
+                      </label>
+                      <div class="field-wrapper">
+                          <div class="input">
+                              <input id="phone" class="flat" ng-model="form.phone" type="text"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </form>
+  </div>
+</script>

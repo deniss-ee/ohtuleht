@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="myAccountStyle.css">
+    </head>
+    <body>
+<my-account-library ng-if="current=='library'" class="ng-scope">
+    <div id="library-shelf" class="ma-library">
+      <!--Upgrade options-->
+      <!-- ngIf: isScreen(SCREEN_UPGRADE_OPTIONS) --><div ng-if="isScreen(SCREEN_UPGRADE_OPTIONS)" class="ng-scope">
+        <upgrade-options upgrade-from="upgradeFrom" on-close="showScreen(SCREEN_SUBSCRIPTIONS)" on-success-update="onItemUpgraded()" options="upgradeOptions" class="ng-isolate-scope">
+  <!-- ngIf: isChooseScreen -->
+  <!-- ngIf: isAddressScreen -->
+  <!-- ngIf: isConfirmScreen --><div ng-if="isConfirmScreen" class="ng-scope">
+    <span class="section-text small-break">
+     <t context="checkout.platform"><span class="ng-scope">Review and confirm the changes to your subscription</span></t>
+    </span>
+
+    <ul class="simple-list simple-list--review-and-confirm clearboth">
+      <!--Access to current term-->
+      <!-- ngIf: isImmediatelyTiming(selectedOption) -->
+      <!-- ngIf: !isImmediatelyTiming(selectedOption) --><li ng-if="!isImmediatelyTiming(selectedOption)" class="simple-list__item simple-list__item--with-dot ng-binding ng-scope">
+          <t context="checkout.platform"><span class="ng-scope">Your current access to the</span></t> TEST (dynamic) <t context="checkout.platform"><span class="ng-scope">will end on</span></t> 10.08.2026
+      </li><!-- end ngIf: !isImmediatelyTiming(selectedOption) -->
+
+      <!--Access to new term-->
+      <!-- ngIf: isImmediateAccess(selectedOption) --><li ng-if="isImmediateAccess(selectedOption)" class="simple-list__item simple-list__item--with-dot ng-binding ng-scope">
+          <t context="checkout.platform"><span class="ng-scope">Your new access to the</span></t> Reklaamivaba | esimene kuu 1,99 €, edaspidi 12,99 € kuus <t context="checkout.platform"><span class="ng-scope">will begin immediately</span></t>
+      </li><!-- end ngIf: isImmediateAccess(selectedOption) -->
+      <!-- ngIf: !isImmediateAccess(selectedOption) -->
+
+      <!--Charged for new term-->
+      <!-- ngIf: isImmediatelyTiming(selectedOption) -->
+      <!-- ngIf: !isImmediatelyTiming(selectedOption) --><li ng-if="!isImmediatelyTiming(selectedOption)" class="simple-list__item simple-list__item--with-dot ng-binding ng-scope">
+          <t context="checkout.platform"><span class="ng-scope">Your subscription for</span></t> <b class="ng-binding">12,99 € sisaldab KM 1,07 €/iga 1 kuu(d)</b> <t context="checkout.platform"><span class="ng-scope">will begin</span></t> 10.08.2026
+      </li><!-- end ngIf: !isImmediatelyTiming(selectedOption) -->
+
+      <!-- ngIf: selectedOption.prorateAccess && selectedOption.prorateRemaining -->
+      <!-- ngIf: selectedOption.prorateAccess && selectedOption.prorateCharged -->
+
+      <!-- ngIf: !isAddressEmpty() -->
+    </ul>
+
+    <span class="section-text small-break section-text--additional">
+     <t context="checkout.platform"><span class="ng-scope">Additional upgrade information</span></t>
+    </span>
+
+    <ul class="simple-list simple-list--review-and-confirm clearboth">
+      <li class="simple-list__item">
+        <span>
+          <t context="checkout.platform"><span class="ng-scope">Payment method: </span></t>
+          <span ng-show="upgradeFrom.card" class="">
+            <t context="checkout.platform" arg0="" arg1=""><b class="ng-binding ng-scope"> *</b></t>
+          </span>
+          <!-- ngIf: upgradeFrom.card.expiration -->
+        </span>
+      </li>
+    </ul>
+
+    <div class="my-account-footer">
+      <button ng-disabled="isUpgradeInProgress" ng-click="addressCollectionEnabled ? showAddressScreen() : showPickScreen()" class="btn btn--gray btn--large btn--bold my-account-footer__button">Tagasi</button>
+      <button ng-disabled="isUpgradeInProgress" ng-click="onConfirm()" ng-class="{'disabled':isUpgradeInProgress}" class="button big confirmation-button my-account-footer__button">
+        Kinnita
+    </button>
+    </div>
+  </div><!-- end ngIf: isConfirmScreen -->
+</upgrade-options>
+      </div><!-- end ngIf: isScreen(SCREEN_UPGRADE_OPTIONS) -->
+
+      <!-- ngIf: isScreen(SCREEN_PRINT_COMPONENT) -->
+    </div>
+</my-account-library>
+    </body>
+</html>

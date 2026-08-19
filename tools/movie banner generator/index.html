@@ -100,7 +100,8 @@
         </select>
       </label>
       <label>Horizontal offset (px): <input type="number" id="video-offset" value="40" min="0" max="500" /></label>
-      <label>Click URL (optional): <input type="text" id="click-url" placeholder="https://example.com" /></label>
+      <label>Click URL for 1250px version (optional): <input type="text" id="click-url" placeholder="https://example.com" /></label>
+      <label>Click URL for 1280px version (optional): <input type="text" id="click-url-2" placeholder="https://example.com" /></label>
       <div class="info-row" id="size-info"></div>
       <div class="preview-wrap" id="preview-wrap" style="width: 600px; height: 400px">
         <img id="preview-bg" src="" alt="Background preview" hidden />
@@ -125,6 +126,7 @@
       const sizeInfo = document.getElementById("size-info");
       const container = document.getElementById("container");
       const clickUrlInput = document.getElementById("click-url");
+      const clickUrlInput2 = document.getElementById("click-url-2");
 
       let bgFile = null,
         bgFile2 = null,
@@ -231,6 +233,7 @@
         const pos = videoPosition.value;
         const offset = parseInt(videoOffset.value) || 0;
         const clickUrl = clickUrlInput.value.trim() || '';
+        const clickUrl2 = clickUrlInput2.value.trim() || '';
         const bgName = bgFile.name;
         const bgName2 = bgFile2.name;
         const videoName = "video.mp4"; // Always video.mp4
@@ -245,7 +248,7 @@
         }
 
         // Function to generate banner HTML with correct dimensions
-        function createBannerHTML(width, height, bgImageName) {
+        function createBannerHTML(width, height, bgImageName, clickUrlForVersion) {
           return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -319,7 +322,7 @@ var clickTag = ""
     }
   </style>
 </head>
-<body onclick="window.open(olBanner.getClickTag('${clickUrl}'), '_blank')">
+<body onclick="window.open(olBanner.getClickTag('${clickUrlForVersion}'), '_blank')">
   <div class="banner-bg">
     <div class="video-wrap">
       <video src="video.mp4" autoplay loop muted playsinline></video>
@@ -360,7 +363,7 @@ var clickTag = ""
         }
 
         // Create first archive (1250 version)
-        const html1 = createBannerHTML(bgNaturalWidth, bgNaturalHeight, bgName);
+        const html1 = createBannerHTML(bgNaturalWidth, bgNaturalHeight, bgName, clickUrl);
         const zip1 = new JSZip();
         zip1.file("index.html", html1);
         zip1.file(bgName, bgFile);
@@ -368,7 +371,7 @@ var clickTag = ""
         zip1.file("video.mp4", videoBlob);
 
         // Create second archive (1280 version)
-        const html2 = createBannerHTML(bgNaturalWidth2, bgNaturalHeight2, bgName2);
+        const html2 = createBannerHTML(bgNaturalWidth2, bgNaturalHeight2, bgName2, clickUrl2);
         const zip2 = new JSZip();
         zip2.file("index.html", html2);
         zip2.file(bgName2, bgFile2);

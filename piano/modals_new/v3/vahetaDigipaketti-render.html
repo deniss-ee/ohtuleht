@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="myAccountStyle.css">
+    </head>
+    <body>
+<my-account-library ng-if="current=='library'" class="ng-scope">
+    <div id="library-shelf" class="ma-library">
+      <!--Upgrade options-->
+      <!-- ngIf: isScreen(SCREEN_UPGRADE_OPTIONS) --><div ng-if="isScreen(SCREEN_UPGRADE_OPTIONS)" class="ng-scope">
+        <upgrade-options upgrade-from="upgradeFrom" on-close="showScreen(SCREEN_SUBSCRIPTIONS)" on-success-update="onItemUpgraded()" options="upgradeOptions" class="ng-isolate-scope">
+  <!-- ngIf: isChooseScreen --><div ng-if="isChooseScreen" class="ng-scope">
+    <span class="section-text">
+     <t context="checkout.platform"><span class="ng-scope">Vaheta digipaketti</span></t>
+    </span>
+
+    <ul class="list list--change-option clearboth">
+      <!-- ngRepeat: option in options --><li class="list__row list__item--separated ng-scope" ng-repeat="option in options">
+
+        <div class="list__cell list__cell--radiobutton" ng-click="option.changable? optionSelected(option.termChangeOptionId):''">
+          <label class="radiobutton" ng-class="{'not-selectable': !option.changable}">
+            <input type="radio" ng-model="selectedOptionId" ng-value="option.termChangeOptionId" ng-disabled="option.changable === false" class="ng-pristine ng-valid" name="02W" value="TCOJO6G54P1YS">
+            <span class="radiobutton__label">
+            </span>
+          </label>
+        </div>
+        <div class="list__cell">
+          <div>
+              <span class="change-option-title ng-binding" ng-class="{'change-option-disabled':!option.changable}">Reklaamivaba | esimene kuu 1,99 €, edaspidi 12,99 € kuus</span>
+              <span class="change-option-restriction-message ng-binding ng-hide" ng-show="!option.changable"></span>
+          </div>
+          <div class="change-option-billing-plan">
+            <!-- Switch of BILLING_TIMING -->
+            <!-- ngIf: option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 0 -->
+            <!-- ngIf: option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 1 --><span ng-if="option.immediateAccess &amp;&amp; !option.upgradeWillBeImmediately &amp;&amp; option.billingTiming === 1" class="ng-binding ng-scope">12,99 €/iga 1 kuu(d), <t context="checkout.platform"><span class="ng-scope">access will begin immediately</span></t>, <!-- ngIf: option.nextBillingDate --><t ng-if="option.nextBillingDate" context="checkout.platform" class="ng-scope"><span class="ng-scope">tellimus uueneb</span></t><!-- end ngIf: option.nextBillingDate --> 10.08.2026</span><!-- end ngIf: option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 1 -->
+            <!-- ngIf: option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 2 -->
+            <!-- ngIf: option.immediateAccess && !option.upgradeWillBeImmediately && option.billingTiming === 3 -->
+            <!-- ngIf: !option.immediateAccess && !option.upgradeWillBeImmediately -->
+            <!-- ngIf: option.upgradeWillBeImmediately -->
+          </div>
+          <div class="change-option-description ng-binding" ng-class="{'change-option-disabled':!option.changable}">
+            4 esimest kuud 1 € kuus, 5. kuust 5,25 € kuus, 7. kuust 10,49 € kuus
+          </div>
+        </div>
+      </li><!-- end ngRepeat: option in options -->
+    </ul>
+
+    <div class="my-account-footer actions">
+        <button ng-disabled="isUpgradeInProgress" ng-click="goBack()" class="ma-wallet-card__default-btn my-account-footer__button">
+          Tagasi</button>
+
+        <!-- ngIf: !addressCollectionEnabled --><button ng-if="!addressCollectionEnabled" ng-disabled="isUpgradeInProgress || !selectedOptionId" ng-click="onPick()" class="btn btn-green my-account-footer__button ng-scope" disabled="disabled">Kinnita</button><!-- end ngIf: !addressCollectionEnabled -->
+
+        <!-- ngIf: addressCollectionEnabled -->
+      </div>
+  </div><!-- end ngIf: isChooseScreen -->
+  <!-- ngIf: isAddressScreen -->
+  <!-- ngIf: isConfirmScreen -->
+</upgrade-options>
+      </div><!-- end ngIf: isScreen(SCREEN_UPGRADE_OPTIONS) -->
+
+      <!-- ngIf: isScreen(SCREEN_PRINT_COMPONENT) -->
+    </div>
+</my-account-library>
+    </body>
+</html>
