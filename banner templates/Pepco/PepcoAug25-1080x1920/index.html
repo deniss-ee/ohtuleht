@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -14,12 +14,22 @@
     <script>
       var olBanner = {
         getQueryStringValue: function (key) {
-          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+          return decodeURIComponent(
+            window.location.search.replace(
+              new RegExp(
+                '^(?:.*[&?]' +
+                  encodeURIComponent(key).replace(/[.+*]/g, '$&') +
+                  '(?:=([^&]*))?)?.*$',
+                'i'
+              ),
+              '$1'
+            )
+          );
         },
 
         getClickTag: function (customDestinationUrl) {
-          this.clickMacro = this.getQueryStringValue("clickMacro");
-          this.clickTag = this.getQueryStringValue("clickTag");
+          this.clickMacro = this.getQueryStringValue('clickMacro');
+          this.clickTag = this.getQueryStringValue('clickTag');
 
           if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
             return this.clickMacro + customDestinationUrl;
@@ -28,7 +38,7 @@
           }
         },
       };
-      var clickTag = "";
+      var clickTag = '';
     </script>
   </head>
 
@@ -44,7 +54,11 @@
         <img class="img img-5" src="img/img-5.png" />
         <img class="img backpack" src="img/backpack.png" />
       </div>
-      <div onclick="window.open(olBanner.getClickTag(), '_blank')" class="slide slide-2" style="display: none">
+      <div
+        class="slide slide-2"
+        onclick="window.open(olBanner.getClickTag(), '_blank')"
+        style="display: none"
+      >
         <img class="img cta" src="img/cta.png" />
       </div>
     </div>

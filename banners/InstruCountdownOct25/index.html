@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -10,12 +10,12 @@
     <script>
       var olBanner = {
         getQueryStringValue: function (key) {
-          return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&?]" + encodeURIComponent(key).replace(/[.+*]/g, "$&") + "(?:=([^&]*))?)?.*$", "i"), "$1"));
+          return decodeURIComponent(window.location.search.replace(new RegExp('^(?:.*[&?]' + encodeURIComponent(key).replace(/[.+*]/g, '$&') + '(?:=([^&]*))?)?.*$', 'i'), '$1'));
         },
 
         getClickTag: function (customDestinationUrl) {
-          this.clickMacro = this.getQueryStringValue("clickMacro");
-          this.clickTag = this.getQueryStringValue("clickTag");
+          this.clickMacro = this.getQueryStringValue('clickMacro');
+          this.clickTag = this.getQueryStringValue('clickTag');
 
           if (customDestinationUrl !== undefined && customDestinationUrl.length > 0) {
             return this.clickMacro + customDestinationUrl;
@@ -24,7 +24,7 @@
           }
         },
       };
-      var clickTag = "";
+      var clickTag = '';
     </script>
   </head>
   <body onclick="window.open(olBanner.getClickTag('https://www.instru.ee/pakkumine'), '_blank')">
@@ -36,9 +36,18 @@
         <div class="countdown-container">
           <p class="countdown-title" id="countdown-title">Jõuludeni on jäänud</p>
           <div class="time-container" id="countdown">
-            <p class="days"><strong class="time-value" data-unit="days">--</strong>p</p>
-            <p class="hours"><strong class="time-value" data-unit="hours">--</strong>t</p>
-            <p class="minutes"><strong class="time-value" data-unit="minutes">--</strong>m</p>
+            <p class="days">
+              <strong class="time-value" data-unit="days">--</strong>
+              p
+            </p>
+            <p class="hours">
+              <strong class="time-value" data-unit="hours">--</strong>
+              t
+            </p>
+            <p class="minutes">
+              <strong class="time-value" data-unit="minutes">--</strong>
+              m
+            </p>
           </div>
         </div>
         <!--Offer Container-->
@@ -57,9 +66,9 @@
           return christmasThisYear;
         }
 
-        var titleEl = document.getElementById("countdown-title");
-        var containerEl = document.getElementById("countdown");
-        var values = Array.prototype.slice.call(document.querySelectorAll(".time-value"));
+        var titleEl = document.getElementById('countdown-title');
+        var containerEl = document.getElementById('countdown');
+        var values = Array.prototype.slice.call(document.querySelectorAll('.time-value'));
         var target = getTargetChristmas(new Date());
         var finished = false;
 
@@ -78,7 +87,7 @@
             finished = true;
             var year = now.getFullYear();
             var dec27 = new Date(year, 11, 27, 0, 0, 0);
-            titleEl.textContent = now >= dec27 ? "Häid Pühi!" : "Häid Jõule!";
+            titleEl.textContent = now >= dec27 ? 'Häid Pühi!' : 'Häid Jõule!';
             if (containerEl) {
               containerEl.parentNode.removeChild(containerEl);
             }
@@ -86,7 +95,7 @@
           }
           var parts = formatDiff(diff);
           values.forEach(function (el) {
-            var unit = el.getAttribute("data-unit");
+            var unit = el.getAttribute('data-unit');
             var newVal = parts[unit];
             var oldVal = el.textContent;
             if (oldVal !== String(newVal)) {
@@ -100,19 +109,19 @@
 
         // Snow effect - lightweight
         (function makeSnow() {
-          var snowContainer = document.querySelector(".snow");
+          var snowContainer = document.querySelector('.snow');
           if (!snowContainer) return;
           var flakes = 40; // adjust density
           for (var i = 0; i < flakes; i++) {
-            var flake = document.createElement("span");
-            flake.className = "snowflake";
+            var flake = document.createElement('span');
+            flake.className = 'snowflake';
             var size = Math.random() * 4 + 2; // 2px - 6px
-            flake.style.width = size + "px";
-            flake.style.height = size + "px";
-            flake.style.left = Math.random() * 100 + "%";
+            flake.style.width = size + 'px';
+            flake.style.height = size + 'px';
+            flake.style.left = Math.random() * 100 + '%';
             var duration = Math.random() * 6 + 6; // 6s - 12s fall
-            var delay = Math.random() * -duration + "s"; // negative for stagger
-            flake.style.animationDuration = duration + "s";
+            var delay = Math.random() * -duration + 's'; // negative for stagger
+            flake.style.animationDuration = duration + 's';
             flake.style.animationDelay = delay;
             flake.style.opacity = Math.random() * 0.6 + 0.4;
             snowContainer.appendChild(flake);
