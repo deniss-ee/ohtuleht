@@ -1,0 +1,474 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+/* ============================================================
+         DESIGN TOKENS
+         ============================================================ */
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --bg-color: #ffffff;
+  --borderwidth__1: 1px;
+  --font__family__fira: "Fira Sans Condensed", sans-serif !important;
+  --font__family__inter: "Inter", sans-serif !important;
+  --font__size__xs: 12px;
+  --font__size__sm: 14px;
+  --font__size__base: 16px;
+  --font__size__lg: 18px;
+  --font__size__xl: 20px;
+  --font__size__2xl: 24px;
+  --font__size__4xl: 36px;
+  --font__weight__normal: 400;
+  --font__weight__medium: 500;
+  --font__weight__bold: 700;
+  --font__weight__extrabold: 800;
+  --ol__red__50: #fff0f1;
+  --ol__red__100: #ffdddf;
+  --ol__red__200: #ffc1c5;
+  --ol__red__300: #ff959c;
+  --ol__red__400: #ff5964;
+  --ol__red__50: #fff0f1;
+  --ol__red__500: #ff2634;
+  --ol__red__600: #fc0616;
+  --ol__red__700: #e3000f;
+  --ol__red__800: #af0510;
+  --ol__red__900: #900c15;
+  --ol__red__950: #500005;
+  --ol__monochrome__100: #e5e8e8;
+  --ol__monochrome__200: #cdd3d4;
+  --ol__monochrome__500: #657275;
+  --ol__monochrome__700: #4a5254;
+  --ol__monochrome__900: #3a3e3f;
+  --ol__monochrome__950: #17191a;
+  --ol__yellow__500: #fcd700;
+  --ol__yellow__600: #d1a000;
+  --ol__yellow__900: #74490f;
+  --ol__yellow__950: #442604;
+  --radius__sm: 4px;
+  --radius__md: 6px;
+  --radius__lg: 8px;
+  --radius__2xl: 16px;
+  --spacing__1: 4px;
+  --spacing__2: 8px;
+  --spacing__3: 12px;
+  --spacing__4: 16px;
+  --spacing__5: 20px;
+  --spacing__6: 24px;
+  --spacing__8: 32px;
+  --spacing__12: 48px;
+  --spacing__14: 56px;
+}
+/* ============================================================
+         SCAFFOLDING
+         ============================================================ */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: none;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font__family__inter) !important;
+  color: var(--ol__monochrome__950);
+}
+h1,
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+button {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+a {
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__bold);
+  text-decoration: none;
+  -webkit-transition: color 125ms ease-in-out;
+  transition: color 125ms ease-in-out;
+}
+a:visited {
+  color: var(--ol__red__700);
+}
+a:hover {
+  color: var(--ol__red__800);
+}
+/* ============================================================
+         TEMPLATE LAYOUT
+         ============================================================ */
+.pn-template {
+  background: var(--white);
+  border-radius: var(--radius__2xl);
+  overflow: hidden;
+}
+.pn-template__main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: var(--spacing__5);
+  padding: var(--spacing__8) var(--spacing__6);
+  background: var(--ol__red__50) !important;
+}
+.pn-main__header {
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__2xl) !important;
+  line-height: 1.2 !important;
+  font-family: var(--font__family__fira) !important;
+  text-align: center;
+}
+/* ============================================================
+         CARDS — from nadalane-pakett design system
+         ============================================================ */
+.pn-main__cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: var(--spacing__3);
+  width: 100%;
+  max-width: 640px;
+  margin-top: var(--spacing__2);
+}
+.card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  gap: var(--spacing__3);
+  padding: calc(var(--spacing__3) + 0.5rem) var(--spacing__3) var(--spacing__3);
+  border-radius: var(--radius__lg);
+  background: var(--white);
+}
+.card--center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  text-align: center;
+}
+.card--white {
+  background: var(--white);
+}
+.card--red {
+  color: var(--white);
+  background: var(--ol__red__700);
+}
+/* ============================================================
+         CARD CONTENT
+         ============================================================ */
+/* Package name — plain text header with bold second word */
+.pn-main__card-package {
+  color: var(--ol__monochrome__950) !important;
+  font-weight: var(--font__weight__normal) !important;
+  font-size: var(--font__size__xl) !important;
+  line-height: 1.35 !important;
+  font-family: var(--font__family__inter) !important;
+  text-align: center;
+}
+.pn-main__card-package strong {
+  font-weight: var(--font__weight__bold) !important;
+}
+.card--red .pn-main__card-package {
+  color: var(--white) !important;
+}
+/* Card subtitle/title — Inter medium */
+.pn-main__card-title {
+  color: var(--ol__monochrome__700) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__base) !important;
+  line-height: 1.35 !important;
+  font-family: var(--font__family__inter) !important;
+  text-align: center;
+}
+.card--red .pn-main__card-title {
+  color: var(--white) !important;
+}
+.badge {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--spacing__3);
+  border-radius: var(--radius__sm);
+  color: var(--ol__red__700);
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__base) !important;
+  line-height: 1.2 !important;
+  font-family: var(--font__family__inter) !important;
+  text-align: center;
+  text-transform: uppercase;
+  background: var(--white);
+}
+/* Badge variant — light red background for white card */
+.badge--light-red {
+  background: var(--ol__red__50) !important;
+  color: var(--ol__red__700) !important;
+}
+/* ============================================================
+         PRICE
+         ============================================================ */
+/* Price box — dashed border container, stacks price + term */
+.price-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  gap: 0;
+  padding: var(--spacing__2) var(--spacing__4);
+  border: var(--borderwidth__1) dashed var(--ol__monochrome__100);
+  border-radius: var(--radius__md);
+}
+.price-box--featured {
+  border-color: var(--ol__red__800);
+}
+/* Price value — Fira Sans Condensed, bold 700, 36px */
+.price--lg {
+  color: var(--ol__red__700) !important;
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__4xl) !important;
+  line-height: 1 !important;
+  font-family: var(--font__family__fira) !important;
+  text-align: center;
+}
+.card--red .price--lg {
+  color: var(--ol__yellow__500) !important;
+}
+/* Period / term below price — Fira Sans Condensed matching Maandumisleht */
+.price__original {
+  display: block;
+  color: var(--ol__monochrome__900) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__base) !important;
+  line-height: 1.2 !important;
+  font-family: var(--font__family__fira) !important;
+  text-align: center;
+  position: static;
+  top: 0;
+  margin-top: 2px;
+}
+.card--red .price__original {
+  color: var(--white) !important;
+}
+/* Benefit text — matches .pn-modal__footer */
+.pn-main__card-benefit {
+  color: var(--ol__monochrome__500) !important;
+  font-weight: var(--font__weight__medium) !important;
+  font-size: var(--font__size__xs) !important;
+  line-height: 1.35 !important;
+  font-family: var(--font__family__inter) !important;
+  text-align: center;
+}
+.card--red .pn-main__card-benefit {
+  color: var(--white) !important;
+}
+/* ============================================================
+         BUTTONS — .btn, .btn--red, .btn--yellow
+         ============================================================ */
+.btn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--spacing__12);
+  padding: 0 var(--spacing__8);
+  border: none;
+  border-radius: var(--radius__sm);
+  font-family: var(--font__family__inter) !important;
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__base) !important;
+  line-height: 1.35 !important;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 0;
+  -webkit-transition:
+    background-color 125ms ease-in-out,
+    color 125ms ease-in-out;
+  transition:
+    background-color 125ms ease-in-out,
+    color 125ms ease-in-out;
+}
+.btn--red {
+  color: var(--white);
+  background: var(--ol__red__700);
+}
+.btn--red:hover {
+  background: var(--ol__red__800);
+}
+.btn--yellow {
+  color: var(--ol__yellow__950);
+  background: var(--ol__yellow__500);
+}
+.btn--yellow:hover {
+  background: var(--ol__yellow__600);
+}
+/* ============================================================
+         TEMPLATE FOOTER
+         ============================================================ */
+.pn-template__footer {
+  color: var(--ol__red__900) !important;
+  font-weight: var(--font__weight__normal) !important;
+  font-size: var(--font__size__xs) !important;
+  line-height: 1.35 !important;
+  font-family: var(--font__family__inter) !important;
+  text-align: center;
+}
+.pn-template__footer-copy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: var(--spacing__3);
+  padding: var(--spacing__4) var(--spacing__6);
+  background: var(--ol__red__700);
+}
+.pn-template__footer-text {
+  color: white !important;
+  font-family: var(--font__family__inter) !important;
+  font-weight: var(--font__weight__bold) !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  -webkit-transition: color 125ms ease-in-out;
+  transition: color 125ms ease-in-out;
+}
+.pn-template__footer-text:hover,
+.pn-template__footer-text:focus {
+  color: var(--ol__red__50) !important;
+}
+.pn-template__footer-text:visited {
+  color: var(--ol__red__50) !important;
+}
+.pn-template__footer-login {
+  color: white !important;
+  font-family: var(--font__family__inter) !important;
+  font-weight: var(--font__weight__normal) !important;
+  font-size: var(--font__size__sm) !important;
+  line-height: 1.35 !important;
+}
+.pn-template__footer-login-cta {
+  color: white !important;
+  font-family: var(--font__family__inter) !important;
+  font-weight: var(--font__weight__bold) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  -webkit-transition: color 125ms ease-in-out;
+  transition: color 125ms ease-in-out;
+}
+.pn-template__footer-login-cta:hover {
+  color: var(--ol__red__50) !important;
+}
+.pn-template__footer-login--mobile {
+  display: none;
+}
+/* adapt dark*/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #000;
+  }
+}
+#checkout-container {
+  background-color: var(--bg-color);
+}
+/* ============================================================
+         RESPONSIVE
+         ============================================================ */
+@media (max-width: 639px) {
+  #checkout-container {
+    background-color: var(--bg-color);
+  }
+  .pn-template__main {
+    padding: var(--spacing__6) var(--spacing__4);
+    gap: var(--spacing__4);
+  }
+  .pn-main__header {
+    font-size: var(--font__size__xl) !important;
+  }
+  .pn-main__cards {
+    -ms-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    gap: var(--spacing__3);
+  }
+  .card--red {
+    -webkit-box-ordinal-group: 0;
+    -ms-flex-order: -1;
+    order: -1;
+  }
+  .price--lg {
+    font-size: 30px !important;
+  }
+  .pn-template__footer-copy {
+    padding: var(--spacing__3) var(--spacing__4);
+  }
+  .pn-template__footer-login--desktop {
+    display: none;
+  }
+  .pn-template__footer-login--mobile {
+    display: block;
+  }
+}

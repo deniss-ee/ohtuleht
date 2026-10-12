@@ -1,0 +1,108 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="PakkumineArtikliAlt.css" />
+  </head>
+  <body>
+    <div class="pn-template">
+      <article class="pn-template__main pn-main">
+        <h3 class="pn-main__header">Tahad rohkem näha ja loo lõpuni lugeda?</h3>
+        <ul class="pn-main__cards">
+          <!-- Card 1: Regular (white) -->
+          <li class="card card--white card--center">
+            <p class="pn-main__card-package">Õhtuleht <strong>Mina</strong></p>
+            <p class="pn-main__card-title">Ühe lugejaga püsitellimus</p>
+            <div class="price-box">
+              <div class="price--lg">2,99 €</div>
+              <div class="price__original">kuus</div>
+            </div>
+            <button
+              class="btn btn--red"
+              external-event="promoCodeTerm"
+              external-event-term-Id="TMP563UG79JY"
+              external-event-offer-Id="OFWLMR2DRUD4"
+            >
+              Telli
+            </button>
+            <p class="pn-main__card-benefit">
+              Ühe lugejaga digipaketi esimene kuu 2,99 €, 2. kuust 5,25 €, 5. kuust 9,99 € kuus. Püsimaksega tellimus pikeneb automaatselt kuni tühistamiseni.
+            </p>
+          </li>
+          <!-- Card 2: Featured (red) -->
+          <li class="card card--red card--center">
+            <p class="pn-main__card-package">Õhtuleht <strong>Meie</strong></p>
+            <p class="pn-main__card-title">Viie lugejaga püsitellimus</p>
+            <div class="price-box price-box--featured">
+              <div class="price--lg">1,49 €</div>
+              <div class="price__original">kuus</div>
+            </div>
+            <button
+              class="btn btn--yellow"
+              external-event="promoCodeTerm"
+              external-event-term-Id="TMB1QH1BA31S"
+              external-event-offer-Id="OFWLMR2DRUD4"
+            >
+              Telli
+            </button>
+            <p class="pn-main__card-benefit">
+              Viie lugejaga digipaketi kaks esimest kuud 1,49 € kuus, 3. kuust 5,25 € kuus, 5. kuust 10,49 €. Püsimaksega tellimus pikeneb automaatselt kuni tühistamiseni.
+            </p>
+          </li>
+        </ul>
+        <a
+          style="text-decoration: underline"
+          href="https://www.ohtuleht.ee/telli"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Vaata kõiki digipakette</a
+        >
+        <p class="pn-template__footer">
+          Püsimaksega tellimus pikeneb automaatselt kuni tühistamiseni. Pakkumine kehtib uutele eraisikutest lugejatele, kellel ei ole hetkel kehtivat digitellimust.
+        </p>
+      </article>
+      <div ng-show="!isUserValid()">
+        <div class="pn-template__footer-copy">
+          <a
+            class="pn-template__footer-text"
+            href="[%% template-footer-text-2-href %%]"
+            extenal-event="footer-cta-learn-more"
+          >
+            [%% template-footer-text-2 %%]
+          </a>
+          <p
+            class="pn-template__footer-login pn-template__footer-login--desktop"
+          >
+            Tellimus olemas?
+            <span
+              class="pn-template__footer-login-cta"
+              ng-click="login()"
+              external-event="login-cta"
+            >
+              Logi sisse</span
+            >
+          </p>
+          <p
+            class="pn-template__footer-login pn-template__footer-login--mobile"
+          >
+            <span
+              class="pn-template__footer-login-cta"
+              ng-click="login()"
+              external-event="login-cta"
+            >
+              Logi sisse</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

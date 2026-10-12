@@ -1,80 +1,84 @@
 @font-face {
-  font-display: swap;
-  src: url("fonts/Instrumentarium-Bold.woff2") format("woff2"), url("fonts/Instrumentarium-Bold.woff") format("woff");
   font-style: normal;
   font-weight: bold;
+  src:
+    url("fonts/Instrumentarium-Bold.woff2") format("woff2"),
+    url("fonts/Instrumentarium-Bold.woff") format("woff");
   font-family: "Instrumentarium";
+  font-display: swap;
 }
 
 @font-face {
-  font-display: swap;
-  src: url("fonts/Instrumentarium-Regular.woff2") format("woff2"), url("fonts/Instrumentarium-Regular.woff") format("woff");
   font-style: normal;
   font-weight: normal;
+  src:
+    url("fonts/Instrumentarium-Regular.woff2") format("woff2"),
+    url("fonts/Instrumentarium-Regular.woff") format("woff");
   font-family: "Instrumentarium";
+  font-display: swap;
 }
 
 html {
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 *,
 *:before,
 *:after {
+  cursor: pointer;
   -webkit-box-sizing: inherit;
   box-sizing: inherit;
   margin: 0;
+
   padding: 0;
   font-family: "Instrumentarium";
-  cursor: pointer;
 }
 
 .banner {
+  position: relative;
   width: 100%;
+
   max-width: 1250px;
   height: 200px;
   margin: 0 auto;
+
+  overflow: hidden;
   background-image: url(img/bg@2x.png);
   background-position: center;
+
   background-size: cover;
-  position: relative;
-  overflow: hidden;
 }
 
 .container {
-  -ms-flex-align: center;
-  -ms-flex-direction: column;
-  -ms-flex-pack: center;
-  -webkit-box-align: center;
-  -webkit-box-direction: normal;
-  -webkit-box-orient: vertical;
-  -webkit-box-pack: center;
-  gap: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 100%;
+
+  gap: 16px;
 }
 
 .countdown-container {
+  -ms-flex-pack: center;
   -ms-flex-align: center;
   -ms-flex-direction: column;
-  -ms-flex-pack: center;
+
   -webkit-box-align: center;
+
   -webkit-box-direction: normal;
   -webkit-box-orient: vertical;
   -webkit-box-pack: center;
-  gap: 4px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  gap: 4px;
 }
 
 .countdown-title {
@@ -89,24 +93,26 @@ html {
 .time-container {
   -ms-flex-align: center;
   -webkit-box-align: center;
-  gap: 8px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .time-container p {
-  -webkit-box-shadow: 0 7.5px 7.5px 0 rgba(198, 27, 15, 0.75);
   padding: 8px 12px;
   border-radius: 6px;
+  background: #fff;
+
   color: var(--EC3225, #ec3225);
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
   line-height: normal;
   letter-spacing: -0.3px;
-  background: #fff;
+
+  -webkit-box-shadow: 0 7.5px 7.5px 0 rgba(198, 27, 15, 0.75);
   box-shadow: 0 7.5px 7.5px 0 rgba(198, 27, 15, 0.75);
 }
 
@@ -115,12 +121,12 @@ html {
   -ms-flex-pack: center;
   -webkit-box-align: center;
   -webkit-box-pack: center;
-  gap: 8px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .offer-title {
@@ -147,30 +153,42 @@ html {
   position: absolute;
   top: -10px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.9);
-  animation-name: snow-fall, snow-drift;
+  background: rgba(255, 255, 255, 0.9);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+  animation-name: snow-fall, snow-drift;
 }
 
 @keyframes snow-fall {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(210px); }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(210px);
+  }
 }
 
 @keyframes snow-drift {
-  0% { margin-left: 0; }
-  50% { margin-left: 15px; }
-  100% { margin-left: 0; }
+  0% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 15px;
+  }
+  100% {
+    margin-left: 0;
+  }
 }
 
 @media only screen and (min-width: 639px) {
   .countdown-container {
     -ms-flex-direction: row;
     -webkit-box-direction: normal;
+
     -webkit-box-orient: horizontal;
-    gap: 32px;
+
     flex-direction: row;
+    gap: 32px;
   }
   .countdown-title {
     font-size: 48px;

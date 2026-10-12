@@ -1,0 +1,230 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="PakkumineArtikliAlt.css" />
+  </head>
+  <body>
+    <div view="state1">
+      <div class="row account-head">
+        <div
+          class="account-head-contentcol"
+          ng-class="!app.image1 ? 'no-logo' : ''"
+        >
+          <div class="account-head-content">
+            <h2>Vormista kingitus!</h2>
+            <p></p>
+          </div>
+          <div class="clr"></div>
+        </div>
+      </div>
+      <div>
+        <div term-selector-component></div>
+      </div>
+    </div>
+    <div view="state2" ng-class="{ 'mobile-user-agent': isMobileUserAgent() }">
+      <div class="row account-head" style="padding-bottom: 0 !important">
+        <div
+          class="account-head-contentcol"
+          style="text-align: center !important"
+          ng-class="!app.image1 ? 'no-logo' : ''"
+        >
+          <div class="account-head-content">
+            <h1>
+              {{selectedTerm.resource.name | tc:'resource.name'}} – meiega näed
+              rohkem!
+            </h1>
+            <div class="pay-what-you-want" ng-if="isPayWhatYouWantTerm()">
+              <span pay-what-you-want-form-component></span>
+            </div>
+            <!-- we do not show this info when gifting -->
+            <p
+              class="sub-lead"
+              ng-if="isUserValid() && isPayableTerm(selectedTerm) && selectedTerm.termId != 'TM5JV9B6JU6A'"
+              class="descrpt"
+            >
+              Tellijana on sul piiramatu ligipääs kogu sisule ja lisaks saad
+              seda kõike jagada kuni nelja sõbraga.
+            </p>
+            <div
+              class="sub-lead"
+              ng-if="isPayableTerm(selectedTerm)"
+              ng-bind-html="selectedTerm.description"
+            >
+              <b>TEST_XXX</b>
+            </div>
+            <div class="term-details sub-lead">
+              <div
+                class="sub-lead"
+                ng-if="isPayableTerm(selectedTerm)"
+                ng-switch="getPayableTermType()"
+              >
+                <div ng-switch-when="PAYABLE">
+                  <span
+                    class="sub-lead"
+                    ng-show="isUserValid() && selectedTerm.termId != 'TM5JV9B6JU6A'"
+                    class="has-free-trial charge-details"
+                    >Hetkel võtame Sinu kontolt
+                    <b style="color: #e3000f"
+                      >{{input.chargeDisplayAmount}}.</b
+                    ></span
+                  >
+                  <span
+                    class="sub-lead"
+                    ng-show="isUserValid() && selectedTerm.termId == 'TM5JV9B6JU6A'"
+                    class="has-free-trial charge-details"
+                    >Võtame Sinu kontolt ühekordse maksena
+                    <b style="color: #e3000f"
+                      >{{input.chargeDisplayAmount}}.</b
+                    ></span
+                  >
+                </div>
+                <div ng-switch-when="FREE_TRIAL_FIXED">
+                  <span class="selected-term-hasfreetrial charge-details"
+                    ><t>You are about to get this trial.</t></span
+                  >
+                </div>
+                <div ng-switch-when="FREE_TRIAL_SUBSCRIPTION">
+                  <span
+                    class="selected-term-hasfreetrial charge-details"
+                    style="
+                      font-size: 16px;
+                      font-weight: 400;
+                      color: #0f0f15;
+                      font-family:
+                        &quot;Roboto&quot;,
+                        -apple-system,
+                        BlinkMacSystemFont,
+                        &quot;Segoe UI&quot;,
+                        Roboto,
+                        Oxygen-Sans,
+                        Ubuntu,
+                        Cantarell,
+                        &quot;Helvetica Neue&quot;,
+                        sans-serif;
+                    "
+                    >Hetkel võtame Sinu kontolt
+                    <b style="color: #e3000f"
+                      >{{selectedTerm.billingPlanTable[0].price}}.</b
+                    ></span
+                  >
+                  <span
+                    class="subscription-has-free-trial"
+                    ng-show="selectedTerm.isSubscription && selectedTerm.hasFreeTrial"
+                  >
+                    <span
+                      ng-if="!isAuthorizationSupportedByPaymentMethod()"
+                      ng-switch="getFreeTrialType()"
+                    >
+                      <span
+                        ng-switch-when="FREE_TRIAL_TERM_PROMO"
+                        id="free-trial-term-promo-message"
+                      >
+                        <t
+                          >Provide your payment details. The free trial
+                          associated with this subscription will be appended to
+                          the standard duration of access, and the promotion
+                          used for this subscription will be applied at the
+                          first renewal. You will be charged
+                          {{selectedTerm.firstRealPriceWithTax}} today for this
+                          extended period.</t
+                        >
+                      </span>
+                      <span
+                        ng-switch-when="FREE_TRIAL_TERM"
+                        id="free-trial-term-message"
+                      >
+                        <t
+                          >Provide your payment details. The free trial
+                          associated with this subscription will be appended to
+                          the standard duration of access. You will be charged
+                          {{selectedTerm.firstRealPriceWithTax}} today for this
+                          extended period.</t
+                        >
+                      </span>
+                      <span
+                        ng-switch-when="FREE_TRIAL_PROMO"
+                        id="free-trial-promo-message"
+                      >
+                        <t
+                          >Provide your payment details. The promotion used for
+                          this subscription will be applied at the first
+                          renewal. You will be charged
+                          {{selectedTerm.firstRealPriceWithTax}} today for this
+                          extended period.</t
+                        >
+                      </span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div auth-component></div>
+      <div ng-show="isUserValid()" promo-code-component></div>
+      <div ng-show="isUserValid()" payment-form-component></div>
+    </div>
+    <!-- Receipt Screen -->
+    <div view="alreadyHasAccess">
+      <div already-has-access-component></div>
+    </div>
+    <div view="auth">
+      <div auth-component></div>
+    </div>
+    <div view="lockedPromoCode">
+      <div promo-code-component></div>
+    </div>
+    <div view="externalVerification">
+      <div external-verification-component></div>
+    </div>
+    <div view="printAddress">
+      <div print-address-component></div>
+    </div>
+    <div view="confirmation">
+      <div confirmation-component></div>
+    </div>
+    <div view="giftParams">
+      <div gift-form-component></div>
+    </div>
+    <div view="redemption">
+      <div redemption-component></div>
+    </div>
+    <div view="user-non-confirmed">
+      <div email-confirmation-required></div>
+    </div>
+    <div view="bankSecure">
+      <div bank-secure-component></div>
+    </div>
+    <div view="sharedSubscription">
+      <div shared-subscription-component></div>
+    </div>
+    <div view="redeemSharedSubscription">
+      <div redeem-shared-subscription-component></div>
+    </div>
+    <div view="continueThreeDSPurchase">
+      <div continue-three-d-s-purchase-component></div>
+    </div>
+    <div view="upgradeSubscription">
+      <div complete-upgrade-component></div>
+    </div>
+    <div view="upgradeSharedSubscription">
+      <div upgrade-shared-subscription-component></div>
+    </div>
+    <div view="subscriptionReactivation">
+      <div reactivate-subscription-component></div>
+    </div>
+    <div view="upgradeAuthentication">
+      <div upgrade-authentication-component></div>
+    </div>
+  </body>
+</html>

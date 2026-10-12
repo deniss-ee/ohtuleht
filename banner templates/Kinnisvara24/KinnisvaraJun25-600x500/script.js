@@ -83,7 +83,7 @@ function generateHTML(mainSlides, ctaImageUrl) {
           </div>
         </a>
       </div>
-    `
+    `,
     )
     .join("");
 
@@ -104,7 +104,7 @@ async function fetchProperties() {
   const proxyUrl =
     "https://corsproxy.io/?" +
     encodeURIComponent(
-      "https://kinnisvara24.ee/dxml-ads?placement=ohtuleht_rental"
+      "https://kinnisvara24.ee/dxml-ads?placement=ohtuleht_rental",
     );
   const xmlString = await fetchXML(proxyUrl);
   if (!xmlString) {
@@ -122,7 +122,7 @@ async function fetchProperties() {
 
   document.getElementById("property-container").innerHTML = generateHTML(
     mainSlides,
-    ctaImageUrl
+    ctaImageUrl,
   );
 }
 

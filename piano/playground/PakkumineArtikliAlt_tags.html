@@ -1,0 +1,102 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="PakkumineArtikliAlt.css" />
+  </head>
+  <body>
+    <div class="pn-template">
+      <article class="pn-template__main pn-main">
+        <h3 class="pn-main__header">[%% template-header %%]</h3>
+        <ul class="pn-main__cards">
+          <!-- Card 1: Regular (white) -->
+          <li class="card card--white card--center">
+            <p class="pn-main__card-package">[%% card-flag-1 %%]</p>
+            <p class="pn-main__card-title">[%% card-title-1 %%]</p>
+            <div class="price-box">
+              <div class="price--lg">[%% card-price-1 %%]</div>
+              <div class="price__original">[%% card-term-1 %%]</div>
+            </div>
+            <button
+              class="btn btn--red"
+              external-event="promoCodeTerm"
+              external-event-term-Id="TMP563UG79JY"
+              external-event-offer-Id="OFWLMR2DRUD4"
+            >
+              [%% card-cta-1-text %%]
+            </button>
+            <p class="pn-main__card-benefit">[%% card-benefit-1 %%]</p>
+          </li>
+          <!-- Card 2: Featured (red) -->
+          <li class="card card--red card--center">
+            <p class="pn-main__card-package">[%% card-flag-2 %%]</p>
+            <p class="pn-main__card-title">[%% card-title-2 %%]</p>
+            <div class="price-box price-box--featured">
+              <div class="price--lg">[%% card-price-2 %%]</div>
+              <div class="price__original">[%% card-term-2 %%]</div>
+            </div>
+            <button
+              class="btn btn--yellow"
+              external-event="promoCodeTerm"
+              external-event-term-Id="TMB1QH1BA31S"
+              external-event-offer-Id="OFWLMR2DRUD4"
+            >
+              [%% card-cta-2-text %%]
+            </button>
+            <p class="pn-main__card-benefit">[%% card-benefit-2 %%]</p>
+          </li>
+        </ul>
+        <a
+          style="text-decoration: underline"
+          href="[%% template__all-href %%]"
+          target="_blank"
+          rel="noopener noreferrer"
+          >[%% template__all %%]</a
+        >
+        <p class="pn-template__footer">[%% template-footer-text %%]</p>
+      </article>
+      <div ng-show="!isUserValid()">
+        <div class="pn-template__footer-copy">
+          <a
+            class="pn-template__footer-text"
+            href="[%% template-footer-text-2-href %%]"
+            extenal-event="footer-cta-learn-more"
+          >
+            [%% template-footer-text-2 %%]
+          </a>
+          <p
+            class="pn-template__footer-login pn-template__footer-login--desktop"
+          >
+            Tellimus olemas?
+            <span
+              class="pn-template__footer-login-cta"
+              ng-click="login()"
+              external-event="login-cta"
+            >
+              [%%log-in%%]</span
+            >
+          </p>
+          <p
+            class="pn-template__footer-login pn-template__footer-login--mobile"
+          >
+            <span
+              class="pn-template__footer-login-cta"
+              ng-click="login()"
+              external-event="login-cta"
+            >
+              [%%log-in%%]</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

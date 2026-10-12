@@ -111,7 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const parentG = path.closest("g");
             if (parentG) {
               const transform = parentG.getAttribute("transform");
-              console.log("Found white circle at index:", index, "transform:", transform);
+              console.log(
+                "Found white circle at index:",
+                index,
+                "transform:",
+                transform,
+              );
 
               // The highlight is the one near the iris (around x:1093, y:771)
               if (transform && transform.includes("1093")) {
@@ -124,14 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Save reference so we can move it with the iris!
                 highlightElement = path;
 
-                console.log("✅ Found and marked the correct highlight element!");
+                console.log(
+                  "✅ Found and marked the correct highlight element!",
+                );
               }
             }
           }
         });
 
         if (irisElement && highlightElement) {
-          console.log("👁️ Iris and highlight will now follow your cursor together!");
+          console.log(
+            "👁️ Iris and highlight will now follow your cursor together!",
+          );
         }
       }
     }, 100); // Wait 100ms for SVG to fully render
@@ -157,17 +166,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const deltaY = clientY - centerY;
     const angle = Math.atan2(deltaY, deltaX);
 
-    const distance = Math.min(60, Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 8);
+    const distance = Math.min(
+      60,
+      Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 8,
+    );
 
     const moveX = Math.cos(angle) * distance;
     const moveY = Math.sin(angle) * distance;
 
-    irisContainer.setAttribute("transform", `matrix(1,0,0,1,${1004.001953125 + moveX},${725.4998779296875 + moveY})`);
+    irisContainer.setAttribute(
+      "transform",
+      `matrix(1,0,0,1,${1004.001953125 + moveX},${725.4998779296875 + moveY})`,
+    );
 
     if (highlightElement) {
-      const highlightContainer = highlightElement.closest(".highlight-container");
+      const highlightContainer = highlightElement.closest(
+        ".highlight-container",
+      );
       if (highlightContainer) {
-        highlightContainer.setAttribute("transform", `matrix(1,0,0,1,${1093.326171875 + moveX},${771.1597900390625 + moveY})`);
+        highlightContainer.setAttribute(
+          "transform",
+          `matrix(1,0,0,1,${1093.326171875 + moveX},${771.1597900390625 + moveY})`,
+        );
       }
     }
   }
@@ -186,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateIrisPosition(touch.clientX, touch.clientY);
       }
     },
-    { passive: true }
+    { passive: true },
   );
 
   // Track touch position on tap
@@ -198,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateIrisPosition(touch.clientX, touch.clientY);
       }
     },
-    { passive: true }
+    { passive: true },
   );
 
   // ============================================
@@ -279,7 +299,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let slideTimer = null;
 
   // Get fade duration from CSS variable for consistency
-  const FADE_DURATION = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--fade-duration")) || 1000;
+  const FADE_DURATION =
+    parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--fade-duration",
+      ),
+    ) || 1000;
   const SLIDE_THREE_DELAY = 6000;
 
   // ============================================
@@ -407,7 +432,9 @@ document.addEventListener("DOMContentLoaded", () => {
         showElement(keywordsContainer);
 
         // Add animation classes to keywords for staggered animation
-        keywordElements.forEach((keyword) => keyword.classList.add("animate-intro"));
+        keywordElements.forEach((keyword) =>
+          keyword.classList.add("animate-intro"),
+        );
       }, 300); // Small delay to ensure overlay is hidden
 
       // Remove listeners

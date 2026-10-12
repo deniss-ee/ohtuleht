@@ -29,7 +29,11 @@ var CLUBS = [
     logo: "poseidon.png",
     overlay: {
       fields: [
-        { label: "Noortetöö koordinaator", value: "Hendrik Toots", icon: "person.svg" },
+        {
+          label: "Noortetöö koordinaator",
+          value: "Hendrik Toots",
+          icon: "person.svg",
+        },
         { label: "E-post", value: "hendrik@jkposeidon.ee", icon: "mail.svg" },
       ],
       url: "https://jkposeidon.ee/",
@@ -46,7 +50,12 @@ var CLUBS = [
     logo: "tarvas.png",
     overlay: {
       fields: [
-        { label: "peatreener", value: "Reijo Kuusik", icon: "person.svg", hidden: true },
+        {
+          label: "peatreener",
+          value: "Reijo Kuusik",
+          icon: "person.svg",
+          hidden: true,
+        },
         { label: "E-post", value: "noored@jktarvas.ee", icon: "mail.svg" },
       ],
       url: "https://jktarvas.ee/",

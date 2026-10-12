@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -41,15 +41,29 @@
         display: none; /* hidden until breakpoint */
       }
       @media (min-width: 481px) {
-        lottie-player.player-sm { display: none; }
-        lottie-player.player-lg { display: block; }
+        lottie-player.player-sm {
+          display: none;
+        }
+        lottie-player.player-lg {
+          display: block;
+        }
       }
     </style>
   </head>
   <body style="margin: 0; padding: 0; cursor: pointer">
     <div class="player-container">
-      <lottie-player class="player-sm" src="700x200-sm.json" loop autoplay></lottie-player>
-      <lottie-player class="player-lg" src="700x200-lg.json" loop autoplay></lottie-player>
+      <lottie-player
+        class="player-sm"
+        src="700x200-sm.json"
+        loop
+        autoplay
+      ></lottie-player>
+      <lottie-player
+        class="player-lg"
+        src="700x200-lg.json"
+        loop
+        autoplay
+      ></lottie-player>
     </div>
   </body>
 </html>

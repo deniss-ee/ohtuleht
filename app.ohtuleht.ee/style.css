@@ -2,23 +2,27 @@
 *,
 ::before,
 ::after {
-  box-sizing: border-box;
   min-width: 0;
+  box-sizing: border-box;
   border-width: 0;
   border-style: solid;
 }
+
 html {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-text-size-adjust: 100%;
   line-height: 1.15;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
 }
+
 body {
   margin: 0;
   overflow: hidden;
 }
+
 main {
   display: block;
 }
+
 p,
 table,
 blockquote,
@@ -30,6 +34,7 @@ figure,
 dl {
   margin: 0;
 }
+
 h1,
 h2,
 h3,
@@ -37,58 +42,70 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-weight: inherit;
   font-size: inherit;
+  font-weight: inherit;
 }
+
 ul,
 ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 dt {
   font-weight: 700;
 }
+
 dd {
   margin-left: 0;
 }
+
 hr {
-  clear: both;
-  box-sizing: content-box;
   height: 0;
   margin: 0;
+  color: inherit;
+  clear: both;
+  box-sizing: content-box;
   border-top-width: 1px;
   overflow: visible;
-  color: inherit;
 }
+
 pre {
-  font-size: inherit;
   font-family: monospace, monospace;
+  font-size: inherit;
 }
+
 address {
   font-style: inherit;
 }
+
 a {
   color: inherit;
-  text-decoration: none;
   background-color: transparent;
+  text-decoration: none;
 }
+
 abbr[title] {
   text-decoration: underline dotted;
 }
+
 b,
 strong {
   font-weight: bolder;
 }
+
 code,
 kbd,
 samp {
-  font-size: inherit;
   font-family: monospace, monospace;
+  font-size: inherit;
 }
+
 small {
   font-size: 80%;
 }
+
 sub,
 sup {
   position: relative;
@@ -96,6 +113,7 @@ sup {
   line-height: 0;
   vertical-align: baseline;
 }
+
 sub {
   bottom: -0.25em;
 }
@@ -103,6 +121,7 @@ sub {
 sup {
   top: -0.5em;
 }
+
 svg,
 img,
 embed,
@@ -110,99 +129,121 @@ object,
 iframe {
   vertical-align: bottom;
 }
+
 button,
 input,
 optgroup,
 select,
 textarea {
-  -webkit-appearance: none;
-  appearance: none;
   margin: 0;
   padding: 0;
-  border-radius: 0;
   color: inherit;
+  background: transparent;
+  border-radius: 0;
+  appearance: none;
   font: inherit;
   text-align: inherit;
   text-transform: inherit;
   vertical-align: middle;
-  background: transparent;
 }
+
 button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
   cursor: pointer;
 }
+
 button:disabled,
 [type="button"]:disabled,
 [type="reset"]:disabled,
 [type="submit"]:disabled {
   cursor: default;
 }
+
 :-moz-focusring {
   outline: auto;
 }
+
 select:disabled {
   opacity: inherit;
 }
+
 option {
   padding: 0;
 }
+
 fieldset {
   min-width: 0;
   margin: 0;
   padding: 0;
 }
+
 legend {
   padding: 0;
 }
+
 progress {
   vertical-align: baseline;
 }
+
 textarea {
   overflow: auto;
 }
+
 [type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
+
 [type="search"] {
   outline-offset: -2px;
 }
+
 [type="search"]::-webkit-search-decoration {
-  -webkit-appearance: none;
+  appearance: none;
 }
+
 ::-webkit-file-upload-button {
-  -webkit-appearance: button;
+  appearance: auto;
   font: inherit;
 }
+
 [type="number"] {
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
+
 label[for] {
   cursor: pointer;
 }
+
 details {
   display: block;
 }
+
 summary {
   display: list-item;
 }
+
 [contenteditable]:focus {
   outline: auto;
 }
+
 table {
   border-color: inherit;
   border-collapse: collapse;
 }
+
 caption {
   text-align: left;
 }
+
 td,
 th {
   padding: 0;
   vertical-align: top;
 }
+
 th {
   font-weight: 700;
   text-align: left;
@@ -213,14 +254,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   gap: 64px;
+  min-height: 100vh;
   overflow: hidden;
 }
 
 .phone-mockup-wrapper {
-  overflow: hidden;
-  box-shadow: 0 20px 80px rgba(70, 70, 78, 0.16);
+  box-shadow: 0 20px 80px rgb(70 70 78 / 16%);
+    overflow: hidden;
 }
 
 /* Small size: 180x390px (1/4 scale) */
@@ -246,8 +287,8 @@ body {
 }
 
 .phone-mockup {
-  display: flex;
   position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -255,32 +296,33 @@ body {
 }
 
 .phone-bg {
-  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .phone-video {
-  object-fit: cover;
-  z-index: 1;
   position: absolute;
   top: 64px;
   left: 0;
+  z-index: 1;
   width: 100%;
+  object-fit: cover;
 }
 
 .phone-overlay {
-  object-fit: cover;
-  z-index: 2;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 2;
   width: 100%;
+  object-fit: cover;
   pointer-events: none;
 }
+
 .text-container {
   display: flex;
   flex-direction: column;
@@ -294,22 +336,22 @@ body {
 }
 
 h1 {
-  color: var(--Colors-Red-600, #F50000);
 font-family: "Fira Sans";
 font-size: 96px;
-font-style: normal;
 font-weight: 600;
 line-height: 112.5%; /* 108px */
+  color: var(--Colors-Red-600, #F50000);
+font-style: normal;
 letter-spacing: -1.2px;
 }
 
 h2 {
-  color: var(--Colors-Ink-950, #292932);
 font-family: Inter;
 font-size: 40px;
-font-style: normal;
 font-weight: 500;
 line-height: 125%; /* 50px */
+  color: var(--Colors-Ink-950, #292932);
+font-style: normal;
 letter-spacing: -1px;
 }
 
@@ -326,7 +368,7 @@ letter-spacing: -1px;
   transform: rotate(-45deg);
 }
 
-@media (max-width: 980px) {
+@media (width <= 980px) {
   body {
     flex-direction: column;
     justify-content: center;
@@ -341,12 +383,12 @@ letter-spacing: -1px;
   position: fixed;
   top: 40vh;
   left: -7.5vw;
+  z-index: -1;
   width: 192px;
   height: 192px;
   margin-left: 0;
   transform: rotate(-45deg);
   pointer-events: none;
-  z-index: -1;
 }
 
   .text-container {
@@ -354,19 +396,19 @@ letter-spacing: -1px;
   }
 
   .header-container {
-    order: 1;
     align-items: center;
-    text-align: center;
     gap: 8px;
     max-width: 320px;
+    order: 1;
+    text-align: center;
   }
 
   .phone-mockup-wrapper,
   .phone-mockup-wrapper.phone-mockup-wrapper--medium {
-    order: 2;
     width: 180px;
     height: 390px;
     border-radius: 24px;
+    order: 2;
   }
 
   .phone-mockup-wrapper .phone-video,
@@ -375,11 +417,11 @@ letter-spacing: -1px;
   }
 
   .button-container {
-    order: 3;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     gap: 12px;
+    order: 3;
+    flex-wrap: wrap;
   }
 
   h1 {

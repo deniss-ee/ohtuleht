@@ -4,7 +4,6 @@
 * Autoprefixer: v10.4.7
 * Browsers: last 4 version
 */
-
 *,
 *:before,
 *:after {
@@ -229,11 +228,11 @@ nobr {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   background-color: rgba(250, 57, 68, 0.75);
 }
 .slide-cta-btn {
@@ -318,7 +317,6 @@ nobr {
   leading-trim: both;
   text-edge: cap;
 }
-
 .btn svg {
   width: 28px;
   height: 28px;
