@@ -1,0 +1,178 @@
+.member-overview__name {
+  visibility: hidden !important;
+  position: relative !important;
+}
+.member-overview__name::before {
+  content: attr(title);
+  visibility: visible;
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+}
+/* ── REWARDS ── */
+[data-redemption_id]::before {
+  display: block;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  border-radius: 4px 4px 0 0;
+}
+[data-redemption_id="reward_66db6"]::before,
+[data-redemption_id="reward_95f16"]::before,
+[data-redemption_id="reward_c9a73"]::before,
+[data-redemption_id="reward_bcf26"]::before,
+[data-redemption_id="reward_7405d"]::before {
+  content: "Digitooted";
+  background: #e2050d;
+}
+[data-redemption_id="reward_841a3"]::before,
+[data-redemption_id="reward_ee751"]::before,
+[data-redemption_id="reward_fa260"]::before,
+[data-redemption_id="reward_edb94"]::before,
+[data-redemption_id="reward_b72d5"]::before,
+[data-redemption_id="reward_b9d45"]::before,
+[data-redemption_id="reward_023e5"]::before {
+  content: "Paberväljaanded";
+  background: #e2050d;
+}
+[data-redemption_id="reward_a8475"]::before,
+[data-redemption_id="reward_6f322"]::before,
+[data-redemption_id="reward_30463"]::before,
+[data-redemption_id="reward_c7144"]::before,
+[data-redemption_id="reward_f0625"]::before,
+[data-redemption_id="reward_ea668"]::before,
+[data-redemption_id="reward_1236b"]::before {
+  content: "Logoga tooted";
+  background: #e2050d;
+}
+[data-redemption_id="reward_c4cc6"]::before,
+[data-redemption_id="reward_a9bda"]::before,
+[data-redemption_id="reward_e7cab"]::before,
+[data-redemption_id="reward_52d7c"]::before,
+[data-redemption_id="reward_01861"]::before,
+[data-redemption_id="reward_699ed"]::before,
+[data-redemption_id="reward_ab5fb"]::before {
+  content: "Partnerite pakkumised";
+  background: #545459;
+}
+[data-redemption_id="reward_e80da"]::before,
+[data-redemption_id="reward_ab0a4"]::before {
+  content: "Eripakkumised";
+  background: #f9ca00;
+}
+/* ── ACTIVITIES ── */
+[data-activity_id]::before {
+  display: block;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+  border-radius: 4px 4px 0 0;
+}
+[data-activity_id="6824b_custom_activity"]::before,
+[data-activity_id="made_a_purchase"]::before,
+[data-activity_id="created_an_account"]::before,
+[data-activity_id="follow_on_instagram"]::before,
+[data-activity_id="9319f_custom_activity"]::before,
+[data-activity_id="d4f4b_custom_activity"]::before,
+[data-activity_id="5cc57_custom_activity"]::before,
+[data-activity_id="d3d53_custom_activity"]::before,
+[data-activity_id="share_on_facebook"]::before {
+  content: "Ühekordsed punktid";
+  background: #ee696e;
+}
+[data-activity_id="e2456_custom_activity"]::before,
+[data-activity_id="80fdd_custom_activity"]::before,
+[data-activity_id="f42f9_custom_activity"]::before,
+[data-activity_id="ccb43_custom_activity"]::before,
+[data-activity_id="bf348_custom_activity"]::before,
+[data-activity_id="cfe9e_custom_activity"]::before,
+[data-activity_id="cacb0_custom_activity"]::before,
+[data-activity_id="bb543_custom_activity"]::before,
+[data-activity_id="referral"]::before,
+[data-activity_id="c9a6b_custom_activity"]::before,
+[data-activity_id="814c0_custom_activity"]::before {
+  content: "Kogu veel punkte ";
+  background: #e2050d;
+}
+[data-activity_id="7d0d7_custom_activity"]::before,
+[data-activity_id="13b2b_custom_activity"]::before,
+[data-activity_id="9efba_custom_activity"]::before,
+[data-activity_id="f7adc_custom_activity"]::before,
+[data-activity_id="birthday_bonus"]::before,
+[data-activity_id="anniversary_bonus"]::before,
+[data-activity_id="winback_bonus"]::before,
+[data-activity_id="a2fe6_custom_activity"]::before {
+  content: "Tähtpäevad ja üllatused";
+  background: #f9ca00;
+}
+.zrl-page__breadcrumbs .zrl-button--capitalized,
+.zrl-page__breadcrumbs .zrl-button--capitalized .zrl-button__label {
+  text-transform: none !important;
+}
+#transaction-filter-approved-btn {
+  order: 1;
+} /* Collected */
+#transaction-filter-redeemed-btn {
+  order: 2;
+} /* Used */
+#transaction-filter-all-btn {
+  order: 3;
+} /* All */
+*:has(> #transaction-filter-all-btn) {
+  display: flex !important;
+}
+.member-profile__nav {
+  display: flex !important;
+  flex-direction: column;
+}
+#view-points-history-btn {
+  order: 1;
+} /* Minu punktid */
+#view-expiration-btn {
+  order: 2;
+} /* Aeguvad punktid */
+#view-refer-and-earn-btn {
+  order: 3;
+} /* Kutsu sõber */
+#view-terms-btn {
+  order: 4;
+} /* Kasutustingimused */
+#view-cancel-membership-btn {
+  order: 5;
+} /* Lojaalsusprogrammist lahkumine */
+.member-profile__avatar,
+.member-overview__avatar {
+  display: none !important;
+}
+.terms-section h6 > #login-btn .zrl-button__label {
+  display: none;
+}
+.terms-section h6 > #login-btn .zrl-button__content::after {
+  content: "kasutustingimustega";
+}
+#view-made_a_purchase-btn .zrl-button__label {
+  display: none !important;
+}
+#view-made_a_purchase-btn .zrl-button__content::after {
+  content: "1000 punkti";
+}
+[data-activity_id="made_a_purchase"] .zrl-tag__label {
+  display: none !important;
+}
+[data-activity_id="made_a_purchase"] span:has(> .zrl-tag__label)::after {
+  content: "1000 punkti";
+}
+.referral-activity__divider,
+.referral-activity__share-options {
+  display: none !important;
+}
+.zrl-button__content:has(> .zrl-button__icon--align-right) > .zrl-button__label {
+  text-transform: none !important;
+}
